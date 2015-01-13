@@ -1,4 +1,12 @@
 CS48-Project
 ============
 
-Game
+Attack of the Trees Game
+
+G11
+
+Shadee Barzin 
+Andrew Ferguson 
+Michele Haque
+Brendan Murphy
+Fengyu Wang
