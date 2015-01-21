@@ -8,7 +8,7 @@ public class Frame {
 	JFrame frame = new Jframe ("2D Game");
 	
 	frame.setDefaultClloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.setSize(1200,365); //frame size
+	frame.setSize(1024,410); //frame size
 	frame.setVisible(true);
     }
 
