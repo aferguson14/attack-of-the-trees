@@ -1,5 +1,6 @@
 package lumerjackGame;
 
+import java.util.*;
 import java.awt.*;
 import java.awt.Image;
 import javax.swing.*;
