@@ -1,16 +1,17 @@
-package lumberjackGame;
-
-import java.util.*;
 import javax.swing.*;
 
 public class Frame {
 
-    public static void main(String[] args) {
-	JFrame frame = new Jframe ("2D Game");
-	
-	frame.setDefaultClloseOperation(JFrame.EXIT_ON_CLOSE);
+    public Frame(){
+	JFrame frame = new JFrame();
+	frame.add(new Board());
+	frame.setTitle("2D Game");
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.setSize(1024,410); //frame size
 	frame.setVisible(true);
+	frame.setLocationRelativeTo(null);
     }
-
+    public static void main(String[] args){
+	new Frame();
+    }
 }

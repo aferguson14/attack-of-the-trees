@@ -1,60 +1,52 @@
-package lumberjackGame;
-
-import java.util.*;
 import java.awt.*;
-import javax.swing.*;
+import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 
 public class Player {
-    int x, dx, y, dy; //x coordinate, dx is change in x coordinate (determine left or right)
+    int x, dx, y;
+    Image still;
 
-    public Player(){
+    public Player() {
 	ImageIcon i = new ImageIcon("/images/playerImages/guy/guyFront.jpg"); //character image
 	still = i.getImage();
 	x = 10;
 	y = 172;
     }
-    
-    public void move(){
+
+    public void move() {
 	x = x + dx;
-	y = y + dy;
     }
 
-    public int getX(){
+    public int getX() {
 	return x;
     }
 
-    public int getY(){
+    public int getY() {
 	return y;
     }
 
-    public Image getImage(){
+    public Image getImage() {
 	return still;
     }
 
-    public void keyPressed(KeyEvent e){
+    public void keyPressed(KeyEvent e) {
 	int key = e.getKeyCode();
-	
-	if(key == KeyEvent.VK_KEY_A)
+	if (key == KeyEvent.VK_LEFT)
 	    dx = -1;
 
-	if(key == KeyEvent.VK_KEY_D)
+	if (key == KeyEvent.VK_RIGHT)
 	    dx = 1;
-
-	if(key == KeyEvent.VK_KEY_W)
-	    dy = 1;
     }
-    public void keyReleased(KeyEvent e){
+
+    public void keyReleased(KeyEvent e) {
 	int key = e.getKeyCode();
-	
-	if(key == KeyEvent.VK_KEY_A)
+
+	if (key == KeyEvent.VK_LEFT)
 	    dx = 0;
 
-	if(key == KeyEvent.VK_KEY_D)
+	if (key == KeyEvent.VK_RIGHT)
 	    dx = 0;
-
-	if(key == KeyEvent.VK_KEY_W)
-	    dy = 0;
     }
 
 }
