@@ -7,7 +7,7 @@ public class Player {
     int x, dx, y, dy; //x coordinate, dx is change in x coordinate (determine left or right)
 
     public Player(){
-	ImageIcon i = new ImageIcon("stillPlayer.png"); //character image
+	ImageIcon i = new ImageIcon("/images/playerImages/guy/guyFront.jpg"); //character image
 	still = i.getImage();
 	x = 10;
 	y = 172;
@@ -26,7 +26,7 @@ public class Player {
 	return y;
     }
 
-    public Image get Image(){
+    public Image getImage(){
 	return still;
     }
 
