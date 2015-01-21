@@ -1,3 +1,5 @@
+package lumberjackGame;
+
 import javax.swing.*;
 
 public class Frame {

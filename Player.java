@@ -1,3 +1,5 @@
+package lumberjackGame;
+
 import java.awt.*;
 
 
