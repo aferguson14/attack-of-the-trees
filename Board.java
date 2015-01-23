@@ -6,7 +6,7 @@ public class Board extends JPanel implements ActionListener {
     Player p;
     public Image img;
     Timer time;
-    // Testing committing to branch Michele
+
     public Board() {
 	p = new Player();
 	addKeyListener(new AL());
