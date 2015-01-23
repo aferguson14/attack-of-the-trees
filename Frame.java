@@ -5,7 +5,7 @@ public class Frame {
     public Frame(){
 	JFrame frame = new JFrame();
 	frame.add(new Board());
-	frame.setTitle("2D Game");
+	frame.setTitle("Attack of the Trees");
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.setSize(1024,410); //frame size
 	frame.setVisible(true);
