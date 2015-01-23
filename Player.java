@@ -8,7 +8,7 @@ public class Player {
     Image still;
 
     public Player() {
-	ImageIcon i = new ImageIcon("/images/playerImages/guy/guyFront.jpg"); //character image
+	ImageIcon i = new ImageIcon("images/playerImages/guy/guyFront.jpg"); //character image
 	still = i.getImage();
 	x = 10;
 	y = 172;
