@@ -11,7 +11,7 @@ public class Board extends JPanel implements ActionListener {
 	p = new Player();
 	addKeyListener(new AL());
 	setFocusable(true);
-	ImageIcon i = new ImageIcon("/images/backgrounds/JungleBackground.jpg");
+	ImageIcon i = new ImageIcon("images/backgrounds/JungleBackground.jpg");
 	img = i.getImage();
 	time = new Timer(5, this);
 	time.start();
