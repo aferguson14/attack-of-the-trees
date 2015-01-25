@@ -19,12 +19,12 @@ public class Board extends JPanel implements ActionListener {
 	time.start();
     }
     
-    private enum STATE {
+    public static enum STATE {
     	MENU,
     	GAME
     };
     
-    private STATE State = STATE.MENU;
+    public static STATE State = STATE.MENU;
 
     public void actionPerformed(ActionEvent e) {
 	p.move();
