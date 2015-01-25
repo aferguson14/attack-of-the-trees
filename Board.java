@@ -6,9 +6,11 @@ public class Board extends JPanel implements ActionListener {
     Player p;
     public Image img;
     Timer time;
+    private Menu menu; 
 
     public Board() {
 	p = new Player();
+	menu = new Menu();
 	addKeyListener(new AL());
 	setFocusable(true);
 	ImageIcon i = new ImageIcon("images/backgrounds/JungleBackground.jpg");
@@ -16,6 +18,13 @@ public class Board extends JPanel implements ActionListener {
 	time = new Timer(5, this);
 	time.start();
     }
+    
+    private enum STATE {
+    	MENU,
+    	GAME
+    };
+    
+    private STATE State = STATE.MENU;
 
     public void actionPerformed(ActionEvent e) {
 	p.move();
@@ -27,7 +36,12 @@ public class Board extends JPanel implements ActionListener {
 	Graphics2D g2d = (Graphics2D) g;
 
 	g2d.drawImage(img, 0, 0, null);
-	g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
+	
+	if(State == STATE.GAME) {
+		g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
+    	} else if(State == STATE.MENU) {
+    		menu.render(g);
+    	}
     }
 
     private class AL extends KeyAdapter {
