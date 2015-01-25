@@ -12,6 +12,7 @@ public class Board extends JPanel implements ActionListener {
 	p = new Player();
 	menu = new Menu();
 	addKeyListener(new AL());
+	addMouseListener(new MouseInput());
 	setFocusable(true);
 	ImageIcon i = new ImageIcon("images/backgrounds/JungleBackground.jpg");
 	img = i.getImage();
