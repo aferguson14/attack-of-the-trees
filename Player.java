@@ -13,7 +13,7 @@ public class Player {
     int AttackSpeed;
     
     public Player() {
-	ImageIcon i = new ImageIcon("images/guyFront.jpg"); //character image
+	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDown.png"); //character image
 	still = i.getImage();
         //starting Player postion/velocity/acceleration
 	x = 10;
