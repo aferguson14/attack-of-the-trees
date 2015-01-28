@@ -100,6 +100,33 @@ public class Board extends JPanel implements ActionListener {
 	if(State == STATE.GAME) {
 		g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
 	        g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), null);
+		       
+		Font fntP = new Font("arial", Font.BOLD, 10);
+		g.setFont(fntP);
+		g.setColor(Color.white);
+		g.drawString("" + p.getHP(), p.getX(), p.getY() - 10);
+        
+		Font fntE = new Font("arial", Font.BOLD, 10);
+		g.setFont(fntE);
+		g.setColor(Color.red);
+		g.drawString("" + enemy.getHP(), enemy.getX(), enemy.getY() - 10);
+        
+		if(p.attacking()){
+		    if(attack){
+			if(p.facing() == 0){
+			    Rectangle rect = new Rectangle(p.getX() - 20, p.getY() + 20, 20, 10);
+			    g2d.setColor(Color.red);
+			    g2d.fill(rect);
+			}
+			else if(p.facing() == 1){
+			    Rectangle rect = new Rectangle(p.getX() + 57, p.getY() + 20, 20, 10);
+			    g2d.setColor(Color.red);
+			    g2d.fill(rect);
+
+			}
+		    }
+		}
+ 
     	} else if(State == STATE.MENU) {
     		menu.render(g);
     	}
@@ -107,31 +134,6 @@ public class Board extends JPanel implements ActionListener {
 	//g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
 
         
-        Font fntP = new Font("arial", Font.BOLD, 10);
-	g.setFont(fntP);
-	g.setColor(Color.white);
-	g.drawString("" + p.getHP(), p.getX(), p.getY() - 10);
-        
-        Font fntE = new Font("arial", Font.BOLD, 10);
-	g.setFont(fntE);
-	g.setColor(Color.red);
-	g.drawString("" + enemy.getHP(), enemy.getX(), enemy.getY() - 10);
-        
-        if(p.attacking()){
-            if(attack){
-                if(p.facing() == 0){
-                    Rectangle rect = new Rectangle(p.getX() - 20, p.getY() + 20, 20, 10);
-                    g2d.setColor(Color.red);
-                    g2d.fill(rect);
-                }
-                else if(p.facing() == 1){
-                    Rectangle rect = new Rectangle(p.getX() + 57, p.getY() + 20, 20, 10);
-                    g2d.setColor(Color.red);
-                    g2d.fill(rect);
-
-                }
-            }
-        }
         
     }
 

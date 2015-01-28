@@ -10,7 +10,7 @@ public class Enemy {
     boolean attacking = false;
     
     public Enemy() {
-	ImageIcon i = new ImageIcon("images/playerImages/girl/girlFront.jpg"); //enemy image
+	ImageIcon i = new ImageIcon("images/playerImages/guy/robot.png"); //enemy image
 	still = i.getImage();
         //starting Enemy postion/velocity/acceleration
 	x = 700;
