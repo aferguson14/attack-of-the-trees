@@ -11,6 +11,7 @@ public class Board extends JPanel implements ActionListener {
     int tic = 0;
     int toc = 50;
     boolean attack = false;
+    private Menu menu;
 
     
 //    int camX;
@@ -29,13 +30,15 @@ public class Board extends JPanel implements ActionListener {
 	p = new Player();
         enemy = new Enemy();
 	addKeyListener(new AL());
+	menu = new Menu();
+	addMouseListener(new MouseInput());
 	setFocusable(true);
 	ImageIcon i = new ImageIcon("images/backgrounds/JungleBackground.jpg");
 	img = i.getImage();
 	time = new Timer(5, this);
 	time.start();
         
-        
+
 //        camX = p.getX() - VIEWPORT_SIZE_X / 2;
 //        camY = p.getY() - VIEWPORT_SIZE_Y / 2;
 //        if (camX > offsetMaxX)
@@ -48,6 +51,13 @@ public class Board extends JPanel implements ActionListener {
 //        else if (camY < offsetMinY)
 //            camY = offsetMinY;
     }
+
+    public static enum STATE {
+    	MENU,
+    	GAME
+    };
+    
+    public static STATE State = STATE.MENU;
 
     public void actionPerformed(ActionEvent e) {
 	p.move();
@@ -86,8 +96,16 @@ public class Board extends JPanel implements ActionListener {
         
         
 	g2d.drawImage(img, 0, 0, null);
-	g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
-        g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), null);
+	
+	if(State == STATE.GAME) {
+		g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
+	        g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), null);
+    	} else if(State == STATE.MENU) {
+    		menu.render(g);
+    	}
+	
+	//g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
+
         
         Font fntP = new Font("arial", Font.BOLD, 10);
 	g.setFont(fntP);
