@@ -15,7 +15,7 @@ public class Player {
     public Player() {
 	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDown.png"); //character image
 	still = i.getImage();
-        //starting Player postion/velocity/acceleration
+        //starting Player position/velocity/acceleration
 	x = 10;
 	y = 265;
         ay = 1;
@@ -82,20 +82,24 @@ public class Player {
 
     public void keyPressed(KeyEvent e) {
 	int key = e.getKeyCode();
-        //input cahnges velocity
+        //input changes velocity
 	if (key == KeyEvent.VK_LEFT){
-	    dx = -5;
+    	    ImageIcon iLeft = new ImageIcon("images/playerImages/guy/guySideDownLeft.png"); // character image
+    	    still = iLeft.getImage();
+    	    dx = -3; // changed from -5 to -3 so moves slower
             facing = 0;
         }
 
 	if (key == KeyEvent.VK_RIGHT){
-	    dx = 5;
-            facing = 1;
+    	    ImageIcon iRight = new ImageIcon("images/playerImages/guy/guySideDown.png"); // character image
+    	    still = iRight.getImage();
+    	    dx = 3; // changed from 5 to 3 so moves slower
+    	    facing = 1;
         }
         //if on ground, can jump
         if(!InAir){
             if(key == KeyEvent.VK_UP){
-                dy = -20;
+                dy = -22; // changed from -20 to -22 so jumps higher
                 InAir = true;    
             }
         }
@@ -105,12 +109,13 @@ public class Player {
 
     public void keyReleased(KeyEvent e) {
 	int key = e.getKeyCode();
-        //realease of L/R key's result in 0 horiz vel
+        //realease of L/R key's result in 0 horizontal velocity
 	if (key == KeyEvent.VK_LEFT)
 	    dx = 0;
 
 	if (key == KeyEvent.VK_RIGHT)
 	    dx = 0;
+        
         if(key == KeyEvent.VK_SPACE)
             attacking = false;
     }
