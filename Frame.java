@@ -1,21 +1,22 @@
+//Clean up Robot/Propjectile Code. Really Messy
+//Push to gitHub
+//Pull from github
+//need robot facing right
+//implement a better projectile class
+//find out why there was a former bug involving player contact
+//make projectile implementable with some player weapons
+//fix hitboxes on robot and player
+//fix attack range's on robot and player
+//give robot and player legit attack animations
+//yaaaaaaaaa
+
 import javax.swing.*;
 
 public class Frame {
-//    int WORLD_SIZE_X = 2000;
-//    int WORLD_SIZE_Y = 900;
-//    int VIEWPORT_SIZE_X = 1024;
-//    int VIEWPORT_SIZE_Y = 410;
-//    
-//
-//    
-//    int offsetMaxX = WORLD_SIZE_X - VIEWPORT_SIZE_X;
-//    int offsetMaxY = WORLD_SIZE_Y - VIEWPORT_SIZE_Y;
-//    int offsetMinX = 0;
-//    int offsetMinY = 0;
     public Frame(){
 	JFrame frame = new JFrame();
 	frame.getContentPane().add(new Board());
-	frame.setTitle("2D Game");
+	frame.setTitle("Attack of the Trees");
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.setSize(1024,410); //frame size
 	frame.setVisible(true);
