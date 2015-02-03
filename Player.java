@@ -75,7 +75,7 @@ public class Player {
     }
         
     public void takeDmg(Enemy e){
-        hp -= e.getAttack();
+    	hp -= e.getAttack();
     }
     
 

@@ -1,4 +1,5 @@
 import java.awt.*;
+
 import javax.swing.*;
 
 public class PauseMenu extends JFrame{
@@ -16,7 +17,7 @@ public class PauseMenu extends JFrame{
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout());
 		getContentPane().add(topPanel);
-		
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		createShopPage();
 		createSavePage();
@@ -30,8 +31,8 @@ public class PauseMenu extends JFrame{
 		
 	}
 	
-	public void setPauseMenuVisible(){
-		this.setVisible(true);
+	public void setPauseMenuVisible(boolean b){
+		this.setVisible(b);
 	}
 	
 	public void createShopPage(){

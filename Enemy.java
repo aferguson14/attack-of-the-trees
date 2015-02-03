@@ -11,14 +11,13 @@ public class Enemy {
     
     public Enemy() {
 	ImageIcon i = new ImageIcon("images/enemyImages/robot/robotFront.png"); //enemy image
-	still = i.getImage();
-        //starting Enemy postion/velocity/acceleration
-	x = 700;
-	y = 265;
+		still = i.getImage();
+        //starting Enemy position/velocity/acceleration
+		x = 700;
+		y = 265;
         ay = 1;
         dy = 0;
-        dx = 0;
-        
+        dx = 0;     
         hp = 100;
         attack = 10;
     }

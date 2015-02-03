@@ -101,18 +101,22 @@ public class Board extends JPanel implements ActionListener {
     	g2d.drawImage(img, 0, 0, null);
 	
     	if(State == STATE.GAME || State == STATE.PAUSE) {
-    			g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
-	        	g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), null);
-		       
-	        	Font fntP = new Font("arial", Font.BOLD, 10);
-	        	g.setFont(fntP);
-	        	g.setColor(Color.white);
-	        	g.drawString("" + p.getHP(), p.getX(), p.getY() - 10);
-        
-	        	Font fntE = new Font("arial", Font.BOLD, 10);
-	        	g.setFont(fntE);
-	        	g.setColor(Color.white);
-	        	g.drawString("" + enemy.getHP(), enemy.getX(), enemy.getY() - 10);
+    			if (p.getHP() > 0 ){
+    				g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
+    				Font fntP = new Font("arial", Font.BOLD, 10);
+    	        	g.setFont(fntP);
+    	        	g.setColor(Color.white);
+    	        	g.drawString("" + p.getHP(), p.getX(), p.getY() - 10);
+    			}
+    			if (enemy.getHP() > 0){
+    				g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), null);
+    				// health still goes down even if enemy's image isn't there bc instance of the class is still there
+    				// so how do we fix that
+    				Font fntE = new Font("arial", Font.BOLD, 10);
+    	        	g.setFont(fntE);
+    	        	g.setColor(Color.white);
+    	        	g.drawString("" + enemy.getHP(), enemy.getX(), enemy.getY() - 10);
+    			}	
 	        	
 	        	if(p.attacking()){
 	        		if(attack){
@@ -129,7 +133,8 @@ public class Board extends JPanel implements ActionListener {
 	        		}
 	        	}
 	        	if(State == STATE.PAUSE){
-	        		pmenu.setPauseMenuVisible();
+	        		pmenu.setPauseMenuVisible(true);
+	        		State = STATE.GAME;
 	        	}
     	}
     	else if(State == STATE.MENU) {
@@ -149,8 +154,9 @@ public class Board extends JPanel implements ActionListener {
         	if(key == KeyEvent.VK_P){
         		if(State == STATE.GAME)
         			State = STATE.PAUSE;
-        		else
+        		else{	
         			State = STATE.GAME;
+        		}
         	}
     		else{
     			p.keyPressed(e);
