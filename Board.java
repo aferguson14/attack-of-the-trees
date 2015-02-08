@@ -23,13 +23,15 @@ public class Board extends JPanel implements ActionListener {
     public Board() {
 	p = new Player();
         EnemyRobot robo = new EnemyRobot(700, 265);
+	EnemyTree tree = new EnemyTree(650, 265);
         enemies.add(robo);
+	enemies.add(tree);
 	addKeyListener(new AL());
 	menu = new Menu();
 	pmenu = new PauseMenu();
 	addMouseListener(new MouseInput());
 	setFocusable(true);
-	ImageIcon i = new ImageIcon("images/backgrounds/JungleBackground.jpg");
+	ImageIcon i = new ImageIcon("images/backgrounds/JungleBackground1.jpg");
 	img = i.getImage();
 	time = new Timer(5, this);
 	time.start();

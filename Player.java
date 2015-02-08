@@ -72,10 +72,15 @@ public class Player {
     public void paintPlayer(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.getStill(), this.getXCoord(), this.getYCoord(), null);
+
+	g.setColor(Color.white);
+	g.fillRect(this.getXCoord() -10 , this.getYCoord() - 10, this.getHp(), 7);
+	/*
         Font fntP = new Font("arial", Font.BOLD, 10);
         g.setFont(fntP);
         g.setColor(Color.blue);
         g.drawString("" + this.getHp(), this.getXCoord(), this.getYCoord() - 10);
+	*/
     }
     
     public void AttackAnimation(Graphics g){
