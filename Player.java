@@ -86,13 +86,24 @@ public class Player {
     public void AttackAnimation(Graphics g){
 	
         if(isAttacking()){
+	    ImageIcon iAttack = new ImageIcon("images/playerImages/guy/guySideUp.png"); 
+	    setStill(iAttack.getImage());	    
             Graphics2D g2d = (Graphics2D) g;
 	    if(getFacing() == 0){
+		    
 		Rectangle rect = new Rectangle(getXCoord() - 20, getYCoord() + 20, 20, 10);
 		g2d.setColor(Color.blue);
 		g2d.fill(rect);
+
+		ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpLeft.png"); //character image
+		setStill(i.getImage());
+
+
 	    }
 	    else if(getFacing() == 1){
+		ImageIcon i = new 
+		    ImageIcon("images/playerImages/guy/guySideUpRight.png");
+		setStill(i.getImage());
 		Rectangle rect = new Rectangle(getXCoord() + 57, getYCoord() + 20, 20, 10);
 		g2d.setColor(Color.blue);
 		g2d.fill(rect);
@@ -108,6 +119,7 @@ public class Player {
     
     public void PlayerAttack(ArrayList <Enemies> enemies){
         if(isAttacking()){
+	  
             if(getFacing() == 0){
                 for(Enemies e : enemies){
                     if(abs(getXCoord() - (e.getXCoord() + e.getHorizontalSize())) <= 20){
@@ -156,8 +168,22 @@ public class Player {
                 setInAir(true);    
             }
         }
-        if(key == KeyEvent.VK_SPACE)
-            setAttacking(true);
+        if(key == KeyEvent.VK_SPACE){
+	    setAttacking(true);
+	    if(getFacing() == 0){
+		ImageIcon aLeft = new 
+		    ImageIcon("images/playerImages/guy/guySideUpLeft.png");
+		setStill(aLeft.getImage());
+
+	    }
+
+	    else{
+		ImageIcon aRight = new 
+		    ImageIcon("images/playerImages/guy/guySideUpRight.png"); 
+		setStill(aRight.getImage());
+
+	    }
+	}
     }
     
     public void keyReleased(KeyEvent e) {
@@ -168,8 +194,19 @@ public class Player {
 	
 	if (key == KeyEvent.VK_RIGHT)
 	    setXVel(0);
-        if(key == KeyEvent.VK_SPACE)
+        if(key == KeyEvent.VK_SPACE){
             setAttacking(false);
+	     if(getFacing() == 0){
+		ImageIcon iLeft = new 
+		    ImageIcon("images/playerImages/guy/guySideDownLeft.png");
+		setStill(iLeft.getImage());
+	    }
+	    else if(getFacing() == 1){
+		ImageIcon iRight = new 
+		    ImageIcon("images/playerImages/guy/guySideDownRight.png");
+		setStill(iRight.getImage());
+	    }
+	}
     }
     //-----------------Getters/Setters------------------------------------------------------------------------------------------------
     public int getXCoord() {
