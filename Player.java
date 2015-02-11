@@ -31,11 +31,11 @@ public class Player {
     private int WorldTop = 0;
     
     public Player() {
-	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDown.png"); //character image
-	setStill(i.getImage());
-        //starting Player postion/velocity/acceleration
-	XCoord = 10;
-	YCoord = WorldBot - VerticalSize;
+    	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDown.png"); //character image
+    	setStill(i.getImage());
+        //starting Player position/velocity/acceleration
+    	XCoord = 10;
+    	YCoord = WorldBot - VerticalSize;
         YAcc = 1;
         YVel = 0;
         XVel = 0;
@@ -50,12 +50,12 @@ public class Player {
     
     public void move() {
         //add velocities to positions/add gravity to yVel
-	setXCoord(getXCoord() + getXVel());
-	setYVel(getYVel() + getYAcc());
-	setYCoord(getYCoord() + getYVel());
+    	setXCoord(getXCoord() + getXVel());
+    	setYVel(getYVel() + getYAcc());
+    	setYCoord(getYCoord() + getYVel());
         
-	//check boundaries, if on ground, InAir = false
-	if((getYCoord() + VerticalSize) >= 334){
+    	//check boundaries, if on ground, InAir = false
+    	if((getYCoord() + VerticalSize) >= 334){
 	    setYCoord(getWorldBot() - VerticalSize);
 	    setYVel(0);
 	    setInAir(false);
@@ -71,15 +71,28 @@ public class Player {
     
     public void paintPlayer(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(this.getStill(), this.getXCoord(), this.getYCoord(), null);
+        if (getHp() > 0){
+        	g2d.drawImage(this.getStill(), this.getXCoord(), this.getYCoord(), null);
+
+        	g.setColor(Color.white);
+        	g.fillRect(this.getXCoord() - 10 , this.getYCoord() - 10, this.getHp(), 7);
+        }
+   //     if (getHp() < 0)
+     //   	Board.State = Board.State.GAMEOVER;
+	/*
         Font fntP = new Font("arial", Font.BOLD, 10);
         g.setFont(fntP);
         g.setColor(Color.blue);
         g.drawString("" + this.getHp(), this.getXCoord(), this.getYCoord() - 10);
+	*/
+    }
+    
+    public void pausePlayer(){
+    	setXVel(0);
+    	setYVel(0);
     }
     
     public void AttackAnimation(Graphics g){
-	
         if(isAttacking()){
             Graphics2D g2d = (Graphics2D) g;
 	    if(getFacing() == 0){
@@ -90,10 +103,8 @@ public class Player {
 	    else if(getFacing() == 1){
 		Rectangle rect = new Rectangle(getXCoord() + 57, getYCoord() + 20, 20, 10);
 		g2d.setColor(Color.blue);
-		g2d.fill(rect);
-		
-	    }
-	    
+		g2d.fill(rect);		
+	    }	    
 	}
     }
     
@@ -131,7 +142,7 @@ public class Player {
     
     public void keyPressed(KeyEvent e) {
 	int key = e.getKeyCode();
-        //input cahnges velocity
+        //input changes velocity
 	if (key == KeyEvent.VK_LEFT){
             ImageIcon iLeft = new ImageIcon("images/playerImages/guy/guySideDownLeft.png"); // character image
             setStill(iLeft.getImage());
@@ -157,7 +168,7 @@ public class Player {
     
     public void keyReleased(KeyEvent e) {
 	int key = e.getKeyCode();
-        //realease of L/R key's result in 0 horiz vel
+        //release of L/R key's result in 0 horiz vel
 	if (key == KeyEvent.VK_LEFT)
 	    setXVel(0);
 	

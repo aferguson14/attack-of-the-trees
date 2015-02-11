@@ -71,6 +71,12 @@ public abstract class Enemies {
         
     }
     
+    // figure out how to stop enemies from attacking while paused
+    public void pauseEnemy(){
+    	setXVel(0);
+    	setYVel(0);
+    }
+    
     public void Attack(Player p, Graphics g){}
     public void takeDmg(Player p){
         hp -= p.getAttack();

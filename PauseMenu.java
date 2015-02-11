@@ -13,6 +13,9 @@ public class PauseMenu extends JFrame{
 	setSize(500,350);
 	setBackground(Color.gray);
 	
+	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+	this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+	
 	JPanel topPanel = new JPanel();
 	topPanel.setLayout(new BorderLayout());
 	getContentPane().add(topPanel);
@@ -58,7 +61,7 @@ public class PauseMenu extends JFrame{
     }
 
     
-    public void paintComponent(Graphics g){
+    public void paint(Graphics g){
 	super.paint(g);
 	Graphics2D g2d = (Graphics2D) g;
     }

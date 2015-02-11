@@ -1,4 +1,4 @@
-//Clean up Robot/Propjectile Code. Really Messy
+//Clean up Robot/Projectile Code. Really Messy
 //Push to gitHub
 //Pull from github
 //need robot facing right
