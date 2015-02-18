@@ -31,27 +31,29 @@ public class Projectile {
     }
     
     public void move(Player p){
-        setXVel(getXVel() + getXAcc());
-        setYVel(getYVel() + getYAcc());
+        if(Board.getState() == Board.STATE.GAME){
+	    setXVel(getXVel() + getXAcc());
+	    setYVel(getYVel() + getYAcc());
         
-        setXCoord(getXCoord() + getXVel());
-        setYCoord(getYCoord() + getYVel());
+	    setXCoord(getXCoord() + getXVel());
+	    setYCoord(getYCoord() + getYVel());
         
-        if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
-            setRemove(true);
-        }
-        if(getXCoord() <= getWorldLeft()){
-            setRemove(true);
-        }
-        if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
-            setRemove(true);
-        }
-        if(getYCoord() <= getWorldTop()){
-            setRemove(true);
-        }
-        if(PlayerContact(p) == true){
-            dealDmg(p);
-        }
+	    if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
+		setRemove(true);
+	    }
+	    if(getXCoord() <= getWorldLeft()){
+		setRemove(true);
+	    }
+	    if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
+		setRemove(true);
+	    }
+	    if(getYCoord() <= getWorldTop()){
+		setRemove(true);
+	    }
+	    if(PlayerContact(p) == true){
+		dealDmg(p);
+	    }
+	}
     }
     
     

@@ -41,36 +41,37 @@ public abstract class Enemies {
     }
     //Move Method, Similar to Player's
     public void move(ArrayList <Terrain> terrain){
-        setXVel(getXVel() + getXAcc());
-        setYVel(getYVel() + getYAcc());
-        if(XVel > 0){
-            setFacing(1);
-        }
-	else if(XVel < 0){
-            setFacing(0);
-        }
-        setXCoord(getXCoord() + getXVel());
-        setYCoord(getYCoord() + getYVel());
-        for(Terrain t : terrain){
-            t.CheckEnemyContact(this);
+        if(Board.getState() == Board.STATE.GAME){
+	    setXVel(getXVel() + getXAcc());
+	    setYVel(getYVel() + getYAcc());
+	    if(XVel > 0){
+		setFacing(1);
+	    }
+	    else if(XVel < 0){
+		setFacing(0);
+	    }
+	    setXCoord(getXCoord() + getXVel());
+	    setYCoord(getYCoord() + getYVel());
+	    for(Terrain t : terrain){
+		t.CheckEnemyContact(this);
             
-        }
+	    }
         
-        if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
-            setYCoord(getWorldBot() - getVerticalSize());
-            setYVel(0);
-            setInAir(false);
+	    if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
+		setYCoord(getWorldBot() - getVerticalSize());
+		setYVel(0);
+		setInAir(false);
+	    }
+	    if(getXCoord() <= getWorldLeft()){
+		setYCoord(0);
+	    }
+	    if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
+		setYCoord(WorldRight = getHorizontalSize());
+	    }
+	    if(getYCoord() <= getWorldTop()){
+		setYCoord(0);
+	    }
         }
-        if(getXCoord() <= getWorldLeft()){
-            setYCoord(0);
-        }
-        if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
-            setYCoord(WorldRight = getHorizontalSize());
-        }
-        if(getYCoord() <= getWorldTop()){
-            setYCoord(0);
-        }
-        
     }
     
     public void Attack(Player p, Graphics g){}

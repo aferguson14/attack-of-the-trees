@@ -28,17 +28,18 @@ public class EnemyTree extends Enemies{
     public void Attack(Player p, Graphics g){
         //if player is in range, attack him/her. 
         //Very difficult for player, but got the functionality down. Just need to tweak things.
-        if(this.isAttacking()){
-            if(this.checkInRange(p)){
-                this.setAttackSpeedCount(this.getAttackSpeedCount() + 1);
-                if(this.getAttackSpeedCount() == this.getAttackSpeed()){
-                      RobotProjectile laser = new RobotProjectile(this.getXCoord(), this.getYCoord(), this.getFacing(), g, 0);
-                      this.addProjectile(laser);
-                      this.setAttackSpeedCount(0);
-                }
-            }
+	if(Board.getState() == Board.STATE.GAME){
+	    if(this.isAttacking()){
+		if(this.checkInRange(p)){
+		    this.setAttackSpeedCount(this.getAttackSpeedCount() + 1);
+		    if(this.getAttackSpeedCount() == this.getAttackSpeed()){
+			RobotProjectile laser = new RobotProjectile(this.getXCoord(), this.getYCoord(), this.getFacing(), g, 0);
+			this.addProjectile(laser);
+			this.setAttackSpeedCount(0);
+		    }
+		}
+	    }
         }
-        
     }
     @Override
     public void AI(Player p, Graphics g, ArrayList<Terrain>terrain){

@@ -36,6 +36,7 @@ public class Board extends JPanel implements ActionListener {
     private boolean attack = false;
     private Menu menu;
     private PauseMenu pmenu;
+    //private GameOver screen;
      private int WorldBot = 2103;
     private int WorldLeft = 0;
     private int WorldRight = 5120;
@@ -63,6 +64,7 @@ public class Board extends JPanel implements ActionListener {
 	addKeyListener(new AL());
 	menu = new Menu();
 	pmenu = new PauseMenu();
+	//screen = new GameOver();
         MouseInput m = new MouseInput();
 	addMouseListener(m);
         addMouseMotionListener(m);
@@ -88,7 +90,8 @@ public class Board extends JPanel implements ActionListener {
     public static enum STATE {
     	MENU,
     	GAME,
-	PAUSE
+	PAUSE,
+	GAMEOVER
     };
     
     private static STATE State = STATE.MENU;
@@ -127,7 +130,7 @@ public class Board extends JPanel implements ActionListener {
 
         
 	//(int) p.getXCoord()/2*(-1)
-	if(getState() == STATE.GAME) {
+	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
             //paint player
             for(Terrain t : terrain){
                 t.paintTerrain(g, getP(), enemies);
@@ -147,11 +150,11 @@ public class Board extends JPanel implements ActionListener {
 		e.paintEnemy(getP(), g);
 	    }
 	    getP().AttackAnimation(g);
+	    if(getState() == STATE.PAUSE){
+		pmenu.requestFocusInWindow();
+	    }
     	}
-	if(getState() == STATE.PAUSE){
-	    getPmenu().setPauseMenuVisible(true);
-	    setState(STATE.GAME);
-	}
+
 	else if(getState() == STATE.MENU) {
 	    getMenu().render(g);
     	}
@@ -180,17 +183,9 @@ public class Board extends JPanel implements ActionListener {
 	}
 	
 	public void keyPressed(KeyEvent e) {
-	    int key = e.getKeyCode();	    
-	    if(key == KeyEvent.VK_P){
-		if(getState() == STATE.GAME)
-		    setState(STATE.PAUSE);
-		else if (getState() == STATE.PAUSE){
-		    setState(STATE.GAME);
-		}
-	    }
-	    else{
-		getP().keyPressed(e);
-	    }
+	    getP().keyPressed(e);
+	    pmenu.keyPressedMenu(e);
+	   
 	}
     }
 
