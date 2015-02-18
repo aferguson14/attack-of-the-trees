@@ -4,23 +4,22 @@ import static java.lang.Math.abs;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
-public class EnemyRobot extends Enemies{
+public class EnemyTree extends Enemies{
 
-    public EnemyRobot(double x, double y){
+    public EnemyTree(double x, double y){
         //Each enemy will build of the default enemy class
         //Lots of unique info for each enemy, meaning lots of repitive code :(
         super(x, y);
-        ImageIcon i = new ImageIcon("images/enemyImages/robot/robotFront.png");
+        ImageIcon i = new ImageIcon("images/enemyImages/tree/treeFront.png");
         this.setStill(i.getImage());
         this.setHorizontalSize(81);
         this.setVerticalSize(115);
-        this.setXAcc(0);
-        this.setYAcc(0);
-        this.setHp(100);
-        this.setAttack(10);
-        this.setSpeed(2);
-        this.setAttackSpeed(150);
-        this.setAttackRange(300);
+        
+        this.setHp(50);
+        this.setAttack(15);
+        this.setSpeed(.5);
+        this.setAttackSpeed(75);
+        this.setAttackRange(20);
         this.setJumpSpeed(-20);
         this.setAttackSpeedCount(19);
     }
@@ -33,15 +32,14 @@ public class EnemyRobot extends Enemies{
             if(this.checkInRange(p)){
                 this.setAttackSpeedCount(this.getAttackSpeedCount() + 1);
                 if(this.getAttackSpeedCount() == this.getAttackSpeed()){
-		    RobotProjectile laser = new RobotProjectile(this.getXCoord(), this.getYCoord(), this.getFacing(), g, 0);
-		    this.addProjectile(laser);
-		    this.setAttackSpeedCount(0);
+                      RobotProjectile laser = new RobotProjectile(this.getXCoord(), this.getYCoord(), this.getFacing(), g, 0);
+                      this.addProjectile(laser);
+                      this.setAttackSpeedCount(0);
                 }
             }
         }
         
     }
-   
     @Override
     public void AI(Player p, Graphics g, ArrayList<Terrain>terrain){
         //move until in range, then attack. Wanna make this enemy shoot lasers. Will work on.
@@ -60,26 +58,25 @@ public class EnemyRobot extends Enemies{
             }else if((p.getXCoord()) > (this.getXCoord() + this.getHorizontalSize())){
                 this.setXVel(this.getSpeed());
                 this.move(terrain);
-            }   
+            }
+
         }
         if(p.getXCoord() > getXCoord()){
             setFacing(1);
         }
         else if(p.getXCoord() < getXCoord()){
             setFacing(0);
-        }   
+        }
+        
     }
-
     @Override
     public void dropItem(){
     //Do once items have been implemented
     }
-
     @Override
     public void die(){
     //not sure if needed, keep just in case
     }
-
     @Override
     public void paintEnemy(Player p, Graphics g){
         //moved painting of enemy to the Enemy class to make the Board class cleaner and stream lined
@@ -88,19 +85,15 @@ public class EnemyRobot extends Enemies{
 
 
 	g.setColor(Color.red);
-	g.fillRect((int) (this.getXCoord() -10) , (int) this.getYCoord() - 10, this.getHp(), 7);
-	/*
-        Font fntE = new Font("arial", Font.BOLD, 10);
-        g.setFont(fntE);
-        g.setColor(Color.red);
-        g.drawString("" + this.getHp(), this.getXCoord(), this.getYCoord() - 10);
-	*/
+	g.fillRect((int) (this.getXCoord() -10) , (int) (this.getYCoord() - 10), this.getHp(), 7);        
         paintProjectile(p, g);
         deleteProjectiles();
     }
     
     public void attackAnimation(Graphics g){
-	//to do
+        
+        
     }
 
+    
 }

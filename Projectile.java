@@ -1,29 +1,29 @@
-
+import static java.lang.Math.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 
 public class Projectile {
-    private int XCoord, YCoord;
-    private int XVel, YVel;
-    private int XAcc, YAcc;
+    private double XCoord, YCoord;
+    private double XVel, YVel;
+    private double XAcc, YAcc;
     private Image still;
     private int facing;
     private int HorizontalSize, VerticalSize;
-    private int LeftBound, RightBound;
-    private int TopBound, BotBound;
-    private int WorldBot = 334;
+     private int WorldBot = 700;
     private int WorldLeft = 0;
-    private int WorldRight = 1024;
+    private int WorldRight = 7478;
     private int WorldTop = 0;
     private int attack;
-    private int speed;
+    private double Speed;
     private boolean remove = false;
+    private double Angle;
     
-    public Projectile(int x, int y, int direction, Graphics g){
+    public Projectile(double x, double y, int direction, Graphics g, double angle){
         setXCoord(x);
         setYCoord(y);
         setFacing(direction);
@@ -37,22 +37,23 @@ public class Projectile {
         setXCoord(getXCoord() + getXVel());
         setYCoord(getYCoord() + getYVel());
         
-        if(getBotBound() >= getWorldBot()){
+        if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
             setRemove(true);
         }
-        if(getLeftBound() <= getWorldLeft()){
+        if(getXCoord() <= getWorldLeft()){
             setRemove(true);
         }
-        if(getRightBound() >= getWorldRight()){
+        if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
             setRemove(true);
         }
-        if(getTopBound() <= getWorldTop()){
+        if(getYCoord() <= getWorldTop()){
             setRemove(true);
         }
         if(PlayerContact(p) == true){
             dealDmg(p);
         }
     }
+    
     
     public boolean PlayerContact(Player p){
         if((getXCoord() >= p.getXCoord()) && (getXCoord() <= (p.getXCoord() + p.getHorizontalSize())) && ((getYCoord() + getVerticalSize()) <= (p.getYCoord() + p.getVerticalSize())) && (getYCoord() >= p.getYCoord())){
@@ -63,6 +64,7 @@ public class Projectile {
         }
         
     }
+
     
     public void dealDmg(Player p){
         p.setHp(p.getHp() - this.getAttack());
@@ -73,11 +75,26 @@ public class Projectile {
     
     public void paintImage(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        Rectangle rect = new Rectangle(getXCoord(), getYCoord(), 20, 10);
+        Rectangle rect = new Rectangle((int) getXCoord(), (int) getYCoord(), 20, 10);
 			    g2d.setColor(Color.red);
 			    g2d.fill(rect);
     }
-
+    
+    public void getXY(Double spd, Double ang){
+        double yvel, xvel;
+        yvel = -1 * (spd * (Math.sin(ang)));
+        xvel = (spd * (Math.cos(ang)));
+        setXVel(xvel);
+        setYVel(yvel);
+        
+        if(this.getFacing() == 0){
+            setXVel(-1 * (getXVel()));
+        }
+	else{
+            setXVel(getXVel());
+        }
+    }
+    
     
     
     
@@ -85,84 +102,84 @@ public class Projectile {
     /**
      * @return the XCoord
      */
-    public int getXCoord() {
+    public double getXCoord() {
         return XCoord;
     }
 
     /**
      * @param XCoord the XCoord to set
      */
-    public void setXCoord(int XCoord) {
+    public void setXCoord(double XCoord) {
         this.XCoord = XCoord;
     }
 
     /**
      * @return the YCoord
      */
-    public int getYCoord() {
+    public double getYCoord() {
         return YCoord;
     }
 
     /**
      * @param YCoord the YCoord to set
      */
-    public void setYCoord(int YCoord) {
+    public void setYCoord(double YCoord) {
         this.YCoord = YCoord;
     }
 
     /**
      * @return the XVel
      */
-    public int getXVel() {
+    public double getXVel() {
         return XVel;
     }
 
     /**
      * @param XVel the XVel to set
      */
-    public void setXVel(int XVel) {
+    public void setXVel(double XVel) {
         this.XVel = XVel;
     }
 
     /**
      * @return the YVel
      */
-    public int getYVel() {
+    public double getYVel() {
         return YVel;
     }
 
     /**
      * @param YVel the YVel to set
      */
-    public void setYVel(int YVel) {
+    public void setYVel(double YVel) {
         this.YVel = YVel;
     }
 
     /**
      * @return the XAcc
      */
-    public int getXAcc() {
+    public double getXAcc() {
         return XAcc;
     }
 
     /**
      * @param XAcc the XAcc to set
      */
-    public void setXAcc(int XAcc) {
+    public void setXAcc(double XAcc) {
         this.XAcc = XAcc;
     }
 
     /**
      * @return the YAcc
      */
-    public int getYAcc() {
+    public double getYAcc() {
         return YAcc;
     }
 
     /**
      * @param YAcc the YAcc to set
      */
-    public void setYAcc(int YAcc) {
+    public void setYAcc(double YAcc) {
         this.YAcc = YAcc;
     }
 
@@ -222,65 +239,6 @@ public class Projectile {
         this.VerticalSize = VerticalSize;
     }
 
-    /**
-     * @return the LeftBound
-     */
-    public int getLeftBound() {
-        return LeftBound;
-    }
-
-    /**
-     * @param LeftBound the LeftBound to set
-     */
-    public void setLeftBound(int LeftBound) {
-        this.LeftBound = LeftBound;
-    }
-
-    /**
-     * @return the RightBound
-     */
-    public int getRightBound() {
-        return RightBound;
-    }
-
-    /**
-     * @param RightBound the RightBound to set
-     */
-    public void setRightBound(int RightBound) {
-        this.RightBound = RightBound;
-    }
-
-    /**
-     * @return the TopBound
-     */
-    public int getTopBound() {
-        return TopBound;
-    }
-
-    /**
-     * @param TopBound the TopBound to set
-     */
-    public void setTopBound(int TopBound) {
-        this.TopBound = TopBound;
-    }
-
-    /**
-     * @return the BotBound
-     */
-    public int getBotBound() {
-        return BotBound;
-    }
-
-    /**
-     * @param BotBound the BotBound to set
-     */
-    public void setBotBound(int BotBound) {
-        this.BotBound = BotBound;
-    }
-
-    /**
-     * @return the WorldBot
-     */
     public int getWorldBot() {
         return WorldBot;
     }
@@ -351,15 +309,15 @@ public class Projectile {
     /**
      * @return the speed
      */
-    public int getSpeed() {
-        return speed;
+    public double getSpeed() {
+        return Speed;
     }
 
     /**
      * @param speed the speed to set
      */
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setSpeed(double speed) {
+        this.Speed = speed;
     }
 
     /**
@@ -374,5 +332,19 @@ public class Projectile {
      */
     public void setRemove(boolean remove) {
         this.remove = remove;
+    }
+
+    /**
+     * @return the angle
+     */
+    public double getAngle() {
+        return Angle;
+    }
+
+    /**
+     * @param angle the angle to set
+     */
+    public void setAngle(double angle) {
+        this.Angle = angle;
     }
 }
