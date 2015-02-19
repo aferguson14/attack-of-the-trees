@@ -6,23 +6,28 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+//extremely similar to Projectile Class
+//difference being: made to attck enemies rather than player
+
 
 public class PlayerProjectile {
+    //private data
     private double XCoord, YCoord;
     private double XVel, YVel;
     private double XAcc, YAcc;
     private Image still;
     private int facing;
     private int HorizontalSize, VerticalSize;
-    private int WorldBot = 334;
+    private int WorldBot = 700;
     private int WorldLeft = 0;
-    private int WorldRight = 1024;
+    private int WorldRight = 7478;
     private int WorldTop = 0;
     private int attack;
     private double Speed;
     private boolean remove = false;
     private double Angle;
     
+    //Constructor
     public PlayerProjectile(double x, double y, int direction, Graphics g, double angle){
         setXCoord(x);
         setYCoord(y);
@@ -30,13 +35,17 @@ public class PlayerProjectile {
         
     }
 
+    //move same as Projectile
         public void move(ArrayList<Enemies> e){
+        //adjust velocities
         setXVel(getXVel() + getXAcc());
         setYVel(getYVel() + getYAcc());
         
+        //adjust coordinates
         setXCoord(getXCoord() + getXVel());
         setYCoord(getYCoord() + getYVel());
         
+        //check world boundaries
         if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
             setRemove(true);
         }
@@ -49,6 +58,7 @@ public class PlayerProjectile {
         if(getYCoord() <= getWorldTop()){
             setRemove(true);
         }
+        //check enemy contact
         for(Enemies enem : e){
             if(EnemyContact(enem) == true){
                 dealDmg(enem);
@@ -56,17 +66,20 @@ public class PlayerProjectile {
         }
     }
 
-    public boolean EnemyContact(Enemies enem){
-            if((getXCoord() >= enem.getXCoord()) && (getXCoord() <= (enem.getXCoord() + enem.getHorizontalSize())) && ((getYCoord() + getVerticalSize()) <= (enem.getYCoord() + enem.getVerticalSize())) && (getYCoord() >= enem.getYCoord())){
-                return true;
-            }
-            else{
-                return false;
-            }
-        
-        
+//return true if in contact with enemy
+public boolean EnemyContact(Enemies enem){
+    if((getXCoord() >= enem.getXCoord()) && 
+            (getXCoord() <= (enem.getXCoord() + enem.getHorizontalSize())) 
+            && ((getYCoord() + getVerticalSize()) <= 
+                (enem.getYCoord() + enem.getVerticalSize())) 
+            && (getYCoord() >= enem.getYCoord())){
+        return true;
     }
-    
+    else{
+        return false;
+    }
+}
+    //deal dmg to enemy based on projectile attack
     public void dealDmg(Enemies e){
         e.setHp(e.getHp() - this.getAttack());
         setRemove(true);
@@ -74,13 +87,16 @@ public class PlayerProjectile {
     
     public void CreateImage(Graphics g){}
     
+    //paint projectile
     public void paintImage(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        Rectangle rect = new Rectangle((int) getXCoord(), (int) getYCoord(), 20, 10);
+        Rectangle rect = new Rectangle((int) getXCoord(), 
+                            (int) getYCoord(), 20, 10);
 			    g2d.setColor(Color.red);
 			    g2d.fill(rect);
     }
     
+    //get xy velocities based on angle and speed, like a right traingle
     public void getXY(Double spd, Double ang){
         double yvel, xvel;
         yvel = -1 * (spd * (Math.sin(ang)));

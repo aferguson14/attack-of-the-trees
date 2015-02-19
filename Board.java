@@ -20,46 +20,49 @@ public class Board extends JPanel implements ActionListener {
     public static void setState(STATE aState) {
         State = aState;
     }
+    
+    //private data
     private Player p;
     private ArrayList <Enemies> enemies = new ArrayList<Enemies>();
     private ArrayList <Terrain> terrain = new ArrayList<Terrain>();
     public Image farBackground;
     public Image nearBackground;
-    public Image Far2;
+    public Image Far2, Far3;
     public Image Near2;
-//    int fps; //Added to try and solve fast enemy
-//    private long diff, start = System.currentTimeMillis(); //Added to solve fast enemy
     private Image img;
     private Timer time;
-    private int tic = 0;
-    private int toc = 50;
     private boolean attack = false;
     private Menu menu;
     private PauseMenu pmenu;
-     private int WorldBot = 2103;
+    //world dimensions
+    private int WorldBot = 700;
     private int WorldLeft = 0;
-    private int WorldRight = 5120;
+    private int WorldRight = 7478;
     private int WorldTop = 0;
     public static Point MouseCoords;
     public static boolean PlayerAttack = false;
 
     
     public Board() {
+        //creates player, enemies, terrain, weapon, menu, and background images
 	p = new Player();
-        EnemyRobot robo = new EnemyRobot(700, WorldBot - 115);
-//	EnemyTree tree = new EnemyTree(650, 265);
-//        EnemyBear bear = new EnemyBear(750, 265);
-//        EnemySunFlower sunflower = new EnemySunFlower(500, 265);
+        EnemyRobot robo = new EnemyRobot(1000, WorldBot - 115);
+	EnemyTree tree = new EnemyTree(2000, WorldBot - 115);
+        EnemyBear bear = new EnemyBear(3000, WorldBot - 115);
+        EnemySunFlower sunflower = new EnemySunFlower(900, WorldBot - 115);
         enemies.add(robo);
-//	enemies.add(tree);
-//        enemies.add(bear);
-//        enemies.add(sunflower);
+	enemies.add(tree);
+        enemies.add(bear);
+        enemies.add(sunflower);
         Rock rock = new Rock(300, WorldBot - 100);
-        Ramp ramp = new Ramp(500, WorldBot);
-        rock.setYCoord(rock.getWorldBot() - 100);
-        ramp.setYCoord(rock.getWorldBot());
+        Ramp ramp = new Ramp(700, WorldBot);
+        Rock rock2 = new Rock(3000, WorldBot - 250);
+        Ramp ramp2 = new Ramp(2900, WorldBot);
+
         terrain.add(rock);
         terrain.add(ramp);
+        terrain.add(rock2);
+        terrain.add(ramp2);
 	addKeyListener(new AL());
 	menu = new Menu();
 	pmenu = new PauseMenu();
@@ -67,6 +70,7 @@ public class Board extends JPanel implements ActionListener {
 	addMouseListener(m);
         addMouseMotionListener(m);
 	setFocusable(true);
+        //not stitched together, used multiple background images
 	ImageIcon far = new 
 	    ImageIcon("images/backgrounds/far-background.png");
         
@@ -76,27 +80,34 @@ public class Board extends JPanel implements ActionListener {
 	    ImageIcon("images/backgrounds/near-background.png");
         ImageIcon near2 = new ImageIcon("images/backgrounds/near-background.png");
 	nearBackground = near.getImage();
+        ImageIcon far3 = new 
+	    ImageIcon("images/backgrounds/far-background.png");
+        
+        Far3 = far.getImage();
         Far2 = far2.getImage();
         Near2 = near2.getImage();
 	time = new Timer(5, this);
 	time.start();
-        gun g = new gun(p.getXCoord() + 115,p.getYCoord() + 25);
+        gun g = new gun(p.getXCoord(),p.getYCoord());
 	p.AddWeapon(g);
     }
 
-
+    //states
     public static enum STATE {
     	MENU,
     	GAME,
-	PAUSE
+	PAUSE,
+        GAMEOVER
     };
-    
+    //initial state = MENU
     private static STATE State = STATE.MENU;
 
+    
     public void actionPerformed(ActionEvent e) {
-
+        //move player, move weapon
         getP().move(terrain);
         getP().getCurrentWeapon().move(getP());
+        //check Player attacking
         if(Board.PlayerAttack){
             getP().setAttacking(true);
 //            Board.MouseCoords
@@ -104,9 +115,8 @@ public class Board extends JPanel implements ActionListener {
         else{
             getP().setAttacking(false);
         }
-//        if(p.isAttacking()){
-//	    p.PlayerAttack(enemies);
-//	}
+
+        //if any enemies are below 0 health, delete
         for(int i = 0; i < getEnemies().size(); i++){
             if(getEnemies().get(i).getHp() <= 0){
                 getEnemies().remove(i);
@@ -119,84 +129,59 @@ public class Board extends JPanel implements ActionListener {
 	super.paint(g);
 	Graphics2D g2d = (Graphics2D) g;
 	
+        //background images
 	g2d.translate((p.getXCoord()*-1)+300, 0); //+300 because of player pos.
-	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
+	g2d.drawImage(farBackground, (int) p.getXCoord()*(-1), -1800, null);
+        g2d.drawImage(Far3, (int) p.getXCoord()*(-1) + 4500, -1800, null);
+        g2d.drawImage(Far3, (int) p.getXCoord()*(-1) + 9000, -1800, null);
 	g2d.drawImage(nearBackground,0, -1300, null);
-                g2d.drawImage(Far2,-4500, -1800,null);
+        g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
 
-        
-	//(int) p.getXCoord()/2*(-1)
 	if(getState() == STATE.GAME) {
-            //paint player
+
+            //paint terrain
             for(Terrain t : terrain){
                 t.paintTerrain(g, getP(), enemies);
             }
+            //paint player and weapon
 	    getP().paintPlayer(g);
             getP().getCurrentWeapon().paintWeapon(g, getP(), getEnemies());
-            //perform enemy AI/ Paint
+
+            //perform player attack, perform enemy AI
             if(getP().isAttacking()){
                 getP().PlayerAttack(g);
             }
-//            getP().testWeapon(g);
-
 	    for(Enemies e : getEnemies()){
-		for(int i = 0; i < getEnemies().size(); i++){
-		    getEnemies().get(i).AI(getP(), g, terrain);
-		}
+		e.AI(getP(), g, terrain);
 		e.paintEnemy(getP(), g);
 	    }
 	    getP().AttackAnimation(g);
     	}
+        //if State!=Game, perform other State actions
 	if(getState() == STATE.PAUSE){
-	    getPmenu().setPauseMenuVisible(true);
-	    setState(STATE.GAME);
+	   pmenu.requestFocusInWindow();
 	}
 	else if(getState() == STATE.MENU) {
 	    getMenu().render(g);
     	}
-        
-        //sleep(fps); //New Code
-	
     }
-    
-//        //New Code
-//    public void sleep(int fps) {
-//	if(fps>0){
-//	    diff = System.currentTimeMillis() - start;
-//	    long targetDelay = 1000/fps;
-//	    if (diff < targetDelay) {
-//		try{
-//		    Thread.sleep(targetDelay - diff);
-//		} catch (InterruptedException e) {}
-//	    }   
-//	    start = System.currentTimeMillis();
-//	}
-//    }
-    
+
+    //User Key Input adapter
     private class AL extends KeyAdapter {
 	public void keyReleased(KeyEvent e) {
 	    getP().keyReleased(e);
 	}
 	
 	public void keyPressed(KeyEvent e) {
-	    int key = e.getKeyCode();	    
-	    if(key == KeyEvent.VK_P){
-		if(getState() == STATE.GAME)
-		    setState(STATE.PAUSE);
-		else if (getState() == STATE.PAUSE){
-		    setState(STATE.GAME);
-		}
-	    }
-	    else{
-		getP().keyPressed(e);
-	    }
+	    getP().keyPressed(e);
+	    pmenu.keyPressedMenu(e);
 	}
     }
 
     
     
-    //------------------------------Getters/Setters---------------------------------------[
+    //------------------------------Getters/Setters---------------------------[
     /**
      * @return the p
      */
@@ -251,34 +236,6 @@ public class Board extends JPanel implements ActionListener {
      */
     public void setTime(Timer time) {
         this.time = time;
-    }
-
-    /**
-     * @return the tic
-     */
-    public int getTic() {
-        return tic;
-    }
-
-    /**
-     * @param tic the tic to set
-     */
-    public void setTic(int tic) {
-        this.tic = tic;
-    }
-
-    /**
-     * @return the toc
-     */
-    public int getToc() {
-        return toc;
-    }
-
-    /**
-     * @param toc the toc to set
-     */
-    public void setToc(int toc) {
-        this.toc = toc;
     }
 
     /**

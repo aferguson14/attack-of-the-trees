@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 public class gun extends Weapon{
+    //constructor
     public gun(double x, double y){
         setXCoord(x);
         setYCoord(y);
@@ -17,6 +18,7 @@ public class gun extends Weapon{
         setXVel(0);
         setYVel(0);
     }
+    //creates projectile towards mouse point
     public void shoot(Point p, Graphics g){
         if(p.getX() > getXCoord()){
             setFacing(1);
@@ -25,12 +27,10 @@ public class gun extends Weapon{
         }
         this.setAttackSpeedTimer(this.getAttackSpeedTimer() + 1);
         if(this.getAttackSpeedTimer() == this.getAttackSpeed()){
-		    Bullet bullet = new Bullet(this.getXCoord(), this.getYCoord(), this.getFacing(), g, findAngle(p));
+		    Bullet bullet = new Bullet(this.getXCoord(), 
+                            his.getYCoord(), this.getFacing(), g, findAngle(p));
 		    this.addProjectile(bullet);
 		    this.setAttackSpeedTimer(0);
-//                    RobotProjectile laser = new RobotProjectile(this.getXCoord(), this.getYCoord(), this.getFacing(), g, 0);
-//		    this.addProjectile(laser);
-//		    this.setAttackSpeedTimer(0);
                 }
     }
     @Override
@@ -43,17 +43,10 @@ public class gun extends Weapon{
         System.out.println("gun");
     }
 
+    //paints weapon (pending)
+    //paints weapon's projectiles
     @Override
     public void paintWeapon(Graphics g, Player p, ArrayList <Enemies> e) {
-       Graphics2D g2d = (Graphics2D) g;
-	g.setColor(Color.red);
-        if(p.getFacing() == 1){
-            g.fillRect((int) (p.getXCoord() + p.getHorizontalSize()) , (int) p.getYCoord() +25, 10, 10);
-        
-        }
-        else{
-            g.fillRect((int) (p.getXCoord()) , (int) p.getYCoord() +25, 10, 10);
-        }
 
         paintProjectile(e, g);
         deleteProjectiles();

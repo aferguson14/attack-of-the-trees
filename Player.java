@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class Player{
+    //private data
     private double XCoord;
     private double XVel;
     private double YCoord;
@@ -24,8 +25,10 @@ public class Player{
     private int facing = 1;
     private int AttackSpeed;
     private int AttackSpeedCount = 19;
+    //player size
     private int HorizontalSize = 50;
     private int VerticalSize = 115;
+    //world dimensions
     private int WorldBot = 700;
     private int WorldLeft = 0;
     private int WorldRight = 7478;
@@ -37,6 +40,7 @@ public class Player{
     private Point MousePoint;
     private int WeaponTracker = 0;
     
+    //Constructor
     public Player() {
 	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDown.png"); //character image
 	setStill(i.getImage());
@@ -58,12 +62,13 @@ public class Player{
 	setXCoord(getXCoord() + getXVel());
 	setYVel(getYVel() + getYAcc());
 	setYCoord(getYCoord() + getYVel());
+        //check terrain contact
         for(Terrain t : terrain){
             t.CheckPlayerContact(this);
             
         }
         
-	//check boundaries, if on ground, InAir = false
+	//check orld boundaries
 	if((getYCoord() + VerticalSize) >= 700){
 	    setYCoord(getWorldBot() - VerticalSize);
 	    setYVel(0);
@@ -83,6 +88,7 @@ public class Player{
     }
     
     public void paintPlayer(Graphics g){
+        //paint player and health bar
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 
@@ -90,53 +96,45 @@ public class Player{
             g.setColor(Color.white);
             g.fillRect((int) (this.getXCoord() -10) , (int) (this.getYCoord() - 10), this.getHp(), 7);
         }
-	/*
-        Font fntP = new Font("arial", Font.BOLD, 10);
-        g.setFont(fntP);
-        g.setColor(Color.blue);
-        g.drawString("" + this.getHp(), this.getXCoord(), this.getYCoord() - 10);
-	*/
     }
     
-    public void AttackAnimation(Graphics g){
-	
-        if(isAttacking()){
-	    if(getFacing() == 0){
+public void AttackAnimation(Graphics g){
+//change player image depending on attack and facing
+if(isAttacking()){
+    if(getFacing() == 0){
 
-		ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpLeft.png"); //character image
-		setStill(i.getImage());
+        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpLeft.png"); //character image
+        setStill(i.getImage());
 
 
-	    }
-	    else if(getFacing() == 1){
-		ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpRight.png");
-		setStill(i.getImage());
-		
-	    }
-	    
-	}else{
-            if(getFacing() == 0){
-                ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownLeft.png");
-		setStill(i.getImage());
-            }else{
-                ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownRight.png");
-		setStill(i.getImage());
-            }
-        }
     }
+    else if(getFacing() == 1){
+        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpRight.png");
+        setStill(i.getImage());
+
+    }
+
+}else{
+    if(getFacing() == 0){
+        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownLeft.png");
+        setStill(i.getImage());
+    }else{
+        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownRight.png");
+        setStill(i.getImage());
+    }
+}
+}
     
+//subtract Hp by enemy attack
     public void takeDmg(Enemies e){
         setHp(getHp() - e.getAttack());
     }
-//    public void testWeapon(Graphics g){
-//        Point p = new Point(650, 265);
-//        getCurrentWeapon().shoot(p, g);
-//    }
-    
+//add weapon    
     public void AddWeapon(Weapon w){
         weapon.add(w);
         currentWeapon = w;
     }
+//switch current weapon
     public void switchWeapon(){
         if(WeaponTracker < weapon.size()){
             WeaponTracker++;
@@ -147,43 +145,28 @@ public class Player{
             currentWeapon = weapon.get(WeaponTracker);
         }
     }
-    
+//get mouse coords
+// if attacking, shoot weapon
+//readjust mouse coords
     public void PlayerAttack(Graphics g){
+        Board.MouseCoords.x += (this.getXCoord() - 300);
         setMousePoint(Board.MouseCoords);
         if(isAttacking()){
             getCurrentWeapon().shoot(this.getMousePoint(), g);
         }
-//        if(isAttacking()){
-//            if(getFacing() == 0){
-//                for(Enemies e : enemies){
-//                    if(abs(getXCoord() - (e.getXCoord() + e.getHorizontalSize())) <= 20){
-//			setAttackSpeedCount(getAttackSpeedCount() + 1);
-//			if(getAttackSpeedCount() == getAttackSpeed()){
-//			    e.takeDmg(this);
-//			    setAttackSpeedCount(0);
-//			}
-//                    }
-//                }
-//            }
-//            else if(getFacing() == 1){
-//                for(Enemies e : enemies){
-//                    if(abs((getXCoord() + getHorizontalSize()) - e.getXCoord()) <= 20){
-//                        setAttackSpeedCount(getAttackSpeedCount() + 1);
-//			if(getAttackSpeedCount() == getAttackSpeed()){
-//			    e.takeDmg(this);
-//			    setAttackSpeedCount(0);
-//			}
-//                    }
-//                }
-//            }
-//        }
+        Board.MouseCoords.x -= (this.getXCoord() - 300);
     }
-
+//get player coords in point form
+    public Point getPlayerPoint(){
+        Point p = new Point((int)this.getXCoord(), (int)this.getYCoord());
+        return p;
+    }
     
+    //player movement input
     public void keyPressed(KeyEvent e) {
 	int key = e.getKeyCode();
         //input cahnges velocity
-	if (key == KeyEvent.VK_LEFT){
+	if (key == KeyEvent.VK_A){
             if(!isAttacking()){
                 ImageIcon iLeft = new ImageIcon("images/playerImages/guy/guySideDownLeft.png"); // character image
                 setStill(iLeft.getImage());
@@ -191,7 +174,7 @@ public class Player{
 	    setXVel(-1 * (this.getSpeed()));
             setFacing(0);
         }
-	if (key == KeyEvent.VK_RIGHT){
+	if (key == KeyEvent.VK_D){
             if(!isAttacking()){
                 ImageIcon iRight = new ImageIcon("images/playerImages/guy/guySideDown.png"); // character image
                 setStill(iRight.getImage());
@@ -201,34 +184,23 @@ public class Player{
         }
         //if on ground, can jump
         if(!isInAir()){
-            if(key == KeyEvent.VK_UP){
+            if(key == KeyEvent.VK_W){
                 setYAcc(.5);
                 setYVel((getJumpSpeed()));
                 setInAir(true);    
             }
         }
-//        if(key == KeyEvent.VK_SPACE)
-//            setAttacking(true);
     }
     
+    //player movement input
     public void keyReleased(KeyEvent e) {
 	int key = e.getKeyCode();
         //realease of L/R key's result in 0 horiz vel
-	if (key == KeyEvent.VK_LEFT)
+	if (key == KeyEvent.VK_A)
 	    setXVel(0);
 	
-	if (key == KeyEvent.VK_RIGHT)
+	if (key == KeyEvent.VK_D)
 	    setXVel(0);
-//        if(key == KeyEvent.VK_SPACE){
-//            setAttacking(false);
-//            if(getFacing() == 0){
-//                ImageIcon iLeft = new ImageIcon("images/playerImages/guy/guySideDownLeft.png"); // character image
-//            setStill(iLeft.getImage());
-//            }else if(getFacing() == 1){
-//                ImageIcon iRight = new ImageIcon("images/playerImages/guy/guySideDown.png"); // character image
-//            setStill(iRight.getImage());
-//            }
-//                }
     }
 
     

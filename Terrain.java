@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 
 public abstract class Terrain {
+    //private data
     private double YCoord;
     private double XCoord;
     private double HorizontalSize;
@@ -25,82 +26,174 @@ public abstract class Terrain {
     private int WorldLeft = 0;
     private int WorldRight = 7478;
     private int WorldTop = 0;
-    private boolean igonoreLeft = false, ignoreTop = false, ignoreRight = false, ignoreBot = false;
+    private boolean ignoreLeft = false, ignoreTop = false, ignoreRight = false, ignoreBot = false;
     
+    //Constructor
     public Terrain(int x, int y){
         setXCoord(x);
         setYCoord(y);
     }
     
+    //if terrain able to move:
     public void move(){setXVel(getXVel() + getXAcc());
+    //adjust velocities
         setYVel(getYVel() + getYAcc());
         setXVel(getXVel() + getXAcc());
+    //adjust coords
         setXCoord(getXCoord() + getXVel());
         setYCoord(getYCoord() + getYVel());
 
     }
+    public void print(){}
     public void UpdateSides(Player p){}
     public void UpdateSidesEnemy(Enemies e){}
      public abstract void paintTerrain(Graphics g, Player p, ArrayList <Enemies> e);
+     
+//checks if enemies are in contact with the terrain     
      public void CheckEnemyContact(Enemies e){
-        if(((e.getXCoord() + e.getHorizontalSize()) == this.getXCoord())
-                 && (((e.getYCoord() >= this.getEnemyTop()) && ((e.getYCoord()) <= this.getEnemyBot()))
-                 || ((((e.getYCoord() + e.getVerticalSize()) >= this.getEnemyTop()) && ((e.getYCoord() + e.getVerticalSize()) <= this.getEnemyBot() + 1)))
-                 || ((this.getTop() >= e.getYCoord()) && (this.getEnemyBot() <= e.getYCoord() + e.getVerticalSize())))){
-             e.setXCoord(this.getXCoord() - e.getHorizontalSize() - e.getSpeed()); 
+         //checks coords of enemy and if in contact with left side of terrain
+         if((((e.getXCoord() + e.getHorizontalSize()) >= this.getXCoord()) && 
+                 (e.getXCoord() + e.getHorizontalSize() <= 
+                    this.getXCoord() + e.getSpeed()))
+                 && (((e.getYCoord() >= this.getTop())
+                 && ((e.getYCoord()) <= this.getBot()))
+                 || ((((e.getYCoord() + e.getVerticalSize()) 
+                     >= this.getTop()) && ((e.getYCoord() + e.getVerticalSize()) 
+                        <= this.getBot() + 1)))
+                 || ((this.getTop() >= e.getYCoord()) && (this.getBot() 
+                        <= e.getYCoord() + e.getVerticalSize())))
+                 ){
+             //set enemy coords accordingly
+             if(!ignoreLeft){
+                e.setXCoord(this.getXCoord() - e.getHorizontalSize() - e.getSpeed()); 
+             }
          }
-         else if(((e.getXCoord()) == (this.getXCoord() + this.getHorizontalSize()))
-                 && (((e.getYCoord() >= this.getEnemyTop()) && ((e.getYCoord()) <= this.getEnemyBot()))
-                 || ((((e.getYCoord() + e.getVerticalSize()) >= this.getEnemyTop()) && ((e.getYCoord() + e.getVerticalSize()) <= this.getEnemyBot() + 1)))
-                 || ((this.getTop() >= e.getYCoord()) && (this.getEnemyBot() <= e.getYCoord() + e.getVerticalSize())))){
-             e.setXCoord(this.getXCoord() + this.getHorizontalSize() + e.getSpeed()); 
+         //check if coords of enemy in contact with Right side of terrain
+         else if((((e.getXCoord()) <= (this.getXCoord() 
+                    + this.getHorizontalSize()))
+                 && (e.getXCoord() >= this.getXCoord() + 
+                    this.getHorizontalSize() - e.getSpeed()))
+                 && (((e.getYCoord() >= this.getTop()) 
+                    && ((e.getYCoord()) <= this.getBot()))
+                 || ((((e.getYCoord() + e.getVerticalSize()) >= this.getTop()) 
+               && ((e.getYCoord() + e.getVerticalSize()) <= this.getBot() + 1)))
+                 || ((this.getTop() >= e.getYCoord()) && (this.getBot()
+                    <= e.getYCoord() + e.getVerticalSize())))
+                 ){
+             //adjust coords accordingly
+             if(!ignoreRight){
+                e.setXCoord(this.getXCoord() + this.getHorizontalSize() + e.getSpeed()); 
+             }
          }
-         else if((((e.getYCoord() + e.getVerticalSize()) >= this.getEnemyTop() && (e.getYCoord() < this.getEnemyTop())))
-                 && (((e.getXCoord() >= this.getXCoord()) && ((e.getXCoord()) <= this.getRightSide()))
-                 || ((((e.getXCoord() + e.getHorizontalSize()) >= this.getXCoord()) && ((e.getXCoord() + e.getHorizontalSize()) <= this.getRightSide()))))){
-             e.setInAir(false);
-             e.setYCoord(this.getEnemyTop() - e.getVerticalSize());
-             e.setYAcc(0);
+         //check if coords in contact with top of terrain
+         else if(((((e.getYCoord() + e.getVerticalSize()) >= this.getTop()) 
+                 && (e.getYCoord() <= this.getTop())))
+                 && (((e.getXCoord() >= this.getXCoord()) 
+                    && ((e.getXCoord()) <= this.getRightSide()))
+                 || ((((e.getXCoord() + e.getHorizontalSize()) 
+                 >= this.getXCoord()) && ((e.getXCoord() + 
+                    e.getHorizontalSize()) <= this.getRightSide()))))){
+             //adjust coords anf velocities accordingly
+             if(!ignoreTop){
+                e.setInAir(false);
+                e.setYCoord(this.getTop() - e.getVerticalSize());
+                e.setYVel(0);
+                e.setYAcc(0);
+             }
          }
-        else if((((e.getYCoord()) <= (this.getEnemyTop() + this.getVerticalSize())) && (e.getYCoord() + e.getVerticalSize() >= (this.getEnemyTop() + this.getVerticalSize())))
-                 && (((e.getXCoord() >= this.getXCoord()) && ((e.getXCoord()) <= this.getRightSide()))
-                 || ((((e.getXCoord() + e.getHorizontalSize()) >= this.getXCoord()) && ((e.getXCoord() + e.getHorizontalSize()) <= this.getRightSide()))))){
-             e.setYVel(-1 * e.getYVel());
-         }
-        else{
+         //check if enemy coords in contact with bot of terrain
+        else if((((e.getYCoord()) <= (this.getTop() + this.getVerticalSize())) 
+                && (e.getYCoord() + e.getVerticalSize() >= 
+                (this.getTop() + this.getVerticalSize())))
+                 && (((e.getXCoord() >= this.getXCoord()) 
+                && ((e.getXCoord()) <= this.getRightSide()))
+                 || ((((e.getXCoord() + e.getHorizontalSize()) 
+                >= this.getXCoord()) && ((e.getXCoord() + e.getHorizontalSize())
+                <= this.getRightSide()))))){
             
-            setYAcc(.5);
+            //adjust velocities accordingly
+            if(!ignoreBot){
+                e.setYVel(-1 * e.getYVel());
+            }
+         }
+        //if not in contact, if acc == 0, set to .5
+         //(if on ground will be reset in move)
+        else{
+            if(e.getYAcc() == 0)
+            e.setYAcc(.5);
         }
      }
      public void CheckPlayerContact(Player p){
-         //UpdateSides(p);
-         if(((p.getXCoord() + p.getHorizontalSize()) == this.getXCoord())
-                 && (((p.getYCoord() >= this.getTop()) && ((p.getYCoord()) <= this.getBot()))
-                 || ((((p.getYCoord() + p.getVerticalSize()) >= this.getTop()) && ((p.getYCoord() + p.getVerticalSize()) <= this.getBot() + 1)))
-                 || ((this.getTop() >= p.getYCoord()) && (this.getBot() <= p.getYCoord() + p.getVerticalSize())))){
-             p.setXCoord(this.getXCoord() - p.getHorizontalSize() - p.getSpeed()); 
+         //check player coords, if in contact ith left
+         if((((p.getXCoord() + p.getHorizontalSize()) >= this.getXCoord()) 
+                 && (p.getXCoord() + p.getHorizontalSize() 
+                 <= this.getXCoord() + p.getSpeed()))
+                 && (((p.getYCoord() >= this.getTop()) 
+                 && ((p.getYCoord()) <= this.getBot()))
+                 || ((((p.getYCoord() + p.getVerticalSize()) 
+                 >= this.getTop()) && ((p.getYCoord() + p.getVerticalSize()) 
+                 <= this.getBot() + 1)))
+                 || ((this.getTop() >= p.getYCoord()) 
+                 && (this.getBot() <= p.getYCoord() + p.getVerticalSize())))
+                 ){
+             //adjust coords accordingly
+           if(!ignoreLeft){
+           p.setXCoord(this.getXCoord() - p.getHorizontalSize() - p.getSpeed()); 
+           }
          }
-         else if(((p.getXCoord()) == (this.getXCoord() + this.getHorizontalSize()))
-                 && (((p.getYCoord() >= this.getTop()) && ((p.getYCoord()) <= this.getBot()))
-                 || ((((p.getYCoord() + p.getVerticalSize()) >= this.getTop()) && ((p.getYCoord() + p.getVerticalSize()) <= this.getBot() + 1)))
-                 || ((this.getTop() >= p.getYCoord()) && (this.getBot() <= p.getYCoord() + p.getVerticalSize())))){
-             p.setXCoord(this.getXCoord() + this.getHorizontalSize() + p.getSpeed()); 
+         //if player coords in contact with right
+         else if((((p.getXCoord()) 
+                 <= (this.getXCoord() + this.getHorizontalSize())) 
+                 && (p.getXCoord() >= this.getXCoord() + 
+                    this.getHorizontalSize() - p.getSpeed()))
+                 && (((p.getYCoord() >= this.getTop()) && ((p.getYCoord()) 
+                 <= this.getBot()))
+                 || ((((p.getYCoord() + p.getVerticalSize()) >= this.getTop()) 
+                 && ((p.getYCoord() + p.getVerticalSize()) 
+                    <= this.getBot() + 1)))
+                 || ((this.getTop() >= p.getYCoord()) && (this.getBot() 
+                    <= p.getYCoord() + p.getVerticalSize())))
+                 ){
+             //adjust coords accordingly
+             if(!ignoreRight){
+                p.setXCoord(this.getXCoord() + this.getHorizontalSize() + p.getSpeed()); 
+             }
          }
-         else if((((p.getYCoord() + p.getVerticalSize()) >= this.getTop() && (p.getYCoord() < this.getTop())))
-                 && (((p.getXCoord() >= this.getXCoord()) && ((p.getXCoord()) <= this.getRightSide()))
-                 || ((((p.getXCoord() + p.getHorizontalSize()) >= this.getXCoord()) && ((p.getXCoord() + p.getHorizontalSize()) <= this.getRightSide()))))){
-             p.setInAir(false);
-             p.setYCoord(this.getTop() - p.getVerticalSize());
-             p.setYAcc(0);
+         //if player coords in contact with top of terrain
+         else if(((((p.getYCoord() + p.getVerticalSize()) >= this.getTop()) 
+                 && (p.getYCoord() <= this.getTop())))
+                 && (((p.getXCoord() >= this.getXCoord()) 
+                 && ((p.getXCoord()) <= this.getRightSide()))
+                 || ((((p.getXCoord() + p.getHorizontalSize()) 
+                    >= this.getXCoord()) && ((p.getXCoord() 
+                        + p.getHorizontalSize()) <= this.getRightSide()))))){
+             //adjust vel, acc, and coords accordngly
+             if(!ignoreTop){
+                p.setInAir(false);
+                p.setYCoord(this.getTop() - p.getVerticalSize());
+                p.setYVel(0);
+                p.setYAcc(0);
+             }
          }
-        else if((((p.getYCoord()) <= (this.getTop() + this.getVerticalSize())) && (p.getYCoord() + p.getVerticalSize() >= (this.getTop() + this.getVerticalSize())))
-                 && (((p.getXCoord() >= this.getXCoord()) && ((p.getXCoord()) <= this.getRightSide()))
-                 || ((((p.getXCoord() + p.getHorizontalSize()) >= this.getXCoord()) && ((p.getXCoord() + p.getHorizontalSize()) <= this.getRightSide()))))){
-             p.setYVel(-1 * p.getYVel());
+         //if player coords in contact with bot
+        else if((((p.getYCoord()) <= (this.getTop() + this.getVerticalSize()))
+                && (p.getYCoord() + p.getVerticalSize() 
+                    >= (this.getTop() + this.getVerticalSize())))
+                 && (((p.getXCoord() >= this.getXCoord()) && ((p.getXCoord()) 
+                    <= this.getRightSide()))
+                 || ((((p.getXCoord() + p.getHorizontalSize()) 
+                    >= this.getXCoord()) && ((p.getXCoord() 
+                        + p.getHorizontalSize()) <= this.getRightSide()))))){
+            //adjust vel accordingly
+            if(!ignoreBot){
+                p.setYVel(-1 * p.getYVel());
+            }
          }
+        //else set acc to .5 if 0
+        //(if on ground, reset to 0 in move)
         else{
-            
-            setYAcc(.5);
+            if(p.getYAcc() == 0)
+            p.setYAcc(.5);
         }
      }
 
@@ -417,15 +510,15 @@ public abstract class Terrain {
     /**
      * @return the igonoreLeft
      */
-    public boolean isIgonoreLeft() {
-        return igonoreLeft;
+    public boolean isIgnoreLeft() {
+        return ignoreLeft;
     }
 
     /**
      * @param igonoreLeft the igonoreLeft to set
      */
-    public void setIgonoreLeft(boolean igonoreLeft) {
-        this.igonoreLeft = igonoreLeft;
+    public void setIgnoreLeft(boolean igonoreLeft) {
+        this.ignoreLeft = igonoreLeft;
     }
 
     /**

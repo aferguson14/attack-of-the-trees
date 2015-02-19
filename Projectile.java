@@ -6,8 +6,9 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-
+//extremely similar to player projectile
 public class Projectile {
+    //private data
     private double XCoord, YCoord;
     private double XVel, YVel;
     private double XAcc, YAcc;
@@ -23,20 +24,24 @@ public class Projectile {
     private boolean remove = false;
     private double Angle;
     
+    //constructor
     public Projectile(double x, double y, int direction, Graphics g, double angle){
         setXCoord(x);
         setYCoord(y);
         setFacing(direction);
         
     }
-    
+    //moves projectile
     public void move(Player p){
+        //adjust velocities
         setXVel(getXVel() + getXAcc());
         setYVel(getYVel() + getYAcc());
         
+        //adjust coords
         setXCoord(getXCoord() + getXVel());
         setYCoord(getYCoord() + getYVel());
         
+        //check world boundaries
         if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
             setRemove(true);
         }
@@ -49,23 +54,29 @@ public class Projectile {
         if(getYCoord() <= getWorldTop()){
             setRemove(true);
         }
+        
+        //if player contact, deal dmg
         if(PlayerContact(p) == true){
             dealDmg(p);
         }
     }
     
-    
-    public boolean PlayerContact(Player p){
-        if((getXCoord() >= p.getXCoord()) && (getXCoord() <= (p.getXCoord() + p.getHorizontalSize())) && ((getYCoord() + getVerticalSize()) <= (p.getYCoord() + p.getVerticalSize())) && (getYCoord() >= p.getYCoord())){
-            return true;
-        }
-        else{
-            return false;
-        }
-        
+//return true if player contact
+public boolean PlayerContact(Player p){
+    if((getXCoord() >= p.getXCoord()) && 
+            (getXCoord() <= (p.getXCoord() + p.getHorizontalSize())) && 
+            ((getYCoord() + getVerticalSize()) <= 
+                (p.getYCoord() + p.getVerticalSize())) && 
+            (getYCoord() >= p.getYCoord())){
+        return true;
+    }
+    else{
+        return false;
     }
 
-    
+}
+
+    //deal dmg to player based on projectile attack
     public void dealDmg(Player p){
         p.setHp(p.getHp() - this.getAttack());
         setRemove(true);
@@ -73,6 +84,7 @@ public class Projectile {
     
     public void CreateImage(Graphics g){}
     
+    //paint projectile
     public void paintImage(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         Rectangle rect = new Rectangle((int) getXCoord(), (int) getYCoord(), 20, 10);
@@ -80,6 +92,7 @@ public class Projectile {
 			    g2d.fill(rect);
     }
     
+    //gets xy velocities based on angle and hypotenuse (speed)
     public void getXY(Double spd, Double ang){
         double yvel, xvel;
         yvel = -1 * (spd * (Math.sin(ang)));
@@ -98,7 +111,7 @@ public class Projectile {
     
     
     
-    //-------------------Setters/Getters--------------------------------------------------------[
+    //-------------------Setters/Getters--------------------------------------
     /**
      * @return the XCoord
      */

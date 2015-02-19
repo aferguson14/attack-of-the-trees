@@ -6,9 +6,8 @@ import javax.swing.ImageIcon;
 
 public class EnemyGnome extends Enemies{
 
+    //Costructor
     public EnemyGnome(double x, double y){
-        //Each enemy will build of the default enemy class
-        //Lots of unique info for each enemy, meaning lots of repitive code :(
         super(x, y);
         ImageIcon i = new ImageIcon("images/enemyImages/gnome/gnomeSide.png");
         this.setStill(i.getImage());
@@ -23,50 +22,61 @@ public class EnemyGnome extends Enemies{
         this.setJumpSpeed(-20);
         this.setAttackSpeedCount(19);
     }
-    
     @Override
     public void Attack(Player p, Graphics g){
-        //if player is in range, attack him/her. 
-        //Very difficult for player, but got the functionality down. Just need to tweak things.
+        if(Board.getState() == Board.STATE.GAME){
+        //if attacking and in attack range
         if(this.isAttacking()){
             if(this.checkInRange(p)){
-                this.setAttackSpeedCount(this.getAttackSpeedCount() + 1);
-                if(this.getAttackSpeedCount() == this.getAttackSpeed()){
-                      RobotProjectile laser = new RobotProjectile(this.getXCoord(), this.getYCoord(), this.getFacing(), g, 0);
-                      this.addProjectile(laser);
-                      this.setAttackSpeedCount(0);
-                }
+            //increment attack speed count
+            this.setAttackSpeedCount(this.getAttackSpeedCount() + 1);
+            //if attack speed count == the enemies attack speed
+            if(this.getAttackSpeedCount() == this.getAttackSpeed()){
+            //create a projectile towards the player
+                RobotProjectile laser = new RobotProjectile(this.getXCoord()
+                        , this.getYCoord(), this.getFacing(), g, 
+                        findAngle(p.getPlayerPoint()));
+                this.addProjectile(laser);
+            //reset attack speed count
+                this.setAttackSpeedCount(0);
+            }
             }
         }
-        
+        }
     }
+   
     @Override
     public void AI(Player p, Graphics g, ArrayList<Terrain>terrain){
-        //move until in range, then attack. Wanna make this enemy shoot lasers. Will work on.
-        if(this.checkInRange(p)){
-            this.setAttacking(true);
-            this.Attack(p, g);
-            this.attackAnimation(g);
-        }
-        else{
-            if((!(p.isInAir())) && (p.getYCoord() < this.getYCoord())){
-                this.setYVel(this.getJumpSpeed());
+        //If it can't move, Jump
+         if(checkMove()){
+                    this.setYVel(this.getJumpSpeed());
+                    setYAcc(.5);
+                    setInAir(true);
+        }    
+         //if not in air and is in range, attack
+        if(this.checkInRange(p) && !isInAir()){
+                this.setAttacking(true);
+                this.Attack(p, g);
+                this.attackAnimation(g);
             }
-            if((p.getXCoord() + p.getHorizontalSize()) < this.getXCoord()){
-                this.setXVel(-1 * (this.getSpeed()));
-                this.move(terrain);
-            }else if((p.getXCoord()) > (this.getXCoord() + this.getHorizontalSize())){
-                this.setXVel(this.getSpeed());
-                this.move(terrain);
+        //else, move toward player
+            else{
+               this.setAttacking(false);
+                if((p.getXCoord() + p.getHorizontalSize()) < this.getXCoord()){
+                    this.setXVel(-1 * (this.getSpeed()));
+                    this.move(terrain);
+                }else if((p.getXCoord()) > (this.getXCoord() + this.getHorizontalSize())){
+                    this.setXVel(this.getSpeed());
+                    this.move(terrain);
+                }   
             }
-
-        }
-        if(p.getXCoord() > getXCoord()){
-            setFacing(1);
-        }
-        else if(p.getXCoord() < getXCoord()){
-            setFacing(0);
-        }
+        //adjust facing
+            if(p.getXCoord() > getXCoord()){
+                setFacing(1);
+            }
+            else if(p.getXCoord() < getXCoord()){
+                setFacing(0);
+            }   
         
     }
     @Override
@@ -79,7 +89,7 @@ public class EnemyGnome extends Enemies{
     }
     @Override
     public void paintEnemy(Player p, Graphics g){
-        //moved painting of enemy to the Enemy class to make the Board class cleaner and stream lined
+        //paint enemy and it's projectiles
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.getStill(), (int) this.getXCoord(), (int) this.getYCoord(), null);
 
@@ -89,10 +99,14 @@ public class EnemyGnome extends Enemies{
         paintProjectile(p, g);
         deleteProjectiles();
     }
-    
     public void attackAnimation(Graphics g){
         
         
+    }
+
+    @Override
+    public void print() {
+        System.out.println("Gnome");
     }
 
     

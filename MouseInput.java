@@ -25,7 +25,9 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 	
     }
     
-    
+    //If in Menu, preform MenuMouse
+    //if in Game, get point and set to Board.MouseCoords
+    //and set Player attack = true
     public void mousePressed(MouseEvent e) {
         if(Board.getState() == Board.STATE.MENU){
             MenuMouse(e);
@@ -37,9 +39,9 @@ public class MouseInput implements MouseListener, MouseMotionListener {
            Board.PlayerAttack = true;
         }
 
-        
-        
     }
+    
+    //if mouse released and in game, set playerAttack = false
     @Override
     public void mouseReleased(MouseEvent arg0) {
 	 if(Board.getState() == Board.STATE.GAME){
@@ -48,6 +50,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 	
     }
  
+    //if mouse dragged in game, set point and player attack
     @Override
     public void mouseDragged(MouseEvent e) {
         if(Board.getState() == Board.STATE.GAME){
@@ -61,21 +64,13 @@ public class MouseInput implements MouseListener, MouseMotionListener {
         
         
     }
-   
-    
-    
 
-    
     public void MenuMouse(MouseEvent e){
         int mx = e.getX();
         int my = e.getY();
 
-        /**
-           public Rectangle newGameButton = new Rectangle(Board.WIDTH /2 + 400, 150, 200, 50);
-           public Rectangle loadGameButton = new Rectangle(Board.WIDTH /2 + 400, 250, 200, 50);
-        */
 
-        //newGameButton
+        //if within newGameButton, set state to Game
         if(mx >= Board.WIDTH /2 + 400 && mx <= Board.WIDTH /2 + 600) {
             if(my >= 150 && my <= 200){
                 //Pressed newGameButton

@@ -1,18 +1,10 @@
-//Clean up Robot/Propjectile Code. Really Messy
-//Push to gitHub
-//Pull from github
-//need robot facing right
-//implement a better projectile class
-//find out why there was a former bug involving player contact
-//make projectile implementable with some player weapons
-//fix hitboxes on robot and player
-//fix attack range's on robot and player
-//give robot and player legit attack animations
-//yaaaaaaaaa
+
 
 import javax.swing.*;
 
 public class Frame {
+    //Sets up frame
+    //executable
     public Frame(){
 	JFrame frame = new JFrame();
 	frame.getContentPane().add(new Board());

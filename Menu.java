@@ -2,12 +2,13 @@ import java.awt.*;
 
 
 public class Menu {
-    
+    //Menu buttons
     public Rectangle newGameButton = new Rectangle((Board.WIDTH/2), 150, 225, 50);
     public Rectangle loadGameButton = new Rectangle((Board.WIDTH/2), 250, 225, 50);
     
     
     public void render(Graphics g) {
+        //Paints Menu
 	Graphics2D g2d = (Graphics2D) g; 
 	Stroke oldStroke = g2d.getStroke();
 	

@@ -1,7 +1,3 @@
-//implement facing once we have a flipped image
-//implement any other methods written down
-//look into animation
-//fix attacking hitboxes
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -18,6 +14,7 @@ public abstract class Enemies {
     private boolean InAir;
     private boolean IsAttacking;
     private int HorizontalSize, VerticalSize;
+    //World dimensions
     private int WorldBot = 700;
     private int WorldLeft = 0;
     private int WorldRight = 7478;
@@ -34,28 +31,37 @@ public abstract class Enemies {
     private int AttackSpeedCount = 0;
     private ArrayList <Projectile> projectiles = new ArrayList<Projectile>();
     private boolean startAttacking = false;
+    private boolean cantMove = false;
+    private double lastCoord1 = 0, lastCoord2;
     
+    //Constructor
     public Enemies(double x, double y){
         XCoord = x;
         YCoord = y;
     }
     //Move Method, Similar to Player's
     public void move(ArrayList <Terrain> terrain){
+
+        if(Board.getState() == Board.STATE.GAME){
+        //adjust velocities
         setXVel(getXVel() + getXAcc());
         setYVel(getYVel() + getYAcc());
+        //set facing depending on movement direction
         if(XVel > 0){
             setFacing(1);
         }
 	else if(XVel < 0){
             setFacing(0);
         }
+        //adjust coords
         setXCoord(getXCoord() + getXVel());
         setYCoord(getYCoord() + getYVel());
+        //check terrain contact
         for(Terrain t : terrain){
             t.CheckEnemyContact(this);
             
         }
-        
+        //check world contacts
         if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
             setYCoord(getWorldBot() - getVerticalSize());
             setYVel(0);
@@ -70,16 +76,30 @@ public abstract class Enemies {
         if(getYCoord() <= getWorldTop()){
             setYCoord(0);
         }
-        
+        //set the last coordinate for future checking
+            setLastCoord2(getLastCoord1());
+            setLastCoord1(getXCoord());
+        }
+    }
+    //if current coord and last coord are equal, and not attacking, return true
+    //basically, if not moving and not attacking return true
+    public boolean checkMove(){
+        if((getLastCoord1() <= getLastCoord2()) && (getLastCoord1() 
+                >= getLastCoord2()) && !attacking){
+            return true;
+        }
+        return false;
     }
     
     public void Attack(Player p, Graphics g){}
+    //subtract health by player's attack dmg
     public void takeDmg(Player p){
         hp -= p.getAttack();
         if(hp <= 0){
             die();
         }
     }
+    //subtract health by an integer
     public void takeDmg(int dmg){
         hp -= dmg;
         if(hp <= 0){
@@ -93,6 +113,7 @@ public abstract class Enemies {
     }
     public void paintEnemy(Player p , Graphics g){}
     
+    //move enemies projectiles, then paint them
     public void paintProjectile(Player p, Graphics g){
         for(Projectile proj : this.getProjectiles()){
 	    proj.move(p);
@@ -104,7 +125,8 @@ public abstract class Enemies {
     //Check if the player is within the Enemies attack range
     public boolean checkInRange(Player p){
         if(facing == 0){
-            if(abs((p.getXCoord() + p.getHorizontalSize()) - XCoord) <= AttackRange){
+            if(abs((p.getXCoord() + p.getHorizontalSize()) - XCoord) 
+                    <= AttackRange){
                 return true;
             }
         }
@@ -118,6 +140,7 @@ public abstract class Enemies {
         
     }
     
+    //if any projectiles need to be removed, remove them
     public void deleteProjectiles(){
         for(Projectile proj : projectiles){
             if(proj.isRemove()){
@@ -125,6 +148,13 @@ public abstract class Enemies {
                 break;
             }
         }
+    }
+    public abstract void print();
+    
+    //finds the angle between enemy position and a given point
+    public double findAngle(Point p){
+        return Math.sinh((this.getYCoord() - p.getY()) 
+                / p.distance(this.getXCoord(), this.getYCoord()));
     }
     public void attackAnimation(Graphics g){}
     
@@ -139,7 +169,7 @@ public abstract class Enemies {
     }
     
     
-    //-------------Getters/Setters------------------------------------------------------------------------------------------------------------------------
+    //-------------Getters/Setters---------------------------------------------
     public double getXCoord() {
         return XCoord;
     }
@@ -351,7 +381,7 @@ public abstract class Enemies {
      * @param projectiles the projectiles to set
      */
     public void setPojectiles(ArrayList <Projectile> projectiles) {
-        this.projectiles = projectiles;
+        this.setProjectiles(projectiles);
     }
 
     /**
@@ -367,4 +397,54 @@ public abstract class Enemies {
     public void setStartAttacking(boolean startAttacking) {
         this.startAttacking = startAttacking;
     }
+
+    /**
+     * @param projectiles the projectiles to set
+     */
+    public void setProjectiles(ArrayList <Projectile> projectiles) {
+        this.projectiles = projectiles;
+    }
+
+    /**
+     * @return the cantMove
+     */
+    public boolean isCantMove() {
+        return cantMove;
+    }
+
+    /**
+     * @param cantMove the cantMove to set
+     */
+    public void setCantMove(boolean cantMove) {
+        this.cantMove = cantMove;
+    }
+
+    /**
+     * @return the lastCoord1
+     */
+    public double getLastCoord1() {
+        return lastCoord1;
+    }
+
+    /**
+     * @param lastCoord1 the lastCoord1 to set
+     */
+    public void setLastCoord1(double lastCoord1) {
+        this.lastCoord1 = lastCoord1;
+    }
+
+    /**
+     * @return the lastCoord2
+     */
+    public double getLastCoord2() {
+        return lastCoord2;
+    }
+
+    /**
+     * @param lastCoord2 the lastCoord2 to set
+     */
+    public void setLastCoord2(double lastCoord2) {
+        this.lastCoord2 = lastCoord2;
+    }
+
 }

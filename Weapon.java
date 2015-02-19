@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 public abstract class Weapon {
+    //private data
     private int Attack;
     private int AttackSpeed;
     private int AttackSpeedTimer;
@@ -26,6 +27,7 @@ public abstract class Weapon {
     public void DealDmgP(Player p){}
     public void DealDmgE(Enemies e){}
     public void shoot(Point p, Graphics g){}
+    //move weapon in correspondence with player
     public void move(Player p){
         if(p.getFacing() == 1){
             setXCoord(p.getXCoord()+ p.getHorizontalSize());
@@ -48,6 +50,7 @@ public abstract class Weapon {
             setXCoord(1024 - 50 + p.getHorizontalSize());
         }
     }
+    //move then paint weapon's projectiles
     public void paintProjectile(ArrayList <Enemies> e, Graphics g){
         for(PlayerProjectile proj : this.getProjectiles()){
             proj.move(e);
@@ -56,6 +59,7 @@ public abstract class Weapon {
             proj.paintImage(g);
         }
     }
+    //if projectile needs to be removed, remove
     public void deleteProjectiles(){
         for(PlayerProjectile proj : projectiles){
             if(proj.isRemove()){
@@ -70,11 +74,13 @@ public abstract class Weapon {
     public void deleteProjectile(PlayerProjectile p){
         projectiles.remove(p);
     }
-    
+    //find angle between player and point
     public double findAngle(Point p){
-        return Math.sinh((this.getYCoord() - p.getY()) / p.distance(this.getXCoord(), this.getYCoord()));
+        return Math.sinh((this.getYCoord() - p.getY()) 
+                / p.distance(this.getXCoord(), this.getYCoord()));
     }
-    public abstract void paintWeapon(Graphics g, Player p,  ArrayList <Enemies> e);
+    public abstract void paintWeapon(Graphics g, Player p,  
+                                        ArrayList <Enemies> e);
     public abstract void print();
     
     //----------------------------------------Getters/Setters--------------------------------------

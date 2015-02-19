@@ -6,24 +6,22 @@ import java.awt.Rectangle;
 
 
 public class RobotProjectile extends Projectile{
-    
+    //Constructor
     public RobotProjectile(double x, double y, int direction, Graphics g, double angle) {
-        super(x, y + 15, direction, g, angle);
+        super(x, y, direction, g, angle);
         setXAcc(0);
         setYAcc(0);
-        setSpeed(3);
+        setSpeed(4);
         setYVel(0);
         CreateImage(g);
-        setHorizontalSize(20);
-        setVerticalSize(10);
+        setHorizontalSize(10);
+        setVerticalSize(5);
         setAttack(10);
-        if(this.getFacing() == 0){
-            setXVel(-1 * (getSpeed()));
-        }
-	else{
-            setXVel(getSpeed());
-        }
+        
+                
+        getXY(this.getSpeed(), angle);
     }
+    //paints projectile
     public void CreateImage(Graphics g){
 	Graphics2D g2d = (Graphics2D) g;
 	if(getFacing() == 0){
