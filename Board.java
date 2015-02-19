@@ -34,8 +34,13 @@ public class Board extends JPanel implements ActionListener {
     private boolean attack = false;
     private Menu menu;
     private PauseMenu pmenu;
+<<<<<<< HEAD
     //world dimensions
     private int WorldBot = 700;
+=======
+    //private GameOver screen;
+     private int WorldBot = 2103;
+>>>>>>> 7e6f5866f938029954048dab077603e0318884ea
     private int WorldLeft = 0;
     private int WorldRight = 7478;
     private int WorldTop = 0;
@@ -66,6 +71,7 @@ public class Board extends JPanel implements ActionListener {
 	addKeyListener(new AL());
 	menu = new Menu();
 	pmenu = new PauseMenu();
+	//screen = new GameOver();
         MouseInput m = new MouseInput();
 	addMouseListener(m);
         addMouseMotionListener(m);
@@ -97,7 +103,11 @@ public class Board extends JPanel implements ActionListener {
     	MENU,
     	GAME,
 	PAUSE,
+<<<<<<< HEAD
         GAMEOVER
+=======
+	GAMEOVER
+>>>>>>> 7e6f5866f938029954048dab077603e0318884ea
     };
     //initial state = MENU
     private static STATE State = STATE.MENU;
@@ -138,9 +148,16 @@ public class Board extends JPanel implements ActionListener {
         g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
 
+<<<<<<< HEAD
 	if(getState() == STATE.GAME) {
 
             //paint terrain
+=======
+        
+	//(int) p.getXCoord()/2*(-1)
+	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
+            //paint player
+>>>>>>> 7e6f5866f938029954048dab077603e0318884ea
             for(Terrain t : terrain){
                 t.paintTerrain(g, getP(), enemies);
             }
@@ -157,11 +174,18 @@ public class Board extends JPanel implements ActionListener {
 		e.paintEnemy(getP(), g);
 	    }
 	    getP().AttackAnimation(g);
+	    if(getState() == STATE.PAUSE){
+		pmenu.requestFocusInWindow();
+	    }
     	}
+<<<<<<< HEAD
         //if State!=Game, perform other State actions
 	if(getState() == STATE.PAUSE){
 	   pmenu.requestFocusInWindow();
 	}
+=======
+
+>>>>>>> 7e6f5866f938029954048dab077603e0318884ea
 	else if(getState() == STATE.MENU) {
 	    getMenu().render(g);
     	}
@@ -176,6 +200,10 @@ public class Board extends JPanel implements ActionListener {
 	public void keyPressed(KeyEvent e) {
 	    getP().keyPressed(e);
 	    pmenu.keyPressedMenu(e);
+<<<<<<< HEAD
+=======
+	   
+>>>>>>> 7e6f5866f938029954048dab077603e0318884ea
 	}
     }
 
