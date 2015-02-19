@@ -25,7 +25,6 @@ public class EnemyBear extends Enemies{
     
     @Override
     public void Attack(Player p, Graphics g){
-<<<<<<< HEAD
         if(Board.getState() == Board.STATE.GAME){
         //if attacking and in attack range
         if(this.isAttacking()){
@@ -45,22 +44,6 @@ public class EnemyBear extends Enemies{
             }
         }
         }
-=======
-        //if player is in range, attack him/her. 
-        //Very difficult for player, but got the functionality down. Just need to tweak things.
-	if(Board.getState() == Board.STATE.GAME){
-	    if(this.isAttacking()){
-		if(this.checkInRange(p)){
-		    this.setAttackSpeedCount(this.getAttackSpeedCount() + 1);
-		    if(this.getAttackSpeedCount() == this.getAttackSpeed()){
-			RobotProjectile laser = new RobotProjectile(this.getXCoord(), this.getYCoord(), this.getFacing(), g, 0);
-			this.addProjectile(laser);
-			this.setAttackSpeedCount(0);
-		    }
-		}
-	    }
-        }
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea
     }
    
     @Override

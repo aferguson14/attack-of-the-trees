@@ -33,7 +33,6 @@ public class Projectile {
     }
     //moves projectile
     public void move(Player p){
-<<<<<<< HEAD
         //adjust velocities
         setXVel(getXVel() + getXAcc());
         setYVel(getYVel() + getYAcc());
@@ -60,31 +59,6 @@ public class Projectile {
         if(PlayerContact(p) == true){
             dealDmg(p);
         }
-=======
-        if(Board.getState() == Board.STATE.GAME){
-	    setXVel(getXVel() + getXAcc());
-	    setYVel(getYVel() + getYAcc());
-        
-	    setXCoord(getXCoord() + getXVel());
-	    setYCoord(getYCoord() + getYVel());
-        
-	    if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
-		setRemove(true);
-	    }
-	    if(getXCoord() <= getWorldLeft()){
-		setRemove(true);
-	    }
-	    if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
-		setRemove(true);
-	    }
-	    if(getYCoord() <= getWorldTop()){
-		setRemove(true);
-	    }
-	    if(PlayerContact(p) == true){
-		dealDmg(p);
-	    }
-	}
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea
     }
     
 //return true if player contact
