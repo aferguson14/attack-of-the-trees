@@ -103,23 +103,23 @@ public void AttackAnimation(Graphics g){
 if(isAttacking()){
     if(getFacing() == 0){
 
-        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpLeft.png"); //character image
+        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpLeft.png"); //character image
         setStill(i.getImage());
 
 
     }
     else if(getFacing() == 1){
-        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpRight.png");
+        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpRight.png");
         setStill(i.getImage());
 
     }
 
 }else{
     if(getFacing() == 0){
-        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownLeft.png");
+        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png");
         setStill(i.getImage());
     }else{
-        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownRight.png");
+        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownRight.png");
         setStill(i.getImage());
     }
 }
@@ -168,7 +168,7 @@ if(isAttacking()){
         //input cahnges velocity
 	if (key == KeyEvent.VK_A){
             if(!isAttacking()){
-                ImageIcon iLeft = new ImageIcon("images/playerImages/guy/guySideDownLeft.png"); // character image
+                ImageIcon iLeft = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png"); // character image
                 setStill(iLeft.getImage());
             }
 	    setXVel(-1 * (this.getSpeed()));
@@ -176,7 +176,7 @@ if(isAttacking()){
         }
 	if (key == KeyEvent.VK_D){
             if(!isAttacking()){
-                ImageIcon iRight = new ImageIcon("images/playerImages/guy/guySideDown.png"); // character image
+                ImageIcon iRight = new ImageIcon("../images/playerImages/guy/guySideDown.png"); // character image
                 setStill(iRight.getImage());
             }
 	    setXVel(getSpeed());
