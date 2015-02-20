@@ -131,9 +131,9 @@ public class Board extends JPanel implements ActionListener {
 	
         //background images
 	g2d.translate((p.getXCoord()*-1)+300, 0); //+300 because of player pos.
-	g2d.drawImage(farBackground, (int) p.getXCoord()*(-1), -1800, null);
-        g2d.drawImage(Far3, (int) p.getXCoord()*(-1) + 4500, -1800, null);
-        g2d.drawImage(Far3, (int) p.getXCoord()*(-1) + 9000, -1800, null);
+	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
+        g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
+        g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 9000, -1800, null);
 	g2d.drawImage(nearBackground,0, -1300, null);
         g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
