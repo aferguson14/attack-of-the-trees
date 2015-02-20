@@ -46,10 +46,6 @@ public class PauseMenu extends JFrame{
 	
     }
     
-    public void setPauseMenuVisible(boolean b){
-	this.setVisible(b);
-    }
-    
     public void createShopPage(){
 	shop = new JPanel();
 	shop.setLayout(new GridLayout(2,2));
