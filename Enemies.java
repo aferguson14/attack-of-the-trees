@@ -11,64 +11,67 @@ import javax.swing.ImageIcon;
 
 public abstract class Enemies {
     //Private Data
-    private int XCoord, YCoord;
-    private int XVel, YVel;
-    private int XAcc, YAcc;
+    private double XCoord, YCoord;
+    private double XVel, YVel;
+    private double XAcc, YAcc;
     private Image still;
     private boolean InAir;
     private boolean IsAttacking;
     private int HorizontalSize, VerticalSize;
-    private int LeftBound, RightBound;
-    private int TopBound, BotBound;
-    private int WorldBot = 334;
+    private int WorldBot = 700;
     private int WorldLeft = 0;
-    private int WorldRight = 1024;
+    private int WorldRight = 7478;
     private int WorldTop = 0;
     private boolean InRange; 
     private int hp;
     private int attack;
-    private int Speed;
+    private double Speed;
     private int AttackSpeed;
     private int AttackRange;
     private int facing = 0;
     private boolean attacking = false;
-    private int JumpSpeed;
+    private double JumpSpeed;
     private int AttackSpeedCount = 0;
     private ArrayList <Projectile> projectiles = new ArrayList<Projectile>();
     private boolean startAttacking = false;
     
-    public Enemies(int x, int y){
+    public Enemies(double x, double y){
         XCoord = x;
         YCoord = y;
     }
     //Move Method, Similar to Player's
-    public void move(){
-        setXVel(getXVel() + getXAcc());
-        setYVel(getYVel() + getYAcc());
-        if(XVel > 0){
-            setFacing(1);
-        }
-	else if(XVel < 0){
-            setFacing(0);
-        }
-        setXCoord(getXCoord() + getXVel());
-        setYCoord(getYCoord() + getYVel());
+    public void move(ArrayList <Terrain> terrain){
+        if(Board.getState() == Board.STATE.GAME){
+	    setXVel(getXVel() + getXAcc());
+	    setYVel(getYVel() + getYAcc());
+	    if(XVel > 0){
+		setFacing(1);
+	    }
+	    else if(XVel < 0){
+		setFacing(0);
+	    }
+	    setXCoord(getXCoord() + getXVel());
+	    setYCoord(getYCoord() + getYVel());
+	    for(Terrain t : terrain){
+		t.CheckEnemyContact(this);
+            
+	    }
         
-        if(getBotBound() >= getWorldBot()){
-            setYCoord(getWorldBot() - getVerticalSize());
-            setYVel(0);
-            setInAir(false);
+	    if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
+		setYCoord(getWorldBot() - getVerticalSize());
+		setYVel(0);
+		setInAir(false);
+	    }
+	    if(getXCoord() <= getWorldLeft()){
+		setYCoord(0);
+	    }
+	    if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
+		setYCoord(WorldRight = getHorizontalSize());
+	    }
+	    if(getYCoord() <= getWorldTop()){
+		setYCoord(0);
+	    }
         }
-        if(getLeftBound() <= getWorldLeft()){
-            setYCoord(0);
-        }
-        if(getRightBound() >= getWorldRight()){
-            setYCoord(WorldRight = getHorizontalSize());
-        }
-        if(getTopBound() <= getWorldTop()){
-            setYCoord(0);
-        }
-        
     }
     
     // figure out how to stop enemies from attacking while paused
@@ -84,7 +87,13 @@ public abstract class Enemies {
             die();
         }
     }
-    public void AI(Player p, Graphics g){}
+    public void takeDmg(int dmg){
+        hp -= dmg;
+        if(hp <= 0){
+            die();
+        }
+    }
+    public void AI(Player p, Graphics g, ArrayList<Terrain> terrain){}
     public void dropItem(){}
     public void die(){
 	
@@ -119,7 +128,7 @@ public abstract class Enemies {
     public void deleteProjectiles(){
         for(Projectile proj : projectiles){
             if(proj.isRemove()){
-                projectiles.remove(proj);
+                projectiles.remove(proj); 
                 break;
             }
         }
@@ -138,51 +147,51 @@ public abstract class Enemies {
     
     
     //-------------Getters/Setters------------------------------------------------------------------------------------------------------------------------
-    public int getXCoord() {
+    public double getXCoord() {
         return XCoord;
     }
 
-    public void setXCoord(int XCoord) {
+    public void setXCoord(double XCoord) {
         this.XCoord = XCoord;
     }
 
-    public int getYCoord() {
+    public double getYCoord() {
         return YCoord;
     }
 
-    public void setYCoord(int YCoord) {
+    public void setYCoord(double YCoord) {
         this.YCoord = YCoord;
     }
 
-    public int getXVel() {
+    public double getXVel() {
         return XVel;
     }
 
-    public void setXVel(int XVel) {
+    public void setXVel(double XVel) {
         this.XVel = XVel;
     }
 
-    public int getYVel() {
+    public double getYVel() {
         return YVel;
     }
 
-    public void setYVel(int YVel) {
+    public void setYVel(double YVel) {
         this.YVel = YVel;
     }
 
-    public int getXAcc() {
+    public double getXAcc() {
         return XAcc;
     }
 
-    public void setXAcc(int XAcc) {
+    public void setXAcc(double XAcc) {
         this.XAcc = XAcc;
     }
 
-    public int getYAcc() {
+    public double getYAcc() {
         return YAcc;
     }
 
-    public void setYAcc(int YAcc) {
+    public void setYAcc(double YAcc) {
         this.YAcc = YAcc;
     }
 
@@ -224,38 +233,6 @@ public abstract class Enemies {
 
     public void setVerticalSize(int VerticalSize) {
         this.VerticalSize = VerticalSize;
-    }
-
-    public int getLeftBound() {
-        return LeftBound;
-    }
-
-    public void setLeftBound(int LeftBound) {
-        this.LeftBound = LeftBound;
-    }
-
-    public int getRightBound() {
-        return RightBound;
-    }
-
-    public void setRightBound(int RightBound) {
-        this.RightBound = RightBound;
-    }
-
-    public int getTopBound() {
-        return TopBound;
-    }
-
-    public void setTopBound(int TopBound) {
-        this.TopBound = TopBound;
-    }
-
-    public int getBotBound() {
-        return BotBound;
-    }
-
-    public void setBotBound(int BotBound) {
-        this.BotBound = BotBound;
     }
 
     public int getWorldBot() {
@@ -306,11 +283,11 @@ public abstract class Enemies {
         this.attack = attack;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return Speed;
     }
 
-    public void setSpeed(int Speed) {
+    public void setSpeed(double Speed) {
         this.Speed = Speed;
     }
 
@@ -354,11 +331,11 @@ public abstract class Enemies {
         this.attacking = attacking;
     }
 
-    public int getJumpSpeed() {
+    public double getJumpSpeed() {
         return JumpSpeed;
     }
 
-    public void setJumpSpeed(int JumpSpeed) {
+    public void setJumpSpeed(double JumpSpeed) {
         this.JumpSpeed = JumpSpeed;
     }
 

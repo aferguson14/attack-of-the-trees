@@ -1,5 +1,11 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.*;
+import javax.swing.JTabbedPane;
+
 
 public class PauseMenu extends JFrame{
     
@@ -12,10 +18,23 @@ public class PauseMenu extends JFrame{
 	setTitle("Pause Menu");
 	setSize(500,350);
 	setBackground(Color.gray);
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	
+<<<<<<< HEAD
 	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	
+=======
+	addKeyListener(new KL());
+	setFocusable(true);
+
+	setUndecorated(true);
+	setOpacity(.85f);
+	//this.setLocationRelativeTo(null);
+
+>>>>>>> 7e6f5866f938029954048dab077603e0318884ea
 	JPanel topPanel = new JPanel();
 	topPanel.setLayout(new BorderLayout());
 	getContentPane().add(topPanel);
@@ -64,6 +83,32 @@ public class PauseMenu extends JFrame{
     public void paint(Graphics g){
 	super.paint(g);
 	Graphics2D g2d = (Graphics2D) g;
+    }
+
+    public void keyPressedMenu(KeyEvent e) {
+	// TODO Auto-generated method stub
+	int key = e.getKeyCode();
+	if(key == KeyEvent.VK_P){
+	    if(Board.getState() == Board.STATE.GAME) {
+		Board.setState(Board.STATE.PAUSE);
+		this.setVisible(true);
+	    }
+	    else if (Board.getState() == Board.STATE.PAUSE){
+		this.dispose();
+		//this.setVisible(false);
+		Board.setState(Board.STATE.GAME);
+	    }
+        }
+    }	
+	
+    private class KL extends KeyAdapter {
+	public void keyPressed(KeyEvent e) {
+	    keyPressedMenu(e);
+	}
+	public int getKeyPressed(KeyEvent e) {
+	    int key = e.getKeyCode();
+	    return key;
+	}
     }
    
 }

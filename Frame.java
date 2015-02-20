@@ -18,7 +18,7 @@ public class Frame {
 	frame.getContentPane().add(new Board());
 	frame.setTitle("Attack of the Trees");
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.setSize(1024,410); //frame size
+	frame.setSize(1750,800); //frame size
 	frame.setVisible(true);
 	frame.setLocationRelativeTo(null);
     }

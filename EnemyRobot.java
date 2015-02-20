@@ -1,11 +1,12 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import static java.lang.Math.abs;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class EnemyRobot extends Enemies{
 
-    public EnemyRobot(int x, int y){
+    public EnemyRobot(double x, double y){
         //Each enemy will build of the default enemy class
         //Lots of unique info for each enemy, meaning lots of repitive code :(
         super(x, y);
@@ -13,10 +14,8 @@ public class EnemyRobot extends Enemies{
         this.setStill(i.getImage());
         this.setHorizontalSize(81);
         this.setVerticalSize(115);
-        this.setLeftBound(this.getXCoord());
-        this.setRightBound(this.getXCoord() + this.getHorizontalSize());
-        this.setTopBound(this.getYCoord());
-        this.setBotBound(this.getYCoord() + this.getVerticalSize());
+        this.setXAcc(0);
+        this.setYAcc(0);
         this.setHp(100);
         this.setAttack(10);
         this.setSpeed(2);
@@ -30,21 +29,22 @@ public class EnemyRobot extends Enemies{
     public void Attack(Player p, Graphics g){
         //if player is in range, attack him/her. 
         //Very difficult for player, but got the functionality down. Just need to tweak things.
-        if(this.isAttacking()){
-            if(this.checkInRange(p)){
-                this.setAttackSpeedCount(this.getAttackSpeedCount() + 1);
-                if(this.getAttackSpeedCount() == this.getAttackSpeed()){
-		    RobotProjectile laser = new RobotProjectile(this.getXCoord(), this.getYCoord(), this.getFacing(), g);
-		    this.addProjectile(laser);
-		    this.setAttackSpeedCount(0);
-                }
-            }
+	if(Board.getState() == Board.STATE.GAME){
+	    if(this.isAttacking()){
+		if(this.checkInRange(p)){
+		    this.setAttackSpeedCount(this.getAttackSpeedCount() + 1);
+		    if(this.getAttackSpeedCount() == this.getAttackSpeed()){
+			RobotProjectile laser = new RobotProjectile(this.getXCoord(), this.getYCoord(), this.getFacing(), g, 0);
+			this.addProjectile(laser);
+			this.setAttackSpeedCount(0);
+		    }
+		}
+	    }
         }
-        
     }
    
     @Override
-    public void AI(Player p, Graphics g){
+    public void AI(Player p, Graphics g, ArrayList<Terrain>terrain){
         //move until in range, then attack. Wanna make this enemy shoot lasers. Will work on.
         if(this.checkInRange(p)){
             this.setAttacking(true);
@@ -57,10 +57,10 @@ public class EnemyRobot extends Enemies{
             }
             if((p.getXCoord() + p.getHorizontalSize()) < this.getXCoord()){
                 this.setXVel(-1 * (this.getSpeed()));
-                this.move();
+                this.move(terrain);
             }else if((p.getXCoord()) > (this.getXCoord() + this.getHorizontalSize())){
                 this.setXVel(this.getSpeed());
-                this.move();
+                this.move(terrain);
             }   
         }
         if(p.getXCoord() > getXCoord()){
@@ -85,11 +85,19 @@ public class EnemyRobot extends Enemies{
     public void paintEnemy(Player p, Graphics g){
         //moved painting of enemy to the Enemy class to make the Board class cleaner and stream lined
         Graphics2D g2d = (Graphics2D) g;
+<<<<<<< HEAD
         g2d.drawImage(this.getStill(), this.getXCoord(), this.getYCoord(), null);
 
 
 	g.setColor(Color.red);
 	g.fillRect(this.getXCoord() -10 , this.getYCoord() - 10, this.getHp(), 7);
+=======
+        g2d.drawImage(this.getStill(), (int) this.getXCoord(), (int) this.getYCoord(), null);
+
+
+	g.setColor(Color.red);
+	g.fillRect((int) (this.getXCoord() -10) , (int) this.getYCoord() - 10, this.getHp(), 7);
+>>>>>>> 7e6f5866f938029954048dab077603e0318884ea
 	/*
         Font fntE = new Font("arial", Font.BOLD, 10);
         g.setFont(fntE);
