@@ -19,6 +19,7 @@ public class PauseMenu extends JFrame{
 	setSize(500,350);
 	setBackground(Color.gray);
         
+        //set the location of the pause menu in the middle of the board
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	
@@ -47,6 +48,7 @@ public class PauseMenu extends JFrame{
     }
     
     public void createShopPage(){
+    	//create the panel for the shop
 	shop = new JPanel();
 	shop.setLayout(new GridLayout(2,2));
 	ImageIcon sword = new ImageIcon("../images/weaponImage/sword.png");
@@ -60,6 +62,7 @@ public class PauseMenu extends JFrame{
     }
     
     public void createSavePage(){
+    	//create the panel for the save game feature
 	save = new JPanel();
 	save.setLayout(new GridLayout(1,2));
 	save.add(new Button("Save"));
@@ -67,6 +70,7 @@ public class PauseMenu extends JFrame{
     }
     
     public void createHelpPage(){
+    	//create the help menu
 	help = new JPanel();
 	JLabel label = new JLabel();
 	label.setText("this is the help menu");
@@ -75,6 +79,7 @@ public class PauseMenu extends JFrame{
 
     
     public void paintComponent(Graphics g){
+    	//pretty sure this is unused...
 	super.paint(g);
 	Graphics2D g2d = (Graphics2D) g;
     }
@@ -82,6 +87,9 @@ public class PauseMenu extends JFrame{
     public void keyPressedMenu(KeyEvent e) {
 	// TODO Auto-generated method stub
 	int key = e.getKeyCode();
+	//check to see if the key pressed is P
+	//if so if the state is in game then change it to pause
+	//if the state is paused then put it in game
 	if(key == KeyEvent.VK_P){
 	    if(Board.getState() == Board.STATE.GAME) {
 		Board.setState(Board.STATE.PAUSE);
