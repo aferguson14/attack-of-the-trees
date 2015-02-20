@@ -138,7 +138,7 @@ public class Board extends JPanel implements ActionListener {
         g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
 
-	if(getState() == STATE.GAME) {
+	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
 
             //paint terrain
             for(Terrain t : terrain){
@@ -157,11 +157,12 @@ public class Board extends JPanel implements ActionListener {
 		e.paintEnemy(getP(), g);
 	    }
 	    getP().AttackAnimation(g);
+	    if(getState() == STATE.PAUSE){
+	   	pmenu.requestFocusInWindow();
+	}
     	}
         //if State!=Game, perform other State actions
-	if(getState() == STATE.PAUSE){
-	   pmenu.requestFocusInWindow();
-	}
+	
 	else if(getState() == STATE.MENU) {
 	    getMenu().render(g);
     	}
