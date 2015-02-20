@@ -42,7 +42,7 @@ public class Player{
     
     //Constructor
     public Player() {
-	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDown.png"); //character image
+	ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDown.png"); //character image
 	setStill(i.getImage());
         //starting Player postion/velocity/acceleration
 	XCoord = 10;

@@ -3,7 +3,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 //NOT IMPLEMENTED YET
-public class axe extends Weapon{
+public class Axe extends Weapon{
 
     @Override
     public void paintWeapon(Graphics g, Player p, ArrayList<Enemies> e) {

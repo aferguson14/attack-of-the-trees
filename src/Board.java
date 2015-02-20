@@ -72,23 +72,23 @@ public class Board extends JPanel implements ActionListener {
 	setFocusable(true);
         //not stitched together, used multiple background images
 	ImageIcon far = new 
-	    ImageIcon("images/backgrounds/far-background.png");
+	    ImageIcon("../images/backgrounds/far-background.png");
         
         farBackground = far.getImage();
-        ImageIcon far2 = new ImageIcon("images/backgrounds/far-background.png");
+        ImageIcon far2 = new ImageIcon("../images/backgrounds/far-background.png");
 	ImageIcon near = new 
-	    ImageIcon("images/backgrounds/near-background.png");
-        ImageIcon near2 = new ImageIcon("images/backgrounds/near-background.png");
+	    ImageIcon("../images/backgrounds/near-background.png");
+        ImageIcon near2 = new ImageIcon("../images/backgrounds/near-background.png");
 	nearBackground = near.getImage();
         ImageIcon far3 = new 
-	    ImageIcon("images/backgrounds/far-background.png");
+	    ImageIcon("../images/backgrounds/far-background.png");
         
         Far3 = far.getImage();
         Far2 = far2.getImage();
         Near2 = near2.getImage();
 	time = new Timer(5, this);
 	time.start();
-        gun g = new gun(p.getXCoord(),p.getYCoord());
+        Gun g = new Gun(p.getXCoord(),p.getYCoord());
 	p.AddWeapon(g);
     }
 

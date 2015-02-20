@@ -9,7 +9,7 @@ public class EnemyTree extends Enemies{
     //Constrcutor
     public EnemyTree(double x, double y){
         super(x, y);
-        ImageIcon i = new ImageIcon("images/enemyImages/tree/treeFront.png");
+        ImageIcon i = new ImageIcon("../images/enemyImages/tree/treeFront.png");
         this.setStill(i.getImage());
         this.setHorizontalSize(81);
         this.setVerticalSize(115);

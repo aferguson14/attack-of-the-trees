@@ -9,7 +9,7 @@ public class EnemyBear extends Enemies{
     //Constructor
     public EnemyBear(double x, double y){
         super(x, y);
-        ImageIcon i = new ImageIcon("images/enemyImages/bear/bearSide.png");
+        ImageIcon i = new ImageIcon("../images/enemyImages/bear/bearSide.png");
         this.setStill(i.getImage());
         this.setHorizontalSize(60);
         this.setVerticalSize(115);

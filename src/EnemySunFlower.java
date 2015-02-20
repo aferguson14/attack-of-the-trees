@@ -9,7 +9,7 @@ public class EnemySunFlower extends Enemies{
     //Constructor
     public EnemySunFlower(double x, double y){
         super(x, y);
-        ImageIcon i = new ImageIcon("images/enemyImages/sunflower/sunflowerFront.png");
+        ImageIcon i = new ImageIcon("../images/enemyImages/sunflower/sunflowerFront.png");
         this.setStill(i.getImage());
         this.setHorizontalSize(90);
         this.setVerticalSize(115);

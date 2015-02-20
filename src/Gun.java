@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class gun extends Weapon{
+public class Gun extends Weapon{
     //constructor
-    public gun(double x, double y){
+    public Gun(double x, double y){
         setXCoord(x);
         setYCoord(y);
         setAttack(10);
