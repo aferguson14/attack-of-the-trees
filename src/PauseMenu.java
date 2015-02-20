@@ -52,11 +52,11 @@ public class PauseMenu extends JFrame{
 	ImageIcon sword = new ImageIcon("../images/weaponImage/sword.png");
 	ImageIcon stick = new ImageIcon("../images/weaponImage/stick.png");
 	ImageIcon gun = new ImageIcon("../images/weaponImage/gun.png");
-	//ImageIcon sword = new ImageIcon("../images/weaponImages/sword.png");
+	ImageIcon axe = new ImageIcon("../images/weaponImages/axe.png");
 	shop.add(new JButton(sword));
 	shop.add(new JButton(stick));
 	shop.add(new JButton(gun));
-	//shop.add(new Button("Item 4"));
+	shop.add(new Button(axe));
     }
     
     public void createSavePage(){
