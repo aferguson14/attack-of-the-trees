@@ -42,25 +42,12 @@ public class Player{
     
     //Constructor
     public Player() {
-<<<<<<< HEAD:Player.java
-<<<<<<< HEAD
-    	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDown.png"); //character image
-    	setStill(i.getImage());
-        //starting Player position/velocity/acceleration
-    	XCoord = 10;
-    	YCoord = WorldBot - VerticalSize;
-        YAcc = 1;
-=======
-	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDown.png"); //character image
-=======
 	ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDown.png"); //character image
->>>>>>> 306d1948f1081fe828d39d097fb8d68d6a542ba5:src/Player.java
 	setStill(i.getImage());
         //starting Player postion/velocity/acceleration
 	XCoord = 10;
 	YCoord = WorldBot - VerticalSize;
         YAcc =  .5;
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea
         YVel = 0;
         XVel = 0;
         hp = 100;
@@ -72,14 +59,6 @@ public class Player{
     
     public void move(ArrayList <Terrain> terrain) {
         //add velocities to positions/add gravity to yVel
-<<<<<<< HEAD
-    	setXCoord(getXCoord() + getXVel());
-    	setYVel(getYVel() + getYAcc());
-    	setYCoord(getYCoord() + getYVel());
-        
-    	//check boundaries, if on ground, InAir = false
-    	if((getYCoord() + VerticalSize) >= 334){
-=======
 	setXCoord(getXCoord() + getXVel());
 	setYVel(getYVel() + getYAcc());
 	setYCoord(getYCoord() + getYVel());
@@ -91,7 +70,6 @@ public class Player{
         
 	//check orld boundaries
 	if((getYCoord() + VerticalSize) >= 700){
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea
 	    setYCoord(getWorldBot() - VerticalSize);
 	    setYVel(0);
 	    setInAir(false);
@@ -112,73 +90,12 @@ public class Player{
     public void paintPlayer(Graphics g){
         //paint player and health bar
         Graphics2D g2d = (Graphics2D) g;
-<<<<<<< HEAD
-        if (getHp() > 0){
-        	g2d.drawImage(this.getStill(), this.getXCoord(), this.getYCoord(), null);
-
-        	g.setColor(Color.white);
-        	g.fillRect(this.getXCoord() - 10 , this.getYCoord() - 10, this.getHp(), 7);
-        }
-   //     if (getHp() < 0)
-     //   	Board.State = Board.State.GAMEOVER;
-=======
         g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 
         if(this.getHp() >= 0){
             g.setColor(Color.white);
             g.fillRect((int) (this.getXCoord() -10) , (int) (this.getYCoord() - 10), this.getHp(), 7);
         }
-<<<<<<< HEAD:Player.java
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea
-	/*
-        Font fntP = new Font("arial", Font.BOLD, 10);
-        g.setFont(fntP);
-        g.setColor(Color.blue);
-        g.drawString("" + this.getHp(), this.getXCoord(), this.getYCoord() - 10);
-	*/
-<<<<<<< HEAD
-    }
-    
-    public void pausePlayer(){
-    	setXVel(0);
-    	setYVel(0);
-=======
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea
-    }
-    
-    public void AttackAnimation(Graphics g){
-        if(isAttacking()){
-	    if(getFacing() == 0){
-
-		ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpLeft.png"); //character image
-		setStill(i.getImage());
-
-
-	    }
-	    else if(getFacing() == 1){
-<<<<<<< HEAD
-		Rectangle rect = new Rectangle(getXCoord() + 57, getYCoord() + 20, 20, 10);
-		g2d.setColor(Color.blue);
-		g2d.fill(rect);		
-	    }	    
-	}
-=======
-		ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpRight.png");
-		setStill(i.getImage());
-		
-	    }
-	    
-	}else{
-            if(getFacing() == 0){
-                ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownLeft.png");
-		setStill(i.getImage());
-            }else{
-                ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownRight.png");
-		setStill(i.getImage());
-            }
-        }
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea
-=======
     }
     
 public void AttackAnimation(Graphics g){
@@ -195,7 +112,6 @@ if(isAttacking()){
         ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpRight.png");
         setStill(i.getImage());
 
->>>>>>> 306d1948f1081fe828d39d097fb8d68d6a542ba5:src/Player.java
     }
 
 }else{
@@ -249,13 +165,8 @@ if(isAttacking()){
     //player movement input
     public void keyPressed(KeyEvent e) {
 	int key = e.getKeyCode();
-<<<<<<< HEAD:Player.java
-        //input changes velocity
-	if (key == KeyEvent.VK_LEFT){
-=======
         //input cahnges velocity
 	if (key == KeyEvent.VK_A){
->>>>>>> 306d1948f1081fe828d39d097fb8d68d6a542ba5:src/Player.java
             if(!isAttacking()){
                 ImageIcon iLeft = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png"); // character image
                 setStill(iLeft.getImage());
@@ -284,13 +195,8 @@ if(isAttacking()){
     //player movement input
     public void keyReleased(KeyEvent e) {
 	int key = e.getKeyCode();
-<<<<<<< HEAD:Player.java
-        //release of L/R key's result in 0 horiz vel
-	if (key == KeyEvent.VK_LEFT)
-=======
         //realease of L/R key's result in 0 horiz vel
 	if (key == KeyEvent.VK_A)
->>>>>>> 306d1948f1081fe828d39d097fb8d68d6a542ba5:src/Player.java
 	    setXVel(0);
 	
 	if (key == KeyEvent.VK_D)

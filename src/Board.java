@@ -34,18 +34,8 @@ public class Board extends JPanel implements ActionListener {
     private boolean attack = false;
     private Menu menu;
     private PauseMenu pmenu;
-<<<<<<< HEAD:Board.java
-<<<<<<< HEAD
-    private GameOverScreen goscreen;
-    private int WorldBot = 334;
-=======
-    //private GameOver screen;
-     private int WorldBot = 2103;
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea
-=======
     //world dimensions
     private int WorldBot = 700;
->>>>>>> 306d1948f1081fe828d39d097fb8d68d6a542ba5:src/Board.java
     private int WorldLeft = 0;
     private int WorldRight = 7478;
     private int WorldTop = 0;
@@ -54,26 +44,7 @@ public class Board extends JPanel implements ActionListener {
 
     
     public Board() {
-<<<<<<< HEAD:Board.java
-<<<<<<< HEAD
-    	p = new Player();
-        EnemyRobot robo = new EnemyRobot(700, 265);
-        EnemyTree tree = new EnemyTree(650, 265);
-        enemies.add(robo);
-        enemies.add(tree);
-        addKeyListener(new AL());
-        menu = new Menu();
-        pmenu = new PauseMenu();
-        addMouseListener(new MouseInput());
-        setFocusable(true);
-        ImageIcon i = new ImageIcon("images/backgrounds/JungleBackground1.jpg");
-        img = i.getImage();
-        time = new Timer(5, this);
-        time.start();
-=======
-=======
         //creates player, enemies, terrain, weapon, menu, and background images
->>>>>>> 306d1948f1081fe828d39d097fb8d68d6a542ba5:src/Board.java
 	p = new Player();
         EnemyRobot robo = new EnemyRobot(1000, WorldBot - 115);
 	EnemyTree tree = new EnemyTree(2000, WorldBot - 115);
@@ -119,44 +90,21 @@ public class Board extends JPanel implements ActionListener {
 	time.start();
         Gun g = new Gun(p.getXCoord(),p.getYCoord());
 	p.AddWeapon(g);
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea
     }
 
     //states
     public static enum STATE {
     	MENU,
     	GAME,
-<<<<<<< HEAD
-    	PAUSE,
-    	GAMEOVER
-=======
 	PAUSE,
-<<<<<<< HEAD:Board.java
-	GAMEOVER
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea
-=======
         GAMEOVER
->>>>>>> 306d1948f1081fe828d39d097fb8d68d6a542ba5:src/Board.java
     };
     //initial state = MENU
     private static STATE State = STATE.MENU;
 
     
     public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD:Board.java
-<<<<<<< HEAD
-    	p.move();
-        if(p.isAttacking()){
-        	p.PlayerAttack(enemies);
-        }
-        for(int i = 0; i < enemies.size(); i++){
-            if(enemies.get(i).getHp() <= 0){
-                enemies.remove(i);
-=======
-
-=======
         //move player, move weapon
->>>>>>> 306d1948f1081fe828d39d097fb8d68d6a542ba5:src/Board.java
         getP().move(terrain);
         getP().getCurrentWeapon().move(getP());
         //check Player attacking
@@ -172,70 +120,16 @@ public class Board extends JPanel implements ActionListener {
         for(int i = 0; i < getEnemies().size(); i++){
             if(getEnemies().get(i).getHp() <= 0){
                 getEnemies().remove(i);
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea
             }
         }
-        repaint();
+	repaint();
     }
     
     public void paint(Graphics g) {
-    	super.paint(g);
-    	Graphics2D g2d = (Graphics2D) g;
+	super.paint(g);
+	Graphics2D g2d = (Graphics2D) g;
 	
-<<<<<<< HEAD
-    	g2d.drawImage(img, 0, 0, null);
-
-    	if(State == STATE.MENU)
-    		menu.render(g);
-    	if(State == STATE.GAME) {
-            //paint player
-    		p.paintPlayer(g);
-            //perform enemy AI/ Paint
-    		for(Enemies e : enemies){
-    			for(int i = 0; i < enemies.size(); i++){
-    				enemies.get(i).AI(p, g);
-    			}
-    			e.paintEnemy(p, g);
-    		}
-    		p.AttackAnimation(g);
-    		}
-    	if(State == STATE.PAUSE){
-    		p.pausePlayer();
-    		for (int i = 0; i < enemies.size(); i++){
-    			enemies.get(i).pauseEnemy();
-    		}
-    		pmenu.setPauseMenuVisible(true);
-    		State = STATE.GAME;
-    	}
-//    	if(State == STATE.GAMEOVER)
-//    		goscreen.paint(g);
-    }
-   
-    private class AL extends KeyAdapter {
-    	public void keyReleased(KeyEvent e) {
-    		p.keyReleased(e);
-    	}
-	
-<<<<<<< HEAD:Board.java
-    	public void keyPressed(KeyEvent e) {
-    		int key = e.getKeyCode();	    
-    		if(key == KeyEvent.VK_P){
-    			if(State == STATE.GAME)
-    				State = STATE.PAUSE;
-    			else if (State == STATE.PAUSE){
-    				State = STATE.GAME;
-    			}
-    		}
-    		else{
-    			p.keyPressed(e);
-    		}
-    	}
-    }
-}
-=======
-=======
         //background images
->>>>>>> 306d1948f1081fe828d39d097fb8d68d6a542ba5:src/Board.java
 	g2d.translate((p.getXCoord()*-1)+300, 0); //+300 because of player pos.
 	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
         g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
@@ -244,7 +138,7 @@ public class Board extends JPanel implements ActionListener {
         g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
 
-	if(getState() == STATE.GAME) {
+	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
 
             //paint terrain
             for(Terrain t : terrain){
@@ -263,11 +157,12 @@ public class Board extends JPanel implements ActionListener {
 		e.paintEnemy(getP(), g);
 	    }
 	    getP().AttackAnimation(g);
+	    if(getState() == STATE.PAUSE){
+	   	pmenu.requestFocusInWindow();
+	}
     	}
         //if State!=Game, perform other State actions
-	if(getState() == STATE.PAUSE){
-	   pmenu.requestFocusInWindow();
-	}
+	
 	else if(getState() == STATE.MENU) {
 	    getMenu().render(g);
     	}
@@ -456,4 +351,3 @@ public class Board extends JPanel implements ActionListener {
         this.MouseCoords = MouseCoords;
     }
 }
->>>>>>> 7e6f5866f938029954048dab077603e0318884ea

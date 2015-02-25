@@ -91,12 +91,6 @@ public abstract class Enemies {
         return false;
     }
     
-    // figure out how to stop enemies from attacking while paused
-    public void pauseEnemy(){
-    	setXVel(0);
-    	setYVel(0);
-    }
-    
     public void Attack(Player p, Graphics g){}
     //subtract health by player's attack dmg
     public void takeDmg(Player p){
