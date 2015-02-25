@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 import javax.swing.JTabbedPane;
+import java.util.*;
 
 
 public class PauseMenu extends JFrame{
@@ -13,6 +14,8 @@ public class PauseMenu extends JFrame{
     public JPanel shop ;
     public JPanel save;
     public JPanel help;
+    JButton clicked;
+    ArrayList<String> weaponNames = new ArrayList<String>(Arrays.asList("sword", "stick", "axe", "gun"));
     
     public PauseMenu(){
 	setTitle("Pause Menu");
@@ -50,21 +53,34 @@ public class PauseMenu extends JFrame{
     public void createShopPage(){
     	//create the panel for the shop
 	shop = new JPanel();
-	shop.setLayout(new GridLayout(2,2));
-	ImageIcon sword = new ImageIcon("../images/weaponImage/sword.png");
-	ImageIcon stick = new ImageIcon("../images/weaponImage/stick.png");
-	ImageIcon gun = new ImageIcon("../images/weaponImage/gun.png");
-	ImageIcon axe = new ImageIcon("../images/weaponImage/axe.png");
-	shop.add(new JButton(sword));
-	shop.add(new JButton(stick));
-	shop.add(new JButton(gun));
-	shop.add(new JButton(axe));
+	shop.setLayout(new FlowLayout());
+	//shop.setLayout(new GridLayout(2,2));
+	for(int i = 0; i < weaponNames.size(); i++){
+	    JButton j = new JButton(new ImageIcon("../images/weaponImage/" + weaponNames.get(i) + ".png")); 
+	    shop.add(j);
+	    j.addActionListener(actionListener);
+	}
+	//ImageIcon sword = new ImageIcon("../images/weaponImage/sword.png");
+	//ImageIcon stick = new ImageIcon("../images/weaponImage/stick.png");
+	//ImageIcon gun = new ImageIcon("../images/weaponImage/gun.png");
+	//ImageIcon axe = new ImageIcon("../images/weaponImage/axe.png");
+	//shop.add(new JButton(sword));
+	//shop.add(new JButton(stick));
+	//shop.add(new JButton(gun));
+	//shop.add(new JButton(axe));
+	this.getContentPane().add(BorderLayout.NORTH, shop);
     }
+    
+    ActionListener actionListener = new ActionListener() {
+	public void actionPerformed(ActionEvent actionEvent) {
+	    System.out.println(actionEvent.getSource());
+	}
+    };
     
     public void createSavePage(){
     	//create the panel for the save game feature
 	save = new JPanel();
-	save.setLayout(new GridLayout(1,2));
+	//save.setLayout(new GridLayout(1,2));
 	save.add(new Button("Save"));
 	save.add(new Button("Save and Exit"));
     }
