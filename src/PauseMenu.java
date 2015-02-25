@@ -72,8 +72,20 @@ public class PauseMenu extends JFrame{
     public void createHelpPage(){
     	//create the help menu
 	help = new JPanel();
-	JLabel label = new JLabel();
-	label.setText("Controls: To move/jump use A,W,D");
+	String text = 
+	    "Controls:&nbsp;&nbsp;&nbsp;&nbsp;Jump&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;W<br>" +
+	    "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+
+	    "Move Left&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;A<br>" +
+    	    "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+
+	    "Move Right   -   D<br>" +
+	    "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+
+            "Duck         -   S<br>" +
+	              "            Attack/Shoot -   Left Click<br>";
+	JLabel label = new JLabel("<html>"+text+"</html>");
+	//	label.setText("Controls: To move/jump use A,W,D");
 	help.add(label);
 	/*JLabel up = new JLabel();
 	label.setText("To jump press W");
