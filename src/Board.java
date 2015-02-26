@@ -144,10 +144,6 @@ public class Board extends JPanel implements ActionListener {
         }
 	//if Player runs over resource, collect
 	for(int i = 0; i< getResources().size();i++){
-	    System.out.println("Player X: " + getP().getXCoord()+ "");
-	    System.out.println("Resource CoordX: " + getResources().get(i).getXCoord() + "");
-	    System.out.println("Player Y: " + getP().getYCoord()+ "");
-	    System.out.println("Resource CoordY: " + getResources().get(i).getYCoord() + "");
 	    
 	    if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
 	       (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
