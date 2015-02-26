@@ -28,7 +28,7 @@ public class Gun extends Weapon{
         this.setAttackSpeedTimer(this.getAttackSpeedTimer() + 1);
         if(this.getAttackSpeedTimer() == this.getAttackSpeed()){
 		    Bullet bullet = new Bullet(this.getXCoord(), 
-                    this.getYCoord(), this.getFacing(), g, findAngle(p));
+                    this.getYCoord() + 45, this.getFacing(), g, findAngle(p));
 		    this.addProjectile(bullet);
 		    this.setAttackSpeedTimer(0);
                 }
