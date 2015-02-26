@@ -22,14 +22,22 @@ public class Board extends JPanel implements ActionListener {
     }
     
     //private data
+
+    //Objects
     private Player p;
     private ArrayList <Enemies> enemies = new ArrayList<Enemies>();
     private ArrayList <Terrain> terrain = new ArrayList<Terrain>();
     private ArrayList <Resource> resources = new ArrayList<Resource>();
+    
+    //Background Images
     public Image farBackground;
     public Image nearBackground;
     public Image Far2, Far3;
     public Image Near2;
+ 
+    //Resource Images
+    public Image LogImage;
+
     private Image img;
     private Timer time;
     private boolean attack = false;
@@ -42,7 +50,7 @@ public class Board extends JPanel implements ActionListener {
     private int WorldTop = 0;
     public static Point MouseCoords;
     public static boolean PlayerAttack = false;
-
+    private ResourceBar resourceBar;
     
     public Board() {
         //creates player, enemies, terrain, weapon, menu, and background images
@@ -87,8 +95,16 @@ public class Board extends JPanel implements ActionListener {
         Far3 = far.getImage();
         Far2 = far2.getImage();
         Near2 = near2.getImage();
+	
+	//RESOURCE IMAGES
+	ImageIcon logImage = new ImageIcon("../images/weaponImage/stick.png");
+	LogImage = logImage.getImage();
+
+	//TIME
 	time = new Timer(5, this);
 	time.start();
+
+	//WEAPONS
         Gun g = new Gun(p.getXCoord(),p.getYCoord());
 	p.AddWeapon(g);
     }
@@ -175,7 +191,18 @@ public class Board extends JPanel implements ActionListener {
 	    for(Resource r : getResources()){
 		r.paintResource(g);
 	    }
+	    
+	    //RESOURCE BAR
+	    g2d.drawImage(LogImage, (int)getP().getXCoord()+950, 50, null);
+	    Stroke oldStroke = g2d.getStroke();
+	    Font fnt0 = new Font("arial", Font.BOLD, 12);
+	    g.setFont(fnt0);
+	    g.setColor(Color.white);
+	    g.drawString("x" + getP().getLogCount()+"", (int) getP().getXCoord()+970, 50);	
+	    g2d.setStroke(oldStroke);
 
+	    
+	    //ATTACK ANIMATION
 	    getP().AttackAnimation(g);
 	    if(getState() == STATE.PAUSE){
 	   	pmenu.requestFocusInWindow();
@@ -377,5 +404,9 @@ public class Board extends JPanel implements ActionListener {
      */
     public void setMouseCoords(Point MouseCoords) {
         this.MouseCoords = MouseCoords;
+    }
+
+    public ResourceBar getResourceBar(){
+	return resourceBar;
     }
 }
