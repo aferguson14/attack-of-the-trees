@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.*;
 import static java.lang.Math.abs;
@@ -50,7 +49,6 @@ public class Board extends JPanel implements ActionListener {
     private int WorldTop = 0;
     public static Point MouseCoords;
     public static boolean PlayerAttack = false;
-    private ResourceBar resourceBar;
     
     public Board() {
         //creates player, enemies, terrain, weapon, menu, and background images
@@ -137,19 +135,35 @@ public class Board extends JPanel implements ActionListener {
         //if any enemies are below 0 health, delete
         for(int i = 0; i < getEnemies().size(); i++){
             if(getEnemies().get(i).getHp() <= 0){
-		//getEnemies().get(i).dropResource(g); //drop resource
+		getEnemies().get(i).getResource().setXCoord(getEnemies().get(i).getXCoord());
+		getEnemies().get(i).getResource().setYCoord(getEnemies().get(i).getYCoord());
+       
                 resources.add(getEnemies().get(i).getResource());
 		getEnemies().remove(i);
             }
         }
-
+	//if Player runs over resource, collect
 	for(int i = 0; i< getResources().size();i++){
-	    if(getP().getXCoord() == getResources().get(i).getXCoord()){
-		//TODO: increase resource count for player
+	    System.out.println("Player X: " + getP().getXCoord()+ "");
+	    System.out.println("Resource CoordX: " + getResources().get(i).getXCoord() + "");
+	    System.out.println("Player Y: " + getP().getYCoord()+ "");
+	    System.out.println("Resource CoordY: " + getResources().get(i).getYCoord() + "");
+	    
+	    if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
+	       (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
+	       (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
+	       (getP().getYCoord() >= getResources().get(i).getYCoord()-25) ){
+
 		if(getResources().get(i).getResourceType() == "log")
 		    getP().setLogCount(getP().getLogCount() + 1);
-		//Implement for other resources
-		System.out.println(getP().getLogCount());
+		/*else if(getResources().get(i).getResourceType() == "iron")
+		    getP().setIronCount(getP().getIronCount() + 1);
+		else if(getResources().get(i).getResourceType() == "coal")
+		    getP().setCoalCount(getP().getCoalCount() + 1);
+		else if(getResources().get(i).getResourceType() == "oil")
+		    getP().setOilCount(getP().getOilCount() + 1);
+		*/
+		//**ABOVE IS TO BE UNCOMMENTED ONCE WE HAVE IMAGES**
 		getResources().remove(i);
 	    }
 	}
@@ -195,7 +209,7 @@ public class Board extends JPanel implements ActionListener {
 	    //RESOURCE BAR
 	    g2d.drawImage(LogImage, (int)getP().getXCoord()+950, 50, null);
 	    Stroke oldStroke = g2d.getStroke();
-	    Font fnt0 = new Font("arial", Font.BOLD, 12);
+	    Font fnt0 = new Font("arial", Font.BOLD, 25);
 	    g.setFont(fnt0);
 	    g.setColor(Color.white);
 	    g.drawString("x" + getP().getLogCount()+"", (int) getP().getXCoord()+970, 50);	
@@ -404,9 +418,5 @@ public class Board extends JPanel implements ActionListener {
      */
     public void setMouseCoords(Point MouseCoords) {
         this.MouseCoords = MouseCoords;
-    }
-
-    public ResourceBar getResourceBar(){
-	return resourceBar;
     }
 }

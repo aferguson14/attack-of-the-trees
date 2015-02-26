@@ -12,6 +12,7 @@ public class EnemyTree extends Enemies{
         super(x, y);
         ImageIcon i = new ImageIcon("../images/enemyImages/tree/treeFront.png");
 	ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
+
         this.setStill(i.getImage());
         this.setHorizontalSize(81);
         this.setVerticalSize(115);

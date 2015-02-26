@@ -19,6 +19,7 @@ public class Resource{
 
 
     //SETTERS AND GETTERS
+
     public void setXCoord(double XCoord){
 	this.XCoord = XCoord;
     }
