@@ -25,6 +25,7 @@ public class Board extends JPanel implements ActionListener {
     private Player p;
     private ArrayList <Enemies> enemies = new ArrayList<Enemies>();
     private ArrayList <Terrain> terrain = new ArrayList<Terrain>();
+    private ArrayList <Resource> resources = new ArrayList<Resource>();
     public Image farBackground;
     public Image nearBackground;
     public Image Far2, Far3;
@@ -105,6 +106,7 @@ public class Board extends JPanel implements ActionListener {
     
     public void actionPerformed(ActionEvent e) {
         //move player, move weapon
+
         getP().move(terrain);
         getP().getCurrentWeapon().move(getP());
         //check Player attacking
@@ -119,9 +121,18 @@ public class Board extends JPanel implements ActionListener {
         //if any enemies are below 0 health, delete
         for(int i = 0; i < getEnemies().size(); i++){
             if(getEnemies().get(i).getHp() <= 0){
-                getEnemies().remove(i);
+		//getEnemies().get(i).dropResource(g); //drop resource
+                resources.add(getEnemies().get(i).getResource());
+		getEnemies().remove(i);
             }
         }
+
+	for(int i = 0; i< getResources().size();i++){
+	    if(getP().getXCoord() == getResources().get(i).getXCoord()){
+		//TODO: increase resource count for player
+		getResources().remove(i);
+	    }
+	}
 	repaint();
     }
     
@@ -156,6 +167,11 @@ public class Board extends JPanel implements ActionListener {
 		e.AI(getP(), g, terrain);
 		e.paintEnemy(getP(), g);
 	    }
+
+	    for(Resource r : getResources()){
+		r.paintResource(g);
+	    }
+
 	    getP().AttackAnimation(g);
 	    if(getState() == STATE.PAUSE){
 	   	pmenu.requestFocusInWindow();
@@ -209,6 +225,14 @@ public class Board extends JPanel implements ActionListener {
      */
     public void setEnemies(ArrayList <Enemies> enemies) {
         this.enemies = enemies;
+    }
+
+    public ArrayList <Resource> getResources() {
+	return resources;
+    }
+
+    public void setResources(ArrayList <Resource> resources){
+	this.resources = resources;
     }
 
     /**

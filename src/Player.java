@@ -68,7 +68,7 @@ public class Player{
             
         }
         
-	//check orld boundaries
+	//check world boundaries
 	if((getYCoord() + VerticalSize) >= 700){
 	    setYCoord(getWorldBot() - VerticalSize);
 	    setYVel(0);
