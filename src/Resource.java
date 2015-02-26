@@ -8,7 +8,7 @@ public class Resource{
 
     private double XCoord, YCoord;
     private Image resourceImage;
-
+    private String resourceType;
     public Resource(double x, double y){
 	setXCoord(x);
 	setYCoord(y);
@@ -43,4 +43,11 @@ public class Resource{
 	return resourceImage;
     }
 
+    public void setResourceType(String resourceType){
+	this.resourceType = resourceType;
+    }
+
+    public String getResourceType(){
+	return resourceType;
+    }
 }

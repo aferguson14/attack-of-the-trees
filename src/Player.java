@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import static java.lang.Math.abs;
@@ -40,6 +39,9 @@ public class Player{
     private Point MousePoint;
     private int WeaponTracker = 0;
     
+    private int logCount;
+    //private int metalCount = 0;
+    
     //Constructor
     public Player() {
 	ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDown.png"); //character image
@@ -55,6 +57,8 @@ public class Player{
         AttackSpeed = 20;
         Speed = 4;
         JumpSpeed = -15;
+
+	logCount = 0;
     }
     
     public void move(ArrayList <Terrain> terrain) {
@@ -508,6 +512,12 @@ if(isAttacking()){
         this.scrollY = scrollY;
     }
 
+    public int getLogCount(){
+	return logCount;
+    }
 
+    public void setLogCount(int logCount){
+	this.logCount = logCount;
+    }
 
 }

@@ -130,6 +130,10 @@ public class Board extends JPanel implements ActionListener {
 	for(int i = 0; i< getResources().size();i++){
 	    if(getP().getXCoord() == getResources().get(i).getXCoord()){
 		//TODO: increase resource count for player
+		if(getResources().get(i).getResourceType() == "log")
+		    getP().setLogCount(getP().getLogCount() + 1);
+		//Implement for other resources
+		System.out.println(getP().getLogCount());
 		getResources().remove(i);
 	    }
 	}

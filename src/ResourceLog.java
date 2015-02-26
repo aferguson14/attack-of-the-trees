@@ -12,6 +12,7 @@ public class ResourceLog extends Resource{
 	//Image needs to be replaced by log
 	ImageIcon i = new ImageIcon("../images/weaponImage/stick.png");
 	this.setResourceImage(i.getImage());
+	this.setResourceType("log");
     }
 
     public void paintResource(Graphics g){
