@@ -159,7 +159,10 @@ public class Board extends JPanel implements ActionListener {
 	    getP().AttackAnimation(g);
 	    if(getState() == STATE.PAUSE){
 	   	pmenu.requestFocusInWindow();
-	}
+		int brightness = (int)(256 - 256 * 0.5f);
+		g.setColor(new Color(0,0,0,brightness));
+		g.fillRect(0, 0, 1750, 800);
+	    }
     	}
         //if State!=Game, perform other State actions
 	
