@@ -54,11 +54,13 @@ public class Board extends JPanel implements ActionListener {
         //creates player, enemies, terrain, weapon, menu, and background images
 	p = new Player();
         EnemyRobot robo = new EnemyRobot(1000, WorldBot - 115);
-	EnemyTree tree = new EnemyTree(2000, WorldBot - 115);
+	EnemyTree tree1 = new EnemyTree(2000, WorldBot - 115);
+	EnemyTree tree2 = new EnemyTree(2200, WorldBot - 115);
         EnemyBear bear = new EnemyBear(3000, WorldBot - 115);
         EnemySunFlower sunflower = new EnemySunFlower(900, WorldBot - 115);
         enemies.add(robo);
-	enemies.add(tree);
+	enemies.add(tree1);
+	enemies.add(tree2);
         enemies.add(bear);
         enemies.add(sunflower);
         Rock rock = new Rock(300, WorldBot - 100);
