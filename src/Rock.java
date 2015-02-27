@@ -30,6 +30,9 @@ public class Rock extends Terrain{
 	g2d.setColor(Color.red);
 	g2d.fill(rect);
     }
+    public void Updatesides(Enemies e, int i){
+        e.getTops().set(i, this.getTop());
+    }
     public void print(){
         System.out.println("Rock");
     }
