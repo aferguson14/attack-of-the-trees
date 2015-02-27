@@ -10,10 +10,13 @@ public class EnemySunFlower extends Enemies{
     public EnemySunFlower(double x, double y){
         super(x, y);
         ImageIcon i = new ImageIcon("../images/enemyImages/sunflower/sunflowerFront.png");
+	ResourceLog coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
+
         this.setStill(i.getImage());
         this.setHorizontalSize(90);
         this.setVerticalSize(115);
         
+	this.setResource(coin);
         this.setHp(50);
         this.setAttack(15);
         this.setSpeed(.5);
@@ -78,10 +81,6 @@ public class EnemySunFlower extends Enemies{
                 setFacing(0);
             }   
         
-    }
-    @Override
-    public void dropResource(Graphics g){
-    //Do once items have been implemented
     }
     @Override
     public void die(){
