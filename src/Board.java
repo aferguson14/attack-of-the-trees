@@ -140,7 +140,7 @@ public class Board extends JPanel implements ActionListener {
         for(int i = 0; i < getEnemies().size(); i++){
             if(getEnemies().get(i).getHp() <= 0){
 		getEnemies().get(i).getResource().setXCoord(getEnemies().get(i).getXCoord());
-		getEnemies().get(i).getResource().setYCoord(getEnemies().get(i).getYCoord());
+		getEnemies().get(i).getResource().setYCoord(getEnemies().get(i).getYCoord()+70);
        
                 resources.add(getEnemies().get(i).getResource());
 		getEnemies().remove(i);
@@ -152,7 +152,7 @@ public class Board extends JPanel implements ActionListener {
 	    if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
 	       (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
 	       (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
-	       (getP().getYCoord() >= getResources().get(i).getYCoord()-25) ){
+	       (getP().getYCoord() >= getResources().get(i).getYCoord()-70) ){
 
 		if(getResources().get(i).getResourceType() == "log")
 		    getP().setLogCount(getP().getLogCount() + 1);
