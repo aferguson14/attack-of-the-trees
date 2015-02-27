@@ -30,7 +30,9 @@ public class Ramp extends Terrain{
     public void paintTerrain(Graphics g, Player p, ArrayList <Enemies> e) {
         Updatesides(p);
         for(Enemies enem : e){
-            Updatesides(enem);
+            for(int i = 0; i < enem.getTops().size(); i++){
+                Updatesides(enem, i);
+            }
         }
         int[] xpoints = new int[3];
         xpoints[0] = (int) getXCoord();
@@ -56,11 +58,11 @@ public void Updatesides(Player p){
     }
 }
 //same as previous method, but for enemies
-public void Updatesides(Enemies e){
+public void Updatesides(Enemies e, int index){
     if(((e.getXCoord() + e.getHorizontalSize()/2) >= this.getXCoord()) && 
             (e.getXCoord() <= this.getXCoord() + 
                 this.getHorizontalSize() - (e.getHorizontalSize()/2))){
-        setEnemyTop(this.getYCoord() - (e.getXCoord() - 
+        e.getTops().set(index, this.getYCoord() - (e.getXCoord() - 
                     this.getXCoord() + (e.getHorizontalSize()/2)));
     }
 }

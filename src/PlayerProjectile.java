@@ -100,7 +100,9 @@ public boolean EnemyContact(Enemies enem){
     public void getXY(Double spd, Double ang){
         double yvel, xvel;
         yvel = -1 * (spd * (Math.sin(ang)));
+                 System.out.println("sin: " + Math.sin(ang) + "\n");
         xvel = (spd * (Math.cos(ang)));
+                 System.out.println("cos: " + Math.cos(ang) + "\n");
         setXVel(xvel);
         setYVel(yvel);
         
