@@ -30,9 +30,12 @@ public abstract class Enemies {
     private double JumpSpeed;
     private int AttackSpeedCount = 0;
     private ArrayList <Projectile> projectiles = new ArrayList<Projectile>();
+    private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
+    private ArrayList<Double> tops = new ArrayList<Double>();
     private boolean startAttacking = false;
     private boolean cantMove = false;
     private double lastCoord1 = 0, lastCoord2;
+    private boolean startedJump = false;
     private Resource resource;
     
     //Constructor
@@ -41,7 +44,7 @@ public abstract class Enemies {
         YCoord = y;
     }
     //Move Method, Similar to Player's
-    public void move(ArrayList <Terrain> terrain){
+    public void move(ArrayList <Terrain> terrain, ArrayList <Enemies> enem){
 
         if(Board.getState() == Board.STATE.GAME){
         //adjust velocities
@@ -58,10 +61,15 @@ public abstract class Enemies {
         setXCoord(getXCoord() + getXVel());
         setYCoord(getYCoord() + getYVel());
         //check terrain contact
-        for(Terrain t : terrain){
-            t.CheckEnemyContact(this);
+        for(int i = 0; i < terrains.size(); i++){
+            terrains.get(i).CheckEnemyContact(this, i);
             
         }
+        for(Enemies en : enem){
+            this.CheckEnemyContact(en);
+            
+        }
+        
         //check world contacts
         if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
             setYCoord(getWorldBot() - getVerticalSize());
@@ -92,6 +100,15 @@ public abstract class Enemies {
         return false;
     }
     
+    public boolean checkSpeed(){
+        if((abs(getLastCoord2() - getLastCoord1()) < abs(this.getSpeed())) && !isAttacking() && !isInAir()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     public void Attack(Player p, Graphics g){}
     //subtract health by player's attack dmg
     public void takeDmg(Player p){
@@ -107,7 +124,7 @@ public abstract class Enemies {
             die();
         }
     }
-    public void AI(Player p, Graphics g, ArrayList<Terrain> terrain){}
+    public void AI(Player p, Graphics g, ArrayList<Terrain> terrain, ArrayList<Enemies> enem){}
     public void dropResource(Graphics g){}
     public void die(){
 	
@@ -168,7 +185,98 @@ public abstract class Enemies {
     public void deleteProjectile(Projectile p){
         projectiles.remove(p);
     }
-    
+    public void CheckEnemyContact(Enemies e){
+         double speedDif = 0;
+         if((e.getSpeed()) < (this.getSpeed())){
+             speedDif = this.getSpeed();
+             
+         }      
+         else{
+             speedDif = e.getSpeed();
+         }
+         //checks coords of enemy and if in contact with left side of terrain
+         if((startedJump == false) &&(((e.getXCoord() + e.getHorizontalSize() + speedDif) >= this.getXCoord()) && 
+                 (e.getXCoord() + e.getHorizontalSize() <=
+                    this.getXCoord() + speedDif))
+                 && (((e.getYCoord() >= this.getYCoord())
+                 && ((e.getYCoord()) <= (this.getYCoord() + this.getVerticalSize())))
+                 || ((((e.getYCoord() + e.getVerticalSize()) 
+                     >= this.getYCoord()) && ((e.getYCoord() + e.getVerticalSize()) 
+                        <= (this.getYCoord() + this.getVerticalSize()) + 1)))
+                 || ((this.getYCoord() >= e.getYCoord()) && ((this.getYCoord() + this.getVerticalSize()) 
+                        <= e.getYCoord() + e.getVerticalSize())))
+                 ){
+             //set enemy coords accordingly
+                e.setXCoord(this.getXCoord() - e.getHorizontalSize() - e.getSpeed()); 
+             
+         }
+         //check if coords of enemy in contact with Right side of terrain
+         else if((startedJump == false) && (((e.getXCoord() - speedDif) <= (this.getXCoord() 
+                    + this.getHorizontalSize()))
+                 && (e.getXCoord() >= this.getXCoord() + 
+                    this.getHorizontalSize() - speedDif))
+                 && (((e.getYCoord() >= this.getYCoord()) 
+                    && ((e.getYCoord()) <= this.getYCoord() + this.getVerticalSize()))
+                 || ((((e.getYCoord() + e.getVerticalSize()) >= this.getYCoord()) 
+               && ((e.getYCoord() + e.getVerticalSize()) <= (this.getYCoord() + this.getVerticalSize() + 1))))
+                 || ((this.getYCoord() >= e.getYCoord()) && ((this.getYCoord() + this.getVerticalSize())
+                    <= e.getYCoord() + e.getVerticalSize())))
+                 ){
+             //adjust coords accordingly
+                e.setXCoord(this.getXCoord() + this.getHorizontalSize() + e.getSpeed()); 
+             
+         }
+//         //check if coords in contact with top of terrain
+//         else if((startedJump == false) && ((((e.getYCoord() + e.getVerticalSize()) > this.getYCoord()) 
+//                 && (e.getYCoord() < this.getYCoord())))
+//                 && (((e.getXCoord() > this.getXCoord()) 
+//                    && ((e.getXCoord()) < (this.getXCoord() + this.getHorizontalSize())))
+//                 || ((((e.getXCoord() + e.getHorizontalSize()) 
+//                 > this.getXCoord()) && ((e.getXCoord() + 
+//                    e.getHorizontalSize()) < (this.getXCoord() + this.getHorizontalSize())))))){
+//             //adjust coords anf velocities accordingly
+//                
+//                e.setYCoord(this.getYCoord() - e.getVerticalSize());
+//                e.setYVel(0);
+//                e.setYAcc(0);
+//                e.setStartedJump(false);
+//             
+//         }
+//         //check if enemy coords in contact with bot of terrain
+//        else if((((e.getYCoord()) < (this.getYCoord() + this.getVerticalSize())) 
+//                && (e.getYCoord() + e.getVerticalSize() >
+//                (this.getYCoord() + this.getVerticalSize())))
+//                 && (((e.getXCoord() > this.getXCoord()) 
+//                && ((e.getXCoord()) < (this.getXCoord() + this.getHorizontalSize())))
+//                 || ((((e.getXCoord() + e.getHorizontalSize()) 
+//                > this.getXCoord()) && ((e.getXCoord() + e.getHorizontalSize())
+//                < (this.getXCoord() + this.getHorizontalSize())))))){
+//            
+//            //adjust velocities accordingly
+//                e.setYVel(-1 * e.getYVel());
+//            
+//         }
+        //if not in contact, if acc == 0, set to .5
+         //(if on ground will be reset in move)
+        else{
+            if(e.getYAcc() == 0)
+            e.setYAcc(.5);
+            if(abs(getYVel()) > 0){
+                setInAir(true);
+            }
+        }
+     }
+     public void setTerrainDimensions(ArrayList <Terrain> ter){
+         this.setTerrains(ter);
+         for(int i = 0; i < terrains.size(); i++){
+             getTops().add(i, terrains.get(i).getTop());
+         }
+     }
+     public void updateTerrainDimensions(){
+         for(int i = 0; i < terrains.size(); i++){
+             terrains.get(i).UpdateSides(this, i);
+         }
+     }
     
     //-------------Getters/Setters---------------------------------------------
     public double getXCoord() {
@@ -446,6 +554,49 @@ public abstract class Enemies {
      */
     public void setLastCoord2(double lastCoord2) {
         this.lastCoord2 = lastCoord2;
+    }
+
+
+    /**
+     * @return the startedJump
+     */
+    public boolean isStartedJump() {
+        return startedJump;
+    }
+
+    /**
+     * @param startedJump the startedJump to set
+     */
+    public void setStartedJump(boolean startedJump) {
+        this.startedJump = startedJump;
+    }
+
+    /**
+     * @return the terrain
+     */
+    public ArrayList<Terrain> getTerrains() {
+        return terrains;
+    }
+
+    /**
+     * @param terrain the terrain to set
+     */
+    public void setTerrains(ArrayList<Terrain> terrain) {
+        this.terrains = terrain;
+    }
+
+    /**
+     * @return the tops
+     */
+    public ArrayList<Double> getTops() {
+        return tops;
+    }
+
+    /**
+     * @param tops the tops to set
+     */
+    public void setTops(ArrayList<Double> tops) {
+        this.tops = tops;
     }
 
     public Resource getResource(){
