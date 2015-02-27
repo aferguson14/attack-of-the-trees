@@ -81,7 +81,7 @@ public class EnemyBear extends Enemies{
         
     }
     @Override
-    public void dropItem(){
+    public void dropResource(Graphics g){
     //Do once items have been implemented
     }
     @Override

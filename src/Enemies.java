@@ -33,6 +33,7 @@ public abstract class Enemies {
     private boolean startAttacking = false;
     private boolean cantMove = false;
     private double lastCoord1 = 0, lastCoord2;
+    private Resource resource;
     
     //Constructor
     public Enemies(double x, double y){
@@ -107,7 +108,7 @@ public abstract class Enemies {
         }
     }
     public void AI(Player p, Graphics g, ArrayList<Terrain> terrain){}
-    public void dropItem(){}
+    public void dropResource(Graphics g){}
     public void die(){
 	
     }
@@ -447,4 +448,11 @@ public abstract class Enemies {
         this.lastCoord2 = lastCoord2;
     }
 
+    public Resource getResource(){
+	return resource;
+    }
+
+    public void setResource(Resource resource){
+	this.resource = resource;
+    }
 }

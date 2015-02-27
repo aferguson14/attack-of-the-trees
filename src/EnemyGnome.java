@@ -80,7 +80,7 @@ public class EnemyGnome extends Enemies{
         
     }
     @Override
-    public void dropItem(){
+    public void dropResource(Graphics g){
     //Do once items have been implemented
     }
     @Override

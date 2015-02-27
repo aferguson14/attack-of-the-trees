@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.*;
 import static java.lang.Math.abs;
@@ -22,13 +21,22 @@ public class Board extends JPanel implements ActionListener {
     }
     
     //private data
+
+    //Objects
     private Player p;
     private ArrayList <Enemies> enemies = new ArrayList<Enemies>();
     private ArrayList <Terrain> terrain = new ArrayList<Terrain>();
+    private ArrayList <Resource> resources = new ArrayList<Resource>();
+    
+    //Background Images
     public Image farBackground;
     public Image nearBackground;
     public Image Far2, Far3;
     public Image Near2;
+ 
+    //Resource Images
+    public Image LogImage;
+
     private Image img;
     private Timer time;
     private boolean attack = false;
@@ -41,17 +49,18 @@ public class Board extends JPanel implements ActionListener {
     private int WorldTop = 0;
     public static Point MouseCoords;
     public static boolean PlayerAttack = false;
-
     
     public Board() {
         //creates player, enemies, terrain, weapon, menu, and background images
 	p = new Player();
         EnemyRobot robo = new EnemyRobot(1000, WorldBot - 115);
-	EnemyTree tree = new EnemyTree(2000, WorldBot - 115);
+	EnemyTree tree1 = new EnemyTree(2000, WorldBot - 115);
+	EnemyTree tree2 = new EnemyTree(2200, WorldBot - 115);
         EnemyBear bear = new EnemyBear(3000, WorldBot - 115);
         EnemySunFlower sunflower = new EnemySunFlower(900, WorldBot - 115);
         enemies.add(robo);
-	enemies.add(tree);
+	enemies.add(tree1);
+	enemies.add(tree2);
         enemies.add(bear);
         enemies.add(sunflower);
         Rock rock = new Rock(300, WorldBot - 100);
@@ -86,8 +95,16 @@ public class Board extends JPanel implements ActionListener {
         Far3 = far.getImage();
         Far2 = far2.getImage();
         Near2 = near2.getImage();
+	
+	//RESOURCE IMAGES
+	ImageIcon logImage = new ImageIcon("../images/weaponImage/stick.png");
+	LogImage = logImage.getImage();
+
+	//TIME
 	time = new Timer(5, this);
 	time.start();
+
+	//WEAPONS
         Gun g = new Gun(p.getXCoord(),p.getYCoord());
 	p.AddWeapon(g);
     }
@@ -105,6 +122,7 @@ public class Board extends JPanel implements ActionListener {
     
     public void actionPerformed(ActionEvent e) {
         //move player, move weapon
+
         getP().move(terrain);
         getP().getCurrentWeapon().move(getP());
         //check Player attacking
@@ -119,9 +137,34 @@ public class Board extends JPanel implements ActionListener {
         //if any enemies are below 0 health, delete
         for(int i = 0; i < getEnemies().size(); i++){
             if(getEnemies().get(i).getHp() <= 0){
-                getEnemies().remove(i);
+		getEnemies().get(i).getResource().setXCoord(getEnemies().get(i).getXCoord());
+		getEnemies().get(i).getResource().setYCoord(getEnemies().get(i).getYCoord());
+       
+                resources.add(getEnemies().get(i).getResource());
+		getEnemies().remove(i);
             }
         }
+	//if Player runs over resource, collect
+	for(int i = 0; i< getResources().size();i++){
+	    
+	    if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
+	       (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
+	       (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
+	       (getP().getYCoord() >= getResources().get(i).getYCoord()-25) ){
+
+		if(getResources().get(i).getResourceType() == "log")
+		    getP().setLogCount(getP().getLogCount() + 1);
+		/*else if(getResources().get(i).getResourceType() == "iron")
+		    getP().setIronCount(getP().getIronCount() + 1);
+		else if(getResources().get(i).getResourceType() == "coal")
+		    getP().setCoalCount(getP().getCoalCount() + 1);
+		else if(getResources().get(i).getResourceType() == "oil")
+		    getP().setOilCount(getP().getOilCount() + 1);
+		*/
+		//**ABOVE IS TO BE UNCOMMENTED ONCE WE HAVE IMAGES**
+		getResources().remove(i);
+	    }
+	}
 	repaint();
     }
     
@@ -156,10 +199,29 @@ public class Board extends JPanel implements ActionListener {
 		e.AI(getP(), g, terrain);
 		e.paintEnemy(getP(), g);
 	    }
+
+	    for(Resource r : getResources()){
+		r.paintResource(g);
+	    }
+	    
+	    //RESOURCE BAR
+	    g2d.drawImage(LogImage, (int)getP().getXCoord()+950, 50, null);
+	    Stroke oldStroke = g2d.getStroke();
+	    Font fnt0 = new Font("arial", Font.BOLD, 25);
+	    g.setFont(fnt0);
+	    g.setColor(Color.white);
+	    g.drawString("x" + getP().getLogCount()+"", (int) getP().getXCoord()+970, 50);	
+	    g2d.setStroke(oldStroke);
+
+	    
+	    //ATTACK ANIMATION
 	    getP().AttackAnimation(g);
 	    if(getState() == STATE.PAUSE){
 	   	pmenu.requestFocusInWindow();
-	}
+		int brightness = (int)(256 - 256 * 0.5f);
+		g.setColor(new Color(0,0,0,brightness));
+		g.fillRect(0, 0, 1750, 800);
+	    }
     	}
         //if State!=Game, perform other State actions
 	
@@ -209,6 +271,14 @@ public class Board extends JPanel implements ActionListener {
      */
     public void setEnemies(ArrayList <Enemies> enemies) {
         this.enemies = enemies;
+    }
+
+    public ArrayList <Resource> getResources() {
+	return resources;
+    }
+
+    public void setResources(ArrayList <Resource> resources){
+	this.resources = resources;
     }
 
     /**

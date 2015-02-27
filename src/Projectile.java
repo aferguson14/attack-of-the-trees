@@ -15,7 +15,7 @@ public class Projectile {
     private Image still;
     private int facing;
     private int HorizontalSize, VerticalSize;
-     private int WorldBot = 700;
+    private int WorldBot = 700;
     private int WorldLeft = 0;
     private int WorldRight = 7478;
     private int WorldTop = 0;

@@ -4,16 +4,20 @@ import static java.lang.Math.abs;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
+
 public class EnemyTree extends Enemies{
 
     //Constrcutor
     public EnemyTree(double x, double y){
         super(x, y);
         ImageIcon i = new ImageIcon("../images/enemyImages/tree/treeFront.png");
+	ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
+
         this.setStill(i.getImage());
         this.setHorizontalSize(81);
         this.setVerticalSize(115);
-        
+       
+	this.setResource(log);
         this.setHp(50);
         this.setAttack(15);
         this.setSpeed(.5);
@@ -79,10 +83,7 @@ public class EnemyTree extends Enemies{
             }   
         
     }
-    @Override
-    public void dropItem(){
-    //Do once items have been implemented
-    }
+
     @Override
     public void die(){
     //not sure if needed, keep just in case
