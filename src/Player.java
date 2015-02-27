@@ -38,6 +38,11 @@ public class Player{
     private Weapon currentWeapon;
     private Point MousePoint;
     private int WeaponTracker = 0;
+    private double HealthBarY = 0;
+    private int FrameWorldLeft = -300;
+    private int FrameWorldRight = 1450;
+    private int FrameWorldTop = 0;
+    private int FrameWorldBot = WorldBot;
     
     //resource counters
     private int logCount;
@@ -58,8 +63,10 @@ public class Player{
         AttackSpeed = 20;
         Speed = 4;
         JumpSpeed = -15;
-
+	HealthBarY = (this.getYCoord() - 580);
+	
 	logCount = 0;
+	coinCount = 0;
     }
     
     public void move(ArrayList <Terrain> terrain) {
@@ -98,8 +105,9 @@ public class Player{
         g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 
         if(this.getHp() >= 0){
-            g.setColor(Color.white);
-            g.fillRect((int) (this.getXCoord() -10) , (int) (this.getYCoord() - 10), this.getHp(), 7);
+            g.drawRect((int) (this.getXCoord() -280) , (int) getHealthBarY(), 100 * 7, 20);
+            g.setColor(Color.RED);
+            g.fillRect((int) (this.getXCoord() -280) , (int) getHealthBarY(), this.getHp() * 7, 20);
         }
     }
     
@@ -426,7 +434,7 @@ if(isAttacking()){
      * @param jumpspeed the jumpspeed to set
      */
     public void setJumpspeed(double jumpspeed) {
-        this.JumpSpeed = jumpspeed;
+        this.setJumpSpeed(jumpspeed);
     }
 
     /**
@@ -512,6 +520,30 @@ if(isAttacking()){
     public void setScrollY(double scrollY) {
         this.scrollY = scrollY;
     }
+    
+        /**
+     * @param JumpSpeed the JumpSpeed to set
+     */
+    public void setJumpSpeed(double JumpSpeed) {
+        this.JumpSpeed = JumpSpeed;
+    }
+
+    /**
+     * @return the HealthBarY
+     */
+    public double getHealthBarY() {
+        return HealthBarY;
+    }
+
+    /**
+     * @param HealthBarY the HealthBarY to set
+     */
+    public void setHealthBarY(double HealthBarY) {
+        this.HealthBarY = HealthBarY;
+    }
+
+
+//RESOURCES SETTER/GETTERS
 
     public int getLogCount(){
 	return logCount;
