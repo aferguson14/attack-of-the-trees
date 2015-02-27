@@ -10,7 +10,7 @@ public class EnemyBear extends Enemies{
     public EnemyBear(double x, double y){
         super(x, y);
         ImageIcon i = new ImageIcon("../images/enemyImages/bear/bearSide.png");
-	ResourceLog coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
+	ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
         this.setStill(i.getImage());
         this.setHorizontalSize(60);
         this.setVerticalSize(115);

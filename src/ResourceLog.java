@@ -10,7 +10,7 @@ public class ResourceLog extends Resource{
     public ResourceLog(double x, double y){
 	super(x,y);
 	//Image needs to be replaced by log
-	ImageIcon i = new ImageIcon("../images/weaponImage/stick.png");
+	ImageIcon i = new ImageIcon("../images/sourceImage/wood.png");
 	this.setResourceImage(i.getImage());
 	this.setResourceType("log");
     }
