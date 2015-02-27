@@ -2,31 +2,21 @@ import java.awt.*;
 import java.awt.event.*;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
-
-    /**
-     * @return the State
-     */
-    public static STATE getState() {
-        return State;
-    }
-
-    /**
-     * @param aState the State to set
-     */
-    public static void setState(STATE aState) {
-        State = aState;
-    }
     
     //private data
 
     //Objects
+    Random randomGenerator = new Random();
     private Player p;
     private ArrayList <Enemies> enemies = new ArrayList<Enemies>();
     private ArrayList <Terrain> terrain = new ArrayList<Terrain>();
     private ArrayList <Resource> resources = new ArrayList<Resource>();
+    private ArrayList <Enemies> boss = new ArrayList<Enemies>();
+    private EnemyGenerator generator = new EnemyGenerator(this);
     
     //Background Images
     public Image farBackground;
@@ -50,29 +40,39 @@ public class Board extends JPanel implements ActionListener {
     private int WorldTop = 0;
     public static Point MouseCoords;
     public static boolean PlayerAttack = false;
+        private boolean StartLevel = true;
+    private int level = 0;
+    private LevelHandler lvlhandler = new LevelHandler();
+    
+        //states
+    public static enum STATE {
+    	MENU,
+    	GAME,
+	PAUSE,
+        GAMEOVER
+    };
+    //initial state = MENU
+    private static STATE State = STATE.MENU;
+    
     
     public Board() {
         //creates player, enemies, terrain, weapon, menu, and background images
 	p = new Player();
-        EnemyRobot robo = new EnemyRobot(1000, WorldBot - 115);
-	EnemyTree tree1 = new EnemyTree(2000, WorldBot - 115);
-	EnemyTree tree2 = new EnemyTree(2200, WorldBot - 115);
-        EnemyBear bear = new EnemyBear(3000, WorldBot - 115);
-        EnemySunFlower sunflower = new EnemySunFlower(900, WorldBot - 115);
-        enemies.add(robo);
-	enemies.add(tree1);
-	enemies.add(tree2);
-        enemies.add(bear);
-        enemies.add(sunflower);
+
         Rock rock = new Rock(300, WorldBot - 100);
         Ramp ramp = new Ramp(700, WorldBot);
         Rock rock2 = new Rock(3000, WorldBot - 250);
-        Ramp ramp2 = new Ramp(2900, WorldBot);
+        Ramp ramp2 = new Ramp(1000, WorldBot);
 
-        terrain.add(rock);
+//        terrain.add(rock);
         terrain.add(ramp);
-        terrain.add(rock2);
+//        terrain.add(rock2);
         terrain.add(ramp2);
+        
+        for(int i = 0; i < enemies.size(); i++){
+            enemies.get(i).setTerrainDimensions(terrain);
+        }
+        
 	addKeyListener(new AL());
 	menu = new Menu();
 	pmenu = new PauseMenu();
@@ -111,16 +111,6 @@ public class Board extends JPanel implements ActionListener {
 	p.AddWeapon(g);
     }
 
-    //states
-    public static enum STATE {
-    	MENU,
-    	GAME,
-	PAUSE,
-        GAMEOVER
-    };
-    //initial state = MENU
-    private static STATE State = STATE.MENU;
-
     
     public void actionPerformed(ActionEvent e) {
         //move player, move weapon
@@ -137,15 +127,60 @@ public class Board extends JPanel implements ActionListener {
         }
 
         //if any enemies are below 0 health, delete
-        for(int i = 0; i < getEnemies().size(); i++){
-            if(getEnemies().get(i).getHp() <= 0){
-		getEnemies().get(i).getResource().setXCoord(getEnemies().get(i).getXCoord());
+        if(boss.size() == 0){
+            for(int i = 0; i < getEnemies().size(); i++){
+                if(getEnemies().get(i).getHp() <= 0){
+                    getEnemies().remove(i);
+                    if(lvlhandler.getProgress() < lvlhandler.getProgressNeeded()){
+                        lvlhandler.setProgress(lvlhandler.getProgress() + 1);
+                    }
+                    if(lvlhandler.getProgress() < lvlhandler.getProgressNeeded()){
+                        if(level == 0){
+                        generator.updateLVL1Enemies(enemies);
+                        enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
+                        } else if(level == 1){
+                            generator.updateLVL2Enemies(enemies);
+                            enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
+                        }else{
+                            generator.updateLVL3Enemies(enemies);
+                            enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
+                        }
+                    } else if(enemies.size() > 0){
+
+                    } else{
+                        //boss stuff
+                        EnemyGnome gnome = new EnemyGnome(2000, getWorldBot() - 115);
+                        boss.add(gnome);
+                    }
+                }
+            }
+            	getEnemies().get(i).getResource().setXCoord(getEnemies().get(i).getXCoord());
 		getEnemies().get(i).getResource().setYCoord(getEnemies().get(i).getYCoord()+70);
        
                 resources.add(getEnemies().get(i).getResource());
-		getEnemies().remove(i);
-            }
         }
+        else{
+                    if(boss.get(0).getHp() <= 0){
+                    boss.remove(0);
+                    level++;
+                    if(level == 1){
+                    lvlhandler.HandleLVL2Start(enemies, generator);
+                        for(int i = 0; i < enemies.size(); i++){
+                            enemies.get(i).setTerrainDimensions(terrain);
+                         }
+                    }
+                    else{
+                        lvlhandler.HandleLVL3Start(enemies, generator);
+                            for(int i = 0; i < enemies.size(); i++){
+                                enemies.get(i).setTerrainDimensions(terrain);
+                            }
+                    }
+                    }
+                //boss.get(i).getResource().setXCoord(getEnemies().get(i).getXCoord());
+		//boss.get(i).getResource().setYCoord(getEnemies().get(i).getYCoord()+70);
+                //resources.add(boss.get(i).getResource());
+        }
+
 	//if Player runs over resource, collect
 	for(int i = 0; i< getResources().size();i++){
 	    
@@ -183,6 +218,11 @@ public class Board extends JPanel implements ActionListener {
         g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
 
+        g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 500, 30);
+        g.setColor(Color.white);
+        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
+        		  lvlhandler.getProgress() * (500/(lvlhandler.getProgressNeeded())), 30);
+
 	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
 
             //paint terrain
@@ -191,19 +231,29 @@ public class Board extends JPanel implements ActionListener {
             }
             //paint player and weapon
 	    getP().paintPlayer(g);
+            if(getEnemies().size() > 0){
             getP().getCurrentWeapon().paintWeapon(g, getP(), getEnemies());
-
+            } else if(boss.size() > 0){
+                getP().getCurrentWeapon().paintWeapon(g, getP(), boss);
+            }
             //perform player attack, perform enemy AI
             if(getP().isAttacking()){
                 getP().PlayerAttack(g);
             }
 	    for(Enemies e : getEnemies()){
-		e.AI(getP(), g, terrain);
+		e.AI(getP(), g, terrain, enemies);
 		e.paintEnemy(getP(), g);
 	    }
-
-	    for(Resource r : getResources()){
-		r.paintResource(g);
+            for(Enemies b : boss){
+                b.AI(getP(), g, terrain, enemies);
+		b.paintEnemy(getP(), g);
+            }
+            for(Terrain t : terrain){
+                t.paintTerrain(g, getP(), enemies);
+            }
+	    getP().AttackAnimation(g);
+	    if(getState() == STATE.PAUSE){
+	   	pmenu.requestFocusInWindow();
 	    }
 	    
 	    //RESOURCE BAR
@@ -426,4 +476,19 @@ public class Board extends JPanel implements ActionListener {
     public void setMouseCoords(Point MouseCoords) {
         this.MouseCoords = MouseCoords;
     }
+    
+        /**
+     * @return the State
+     */
+    public static STATE getState() {
+        return State;
+    }
+
+    /**
+     * @param aState the State to set
+     */
+    public static void setState(STATE aState) {
+        State = aState;
+    }
+
 }
