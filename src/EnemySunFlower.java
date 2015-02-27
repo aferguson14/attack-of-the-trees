@@ -51,26 +51,39 @@ public class EnemySunFlower extends Enemies{
     @Override
     public void AI(Player p, Graphics g, ArrayList<Terrain>terrain){
         //If it can't move, Jump
+        if(isInAir()){
+            if(getYVel() == 0){
+                setStartedJump(false);
+            }
+        }
          if(checkMove()){
                     this.setYVel(this.getJumpSpeed());
                     setYAcc(.5);
                     setInAir(true);
         }    
+                 else if(checkSpeed()){
+                    this.setYVel(this.getJumpSpeed());
+                    this.setXVel(this.getSpeed());
+                    setYAcc(.5);
+                    setInAir(true);
+         }
          //if not in air and is in range, attack
         if(this.checkInRange(p) && !isInAir()){
                 this.setAttacking(true);
                 this.Attack(p, g);
                 this.attackAnimation(g);
+                
             }
+
         //else, move toward player
             else{
                this.setAttacking(false);
                 if((p.getXCoord() + p.getHorizontalSize()) < this.getXCoord()){
                     this.setXVel(-1 * (this.getSpeed()));
-                    this.move(terrain);
+                    this.move(terrain, enem);
                 }else if((p.getXCoord()) > (this.getXCoord() + this.getHorizontalSize())){
                     this.setXVel(this.getSpeed());
-                    this.move(terrain);
+                    this.move(terrain, enem);
                 }   
             }
         //adjust facing
