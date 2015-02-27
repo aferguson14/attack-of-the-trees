@@ -98,9 +98,9 @@ public class Board extends JPanel implements ActionListener {
         Near2 = near2.getImage();
 	
 	//RESOURCE IMAGES
-	ImageIcon logImage = new ImageIcon("../images/weaponImage/stick.png");
+	ImageIcon logImage = new ImageIcon("../images/sourceImage/wood.png");
 	LogImage = logImage.getImage();
-	ImageIcon coinImage = new ImageIcon("../images/weaponImage/coin.png");
+	ImageIcon coinImage = new ImageIcon("../images/sourceImage/coin.png");
 	CoinImage = coinImage.getImage();
 	//TIME
 	time = new Timer(5, this);
@@ -140,7 +140,7 @@ public class Board extends JPanel implements ActionListener {
         for(int i = 0; i < getEnemies().size(); i++){
             if(getEnemies().get(i).getHp() <= 0){
 		getEnemies().get(i).getResource().setXCoord(getEnemies().get(i).getXCoord());
-		getEnemies().get(i).getResource().setYCoord(getEnemies().get(i).getYCoord());
+		getEnemies().get(i).getResource().setYCoord(getEnemies().get(i).getYCoord()+70);
        
                 resources.add(getEnemies().get(i).getResource());
 		getEnemies().remove(i);
@@ -152,12 +152,12 @@ public class Board extends JPanel implements ActionListener {
 	    if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
 	       (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
 	       (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
-	       (getP().getYCoord() >= getResources().get(i).getYCoord()-25) ){
+	       (getP().getYCoord() >= getResources().get(i).getYCoord()-70) ){
 
 		if(getResources().get(i).getResourceType() == "log")
 		    getP().setLogCount(getP().getLogCount() + 1);
 		else if(getResources().get(i).getResourceType() == "coin")
-		    getP().setCoinCount(getP().getIronCount() + 1);
+		    getP().setCoinCount(getP().getCoinCount() + 1);
 	     /*	else if(getResources().get(i).getResourceType() == "coal")
 		    getP().setCoalCount(getP().getCoalCount() + 1);
 		else if(getResources().get(i).getResourceType() == "oil")
