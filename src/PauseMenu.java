@@ -30,7 +30,7 @@ public class PauseMenu extends JFrame{
 	setFocusable(true);
 
 	setUndecorated(true);
-	setOpacity(.85f);
+	//	setOpacity(.85f);
 	//this.setLocationRelativeTo(null);
 
 	JPanel topPanel = new JPanel();

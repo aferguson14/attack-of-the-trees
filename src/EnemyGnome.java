@@ -10,10 +10,12 @@ public class EnemyGnome extends Enemies{
     public EnemyGnome(double x, double y){
         super(x, y);
         ImageIcon i = new ImageIcon("../images/enemyImages/gnome/gnomeSide.png");
-        this.setStill(i.getImage());
+        ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
+	this.setStill(i.getImage());
         this.setHorizontalSize(81);
         this.setVerticalSize(115);
         
+	this.setResource(coin);
         this.setHp(50);
         this.setAttack(15);
         this.setSpeed(.5);
@@ -78,10 +80,6 @@ public class EnemyGnome extends Enemies{
                 setFacing(0);
             }   
         
-    }
-    @Override
-    public void dropResource(Graphics g){
-    //Do once items have been implemented
     }
     @Override
     public void die(){

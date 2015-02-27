@@ -39,8 +39,9 @@ public class Player{
     private Point MousePoint;
     private int WeaponTracker = 0;
     
+    //resource counters
     private int logCount;
-    //private int metalCount = 0;
+    private int coinCount;
     
     //Constructor
     public Player() {
@@ -518,6 +519,14 @@ if(isAttacking()){
 
     public void setLogCount(int logCount){
 	this.logCount = logCount;
+    }
+
+    public int getCoinCount(){
+	return coinCount;
+    }
+
+    public void setCoinCount(int coinCount){
+	this.coinCount = coinCount;
     }
 
 }

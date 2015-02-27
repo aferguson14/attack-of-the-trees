@@ -36,6 +36,7 @@ public class Board extends JPanel implements ActionListener {
  
     //Resource Images
     public Image LogImage;
+    public Image CoinImage;
 
     private Image img;
     private Timer time;
@@ -99,7 +100,8 @@ public class Board extends JPanel implements ActionListener {
 	//RESOURCE IMAGES
 	ImageIcon logImage = new ImageIcon("../images/weaponImage/stick.png");
 	LogImage = logImage.getImage();
-
+	ImageIcon coinImage = new ImageIcon("../images/weaponImage/coin.png");
+	CoinImage = coinImage.getImage();
 	//TIME
 	time = new Timer(5, this);
 	time.start();
@@ -154,9 +156,9 @@ public class Board extends JPanel implements ActionListener {
 
 		if(getResources().get(i).getResourceType() == "log")
 		    getP().setLogCount(getP().getLogCount() + 1);
-		/*else if(getResources().get(i).getResourceType() == "iron")
-		    getP().setIronCount(getP().getIronCount() + 1);
-		else if(getResources().get(i).getResourceType() == "coal")
+		else if(getResources().get(i).getResourceType() == "coin")
+		    getP().setCoinCount(getP().getIronCount() + 1);
+	     /*	else if(getResources().get(i).getResourceType() == "coal")
 		    getP().setCoalCount(getP().getCoalCount() + 1);
 		else if(getResources().get(i).getResourceType() == "oil")
 		    getP().setOilCount(getP().getOilCount() + 1);
@@ -205,12 +207,16 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	    
 	    //RESOURCE BAR
-	    g2d.drawImage(LogImage, (int)getP().getXCoord()+950, 50, null);
 	    Stroke oldStroke = g2d.getStroke();
 	    Font fnt0 = new Font("arial", Font.BOLD, 25);
 	    g.setFont(fnt0);
 	    g.setColor(Color.white);
+
+	    g2d.drawImage(LogImage, (int)getP().getXCoord()+950, 50, null);
 	    g.drawString("x" + getP().getLogCount()+"", (int) getP().getXCoord()+970, 50);	
+	    g2d.drawImage(CoinImage, (int)getP().getXCoord()+1050, 50, null);
+	    g.drawString("x" + getP().getCoinCount()+"", (int) getP().getXCoord()+1070, 50);	
+
 	    g2d.setStroke(oldStroke);
 
 	    
