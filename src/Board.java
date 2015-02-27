@@ -276,7 +276,7 @@ public class Board extends JPanel implements ActionListener {
 	   	pmenu.requestFocusInWindow();
 		int brightness = (int)(256 - 256 * 0.5f);
 		g.setColor(new Color(0,0,0,brightness));
-		g.fillRect(0, 0, 1750, 800);
+		g.fillRect((int)getP().getXCoord()-1000, 0, 7478, 1000);
 	    }
     	}
         //if State!=Game, perform other State actions
