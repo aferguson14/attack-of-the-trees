@@ -49,7 +49,7 @@ public class EnemySunFlower extends Enemies{
     }
    
     @Override
-    public void AI(Player p, Graphics g, ArrayList<Terrain>terrain){
+    public void AI(Player p, Graphics g, ArrayList<Terrain>terrain, ArrayList<Enemies> enem){
         //If it can't move, Jump
         if(isInAir()){
             if(getYVel() == 0){

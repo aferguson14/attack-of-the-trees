@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import static java.lang.Math.abs;
@@ -52,16 +51,16 @@ public class EnemyGenerator {
     }
     
     public void createLVL1Enemies(ArrayList<Enemies> enem2){
-    Random randomGenerator = new Random();
+	Random randomGenerator = new Random();
 
 
-    for(int i = 0; i <  4; i++){
+	for(int i = 0; i <  4; i++){
 
             EnemyTree tree = new EnemyTree(0, getBoard().getWorldBot() - 115);
             this.generateEnemy(tree, enem2, getBoard().getP(), randomGenerator);
         
 
-    }
+	}
 
 }
    public void createLVL2Enemies(ArrayList<Enemies> enem2){
