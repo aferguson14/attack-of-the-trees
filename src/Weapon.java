@@ -28,8 +28,8 @@ public abstract class Weapon {
     //move weapon in correspondence with player
     public void move(Player p){
         if(p.getFacing() == 1){
-            setXCoord(p.getXCoord()+ p.getHorizontalSize());
-            setYCoord(p.getYCoord() + 25);
+            setXCoord(p.getXCoord()+ p.getHorizontalSize()); //changed
+            setYCoord(p.getYCoord() + 25); //25 to make weapon lower
         }
         else{
             setXCoord(p.getXCoord());

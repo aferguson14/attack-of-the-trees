@@ -53,7 +53,7 @@ public class Player{
 	ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDown.png"); //character image
 	setStill(i.getImage());
         //starting Player postion/velocity/acceleration
-	XCoord = 10;
+	XCoord = 10; //was 10
 	YCoord = WorldBot - VerticalSize;
         YAcc =  .5;
         YVel = 0;
@@ -162,12 +162,13 @@ if(isAttacking()){
 // if attacking, shoot weapon
 //readjust mouse coords
     public void PlayerAttack(Graphics g){
-        Board.MouseCoords.x += (this.getXCoord() - 300);
+        Board.MouseCoords.x += (this.getXCoord() - 800);
+	//-300 relates to painting player in Board
         setMousePoint(Board.MouseCoords);
         if(isAttacking()){
             getCurrentWeapon().shoot(this.getMousePoint(), g);
         }
-        Board.MouseCoords.x -= (this.getXCoord() - 300);
+        Board.MouseCoords.x -= (this.getXCoord() - 800);
     }
 //get player coords in point form
     public Point getPlayerPoint(){
