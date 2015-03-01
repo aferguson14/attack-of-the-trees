@@ -71,7 +71,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
 
         //if within newGameButton, set state to Game
-        if(mx >= Board.WIDTH /2 + 400 && mx <= Board.WIDTH /2 + 600) {
+        if(mx >= Board.WIDTH /2 + 780 && mx <= Board.WIDTH /2 + 1020) {
             if(my >= 150 && my <= 200){
                 //Pressed newGameButton
                 Board.setState(Board.STATE.GAME);
