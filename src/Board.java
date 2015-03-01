@@ -191,9 +191,7 @@ public class Board extends JPanel implements ActionListener {
                             }
                     }
                     }
-                //boss.get(i).getResource().setXCoord(getEnemies().get(i).getXCoord());
-		//boss.get(i).getResource().setYCoord(getEnemies().get(i).getYCoord()+70);
-                //resources.add(boss.get(i).getResource());
+
         }
 
 	//if Player runs over resource, collect
@@ -221,11 +219,14 @@ public class Board extends JPanel implements ActionListener {
     }
     
     public void paint(Graphics g) {
+	//Player is painted last to make him in front of enemies
 	super.paint(g);
 	Graphics2D g2d = (Graphics2D) g;
 	
         //background images
 	g2d.translate((p.getXCoord()*-1)+300, 0); //+300 because of player pos.
+	//above line changes where player appears on screen
+
 	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
         g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
         g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 9000, -1800, null);
@@ -243,13 +244,6 @@ public class Board extends JPanel implements ActionListener {
             //paint terrain
             for(Terrain t : terrain){
                 t.paintTerrain(g, getP(), enemies);
-            }
-            //paint player and weapon
-	    getP().paintPlayer(g);
-            if(getEnemies().size() > 0){
-            getP().getCurrentWeapon().paintWeapon(g, getP(), getEnemies());
-            } else if(boss.size() > 0){
-                getP().getCurrentWeapon().paintWeapon(g, getP(), boss);
             }
             //perform player attack, perform enemy AI
             if(getP().isAttacking()){
@@ -290,6 +284,14 @@ public class Board extends JPanel implements ActionListener {
 	    g2d.setStroke(oldStroke);
 
 	    
+            //paint player and weapon
+	    getP().paintPlayer(g);
+            if(getEnemies().size() > 0){
+            getP().getCurrentWeapon().paintWeapon(g, getP(), getEnemies());
+            } else if(boss.size() > 0){
+                getP().getCurrentWeapon().paintWeapon(g, getP(), boss);
+            }
+
 	    //ATTACK ANIMATION
 	    getP().AttackAnimation(g);
 	    if(getState() == STATE.PAUSE){
