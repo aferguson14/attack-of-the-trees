@@ -40,7 +40,7 @@ public class Board extends JPanel implements ActionListener {
     private int WorldTop = 0;
     public static Point MouseCoords;
     public static boolean PlayerAttack = false;
-        private boolean StartLevel = true;
+    private boolean StartLevel = true;
     private int level = 0;
     private LevelHandler lvlhandler = new LevelHandler();
     
@@ -58,6 +58,7 @@ public class Board extends JPanel implements ActionListener {
     public Board() {
         //creates player, enemies, terrain, weapon, menu, and background images
 	p = new Player();
+        lvlhandler.HandleLVL1Start(enemies, generator);
 
         Rock rock = new Rock(300, WorldBot - 100);
         Ramp ramp = new Ramp(700, WorldBot);
@@ -130,14 +131,23 @@ public class Board extends JPanel implements ActionListener {
         if(boss.size() == 0){
             for(int i = 0; i < getEnemies().size(); i++){
                 if(getEnemies().get(i).getHp() <= 0){
+		    //Resource Drop
+		    getEnemies().get(i).getResource().setXCoord
+			(getEnemies().get(i).getXCoord());
+		    getEnemies().get(i).getResource().setYCoord
+			(getEnemies().get(i).getYCoord()+70);
+       
+		    resources.add(getEnemies().get(i).getResource());
+
+
                     getEnemies().remove(i);
                     if(lvlhandler.getProgress() < lvlhandler.getProgressNeeded()){
                         lvlhandler.setProgress(lvlhandler.getProgress() + 1);
                     }
-                    if(lvlhandler.getProgress() < lvlhandler.getProgressNeeded()){
+                    if(lvlhandler.getProgress()<lvlhandler.getProgressNeeded()){
                         if(level == 0){
                         generator.updateLVL1Enemies(enemies);
-                        enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
+                        enemies.get(enemies.size()-1).setTerrainDimensions(terrain);
                         } else if(level == 1){
                             generator.updateLVL2Enemies(enemies);
                             enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
@@ -153,14 +163,19 @@ public class Board extends JPanel implements ActionListener {
                         boss.add(gnome);
                     }
                 }
+
             }
-            	getEnemies().get(i).getResource().setXCoord(getEnemies().get(i).getXCoord());
-		getEnemies().get(i).getResource().setYCoord(getEnemies().get(i).getYCoord()+70);
-       
-                resources.add(getEnemies().get(i).getResource());
         }
         else{
                     if(boss.get(0).getHp() <= 0){
+		    //Resource Drop **NEEDS TO BE UPDATED FOR MORE BOSSES**
+		    boss.get(0).getResource().setXCoord
+			(boss.get(0).getXCoord());
+		    boss.get(0).getResource().setYCoord
+			(boss.get(0).getYCoord()+70);
+       
+		    resources.add(boss.get(0).getResource());
+
                     boss.remove(0);
                     level++;
                     if(level == 1){
@@ -202,7 +217,7 @@ public class Board extends JPanel implements ActionListener {
 		getResources().remove(i);
 	    }
 	}
-	repaint();
+		repaint();
     }
     
     public void paint(Graphics g) {
@@ -221,7 +236,7 @@ public class Board extends JPanel implements ActionListener {
         g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 500, 30);
         g.setColor(Color.white);
         g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
-        		  lvlhandler.getProgress() * (500/(lvlhandler.getProgressNeeded())), 30);
+		  lvlhandler.getProgress() * (500/(lvlhandler.getProgressNeeded())), 30);
 
 	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
 
@@ -251,6 +266,11 @@ public class Board extends JPanel implements ActionListener {
             for(Terrain t : terrain){
                 t.paintTerrain(g, getP(), enemies);
             }
+	    //Paint resources
+	    for(Resource r : getResources()){
+		r.paintResource(g);
+	    }
+
 	    getP().AttackAnimation(g);
 	    if(getState() == STATE.PAUSE){
 	   	pmenu.requestFocusInWindow();
