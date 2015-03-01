@@ -28,6 +28,12 @@ public class Board extends JPanel implements ActionListener {
     public Image LogImage;
     public Image CoinImage;
 
+    //Weapon Images
+    public Image SwordImage;
+    public Image AxeImage;
+    public Image StickImage;
+    public Image GunImage;
+
     private Image img;
     private Timer time;
     private boolean attack = false;
@@ -106,6 +112,16 @@ public class Board extends JPanel implements ActionListener {
 	//TIME
 	time = new Timer(5, this);
 	time.start();
+
+	//WEAPON IMAGES
+	ImageIcon axeImage = new ImageIcon("../images/weaponImage/axe.png");
+	AxeImage = axeImage.getImage();
+	ImageIcon swordImage = new ImageIcon("../images/weaponImage/sword.png");
+	SwordImage = swordImage.getImage();
+	ImageIcon stickImage = new ImageIcon("../images/weaponImage/stick.png");
+	StickImage = stickImage.getImage();
+	ImageIcon gunImage = new ImageIcon("../images/weaponImage/gun.png");
+	GunImage = gunImage.getImage();
 
 	//WEAPONS
         Gun g = new Gun(p.getXCoord(),p.getYCoord());
@@ -224,7 +240,7 @@ public class Board extends JPanel implements ActionListener {
 	Graphics2D g2d = (Graphics2D) g;
 	
         //background images
-	g2d.translate((p.getXCoord()*-1)+300, 0); //+300 because of player pos.
+	g2d.translate((p.getXCoord()*-1)+800, 0); //+300 because of player pos.
 	//above line changes where player appears on screen
 
 	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
@@ -271,19 +287,40 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	    
 	    //RESOURCE BAR
+	    int resourceBarX = (int)getP().getXCoord()+830;
 	    Stroke oldStroke = g2d.getStroke();
 	    Font fnt0 = new Font("arial", Font.BOLD, 25);
 	    g.setFont(fnt0);
 	    g.setColor(Color.white);
 
-	    g2d.drawImage(LogImage, (int)getP().getXCoord()+950, 50, null);
-	    g.drawString("x" + getP().getLogCount()+"", (int) getP().getXCoord()+970, 50);	
-	    g2d.drawImage(CoinImage, (int)getP().getXCoord()+1050, 50, null);
-	    g.drawString("x" + getP().getCoinCount()+"", (int) getP().getXCoord()+1070, 50);	
+	    g2d.drawImage(LogImage, resourceBarX, 50, null);
+	    g.drawString("x" + getP().getLogCount()+"", resourceBarX, 50);	
+	    g2d.drawImage(CoinImage, resourceBarX, 125, null);
+	    g.drawString("x" + getP().getCoinCount()+"", resourceBarX, 125);	
 
 	    g2d.setStroke(oldStroke);
 
 	    
+	    //WEAPON BAR
+	    int weaponBarX = (int)getP().getXCoord()-760;
+	    //oldStroke = g2d.getStroke();
+	    //fnt0 = new Font("arial", Font.BOLD, 25);
+	    g.setFont(fnt0);
+	    g.setColor(Color.white);
+
+	    g2d.drawImage(StickImage, weaponBarX, 50, null);
+	    g.drawString("1", weaponBarX-10, 50+5);	
+	    g2d.drawImage(SwordImage, weaponBarX, 110, null);
+	    g.drawString("2", weaponBarX-10, 110+5);	
+	    g2d.drawImage(AxeImage, weaponBarX, 170, null);
+	    g.drawString("3", weaponBarX-10, 170+5);	
+	    g2d.drawImage(GunImage, weaponBarX, 230, null);
+	    g.drawString("4", weaponBarX-10, 230+5);	
+
+
+	    g2d.setStroke(oldStroke);
+	    
+
             //paint player and weapon
 	    getP().paintPlayer(g);
             if(getEnemies().size() > 0){

@@ -34,7 +34,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
         }
         
         if(Board.getState() == Board.STATE.GAME){
-           Point p = new Point(e.getX(), e.getY());
+	    Point p = new Point(e.getX(), e.getY());
            Board.MouseCoords = p;
            Board.PlayerAttack = true;
         }
