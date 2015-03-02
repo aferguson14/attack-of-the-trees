@@ -71,32 +71,34 @@ public class Player{
     
     public void move(ArrayList <Terrain> terrain) {
         //add velocities to positions/add gravity to yVel
-	setXCoord(getXCoord() + getXVel());
-	setYVel(getYVel() + getYAcc());
-	setYCoord(getYCoord() + getYVel());
-        //check terrain contact
-        for(Terrain t : terrain){
-            t.CheckPlayerContact(this);
-            
-        }
-        
-	//check world boundaries
-	if((getYCoord() + VerticalSize) >= 700){
-	    setYCoord(getWorldBot() - VerticalSize);
-	    setYVel(0);
-	    setInAir(false);
-	}
-        if(getXCoord() <= 0){
-            setXCoord(0);
-        }
-        else if((getXCoord() + 50) >= 7000){
-            setXCoord(7000 - 50);
-        }
-        
-        setScrollX(getXCoord()*(-1)); //For background
-	setScrollY(getYCoord()); //For background
+	if(Board.getState() == Board.STATE.GAME){
 
+	    setXCoord(getXCoord() + getXVel());
+	    setYVel(getYVel() + getYAcc());
+	    setYCoord(getYCoord() + getYVel());
+	    //check terrain contact
+	    for(Terrain t : terrain){
+		t.CheckPlayerContact(this);
+            
+	    }
         
+	    //check world boundaries
+	    if((getYCoord() + VerticalSize) >= 700){
+		setYCoord(getWorldBot() - VerticalSize);
+		setYVel(0);
+		setInAir(false);
+	    }
+	    if(getXCoord() <= 0){
+		setXCoord(0);
+	    }
+	    else if((getXCoord() + 50) >= 7000){
+		setXCoord(7000 - 50);
+	    }
+	    
+	    setScrollX(getXCoord()*(-1)); //For background
+	    setScrollY(getYCoord()); //For background
+
+        }
     }
     
     public void paintPlayer(Graphics g){
@@ -111,43 +113,43 @@ public class Player{
         }
     }
     
-public void AttackAnimation(Graphics g){
-//change player image depending on attack and facing
-if(isAttacking()){
-    if(getFacing() == 0){
+    public void AttackAnimation(Graphics g){
+	//change player image depending on attack and facing
+	if(isAttacking()){
+	    if(getFacing() == 0){
 
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpLeft.png"); //character image
-        setStill(i.getImage());
+		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpLeft.png"); //character image
+		setStill(i.getImage());
 
 
+	    }
+	    else if(getFacing() == 1){
+		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpRight.png");
+		setStill(i.getImage());
+
+	    }
+
+	}else{
+	    if(getFacing() == 0){
+		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png");
+		setStill(i.getImage());
+	    }else{
+		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownRight.png");
+		setStill(i.getImage());
+	    }
+	}
     }
-    else if(getFacing() == 1){
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpRight.png");
-        setStill(i.getImage());
-
-    }
-
-}else{
-    if(getFacing() == 0){
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png");
-        setStill(i.getImage());
-    }else{
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownRight.png");
-        setStill(i.getImage());
-    }
-}
-}
     
-//subtract Hp by enemy attack
+    //subtract Hp by enemy attack
     public void takeDmg(Enemies e){
         setHp(getHp() - e.getAttack());
     }
-//add weapon    
+    //add weapon    
     public void AddWeapon(Weapon w){
         weapon.add(w);
         currentWeapon = w;
     }
-//switch current weapon
+    //switch current weapon
     public void switchWeapon(){
         if(WeaponTracker < weapon.size()){
             WeaponTracker++;
@@ -158,9 +160,9 @@ if(isAttacking()){
             currentWeapon = weapon.get(WeaponTracker);
         }
     }
-//get mouse coords
-// if attacking, shoot weapon
-//readjust mouse coords
+    //get mouse coords
+    // if attacking, shoot weapon
+    //readjust mouse coords
     public void PlayerAttack(Graphics g){
         Board.MouseCoords.x += (this.getXCoord() - 800);
 	//-300 relates to painting player in Board
@@ -170,7 +172,7 @@ if(isAttacking()){
         }
         Board.MouseCoords.x -= (this.getXCoord() - 800);
     }
-//get player coords in point form
+    //get player coords in point form
     public Point getPlayerPoint(){
         Point p = new Point((int)this.getXCoord(), (int)this.getYCoord());
         return p;
@@ -209,7 +211,7 @@ if(isAttacking()){
     //player movement input
     public void keyReleased(KeyEvent e) {
 	int key = e.getKeyCode();
-        //realease of L/R key's result in 0 horiz vel
+        //release of L/R key's result in 0 horiz vel
 	if (key == KeyEvent.VK_A)
 	    setXVel(0);
 	
