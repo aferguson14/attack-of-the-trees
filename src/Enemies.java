@@ -43,6 +43,7 @@ public abstract class Enemies {
         XCoord = x;
         YCoord = y;
     }
+
     //Move Method, Similar to Player's
     public void move(ArrayList <Terrain> terrain, ArrayList <Enemies> enem){
 
@@ -77,10 +78,10 @@ public abstract class Enemies {
             setInAir(false);
         }
         if(getXCoord() <= getWorldLeft()){
-            setYCoord(0);
+            setXCoord(0);
         }
         if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
-            setYCoord(WorldRight = getHorizontalSize());
+            setXCoord(WorldRight = getHorizontalSize());
         }
         if(getYCoord() <= getWorldTop()){
             setYCoord(0);
@@ -99,7 +100,6 @@ public abstract class Enemies {
         }
         return false;
     }
-    
     public boolean checkSpeed(){
         if((abs(getLastCoord2() - getLastCoord1()) < abs(this.getSpeed())) && !isAttacking() && !isInAir()){
             return true;
@@ -125,7 +125,7 @@ public abstract class Enemies {
         }
     }
     public void AI(Player p, Graphics g, ArrayList<Terrain> terrain, ArrayList<Enemies> enem){}
-    public void dropResource(Graphics g){}
+    public void dropItem(){}
     public void die(){
 	
     }
@@ -185,7 +185,7 @@ public abstract class Enemies {
     public void deleteProjectile(Projectile p){
         projectiles.remove(p);
     }
-    public void CheckEnemyContact(Enemies e){
+     public void CheckEnemyContact(Enemies e){
          double speedDif = 0;
          if((e.getSpeed()) < (this.getSpeed())){
              speedDif = this.getSpeed();
@@ -556,7 +556,6 @@ public abstract class Enemies {
         this.lastCoord2 = lastCoord2;
     }
 
-
     /**
      * @return the startedJump
      */
@@ -585,6 +584,7 @@ public abstract class Enemies {
         this.terrains = terrain;
     }
 
+
     /**
      * @return the tops
      */
@@ -598,12 +598,13 @@ public abstract class Enemies {
     public void setTops(ArrayList<Double> tops) {
         this.tops = tops;
     }
-
-    public Resource getResource(){
+    
+        public Resource getResource(){
 	return resource;
     }
 
     public void setResource(Resource resource){
 	this.resource = resource;
     }
+
 }
