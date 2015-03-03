@@ -248,7 +248,7 @@ public class Board extends JPanel implements ActionListener {
 	Graphics2D g2d = (Graphics2D) g;
 	
         //background images
-	g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
+	g2d.translate((p.getXCoord()*-1)+600, 0); //+600 because of player pos.
 	//above line changes where player appears on screen
 	
 	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);

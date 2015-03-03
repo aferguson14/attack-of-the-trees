@@ -113,16 +113,39 @@ public class Player{
     public void paintPlayer(Graphics g){
         //paint player and health bar
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
+	//  g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 
 	//Arm movement
-	double angle = Math.toDegrees(Math.atan2((Board.MouseCoords.y-(this.getYCoord()+60)), (Board.MouseCoords.x-(this.getXCoord()+10))));
-        g2d.rotate(angle, this.getXCoord(), this.getYCoord());
-        g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())+10, (int) (this.getYCoord())+60, null);
-	g2d.rotate(-angle, this.getXCoord(), this.getYCoord());
+	if(this.getFacing()==0){
+	    double angle = Math.atan2(
+	      ((Board.MouseCoords.y)-(this.getYCoord()+60)), 
+	      ((Board.MouseCoords.x-600+this.getXCoord())-(this.getXCoord()-15+40)));
+	    //Test Printing
+	    /*	    System.out.println("MouseCoord: (" + (Board.MouseCoords.x-600+this.getXCoord()) + ", " + Board.MouseCoords.y+ ")");
+	    System.out.println("PlayerCoord: (" + this.getXCoord() + ", " + this.getYCoord() + ")");
+	    */
+	
+	    g2d.rotate(angle, this.getXCoord()-15+40, this.getYCoord()+60+3);
+	    g2d.rotate(Math.PI, this.getXCoord()-15+40, this.getYCoord()+60+3);
+	    g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())-15, (int) (this.getYCoord())+60, null);
+	    g2d.rotate(-Math.PI, this.getXCoord()-15+40, this.getYCoord()+60+3);
+	    g2d.rotate(-angle, this.getXCoord()-15+40, this.getYCoord()+60+3);
+	    g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
+	   
+	}
 
-
-
+	if(this.getFacing()==1){
+	    g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
+	    double angle = Math.atan2(
+	      ((Board.MouseCoords.y)-(this.getYCoord()+60)), 
+	      ((Board.MouseCoords.x-600+this.getXCoord())-(this.getXCoord()+15)));	
+	
+	    g2d.rotate(angle, this.getXCoord()+15, this.getYCoord()+60+3);
+	    g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())+15, (int) (this.getYCoord())+60, null);
+	    g2d.rotate(-angle, this.getXCoord()+15, this.getYCoord()+60+3);
+	    
+	}
+	//End Arm Movement
 
         if(this.getHp() >= 0){
             g.drawRect((int) (this.getXCoord() -280) , (int) getHealthBarY(), 100 * 7, 20);
@@ -205,18 +228,33 @@ public class Player{
         //input cahnges velocity
 	if (key == KeyEvent.VK_A){
             if(!isAttacking()){
-                ImageIcon iLeft = new ImageIcon("../images/playerImages/guy/guyArmlessLeft.png"); // character image
-                setStill(iLeft.getImage());
             }
+	    ImageIcon iLeft = new ImageIcon
+		("../images/playerImages/guy/guyArmlessLeft.png");
+            setStill(iLeft.getImage());
+	    ImageIcon iArmLeft = new ImageIcon
+		    ("../images/playerImages/guy/armLeft.png");
+	    setArmStill(iArmLeft.getImage());
+	    
 	    setXVel(-1 * (this.getSpeed()));
             setFacing(0);
         }
 	if (key == KeyEvent.VK_D){
             if(!isAttacking()){
-                ImageIcon iRight = new ImageIcon("../images/playerImages/guy/guyArmlessRight.png"); // character image
+		/*                ImageIcon iRight = new ImageIcon("../images/playerImages/guy/guyArmlessRight.png"); // character image
                 setStill(iRight.getImage());
-            }
-    setXVel(getSpeed());
+		ImageIcon iArmRight = new ImageIcon("../images/playerImages/guy/armRight.png");
+		setArmStill(iArmRight.getImage());
+		*/
+          }
+	    ImageIcon iRight = new ImageIcon
+		("../images/playerImages/guy/guyArmlessRight.png");
+            setStill(iRight.getImage());
+	    ImageIcon iArmRight = new ImageIcon
+		    ("../images/playerImages/guy/armRight.png");
+	    setArmStill(iArmRight.getImage());
+
+	    setXVel(getSpeed());
             setFacing(1);
         }
         //if on ground, can jump
