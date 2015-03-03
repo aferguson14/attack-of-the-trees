@@ -126,11 +126,23 @@ public class Board extends JPanel implements ActionListener {
 	//WEAPONS
         Gun g = new Gun(p.getXCoord(),p.getYCoord());
 	p.AddWeapon(g);
+       	//Stick s = new Stick(p.getXCoord(),p.getYCord());
+	//p.AddWeapon(s);
+	//Axe a = new Axe(p.getXCoord(),p.getYCord());
+	//p.AddWeapon(a);
+	//Sword sw = new Sword(p.getXCoord(),p.getYCord());
+	//p.AddWeapon(sw);
+	//above to be uncommented when implemented
     }
 
     
     public void actionPerformed(ActionEvent e) {
         //move player, move weapon
+
+	if(getState() == STATE.PAUSE){
+	    getP().setXVel(0);
+	    getP().setYVel(0);
+	} //fixes the player moving after resuming
 
         getP().move(terrain);
         getP().getCurrentWeapon().move(getP());
@@ -240,8 +252,10 @@ public class Board extends JPanel implements ActionListener {
 	Graphics2D g2d = (Graphics2D) g;
 	
         //background images
-	g2d.translate((p.getXCoord()*-1)+800, 0); //+300 because of player pos.
+	//	if(getState() == STATE.GAME){
+	    g2d.translate((p.getXCoord()*-1)+800, 0); //+800 because of player pos.
 	//above line changes where player appears on screen
+	    //	}
 
 	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
         g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);

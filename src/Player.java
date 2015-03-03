@@ -180,6 +180,7 @@ public class Player{
     
     //player movement input
     public void keyPressed(KeyEvent e) {
+
 	int key = e.getKeyCode();
         //input cahnges velocity
 	if (key == KeyEvent.VK_A){
@@ -207,9 +208,10 @@ public class Player{
             }
         }
     }
-    
+
     //player movement input
     public void keyReleased(KeyEvent e) {
+
 	int key = e.getKeyCode();
         //release of L/R key's result in 0 horiz vel
 	if (key == KeyEvent.VK_A)
