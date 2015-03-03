@@ -25,7 +25,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 	
     }
     
-    //If in Menu, preform MenuMouse
+    //If in Menu, perform MenuMouse
     //if in Game, get point and set to Board.MouseCoords
     //and set Player attack = true
     public void mousePressed(MouseEvent e) {
@@ -71,8 +71,8 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
 
         //if within newGameButton, set state to Game
-        if(mx >= Board.WIDTH /2 + 780 && mx <= Board.WIDTH /2 + 1020) {
-            if(my >= 150 && my <= 200){
+        if(mx >= Board.WIDTH /2 + 680 && mx <= Board.WIDTH /2 + 1000) {
+            if(my >= 200 && my <= 300){
                 //Pressed newGameButton
                 Board.setState(Board.STATE.GAME);
             }
