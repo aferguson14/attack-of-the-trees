@@ -16,10 +16,10 @@ public class EnemyBear extends Enemies{
         this.setVerticalSize(115);
         
 	this.setResource(coin);
-        this.setHp(25);
+        this.setHp(200);
         this.setAttack(10);
-        this.setSpeed(2);
-        this.setAttackSpeed(75);
+        this.setSpeed(1);
+        this.setAttackSpeed(50);
         this.setAttackRange(20);
         this.setJumpSpeed(-20);
         this.setAttackSpeedCount(19);

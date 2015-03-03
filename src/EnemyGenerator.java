@@ -15,14 +15,14 @@ public class EnemyGenerator {
     public void generateEnemy(Enemies enem, ArrayList<Enemies> into,Player p, Random randomGenerator){
          
          
-         long rangeL = (long)this.getBoard().getWorldLeft() + (long)p.getXCoord() - 300;
-         long rangeR = (long)this.getBoard().getWorldRight() - (long)p.getXCoord() - 1450;
+         long rangeL = (long)this.getBoard().getWorldLeft() + (long)p.getXCoord() - 600;
+         long rangeR = (long)this.getBoard().getWorldRight() - (long)p.getXCoord() - 1150;
          
          long fractionL = (long)(rangeL * randomGenerator.nextDouble());
          long fractionR = (long)(rangeR * randomGenerator.nextDouble());
          
          double randomNumL = (double)(fractionL);
-         double randomNumR = (double)(fractionR + p.getXCoord() + 1450);
+         double randomNumR = (double)(fractionR + p.getXCoord() + 1150);
          
          int pick = randomGenerator.nextInt(2);
          if(pick == 0){

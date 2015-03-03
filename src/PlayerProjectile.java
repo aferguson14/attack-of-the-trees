@@ -26,61 +26,67 @@ public class PlayerProjectile {
     private double Speed;
     private boolean remove = false;
     private double Angle;
+    private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
+    private ArrayList<Double> tops = new ArrayList<Double>();
     
     //Constructor
     public PlayerProjectile(double x, double y, int direction, Graphics g, double angle){
         setXCoord(x);
         setYCoord(y);
         setFacing(direction);
-        
     }
 
     //move same as Projectile
-    public void move(ArrayList<Enemies> e){
-	if(Board.getState() == Board.STATE.GAME){
-	    //adjust velocities
-	    setXVel(getXVel() + getXAcc());
-	    setYVel(getYVel() + getYAcc());
-	    
-	    //adjust coordinates
-	    setXCoord(getXCoord() + getXVel());
-	    setYCoord(getYCoord() + getYVel());
-	    
-	    //check world boundaries
-	    if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
-		setRemove(true);
-	    }
-	    if(getXCoord() <= getWorldLeft()){
-		setRemove(true);
-	    }
-	    if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
-		setRemove(true);
-	    }
-	    if(getYCoord() <= getWorldTop()){
-		setRemove(true);
-	    }
-	    //check enemy contact
-	    for(Enemies enem : e){
-		if(EnemyContact(enem) == true){
-		    dealDmg(enem);
-		}
-	    }
-	}
+        public void move(ArrayList<Enemies> e, Player p){
+            if(Board.getState() == Board.STATE.GAME){
+                //adjust velocities
+                    setTerrainDimensions(p.getTerrains());
+                for(int i = 0; i < terrains.size(); i++){
+                    terrains.get(i).CheckPlayerProjectileContact(this, i);
+                }    
+
+                setXVel(getXVel() + getXAcc());
+                setYVel(getYVel() + getYAcc());
+
+                //adjust coordinates
+                setXCoord(getXCoord() + getXVel());
+                setYCoord(getYCoord() + getYVel());
+
+                //check world boundaries
+                if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
+                    setRemove(true);
+                }
+                if(getXCoord() <= p.getXCoord() - 600){
+                    setRemove(true);
+                }
+                if((this.getXCoord() + this.getHorizontalSize()) >= p.getXCoord() + 800){
+                    setRemove(true);
+                }
+                if(getYCoord() <= getWorldTop()){
+                    setRemove(true);
+                }
+                //check enemy contact
+                for(Enemies enem : e){
+                    if(EnemyContact(enem) == true){
+                        dealDmg(enem);
+                    }
+                }
+            }
     }
 
-    //return true if in contact with enemy
-    public boolean EnemyContact(Enemies enem){
-	if((getXCoord() >= enem.getXCoord()) && 
-	   (getXCoord() <= (enem.getXCoord() + enem.getHorizontalSize())) 
-	   && ((getYCoord() + getVerticalSize()) <= 
-	       (enem.getYCoord() + enem.getVerticalSize())) 
-	   && (getYCoord() >= enem.getYCoord())){
-	    return true;
-	}
-	else{
-	    return false;
-	}
+//return true if in contact with enemy
+public boolean EnemyContact(Enemies enem){
+    if((getXCoord() >= enem.getXCoord()) && 
+            (getXCoord() <= (enem.getXCoord() + enem.getHorizontalSize())) 
+            && ((getYCoord() + getVerticalSize()) <= 
+                (enem.getYCoord() + enem.getVerticalSize())) 
+            && (getYCoord() >= enem.getYCoord())){
+        return true;
     }
+    else{
+        return false;
+    }
+}
     //deal dmg to enemy based on projectile attack
     public void dealDmg(Enemies e){
         e.setHp(e.getHp() - this.getAttack());
@@ -98,13 +104,11 @@ public class PlayerProjectile {
 			    g2d.fill(rect);
     }
     
-    //get xy velocities based on angle and speed, like a right triangle
+    //get xy velocities based on angle and speed, like a right traingle
     public void getXY(Double spd, Double ang){
         double yvel, xvel;
         yvel = -1 * (spd * (Math.sin(ang)));
-                 System.out.println("sin: " + Math.sin(ang) + "\n");
         xvel = (spd * (Math.cos(ang)));
-                 System.out.println("cos: " + Math.cos(ang) + "\n");
         setXVel(xvel);
         setYVel(yvel);
         
@@ -116,7 +120,17 @@ public class PlayerProjectile {
         }
     }
     
-    
+    public void setTerrainDimensions(ArrayList <Terrain> ter){
+         this.setTerrains(ter);
+         for(int i = 0; i < getTerrains().size(); i++){
+             getTops().add(i, getTerrains().get(i).getTop());
+         }
+     }
+     public void updateTerrainDimensions(){
+         for(int i = 0; i < getTerrains().size(); i++){
+             getTerrains().get(i).UpdateSides(this, i);
+         }
+     }
     
     
     //-------------------Setters/Getters--------------------------------------------------------[
@@ -367,5 +381,33 @@ public class PlayerProjectile {
      */
     public void setAngle(double angle) {
         this.Angle = angle;
+    }
+
+    /**
+     * @return the terrains
+     */
+    public ArrayList<Terrain> getTerrains() {
+        return terrains;
+    }
+
+    /**
+     * @param terrains the terrains to set
+     */
+    public void setTerrains(ArrayList<Terrain> terrains) {
+        this.terrains = terrains;
+    }
+
+    /**
+     * @return the tops
+     */
+    public ArrayList<Double> getTops() {
+        return tops;
+    }
+
+    /**
+     * @param tops the tops to set
+     */
+    public void setTops(ArrayList<Double> tops) {
+        this.tops = tops;
     }
 }

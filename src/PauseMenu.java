@@ -16,8 +16,10 @@ public class PauseMenu extends JFrame{
     public JPanel help;
     //JButton clicked;
     //ArrayList<String> weaponNames = new ArrayList<String>(Arrays.asList("sword", "stick", "axe", "gun"));
+    Player p;
     
-    public PauseMenu(){
+    public PauseMenu(Player p){
+	this.p = p;
 	setTitle("Pause Menu");
 	setSize(500,350);
 	//setBackground(Color.gray);
@@ -38,7 +40,7 @@ public class PauseMenu extends JFrame{
 	getContentPane().add(topPanel);
 	this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	
-	shop = new ShopPanel();
+	shop = new ShopPanel(p);
 	//createShopPage();
 	createSavePage();
 	createHelpPage();

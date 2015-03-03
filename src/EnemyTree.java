@@ -4,27 +4,25 @@ import static java.lang.Math.abs;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
-
 public class EnemyTree extends Enemies{
 
     //Constrcutor
     public EnemyTree(double x, double y){
         super(x, y);
         ImageIcon i = new ImageIcon("../images/enemyImages/tree/treeFront.png");
-	ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
-
+        ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
         this.setStill(i.getImage());
         this.setHorizontalSize(81);
         this.setVerticalSize(115);
-       
-	this.setResource(log);
-        this.setHp(50);
+        
+        this.setResource(log);
+        this.setHp(80);
         this.setAttack(15);
-        this.setSpeed(.5);
-        this.setAttackSpeed(75);
-        this.setAttackRange(20);
+        this.setSpeed(2);
+        this.setAttackSpeed(500);
+        this.setAttackRange(500);
         this.setJumpSpeed(-20);
-        this.setAttackSpeedCount(19);
+        this.setAttackSpeedCount(499);
     }
         @Override
     public void Attack(Player p, Graphics g){
@@ -37,10 +35,10 @@ public class EnemyTree extends Enemies{
             //if attack speed count == the enemies attack speed
             if(this.getAttackSpeedCount() == this.getAttackSpeed()){
             //create a projectile towards the player
-                RobotProjectile laser = new RobotProjectile(this.getXCoord()
-                        , this.getYCoord(), this.getFacing(), g, 
+                TreeProjectile leaf = new TreeProjectile(this.getXCoord()
+                        , this.getYCoord() + 30, this.getFacing(), g, 
                         findAngle(p.getPlayerPoint()));
-                this.addProjectile(laser);
+                this.addProjectile(leaf);
             //reset attack speed count
                 this.setAttackSpeedCount(0);
             }
@@ -59,12 +57,14 @@ public class EnemyTree extends Enemies{
         }
          if(checkMove()){
                     this.setYVel(this.getJumpSpeed());
+                    setStartedJump(true);
                     setYAcc(.5);
                     setInAir(true);
         }    
-        else if(checkSpeed()){
+         else if(checkSpeed()){
                     this.setYVel(this.getJumpSpeed());
                     this.setXVel(this.getSpeed());
+                    setStartedJump(true);
                     setYAcc(.5);
                     setInAir(true);
          }
@@ -75,7 +75,6 @@ public class EnemyTree extends Enemies{
                 this.attackAnimation(g);
                 
             }
-
         //else, move toward player
             else{
                this.setAttacking(false);
@@ -94,9 +93,11 @@ public class EnemyTree extends Enemies{
             else if(p.getXCoord() < getXCoord()){
                 setFacing(0);
             }   
-        
     }
-
+    @Override
+    public void dropItem(){
+    //Do once items have been implemented
+    }
     @Override
     public void die(){
     //not sure if needed, keep just in case

@@ -14,8 +14,7 @@ public class Resource{
 	setYCoord(y);
     }
 
-    public void paintResource(Graphics g){
-    }
+    public void paintResource(Graphics g){}
 
 
     //SETTERS AND GETTERS

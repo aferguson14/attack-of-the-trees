@@ -1,5 +1,3 @@
-package src;
-
 import java.awt.*;
 import java.awt.event.*;
 import static java.lang.Math.abs;
@@ -40,8 +38,9 @@ public class Board extends JPanel implements ActionListener {
     private Timer time;
     private boolean attack = false;
     private Menu menu;
-    private GameOverScreen goscreen;
     private PauseMenu pmenu;
+    private GameOverScreen goscreen;
+
     //world dimensions
     private int WorldBot = 700;
     private int WorldLeft = 0;
@@ -55,9 +54,9 @@ public class Board extends JPanel implements ActionListener {
     
     //states
     public static enum STATE {
-    	MENU,
-    	GAME,
-    	PAUSE,
+	MENU,
+	GAME,
+	PAUSE,
         GAMEOVER
     };
     //initial state = MENU
@@ -66,317 +65,318 @@ public class Board extends JPanel implements ActionListener {
     
     public Board() {
         //creates player, enemies, terrain, weapon, menu, and background images
-    	p = new Player();
-        lvlhandler.HandleLVL1Start(enemies, generator);
-        
-        Rock rock = new Rock(300, WorldBot - 100);
-        Ramp ramp = new Ramp(700, WorldBot);
-        Rock rock2 = new Rock(3000, WorldBot - 250);
-        Ramp ramp2 = new Ramp(1000, WorldBot);
-
-        //        terrain.add(rock);
-        terrain.add(ramp);
-        //        terrain.add(rock2);
-        terrain.add(ramp2);
+	p = new Player();
+        lvlhandler.HandleLVL1Start(enemies, terrain, generator);
         
         for(int i = 0; i < enemies.size(); i++){
             enemies.get(i).setTerrainDimensions(terrain);
         }
+        p.setTerrains(terrain);
         
-        addKeyListener(new AL());
-        menu = new Menu();
-        pmenu = new PauseMenu();
-        goscreen = new GameOverScreen();
+	addKeyListener(new AL());
+	menu = new Menu();
+	pmenu = new PauseMenu(p);
+	goscreen = new GameOverScreen();
         MouseInput m = new MouseInput();
-        addMouseListener(m);
+	addMouseListener(m);
         addMouseMotionListener(m);
-        setFocusable(true);
+	setFocusable(true);
         //not stitched together, used multiple background images
-        ImageIcon far = new 
-	    ImageIcon("images/backgrounds/far-background.png");
+	ImageIcon far = new 
+	    ImageIcon("../images/backgrounds/far-background.png");
         
         farBackground = far.getImage();
-        ImageIcon far2 = new ImageIcon("images/backgrounds/far-background.png");
-        ImageIcon near = new 
-	    ImageIcon("images/backgrounds/near-background.png");
-        ImageIcon near2 = new ImageIcon("images/backgrounds/near-background.png");
-        nearBackground = near.getImage();
+        ImageIcon far2 = new ImageIcon("../images/backgrounds/far-background.png");
+	ImageIcon near = new 
+	    ImageIcon("../images/backgrounds/near-background.png");
+        ImageIcon near2 = new ImageIcon("../images/backgrounds/near-background.png");
+	nearBackground = near.getImage();
         ImageIcon far3 = new 
-	    ImageIcon("images/backgrounds/far-background.png");
+	    ImageIcon("../images/backgrounds/far-background.png");
         
         Far3 = far.getImage();
         Far2 = far2.getImage();
         Near2 = near2.getImage();
 	
-        //RESOURCE IMAGES
-        ImageIcon logImage = new ImageIcon("images/sourceImage/wood.png");
-        LogImage = logImage.getImage();
-        ImageIcon coinImage = new ImageIcon("images/sourceImage/coin.png");
-        CoinImage = coinImage.getImage();
-        
-        //TIME
-        time = new Timer(5, this);
-        time.start();
-
-		//WEAPON IMAGES
-		ImageIcon axeImage = new ImageIcon("images/weaponImage/axe.png");
-		AxeImage = axeImage.getImage();
-		ImageIcon swordImage = new ImageIcon("images/weaponImage/sword.png");
-		SwordImage = swordImage.getImage();
-		ImageIcon stickImage = new ImageIcon("images/weaponImage/stick.png");
-		StickImage = stickImage.getImage();
-		ImageIcon gunImage = new ImageIcon("images/weaponImage/gun.png");
-		GunImage = gunImage.getImage();
-
-		//WEAPONS
-        Gun g = new Gun(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(g);
-		//Stick s = new Stick(p.getXCoord(),p.getYCord());
-		//p.AddWeapon(s);
-		//Axe a = new Axe(p.getXCoord(),p.getYCord());
-		//p.AddWeapon(a);
-		//Sword sw = new Sword(p.getXCoord(),p.getYCord());
-		//p.AddWeapon(sw);
-		//above to be uncommented when implemented
+	//RESOURCE IMAGES
+	ImageIcon logImage = new ImageIcon("../images/sourceImage/wood.png");
+	LogImage = logImage.getImage();
+	ImageIcon coinImage = new ImageIcon("../images/sourceImage/coin.png");
+	CoinImage = coinImage.getImage();
+	//TIME
+	time = new Timer(5, this);
+	time.start();
+	
+	//WEAPON IMAGES
+	ImageIcon axeImage = new ImageIcon("../images/weaponImage/axe.png");
+	AxeImage = axeImage.getImage();
+	ImageIcon swordImage = new ImageIcon("../images/weaponImage/sword.png");
+	SwordImage = swordImage.getImage();
+	ImageIcon stickImage = new ImageIcon("../images/weaponImage/stick.png");
+	StickImage = stickImage.getImage();
+	ImageIcon gunImage = new ImageIcon("../images/weaponImage/gun.png");
+	GunImage = gunImage.getImage();
+	
+	//WEAPONS
+	Gun g = new Gun(p.getXCoord(),p.getYCoord());
+	p.AddWeapon(g);
+	//Stick s = new Stick(p.getXCoord(),p.getYCord());
+	//p.AddWeapon(s);
+	//Axe a = new Axe(p.getXCoord(),p.getYCord());
+	//p.AddWeapon(a);
+	//Sword sw = new Sword(p.getXCoord(),p.getYCord());
+	//p.AddWeapon(sw);
+	//above to be uncommented when implemented
     }
-
+    
     
     public void actionPerformed(ActionEvent e) {
-        //move player, move weapon
+	//move player, move weapon
+	
+	if(getState() == STATE.PAUSE){
+	    getP().setXVel(0);
+	    getP().setYVel(0);
+	} //fixes the player moving after resuming
+        
+        if(getState() == STATE.GAME){
+	    getP().move(terrain);
+	    getP().getCurrentWeapon().move(getP());
+	    //check Player attacking
+	    if(Board.PlayerAttack){
+		getP().setAttacking(true);
+		//            Board.MouseCoords
+	    }
+	    else{
+		getP().setAttacking(false);
+	    }
+	    
+	    //if any enemies are below 0 health, delete
+	    if(boss.size() == 0){
+		for(int i = 0; i < getEnemies().size(); i++){
+		    if(getEnemies().get(i).getHp() <= 0){
+			//Resource Drop
+			getEnemies().get(i).getResource().setXCoord
+			    (getEnemies().get(i).getXCoord());
+			getEnemies().get(i).getResource().setYCoord
+			    (getEnemies().get(i).getYCoord()+70);
+			
+			resources.add(getEnemies().get(i).getResource());
+			
+			
+			getEnemies().remove(i);
+			if(lvlhandler.getProgress() < lvlhandler.getProgressNeeded()){
+			    lvlhandler.setProgress(lvlhandler.getProgress() + 1);
+			}
+			if(lvlhandler.getProgress()<lvlhandler.getProgressNeeded()){
+			    if(level == 0){
+				generator.updateLVL1Enemies(enemies);
+				enemies.get(enemies.size()-1).setTerrainDimensions(terrain);
+			    } else if(level == 1){
+                            generator.updateLVL2Enemies(enemies);
+                            enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
+			    }else{
+				generator.updateLVL3Enemies(enemies);
+				enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
+			    }
+			} else if(enemies.size() > 0){
+			    
+			} else{
+			    //boss stuff
+			    EnemyGnome gnome = new EnemyGnome(2000, getWorldBot() - 115);
+			    boss.add(gnome);
+			}
+		    }
+		    
+		}
+	    }
+	    else{
+		if(boss.get(0).getHp() <= 0){
+		    //Resource Drop **NEEDS TO BE UPDATED FOR MORE BOSSES**
+		    boss.get(0).getResource().setXCoord
+			(boss.get(0).getXCoord());
+		    boss.get(0).getResource().setYCoord
+			(boss.get(0).getYCoord()+70);
+		    
+		    resources.add(boss.get(0).getResource());
 
-    	if(getState() == STATE.PAUSE){
-		    getP().setXVel(0);
-		    getP().setYVel(0);
-    	} //fixes the player moving after resuming
-
-        getP().move(terrain);
-        getP().getCurrentWeapon().move(getP());
-        //check Player attacking
-        if(Board.PlayerAttack){
-            getP().setAttacking(true);
-	    //            Board.MouseCoords
-        }
-        else{
-            getP().setAttacking(false);
-        }
-
-        //if any enemies are below 0 health, delete
-        if(boss.size() == 0){
-            for(int i = 0; i < getEnemies().size(); i++){
-                if(getEnemies().get(i).getHp() <= 0){
-		    //Resource Drop
-		    getEnemies().get(i).getResource().setXCoord
-			(getEnemies().get(i).getXCoord());
-		    getEnemies().get(i).getResource().setYCoord
-			(getEnemies().get(i).getYCoord()+70);
-       
-		    resources.add(getEnemies().get(i).getResource());
-
-            getEnemies().remove(i);
-            if(lvlhandler.getProgress() < lvlhandler.getProgressNeeded()){
-            	lvlhandler.setProgress(lvlhandler.getProgress() + 1);
-            }
-            if(lvlhandler.getProgress()<lvlhandler.getProgressNeeded()){
-            	if(level == 0){
-            		generator.updateLVL1Enemies(enemies);
-            		enemies.get(enemies.size()-1).setTerrainDimensions(terrain);
-            	} else if(level == 1){
-            		generator.updateLVL2Enemies(enemies);
-            		enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
-            	}else{
-            		generator.updateLVL3Enemies(enemies);
-            		enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
-            	}
-             } else if(enemies.size() > 0){
-             } else{
-                    //boss stuff
-                    EnemyGnome gnome = new EnemyGnome(2000, getWorldBot() - 115);
-                    boss.add(gnome);
-                    }
-                }
-            }
-        }
-        else{
-        	if(boss.get(0).getHp() <= 0){
-        		//Resource Drop **NEEDS TO BE UPDATED FOR MORE BOSSES**
-        		boss.get(0).getResource().setXCoord
-        		(boss.get(0).getXCoord());
-        		boss.get(0).getResource().setYCoord
-        		(boss.get(0).getYCoord()+70);
-       
-        		resources.add(boss.get(0).getResource());
-
-        		boss.remove(0);
-        		level++;
-        		if(level == 1){
-                    lvlhandler.HandleLVL2Start(enemies, generator);
-                    for(int i = 0; i < enemies.size(); i++){
-                    	enemies.get(i).setTerrainDimensions(terrain);
-                    }
-        		}
-        		else{
-        			lvlhandler.HandleLVL3Start(enemies, generator);
-        			for(int i = 0; i < enemies.size(); i++){
-        				enemies.get(i).setTerrainDimensions(terrain);
-        			}
-        		}
-        	}
-        }
-
-        //if Player runs over resource, collect
-        for(int i = 0; i< getResources().size();i++){
+		    boss.remove(0);
+		    level++;
+		    if(level == 1){
+			lvlhandler.HandleLVL2Start(enemies, terrain, generator);
+			for(int i = 0; i < enemies.size(); i++){
+			    enemies.get(i).setTerrainDimensions(terrain);
+			}
+		    }
+		    else{
+			lvlhandler.HandleLVL3Start(enemies, terrain, generator);
+			for(int i = 0; i < enemies.size(); i++){
+			    enemies.get(i).setTerrainDimensions(terrain);
+			}
+		    }
+		}
+		
+	    }
+	    
+	    //if Player runs over resource, collect
+	    for(int i = 0; i< getResources().size();i++){
 	        
-        if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
-	       (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
-	       (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
-	       (getP().getYCoord() >= getResources().get(i).getYCoord()-70) ){
-
-        	if(getResources().get(i).getResourceType() == "log")
-        		getP().setLogCount(getP().getLogCount() + 1);
-        	else if(getResources().get(i).getResourceType() == "coin")
-        		getP().setCoinCount(getP().getCoinCount() + 1);
-        	/*else if(getResources().get(i).getResourceType() == "coal")
-		      	getP().setCoalCount(getP().getCoalCount() + 1);
+		if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
+		   (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
+		   (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
+		   (getP().getYCoord() >= getResources().get(i).getYCoord()-70) ){
+		    
+		    if(getResources().get(i).getResourceType() == "log")
+			getP().setLogCount(getP().getLogCount() + 1);
+		    else if(getResources().get(i).getResourceType() == "coin")
+			getP().setCoinCount(getP().getCoinCount() + 1);
+		    /*else if(getResources().get(i).getResourceType() == "coal")
+		      getP().setCoalCount(getP().getCoalCount() + 1);
 		      else if(getResources().get(i).getResourceType() == "oil")
-		        	getP().setOilCount(getP().getOilCount() + 1);
-        	 */
-		//**ABOVE IS TO BE UNCOMMENTED ONCE WE HAVE IMAGES**
-        	getResources().remove(i);
-	    	}
-        }
+		      getP().setOilCount(getP().getOilCount() + 1);
+		    */
+		    //**ABOVE IS TO BE UNCOMMENTED ONCE WE HAVE IMAGES**
+		    getResources().remove(i);
+		}
+	    }
+	}
 	repaint();
     }
     
     public void paint(Graphics g) {
-    	//Player is painted last to make him in front of enemies
-    	super.paint(g);
-    	Graphics2D g2d = (Graphics2D) g;
+	//Player is painted last to make him in front of enemies
+	super.paint(g);
+	Graphics2D g2d = (Graphics2D) g;
 	
         //background images
-    	//if(getState() == STATE.GAME){
-    	g2d.translate((p.getXCoord()*-1)+800, 0); //+800 because of player pos.
-    	//above line changes where player appears on screen
-    	//}
-
-    	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
+	g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
+	//above line changes where player appears on screen
+	
+	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
         g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
         g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 9000, -1800, null);
-        g2d.drawImage(nearBackground,0, -1300, null);
+	g2d.drawImage(nearBackground,0, -1300, null);
         g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
 
-	/*  g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 500, 30);
-        g.setColor(Color.white);
-        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
-		lvlhandler.getProgress() * (500/(lvlhandler.getProgressNeeded())), 30);*/
+        
 
-        if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
-        	g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 500, 30);
-        	g.setColor(Color.white);
-        	g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
-		       lvlhandler.getProgress() * (500/(lvlhandler.getProgressNeeded())), 30);
-
+	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
+            g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 700, 30);
+	    g.setColor(Color.white);
+	    g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
+		       lvlhandler.getProgress() * (700/(lvlhandler.getProgressNeeded())), 30);
+	    g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 700, 10);
+	    g.setColor(Color.YELLOW);
+	    g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 
+		       p.getCurrentWeapon().getAttackSpeedTimer() * (700/p.getCurrentWeapon().getAttackSpeed()), 10);
             //paint terrain
             for(Terrain t : terrain){
-                t.paintTerrain(g, getP(), enemies);
+                for(int i = 0; i < enemies.size(); i++){
+                    t.paintTerrain(g, getP(),enemies, enemies.get(i).getProjectiles(), p.getCurrentWeapon().getProjectiles());
+                }
             }
             //perform player attack, perform enemy AI
             if(getP().isAttacking()){
                 getP().PlayerAttack(g);
             }
-            for(Enemies e : getEnemies()){
-            	e.AI(getP(), g, terrain, enemies);
-            	e.paintEnemy(getP(), g);
-            }
+	    for(Enemies e : getEnemies()){
+		e.AI(getP(), g, terrain, enemies);
+		e.paintEnemy(getP(), g);
+	    }
             for(Enemies b : boss){
                 b.AI(getP(), g, terrain, enemies);
-                b.paintEnemy(getP(), g);
+		b.paintEnemy(getP(), g);
             }
-            for(Terrain t : terrain){
-                t.paintTerrain(g, getP(), enemies);
-            }
-            //Paint resources
-            for(Resource r : getResources()){
-            	r.paintResource(g);
-            }
-            getP().AttackAnimation(g);
-            if(getState() == STATE.PAUSE){
-            	pmenu.requestFocusInWindow();
-            }
+
+	    //Paint resources
+	    for(Resource r : getResources()){
+		r.paintResource(g);
+	    }
+
+	    getP().AttackAnimation(g);
+	    if(getState() == STATE.PAUSE){
+		pmenu.requestFocusInWindow();
+	    }
 	        
-		    //RESOURCE BAR
-		    int resourceBarX = (int)getP().getXCoord()+830;
-		    Stroke oldStroke = g2d.getStroke();
-		    Font fnt0 = new Font("arial", Font.BOLD, 25);
-		    g.setFont(fnt0);
-		    g.setColor(Color.white);
-	
-		    g2d.drawImage(LogImage, resourceBarX, 50, null);
-		    g.drawString("x" + getP().getLogCount()+"", resourceBarX, 50);
-		    g2d.drawImage(CoinImage, resourceBarX, 125, null);
-		    g.drawString("x" + getP().getCoinCount()+"", resourceBarX, 125);
-	
-		    g2d.setStroke(oldStroke);
-		    
-		    //WEAPON BAR
-		    int weaponBarX = (int)getP().getXCoord()-760;
-		    //oldStroke = g2d.getStroke();
-		    //fnt0 = new Font("arial", Font.BOLD, 25);
-		    g.setFont(fnt0);
-		    g.setColor(Color.white);	
-		    g2d.drawImage(StickImage, weaponBarX, 50, null);
-		    g.drawString("1", weaponBarX-10, 50+5);
-		    g2d.drawImage(SwordImage, weaponBarX, 110, null);
-		    g.drawString("2", weaponBarX-10, 110+5);
-		    g2d.drawImage(AxeImage, weaponBarX, 170, null);
-		    g.drawString("3", weaponBarX-10, 170+5);
-		    g2d.drawImage(GunImage, weaponBarX, 230, null);
-		    g.drawString("4", weaponBarX-10, 230+5);	
+	    //RESOURCE BAR
+	    int resourceBarX = (int)getP().getXCoord()+630;
+	    Stroke oldStroke = g2d.getStroke();
+	    Font fnt0 = new Font("arial", Font.BOLD, 25);
+	    g.setFont(fnt0);
+	    g.setColor(Color.white);
 
-		    g2d.setStroke(oldStroke);
+	    g2d.drawImage(LogImage, resourceBarX, 50, null);
+	    g.drawString("x" + getP().getLogCount()+"", resourceBarX, 50);
+	    g2d.drawImage(CoinImage, resourceBarX, 125, null);
+	    g.drawString("x" + getP().getCoinCount()+"", resourceBarX, 125);
 
-		    //paint player and weapon
-		    getP().paintPlayer(g);
-		    if(getEnemies().size() > 0){
-		    	getP().getCurrentWeapon().paintWeapon(g, getP(), getEnemies());
-		    } else if(boss.size() > 0){
-		    	getP().getCurrentWeapon().paintWeapon(g, getP(), boss);
-		    }
+	    g2d.setStroke(oldStroke);
 
-		    //ATTACK ANIMATION
-		    getP().AttackAnimation(g);
-		    if(getState() == STATE.PAUSE){
-		    	pmenu.requestFocusInWindow();
-		    	int brightness = (int)(256 - 256 * 0.5f);
-		    	g.setColor(new Color(0,0,0,brightness));
-		    	g.fillRect((int)getP().getXCoord()-1000, 0, 7478, 1000);
-		    }
-        }
+	        
+	    //WEAPON BAR
+	    int weaponBarX = (int)getP().getXCoord()-560;
+	    //oldStroke = g2d.getStroke();
+	    //fnt0 = new Font("arial", Font.BOLD, 25);
+	    g.setFont(fnt0);
+	    g.setColor(Color.white);
+
+	    g2d.drawImage(StickImage, weaponBarX, 50, null);
+	    g.drawString("1", weaponBarX-10, 50+5);
+	    g2d.drawImage(SwordImage, weaponBarX, 110, null);
+	    g.drawString("2", weaponBarX-10, 110+5);
+	    g2d.drawImage(AxeImage, weaponBarX, 170, null);
+	    g.drawString("3", weaponBarX-10, 170+5);
+	    g2d.drawImage(GunImage, weaponBarX, 230, null);
+	    g.drawString("4", weaponBarX-10, 230+5);
+
+
+	    g2d.setStroke(oldStroke);
+	        
+
+            //paint player and weapon
+	    getP().paintPlayer(g);
+            if(getEnemies().size() > 0){
+		getP().getCurrentWeapon().paintWeapon(g, getP(), getEnemies());
+            } else if(boss.size() > 0){
+                getP().getCurrentWeapon().paintWeapon(g, getP(), boss);
+            }
+
+	    //ATTACK ANIMATION
+	    getP().AttackAnimation(g);
+	    if(getState() == STATE.PAUSE){
+		pmenu.requestFocusInWindow();
+		int brightness = (int)(256 - 256 * 0.5f);
+		g.setColor(new Color(0,0,0,brightness));
+		g.fillRect((int)getP().getXCoord()-1000, 0, 7478, 1000);
+	    }
+	}
         //if State!=Game, perform other State actions
 	
-        else if(getState() == STATE.MENU) {
-        	getMenu().render(g);
-        }
-        else if (getState() == STATE.GAMEOVER){
-        	goscreen.requestFocusInWindow();
-        	int brightness = (int)(256 - 256 * 0.5f);
-        	g.setColor(new Color(0,0,0,brightness));
-	    	g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
-	    }
+	else if(getState() == STATE.MENU) {
+	    getMenu().render(g);
+	}
+	else if (getState() == STATE.GAMEOVER){
+	    goscreen.requestFocusInWindow();
+	    int brightness = (int)(256 - 256 * 0.5f);
+	    g.setColor(new Color(0,0,0,brightness));
+	    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+	}
     }
 
     //User Key Input adapter
     private class AL extends KeyAdapter {
-    	public void keyReleased(KeyEvent e) {
-    		getP().keyReleased(e);
-    	}
+	public void keyReleased(KeyEvent e) {
+	    getP().keyReleased(e);
+	}
 	
-    	public void keyPressed(KeyEvent e) {
-    		getP().keyPressed(e);
-    		pmenu.keyPressedMenu(e);
-    	}
+	public void keyPressed(KeyEvent e) {
+	    getP().keyPressed(e);
+	    pmenu.keyPressedMenu(e);
+	}
     }
 
+    
+    
     //------------------------------Getters/Setters---------------------------[
     /**
      * @return the p
@@ -471,7 +471,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     /**
-     * @return the pause menu
+     * @return the pmenu
      */
     public PauseMenu getPmenu() {
         return pmenu;
@@ -488,13 +488,13 @@ public class Board extends JPanel implements ActionListener {
      * @return the game over screen
      */
     public GameOverScreen getGoscreen(){
-    	return goscreen;
+	return goscreen;
     }
     
     public void setGoscreen(GameOverScreen goscreen){
-    	this.goscreen= goscreen;
+	this.goscreen= goscreen;
     }
-    
+
     /**
      * @return the WorldBot
      */
@@ -564,10 +564,8 @@ public class Board extends JPanel implements ActionListener {
     public void setMouseCoords(Point MouseCoords) {
         this.MouseCoords = MouseCoords;
     }
-
-    /**
     
-     /**
+    /**
      * @return the State
      */
     public static STATE getState() {
@@ -580,4 +578,5 @@ public class Board extends JPanel implements ActionListener {
     public static void setState(STATE aState) {
         State = aState;
     }
+
 }
