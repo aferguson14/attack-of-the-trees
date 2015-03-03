@@ -264,12 +264,17 @@ public class Board extends JPanel implements ActionListener {
         g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
 
-        g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 500, 30);
+	/*        g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 500, 30);
         g.setColor(Color.white);
         g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
-		  lvlhandler.getProgress() * (500/(lvlhandler.getProgressNeeded())), 30);
+	lvlhandler.getProgress() * (500/(lvlhandler.getProgressNeeded())), 30);*/
 
 	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
+
+	    g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 500, 30);
+	    g.setColor(Color.white);
+	    g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
+	    lvlhandler.getProgress() * (500/(lvlhandler.getProgressNeeded())), 30);
 
             //paint terrain
             for(Terrain t : terrain){
