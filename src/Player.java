@@ -35,7 +35,7 @@ public class Player{
     private double Speed;
     private double JumpSpeed;
     private ArrayList<Weapon> weapon = new ArrayList<Weapon>(); 
-     private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
+    private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
     private Weapon currentWeapon;
     private Point MousePoint;
     private int WeaponTracker = 0;
@@ -113,45 +113,48 @@ public class Player{
             g.setColor(Color.RED);
             g.fillRect((int) (this.getXCoord() -280) , (int) getHealthBarY(), this.getHp() * 7, 20);
         }
+	else{
+	    Board.setState(Board.STATE.GAMEOVER);
+	} 
+   }
+    
+    public void AttackAnimation(Graphics g){
+	//change player image depending on attack and facing
+	if(isAttacking()){
+	    if(getFacing() == 0){
+
+		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpLeft.png"); //character image
+		setStill(i.getImage());
+
+
+	    }
+	    else if(getFacing() == 1){
+		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpRight.png");
+		setStill(i.getImage());
+
+	    }
+
+	}else{
+	    if(getFacing() == 0){
+		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png");
+		setStill(i.getImage());
+	    }else{
+		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownRight.png");
+		setStill(i.getImage());
+	    }
+	}
     }
     
-public void AttackAnimation(Graphics g){
-//change player image depending on attack and facing
-if(isAttacking()){
-    if(getFacing() == 0){
-
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpLeft.png"); //character image
-        setStill(i.getImage());
-
-
-    }
-    else if(getFacing() == 1){
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpRight.png");
-        setStill(i.getImage());
-
-    }
-
-}else{
-    if(getFacing() == 0){
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png");
-        setStill(i.getImage());
-    }else{
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownRight.png");
-        setStill(i.getImage());
-    }
-}
-}
-    
-//subtract Hp by enemy attack
+    //subtract Hp by enemy attack
     public void takeDmg(Enemies e){
         setHp(getHp() - e.getAttack());
     }
-//add weapon    
+    //add weapon    
     public void AddWeapon(Weapon w){
         weapon.add(w);
         currentWeapon = w;
     }
-//switch current weapon
+    //switch current weapon
     public void switchWeapon(){
         if(WeaponTracker < weapon.size()){
             WeaponTracker++;
@@ -162,9 +165,9 @@ if(isAttacking()){
             currentWeapon = weapon.get(WeaponTracker);
         }
     }
-//get mouse coords
-// if attacking, shoot weapon
-//readjust mouse coords
+    //get mouse coords
+    // if attacking, shoot weapon
+    //readjust mouse coords
     public void PlayerAttack(Graphics g){
         Board.MouseCoords.x += (this.getXCoord() - 650);
 	//-650 relates to painting player in Board
@@ -174,7 +177,7 @@ if(isAttacking()){
         }
         Board.MouseCoords.x -= (this.getXCoord() - 650);
     }
-//get player coords in point form
+    //get player coords in point form
     public Point getPlayerPoint(){
         Point p = new Point((int)this.getXCoord(), (int)this.getYCoord());
         return p;
@@ -197,7 +200,7 @@ if(isAttacking()){
                 ImageIcon iRight = new ImageIcon("../images/playerImages/guy/guySideDown.png"); // character image
                 setStill(iRight.getImage());
             }
-	    setXVel(getSpeed());
+    setXVel(getSpeed());
             setFacing(1);
         }
         //if on ground, can jump
@@ -212,13 +215,13 @@ if(isAttacking()){
     
     //player movement input
     public void keyReleased(KeyEvent e) {
-	int key = e.getKeyCode();
+int key = e.getKeyCode();
         //realease of L/R key's result in 0 horiz vel
-	if (key == KeyEvent.VK_A)
-	    setXVel(0);
-	
-	if (key == KeyEvent.VK_D)
-	    setXVel(0);
+if (key == KeyEvent.VK_A)
+    setXVel(0);
+
+if (key == KeyEvent.VK_D)
+    setXVel(0);
     }
 
     
@@ -526,7 +529,7 @@ if(isAttacking()){
         this.scrollY = scrollY;
     }
     
-        /**
+    /**
      * @param JumpSpeed the JumpSpeed to set
      */
     public void setJumpSpeed(double JumpSpeed) {
@@ -548,7 +551,7 @@ if(isAttacking()){
     }
 
 
-//RESOURCES SETTER/GETTERS
+    //RESOURCES SETTER/GETTERS
 
     public int getLogCount(){
 	return logCount;
