@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class Projectile {
     private Image still;
     private int facing;
     private int HorizontalSize, VerticalSize;
-    private int WorldBot = 700;
+     private int WorldBot = 700;
     private int WorldLeft = 0;
     private int WorldRight = 7478;
     private int WorldTop = 0;
@@ -23,6 +24,8 @@ public class Projectile {
     private double Speed;
     private boolean remove = false;
     private double Angle;
+    private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
+    private ArrayList<Double> tops = new ArrayList<Double>();
     
     //constructor
     public Projectile(double x, double y, int direction, Graphics g, double angle){
@@ -34,6 +37,12 @@ public class Projectile {
     //moves projectile
     public void move(Player p){
         //adjust velocities
+        setTerrainDimensions(p.getTerrains());
+        for(int i = 0; i < getTerrains().size(); i++){
+            getTerrains().get(i).CheckProjectileContact(this, i);
+            
+        }
+        
         setXVel(getXVel() + getXAcc());
         setYVel(getYVel() + getYAcc());
         
@@ -54,6 +63,7 @@ public class Projectile {
         if(getYCoord() <= getWorldTop()){
             setRemove(true);
         }
+        
         
         //if player contact, deal dmg
         if(PlayerContact(p) == true){
@@ -108,7 +118,22 @@ public boolean PlayerContact(Player p){
         }
     }
     
+        public double findAngle(Point p){
+        return Math.sinh((this.getYCoord() - p.getY()) 
+                / p.distance(this.getXCoord(), this.getYCoord()));
+    }
     
+        public void setTerrainDimensions(ArrayList <Terrain> ter){
+         this.setTerrains(ter);
+         for(int i = 0; i < getTerrains().size(); i++){
+             getTops().add(i, getTerrains().get(i).getTop());
+         }
+     }
+     public void updateTerrainDimensions(){
+         for(int i = 0; i < getTerrains().size(); i++){
+             getTerrains().get(i).UpdateSides(this, i);
+         }
+     }
     
     
     //-------------------Setters/Getters--------------------------------------
@@ -359,5 +384,33 @@ public boolean PlayerContact(Player p){
      */
     public void setAngle(double angle) {
         this.Angle = angle;
+    }
+
+    /**
+     * @return the terrains
+     */
+    public ArrayList<Terrain> getTerrains() {
+        return terrains;
+    }
+
+    /**
+     * @param terrains the terrains to set
+     */
+    public void setTerrains(ArrayList<Terrain> terrains) {
+        this.terrains = terrains;
+    }
+
+    /**
+     * @return the tops
+     */
+    public ArrayList<Double> getTops() {
+        return tops;
+    }
+
+    /**
+     * @param tops the tops to set
+     */
+    public void setTops(ArrayList<Double> tops) {
+        this.tops = tops;
     }
 }

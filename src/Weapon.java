@@ -49,9 +49,9 @@ public abstract class Weapon {
         }
     }
     //move then paint weapon's projectiles
-    public void paintProjectile(ArrayList <Enemies> e, Graphics g){
+    public void paintProjectile(ArrayList <Enemies> e, Graphics g, Player p){
         for(PlayerProjectile proj : this.getProjectiles()){
-            proj.move(e);
+            proj.move(e, p);
         }
         for(PlayerProjectile proj : this.getProjectiles()){
             proj.paintImage(g);

@@ -18,10 +18,10 @@ public class EnemySunFlower extends Enemies{
         
 	this.setResource(coin);
         this.setHp(50);
-        this.setAttack(15);
-        this.setSpeed(.5);
-        this.setAttackSpeed(75);
-        this.setAttackRange(20);
+        this.setAttack(30);
+        this.setSpeed(1);
+        this.setAttackSpeed(200);
+        this.setAttackRange(600);
         this.setJumpSpeed(-20);
         this.setAttackSpeedCount(19);
     }
@@ -36,10 +36,10 @@ public class EnemySunFlower extends Enemies{
             //if attack speed count == the enemies attack speed
             if(this.getAttackSpeedCount() == this.getAttackSpeed()){
             //create a projectile towards the player
-                RobotProjectile laser = new RobotProjectile(this.getXCoord()
+               SunFlowerProjectile fire = new SunFlowerProjectile(this.getXCoord()
                         , this.getYCoord(), this.getFacing(), g, 
                         findAngle(p.getPlayerPoint()));
-                this.addProjectile(laser);
+                this.addProjectile(fire);
             //reset attack speed count
                 this.setAttackSpeedCount(0);
             }

@@ -64,21 +64,12 @@ public class Board extends JPanel implements ActionListener {
     public Board() {
         //creates player, enemies, terrain, weapon, menu, and background images
 	p = new Player();
-        lvlhandler.HandleLVL1Start(enemies, generator);
-
-        Rock rock = new Rock(300, WorldBot - 100);
-        Ramp ramp = new Ramp(700, WorldBot);
-        Rock rock2 = new Rock(3000, WorldBot - 250);
-        Ramp ramp2 = new Ramp(1000, WorldBot);
-
-//        terrain.add(rock);
-        terrain.add(ramp);
-//        terrain.add(rock2);
-        terrain.add(ramp2);
+        lvlhandler.HandleLVL1Start(enemies, terrain, generator);
         
         for(int i = 0; i < enemies.size(); i++){
             enemies.get(i).setTerrainDimensions(terrain);
         }
+        p.setTerrains(terrain);
         
 	addKeyListener(new AL());
 	menu = new Menu();
@@ -124,7 +115,7 @@ public class Board extends JPanel implements ActionListener {
 	GunImage = gunImage.getImage();
 
 	//WEAPONS
-        Gun g = new Gun(p.getXCoord(),p.getYCoord());
+         Gun g = new Gun(p.getXCoord(),p.getYCoord());
 	p.AddWeapon(g);
        	//Stick s = new Stick(p.getXCoord(),p.getYCord());
 	//p.AddWeapon(s);
@@ -137,13 +128,14 @@ public class Board extends JPanel implements ActionListener {
 
     
     public void actionPerformed(ActionEvent e) {
-        //move player, move weapon
+         //move player, move weapon
 
 	if(getState() == STATE.PAUSE){
 	    getP().setXVel(0);
 	    getP().setYVel(0);
 	} //fixes the player moving after resuming
-
+        
+        if(getState() == STATE.GAME){
         getP().move(terrain);
         getP().getCurrentWeapon().move(getP());
         //check Player attacking
@@ -207,13 +199,13 @@ public class Board extends JPanel implements ActionListener {
                     boss.remove(0);
                     level++;
                     if(level == 1){
-                    lvlhandler.HandleLVL2Start(enemies, generator);
+                    lvlhandler.HandleLVL2Start(enemies, terrain, generator);
                         for(int i = 0; i < enemies.size(); i++){
                             enemies.get(i).setTerrainDimensions(terrain);
                          }
                     }
                     else{
-                        lvlhandler.HandleLVL3Start(enemies, generator);
+                        lvlhandler.HandleLVL3Start(enemies, terrain, generator);
                             for(int i = 0; i < enemies.size(); i++){
                                 enemies.get(i).setTerrainDimensions(terrain);
                             }
@@ -243,6 +235,7 @@ public class Board extends JPanel implements ActionListener {
 		getResources().remove(i);
 	    }
 	}
+}
 		repaint();
     }
     
@@ -252,10 +245,8 @@ public class Board extends JPanel implements ActionListener {
 	Graphics2D g2d = (Graphics2D) g;
 	
         //background images
-	//	if(getState() == STATE.GAME){
-	    g2d.translate((p.getXCoord()*-1)+800, 0); //+800 because of player pos.
+	g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
 	//above line changes where player appears on screen
-	    //	}
 
 	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
         g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
@@ -264,21 +255,22 @@ public class Board extends JPanel implements ActionListener {
         g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
 
-	/*        g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 500, 30);
-        g.setColor(Color.white);
-        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
-	lvlhandler.getProgress() * (500/(lvlhandler.getProgressNeeded())), 30);*/
+        
 
 	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
-
-	    g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 500, 30);
-	    g.setColor(Color.white);
-	    g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
-	    lvlhandler.getProgress() * (500/(lvlhandler.getProgressNeeded())), 30);
-
+            g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 700, 30);
+        g.setColor(Color.white);
+        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
+		  lvlhandler.getProgress() * (700/(lvlhandler.getProgressNeeded())), 30);
+        g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 700, 10);
+        g.setColor(Color.YELLOW);
+        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 
+		  p.getCurrentWeapon().getAttackSpeedTimer() * (700/p.getCurrentWeapon().getAttackSpeed()), 10);
             //paint terrain
             for(Terrain t : terrain){
-                t.paintTerrain(g, getP(), enemies);
+                for(int i = 0; i < enemies.size(); i++){
+                    t.paintTerrain(g, getP(),enemies, enemies.get(i).getProjectiles(), p.getCurrentWeapon().getProjectiles());
+                }
             }
             //perform player attack, perform enemy AI
             if(getP().isAttacking()){
@@ -292,9 +284,7 @@ public class Board extends JPanel implements ActionListener {
                 b.AI(getP(), g, terrain, enemies);
 		b.paintEnemy(getP(), g);
             }
-            for(Terrain t : terrain){
-                t.paintTerrain(g, getP(), enemies);
-            }
+
 	    //Paint resources
 	    for(Resource r : getResources()){
 		r.paintResource(g);
@@ -306,7 +296,7 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	    
 	    //RESOURCE BAR
-	    int resourceBarX = (int)getP().getXCoord()+830;
+	    int resourceBarX = (int)getP().getXCoord()+630;
 	    Stroke oldStroke = g2d.getStroke();
 	    Font fnt0 = new Font("arial", Font.BOLD, 25);
 	    g.setFont(fnt0);
@@ -321,7 +311,7 @@ public class Board extends JPanel implements ActionListener {
 
 	    
 	    //WEAPON BAR
-	    int weaponBarX = (int)getP().getXCoord()-760;
+	    int weaponBarX = (int)getP().getXCoord()-560;
 	    //oldStroke = g2d.getStroke();
 	    //fnt0 = new Font("arial", Font.BOLD, 25);
 	    g.setFont(fnt0);

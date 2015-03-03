@@ -12,12 +12,12 @@ public class Bullet extends PlayerProjectile{
         super(x, y, direction, g, angle);
         setXAcc(0);
         setYAcc(0);
-        setSpeed(8);
+        setSpeed(6);
         setYVel(0);
         CreateImage(g);
         setHorizontalSize(10);
         setVerticalSize(5);
-        setAttack(10);
+        setAttack(20);
         
         //modify x and y velocities based on angle fired 
         getXY(this.getSpeed(), angle);

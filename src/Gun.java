@@ -11,9 +11,9 @@ public class Gun extends Weapon{
     public Gun(double x, double y){
         setXCoord(x);
         setYCoord(y);
-        setAttack(10);
-        setAttackSpeed(50);
-        setAttackSpeedTimer(49);
+        setAttack(40);
+        setAttackSpeed(300);
+        setAttackSpeedTimer(299);
         setSpeed(3);
         setXVel(0);
         setYVel(0);
@@ -48,7 +48,7 @@ public class Gun extends Weapon{
     @Override
     public void paintWeapon(Graphics g, Player p, ArrayList <Enemies> e) {
 
-        paintProjectile(e, g);
+        paintProjectile(e, g, p);
         deleteProjectiles();
     }
     
