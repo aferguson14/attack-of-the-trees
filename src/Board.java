@@ -279,6 +279,14 @@ public class Board extends JPanel implements ActionListener {
             if(getP().isAttacking()){
                 getP().PlayerAttack(g);
             }
+
+
+	    //Paint resources
+	    for(Resource r : getResources()){
+		r.paintResource(g);
+	    }
+
+
 	    for(Enemies e : getEnemies()){
 		e.AI(getP(), g, terrain, enemies);
 		e.paintEnemy(getP(), g);
@@ -287,12 +295,7 @@ public class Board extends JPanel implements ActionListener {
                 b.AI(getP(), g, terrain, enemies);
 		b.paintEnemy(getP(), g);
             }
-
-	    //Paint resources
-	    for(Resource r : getResources()){
-		r.paintResource(g);
-	    }
-
+ 
 	    getP().AttackAnimation(g);
 	    if(getState() == STATE.PAUSE){
 		pmenu.requestFocusInWindow();
