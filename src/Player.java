@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import static java.lang.Math.abs;
@@ -44,9 +46,9 @@ public class Player{
     
     //Constructor
     public Player() {
-	ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDown.png"); //character image
+	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDown.png"); //character image
 	setStill(i.getImage());
-        //starting Player postion/velocity/acceleration
+        //starting Player position/velocity/acceleration
 	XCoord = 10;
 	YCoord = WorldBot - VerticalSize;
         YAcc =  .5;
@@ -57,8 +59,7 @@ public class Player{
         AttackSpeed = 20;
         Speed = 4;
         JumpSpeed = -15;
-
-	logCount = 0;
+        logCount = 0;
     }
     
     public void move(ArrayList <Terrain> terrain) {
@@ -96,9 +97,13 @@ public class Player{
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 
+        //only repaint if player's health is above 0
         if(this.getHp() >= 0){
             g.setColor(Color.white);
             g.fillRect((int) (this.getXCoord() -10) , (int) (this.getYCoord() - 10), this.getHp(), 7);
+        }
+        else if (this.getHp() < 0){
+        	Board.setState(Board.STATE.GAMEOVER);
         }
     }
     
@@ -107,23 +112,23 @@ public void AttackAnimation(Graphics g){
 if(isAttacking()){
     if(getFacing() == 0){
 
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpLeft.png"); //character image
+        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpLeft.png"); //character image
         setStill(i.getImage());
 
 
     }
     else if(getFacing() == 1){
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpRight.png");
+        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpRight.png");
         setStill(i.getImage());
 
     }
 
 }else{
     if(getFacing() == 0){
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png");
+        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownLeft.png");
         setStill(i.getImage());
     }else{
-        ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownRight.png");
+        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownRight.png");
         setStill(i.getImage());
     }
 }
@@ -169,10 +174,10 @@ if(isAttacking()){
     //player movement input
     public void keyPressed(KeyEvent e) {
 	int key = e.getKeyCode();
-        //input cahnges velocity
+        //input changes velocity
 	if (key == KeyEvent.VK_A){
             if(!isAttacking()){
-                ImageIcon iLeft = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png"); // character image
+                ImageIcon iLeft = new ImageIcon("images/playerImages/guy/guySideDownLeft.png"); // character image
                 setStill(iLeft.getImage());
             }
 	    setXVel(-1 * (this.getSpeed()));
@@ -180,7 +185,7 @@ if(isAttacking()){
         }
 	if (key == KeyEvent.VK_D){
             if(!isAttacking()){
-                ImageIcon iRight = new ImageIcon("../images/playerImages/guy/guySideDown.png"); // character image
+                ImageIcon iRight = new ImageIcon("images/playerImages/guy/guySideDown.png"); // character image
                 setStill(iRight.getImage());
             }
 	    setXVel(getSpeed());

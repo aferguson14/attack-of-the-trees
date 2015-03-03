@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.*;
 import java.awt.event.*;
 import static java.lang.Math.abs;
@@ -6,20 +8,6 @@ import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
 
-    /**
-     * @return the State
-     */
-    public static STATE getState() {
-        return State;
-    }
-
-    /**
-     * @param aState the State to set
-     */
-    public static void setState(STATE aState) {
-        State = aState;
-    }
-    
     //private data
 
     //Objects
@@ -42,6 +30,8 @@ public class Board extends JPanel implements ActionListener {
     private boolean attack = false;
     private Menu menu;
     private PauseMenu pmenu;
+    private GameOverScreen goscreen = new GameOverScreen();
+   
     //world dimensions
     private int WorldBot = 700;
     private int WorldLeft = 0;
@@ -50,17 +40,27 @@ public class Board extends JPanel implements ActionListener {
     public static Point MouseCoords;
     public static boolean PlayerAttack = false;
     
+    //states
+    public static enum STATE {
+    	MENU,
+    	GAME,
+    	PAUSE,
+        GAMEOVER
+    };
+    //initial state = MENU
+    private static STATE State = STATE.MENU;
+    
     public Board() {
         //creates player, enemies, terrain, weapon, menu, and background images
-	p = new Player();
+    	p = new Player();
         EnemyRobot robo = new EnemyRobot(1000, WorldBot - 115);
-	EnemyTree tree1 = new EnemyTree(2000, WorldBot - 115);
-	EnemyTree tree2 = new EnemyTree(2200, WorldBot - 115);
+        EnemyTree tree1 = new EnemyTree(2000, WorldBot - 115);
+        EnemyTree tree2 = new EnemyTree(2200, WorldBot - 115);
         EnemyBear bear = new EnemyBear(3000, WorldBot - 115);
         EnemySunFlower sunflower = new EnemySunFlower(900, WorldBot - 115);
         enemies.add(robo);
-	enemies.add(tree1);
-	enemies.add(tree2);
+        enemies.add(tree1);
+        enemies.add(tree2);
         enemies.add(bear);
         enemies.add(sunflower);
         Rock rock = new Rock(300, WorldBot - 100);
@@ -72,52 +72,42 @@ public class Board extends JPanel implements ActionListener {
         terrain.add(ramp);
         terrain.add(rock2);
         terrain.add(ramp2);
-	addKeyListener(new AL());
-	menu = new Menu();
-	pmenu = new PauseMenu();
+        addKeyListener(new AL());
+        menu = new Menu();
+        pmenu = new PauseMenu();
         MouseInput m = new MouseInput();
-	addMouseListener(m);
+        addMouseListener(m);
         addMouseMotionListener(m);
-	setFocusable(true);
+        setFocusable(true);
         //not stitched together, used multiple background images
-	ImageIcon far = new 
-	    ImageIcon("../images/backgrounds/far-background.png");
+        ImageIcon far = new 
+	    ImageIcon("images/backgrounds/far-background.png");
         
         farBackground = far.getImage();
-        ImageIcon far2 = new ImageIcon("../images/backgrounds/far-background.png");
-	ImageIcon near = new 
-	    ImageIcon("../images/backgrounds/near-background.png");
-        ImageIcon near2 = new ImageIcon("../images/backgrounds/near-background.png");
-	nearBackground = near.getImage();
+        ImageIcon far2 = new ImageIcon("images/backgrounds/far-background.png");
+        ImageIcon near = new 
+	    ImageIcon("images/backgrounds/near-background.png");
+        ImageIcon near2 = new ImageIcon("images/backgrounds/near-background.png");
+        nearBackground = near.getImage();
         ImageIcon far3 = new 
-	    ImageIcon("../images/backgrounds/far-background.png");
+	    ImageIcon("images/backgrounds/far-background.png");
         
         Far3 = far.getImage();
         Far2 = far2.getImage();
         Near2 = near2.getImage();
 	
-	//RESOURCE IMAGES
-	ImageIcon logImage = new ImageIcon("../images/weaponImage/stick.png");
-	LogImage = logImage.getImage();
+        //RESOURCE IMAGES
+        ImageIcon logImage = new ImageIcon("images/weaponImage/stick.png");
+        LogImage = logImage.getImage();
 
-	//TIME
-	time = new Timer(5, this);
-	time.start();
+        //TIME
+        time = new Timer(5, this);
+        time.start();
 
-	//WEAPONS
+        //WEAPONS
         Gun g = new Gun(p.getXCoord(),p.getYCoord());
-	p.AddWeapon(g);
+        p.AddWeapon(g);
     }
-
-    //states
-    public static enum STATE {
-    	MENU,
-    	GAME,
-	PAUSE,
-        GAMEOVER
-    };
-    //initial state = MENU
-    private static STATE State = STATE.MENU;
 
     
     public void actionPerformed(ActionEvent e) {
@@ -128,7 +118,7 @@ public class Board extends JPanel implements ActionListener {
         //check Player attacking
         if(Board.PlayerAttack){
             getP().setAttacking(true);
-//            Board.MouseCoords
+            //Board.MouseCoords
         }
         else{
             getP().setAttacking(false);
@@ -137,109 +127,115 @@ public class Board extends JPanel implements ActionListener {
         //if any enemies are below 0 health, delete
         for(int i = 0; i < getEnemies().size(); i++){
             if(getEnemies().get(i).getHp() <= 0){
-		getEnemies().get(i).getResource().setXCoord(getEnemies().get(i).getXCoord());
-		getEnemies().get(i).getResource().setYCoord(getEnemies().get(i).getYCoord());
-       
+            	getEnemies().get(i).getResource().setXCoord(getEnemies().get(i).getXCoord());
+            	getEnemies().get(i).getResource().setYCoord(getEnemies().get(i).getYCoord());
+            	
                 resources.add(getEnemies().get(i).getResource());
-		getEnemies().remove(i);
+                getEnemies().remove(i);
             }
         }
-	//if Player runs over resource, collect
-	for(int i = 0; i< getResources().size();i++){
+        //if Player runs over resource, collect
+        for(int i = 0; i< getResources().size();i++){
 	    
-	    if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
-	       (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
-	       (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
-	       (getP().getYCoord() >= getResources().get(i).getYCoord()-25) ){
+        	if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
+        			(getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
+        			(getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
+        			(getP().getYCoord() >= getResources().get(i).getYCoord()-25) ){
 
-		if(getResources().get(i).getResourceType() == "log")
-		    getP().setLogCount(getP().getLogCount() + 1);
-		/*else if(getResources().get(i).getResourceType() == "iron")
+        		if(getResources().get(i).getResourceType() == "log")
+        			getP().setLogCount(getP().getLogCount() + 1);
+        			/*else if(getResources().get(i).getResourceType() == "iron")
 		    getP().setIronCount(getP().getIronCount() + 1);
-		else if(getResources().get(i).getResourceType() == "coal")
+			else if(getResources().get(i).getResourceType() == "coal")
 		    getP().setCoalCount(getP().getCoalCount() + 1);
-		else if(getResources().get(i).getResourceType() == "oil")
+			else if(getResources().get(i).getResourceType() == "oil")
 		    getP().setOilCount(getP().getOilCount() + 1);
 		*/
 		//**ABOVE IS TO BE UNCOMMENTED ONCE WE HAVE IMAGES**
-		getResources().remove(i);
-	    }
-	}
-	repaint();
+        		getResources().remove(i);
+        	}
+        }
+        repaint();
     }
     
     public void paint(Graphics g) {
-	super.paint(g);
-	Graphics2D g2d = (Graphics2D) g;
+    	super.paint(g);
+    	Graphics2D g2d = (Graphics2D) g;
 	
         //background images
-	g2d.translate((p.getXCoord()*-1)+300, 0); //+300 because of player pos.
-	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
+    	g2d.translate((p.getXCoord()*-1)+300, 0); //+300 because of player pos.
+    	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
         g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
         g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 9000, -1800, null);
-	g2d.drawImage(nearBackground,0, -1300, null);
+        g2d.drawImage(nearBackground,0, -1300, null);
         g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
 
-	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
+        if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
 
             //paint terrain
             for(Terrain t : terrain){
                 t.paintTerrain(g, getP(), enemies);
             }
             //paint player and weapon
-	    getP().paintPlayer(g);
+            getP().paintPlayer(g);
             getP().getCurrentWeapon().paintWeapon(g, getP(), getEnemies());
 
             //perform player attack, perform enemy AI
             if(getP().isAttacking()){
                 getP().PlayerAttack(g);
             }
-	    for(Enemies e : getEnemies()){
-		e.AI(getP(), g, terrain);
-		e.paintEnemy(getP(), g);
-	    }
+            for(Enemies e : getEnemies()){
+            	e.AI(getP(), g, terrain);
+            	e.paintEnemy(getP(), g);
+            }
 
-	    for(Resource r : getResources()){
-		r.paintResource(g);
-	    }
+            for(Resource r : getResources()){
+            	r.paintResource(g);
+            }
 	    
-	    //RESOURCE BAR
-	    g2d.drawImage(LogImage, (int)getP().getXCoord()+950, 50, null);
-	    Stroke oldStroke = g2d.getStroke();
-	    Font fnt0 = new Font("arial", Font.BOLD, 25);
-	    g.setFont(fnt0);
-	    g.setColor(Color.white);
-	    g.drawString("x" + getP().getLogCount()+"", (int) getP().getXCoord()+970, 50);	
-	    g2d.setStroke(oldStroke);
-
+            //RESOURCE BAR
+            g2d.drawImage(LogImage, (int)getP().getXCoord()+950, 50, null);
+            Stroke oldStroke = g2d.getStroke();
+            Font fnt0 = new Font("arial", Font.BOLD, 25);
+            g.setFont(fnt0);
+            g.setColor(Color.white);
+            g.drawString("x" + getP().getLogCount()+"", (int) getP().getXCoord()+970, 50);	
+            g2d.setStroke(oldStroke);
 	    
-	    //ATTACK ANIMATION
-	    getP().AttackAnimation(g);
-	    if(getState() == STATE.PAUSE){
-	   	pmenu.requestFocusInWindow();
-		int brightness = (int)(256 - 256 * 0.5f);
-		g.setColor(new Color(0,0,0,brightness));
-		g.fillRect(0, 0, 1750, 800);
-	    }
-    	}
-        //if State!=Game, perform other State actions
+	    
+            //ATTACK ANIMATION
+            getP().AttackAnimation(g);
+            if(getState() == STATE.PAUSE){
+            	pmenu.requestFocusInWindow();
+            	int brightness = (int)(256 - 256 * 0.5f);
+            	g.setColor(new Color(0,0,0,brightness));
+            	g.fillRect(0, 0, 1750, 800);
+            }
+    		}
+        	//if State!=Game, perform other State actions
 	
-	else if(getState() == STATE.MENU) {
-	    getMenu().render(g);
+        else if(getState() == STATE.MENU) {
+        	getMenu().render(g);
     	}
+        else if (getState() == STATE.GAMEOVER){
+        	goscreen.requestFocusInWindow();
+        	int brightness = (int)(256 - 256 * 0.5f);
+        	g.setColor(new Color(0,0,0,brightness));
+        	g.fillRect(0, 0, 1750, 800);
+        }
     }
 
     //User Key Input adapter
     private class AL extends KeyAdapter {
-	public void keyReleased(KeyEvent e) {
-	    getP().keyReleased(e);
-	}
+    	public void keyReleased(KeyEvent e) {
+    		getP().keyReleased(e);
+    	}
 	
 	public void keyPressed(KeyEvent e) {
 	    getP().keyPressed(e);
 	    pmenu.keyPressedMenu(e);
-	}
+		}
     }
 
     
@@ -338,7 +334,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     /**
-     * @return the pmenu
+     * @return the pause menu
      */
     public PauseMenu getPmenu() {
         return pmenu;
@@ -351,6 +347,17 @@ public class Board extends JPanel implements ActionListener {
         this.pmenu = pmenu;
     }
 
+    /**
+     * @return the game over screen
+     */
+    public GameOverScreen getGoscreen(){
+    	return goscreen;
+    }
+    
+    public void setGoscreen(GameOverScreen goscreen){
+    	this.goscreen= goscreen;
+    }
+    
     /**
      * @return the WorldBot
      */
@@ -419,5 +426,18 @@ public class Board extends JPanel implements ActionListener {
      */
     public void setMouseCoords(Point MouseCoords) {
         this.MouseCoords = MouseCoords;
+    }
+    /**
+     * @return the State
+     */
+    public static STATE getState() {
+        return State;
+    }
+
+    /**
+     * @param aState the State to set
+     */
+    public static void setState(STATE aState) {
+        State = aState;
     }
 }
