@@ -73,7 +73,7 @@ public class Board extends JPanel implements ActionListener {
         
 	addKeyListener(new AL());
 	menu = new Menu();
-	pmenu = new PauseMenu();
+	pmenu = new PauseMenu(p);
         MouseInput m = new MouseInput();
 	addMouseListener(m);
         addMouseMotionListener(m);
