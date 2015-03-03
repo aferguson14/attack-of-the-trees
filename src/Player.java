@@ -18,15 +18,20 @@ public class Player{
     private double scrollY;
     private int hp;
     private int attack;
+    
     private Image still;
+    private Image armStill;
+
     private boolean InAir = false;
     private boolean attacking = false;
     private int facing = 1;
     private int AttackSpeed;
     private int AttackSpeedCount = 49;
+
     //player size
     private int HorizontalSize = 50;
     private int VerticalSize = 115;
+
     //world dimensions
     private int WorldBot = 700;
     private int WorldLeft = 0;
@@ -51,8 +56,10 @@ public class Player{
     
     //Constructor
     public Player() {
-	ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDown.png"); //character image
+	ImageIcon i = new ImageIcon("../images/playerImages/guy/guyArmlessRight.png"); //character image
 	setStill(i.getImage());
+	ImageIcon iArm = new ImageIcon ("../images/playerImages/guy/armRight.png");
+	setArmStill(iArm.getImage());
         //starting Player postion/velocity/acceleration
 	XCoord = 10; //was 10
 	YCoord = WorldBot - VerticalSize;
@@ -108,6 +115,15 @@ public class Player{
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 
+	//Arm movement
+	double angle = Math.toDegrees(Math.atan2((Board.MouseCoords.y-(this.getYCoord()+60)), (Board.MouseCoords.x-(this.getXCoord()+10))));
+        g2d.rotate(angle, this.getXCoord(), this.getYCoord());
+        g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())+10, (int) (this.getYCoord())+60, null);
+	g2d.rotate(-angle, this.getXCoord(), this.getYCoord());
+
+
+
+
         if(this.getHp() >= 0){
             g.drawRect((int) (this.getXCoord() -280) , (int) getHealthBarY(), 100 * 7, 20);
             g.setColor(Color.RED);
@@ -123,24 +139,24 @@ public class Player{
 	if(isAttacking()){
 	    if(getFacing() == 0){
 
-		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpLeft.png"); //character image
-		setStill(i.getImage());
+		//	ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpLeft.png"); //character image
+		//setStill(i.getImage());
 
 
 	    }
 	    else if(getFacing() == 1){
-		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpRight.png");
-		setStill(i.getImage());
+		//ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideUpRight.png");
+		//setStill(i.getImage());
 
 	    }
 
 	}else{
 	    if(getFacing() == 0){
-		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png");
-		setStill(i.getImage());
+		//ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png");
+		//setStill(i.getImage());
 	    }else{
-		ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownRight.png");
-		setStill(i.getImage());
+		//ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDownRight.png");
+		//setStill(i.getImage());
 	    }
 	}
     }
@@ -189,7 +205,7 @@ public class Player{
         //input cahnges velocity
 	if (key == KeyEvent.VK_A){
             if(!isAttacking()){
-                ImageIcon iLeft = new ImageIcon("../images/playerImages/guy/guySideDownLeft.png"); // character image
+                ImageIcon iLeft = new ImageIcon("../images/playerImages/guy/guyArmlessLeft.png"); // character image
                 setStill(iLeft.getImage());
             }
 	    setXVel(-1 * (this.getSpeed()));
@@ -197,7 +213,7 @@ public class Player{
         }
 	if (key == KeyEvent.VK_D){
             if(!isAttacking()){
-                ImageIcon iRight = new ImageIcon("../images/playerImages/guy/guySideDown.png"); // character image
+                ImageIcon iRight = new ImageIcon("../images/playerImages/guy/guyArmlessRight.png"); // character image
                 setStill(iRight.getImage());
             }
     setXVel(getSpeed());
@@ -297,6 +313,14 @@ if (key == KeyEvent.VK_D)
 
     public void setStill(Image still) {
         this.still = still;
+    }
+
+    public Image getArmStill(){
+	return armStill;
+    }
+
+    public void setArmStill(Image armStill){
+	this.armStill = armStill;
     }
 
     public boolean isInAir() {
