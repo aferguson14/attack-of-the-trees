@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.PointerInfo;
+
 
 public class Player{
     //private data
@@ -128,6 +130,8 @@ public class Player{
 	    g2d.rotate(angle, this.getXCoord()-15+40, this.getYCoord()+60+3);
 	    g2d.rotate(Math.PI, this.getXCoord()-15+40, this.getYCoord()+60+3);
 	    g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())-15, (int) (this.getYCoord())+60, null);
+	    g2d.drawImage(this.getCurrentWeapon().getStillLeft(),(int) (this.getXCoord())-15-37, (int) (this.getYCoord())+60-7, null);
+
 	    g2d.rotate(-Math.PI, this.getXCoord()-15+40, this.getYCoord()+60+3);
 	    g2d.rotate(-angle, this.getXCoord()-15+40, this.getYCoord()+60+3);
 	    g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
@@ -141,6 +145,8 @@ public class Player{
 	      ((Board.MouseCoords.x-600+this.getXCoord())-(this.getXCoord()+15)));	
 	
 	    g2d.rotate(angle, this.getXCoord()+15, this.getYCoord()+60+3);
+	    g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+33, (int) (this.getYCoord())+60-7, null);
+
 	    g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())+15, (int) (this.getYCoord())+60, null);
 	    g2d.rotate(-angle, this.getXCoord()+15, this.getYCoord()+60+3);
 	    

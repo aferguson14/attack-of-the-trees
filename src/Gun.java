@@ -1,10 +1,10 @@
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+
 
 public class Gun extends Weapon{
     //constructor
@@ -17,7 +17,13 @@ public class Gun extends Weapon{
         setSpeed(3);
         setXVel(0);
         setYVel(0);
-    }
+
+	ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/gunLeft.png");
+	setStillLeft(iWeapLeft.getImage());
+	ImageIcon iWeapRight = new ImageIcon("../images/weaponImage/gunRight.png");
+	setStillRight(iWeapRight.getImage());
+ 
+   }
     //creates projectile towards mouse point
     public void shoot(Point p, Graphics g){
         if(p.getX() > getXCoord()){

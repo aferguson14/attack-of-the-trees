@@ -2,9 +2,14 @@ import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+
 
 public abstract class Weapon {
     //private data
+    private Image stillLeft;
+    private Image stillRight;
+    
     private int Attack;
     private int AttackSpeed;
     private int AttackSpeedTimer;
@@ -278,5 +283,20 @@ public abstract class Weapon {
         this.XVel = XVel;
     }
     
+    public Image getStillLeft() {
+        return stillLeft;
+    }
+
+    public void setStillLeft(Image stillLeft) {
+        this.stillLeft = stillLeft;
+    }
+
+    public Image getStillRight() {
+        return stillRight;
+    }
+
+    public void setStillRight(Image stillRight) {
+        this.stillRight = stillRight;
+    }
     
 }

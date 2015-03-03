@@ -3,6 +3,7 @@ import java.awt.event.*;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.PointerInfo;
 import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
