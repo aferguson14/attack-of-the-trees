@@ -10,10 +10,12 @@ public class EnemyGnome extends Enemies{
     public EnemyGnome(double x, double y){
         super(x, y);
         ImageIcon i = new ImageIcon("../images/enemyImages/gnome/gnomeSide.png");
-        this.setStill(i.getImage());
+        ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
+	this.setStill(i.getImage());
         this.setHorizontalSize(81);
         this.setVerticalSize(115);
         
+	this.setResource(coin);
         this.setHp(50);
         this.setAttack(15);
         this.setSpeed(.5);
@@ -46,28 +48,40 @@ public class EnemyGnome extends Enemies{
     }
    
     @Override
-    public void AI(Player p, Graphics g, ArrayList<Terrain>terrain){
+    public void AI(Player p, Graphics g, ArrayList<Terrain>terrain, ArrayList<Enemies> enem){
         //If it can't move, Jump
+        if(isInAir()){
+            if(getYVel() == 0){
+                setStartedJump(false);
+            }
+        }
          if(checkMove()){
                     this.setYVel(this.getJumpSpeed());
                     setYAcc(.5);
                     setInAir(true);
         }    
+         else if(checkSpeed()){
+                    this.setYVel(this.getJumpSpeed());
+                    this.setXVel(this.getSpeed());
+                    setYAcc(.5);
+                    setInAir(true);
+         }
          //if not in air and is in range, attack
         if(this.checkInRange(p) && !isInAir()){
                 this.setAttacking(true);
                 this.Attack(p, g);
                 this.attackAnimation(g);
+                
             }
         //else, move toward player
             else{
                this.setAttacking(false);
                 if((p.getXCoord() + p.getHorizontalSize()) < this.getXCoord()){
                     this.setXVel(-1 * (this.getSpeed()));
-                    this.move(terrain);
+                    this.move(terrain, enem);
                 }else if((p.getXCoord()) > (this.getXCoord() + this.getHorizontalSize())){
                     this.setXVel(this.getSpeed());
-                    this.move(terrain);
+                    this.move(terrain, enem);
                 }   
             }
         //adjust facing
@@ -78,10 +92,6 @@ public class EnemyGnome extends Enemies{
                 setFacing(0);
             }   
         
-    }
-    @Override
-    public void dropResource(Graphics g){
-    //Do once items have been implemented
     }
     @Override
     public void die(){

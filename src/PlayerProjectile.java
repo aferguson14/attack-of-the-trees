@@ -36,49 +36,51 @@ public class PlayerProjectile {
     }
 
     //move same as Projectile
-        public void move(ArrayList<Enemies> e){
-        //adjust velocities
-        setXVel(getXVel() + getXAcc());
-        setYVel(getYVel() + getYAcc());
-        
-        //adjust coordinates
-        setXCoord(getXCoord() + getXVel());
-        setYCoord(getYCoord() + getYVel());
-        
-        //check world boundaries
-        if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
-            setRemove(true);
-        }
-        if(getXCoord() <= getWorldLeft()){
-            setRemove(true);
-        }
-        if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
-            setRemove(true);
-        }
-        if(getYCoord() <= getWorldTop()){
-            setRemove(true);
-        }
-        //check enemy contact
-        for(Enemies enem : e){
-            if(EnemyContact(enem) == true){
-                dealDmg(enem);
-            }
-        }
+    public void move(ArrayList<Enemies> e){
+	if(Board.getState() == Board.STATE.GAME){
+	    //adjust velocities
+	    setXVel(getXVel() + getXAcc());
+	    setYVel(getYVel() + getYAcc());
+	    
+	    //adjust coordinates
+	    setXCoord(getXCoord() + getXVel());
+	    setYCoord(getYCoord() + getYVel());
+	    
+	    //check world boundaries
+	    if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
+		setRemove(true);
+	    }
+	    if(getXCoord() <= getWorldLeft()){
+		setRemove(true);
+	    }
+	    if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
+		setRemove(true);
+	    }
+	    if(getYCoord() <= getWorldTop()){
+		setRemove(true);
+	    }
+	    //check enemy contact
+	    for(Enemies enem : e){
+		if(EnemyContact(enem) == true){
+		    dealDmg(enem);
+		}
+	    }
+	}
     }
 
-//return true if in contact with enemy
-public boolean EnemyContact(Enemies enem){
-    if((getXCoord() >= enem.getXCoord()) && 
-            (getXCoord() <= (enem.getXCoord() + enem.getHorizontalSize())) 
-            && ((getYCoord() + getVerticalSize()) <= 
-                (enem.getYCoord() + enem.getVerticalSize())) 
-            && (getYCoord() >= enem.getYCoord())){
-        return true;
+    //return true if in contact with enemy
+    public boolean EnemyContact(Enemies enem){
+	if((getXCoord() >= enem.getXCoord()) && 
+	   (getXCoord() <= (enem.getXCoord() + enem.getHorizontalSize())) 
+	   && ((getYCoord() + getVerticalSize()) <= 
+	       (enem.getYCoord() + enem.getVerticalSize())) 
+	   && (getYCoord() >= enem.getYCoord())){
+	    return true;
+	}
+	else{
+	    return false;
+	}
     }
-    else{
-        return false;
-    }
-}
     //deal dmg to enemy based on projectile attack
     public void dealDmg(Enemies e){
         e.setHp(e.getHp() - this.getAttack());
@@ -96,11 +98,13 @@ public boolean EnemyContact(Enemies enem){
 			    g2d.fill(rect);
     }
     
-    //get xy velocities based on angle and speed, like a right traingle
+    //get xy velocities based on angle and speed, like a right triangle
     public void getXY(Double spd, Double ang){
         double yvel, xvel;
         yvel = -1 * (spd * (Math.sin(ang)));
+                 System.out.println("sin: " + Math.sin(ang) + "\n");
         xvel = (spd * (Math.cos(ang)));
+                 System.out.println("cos: " + Math.cos(ang) + "\n");
         setXVel(xvel);
         setYVel(yvel);
         

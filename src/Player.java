@@ -1,5 +1,3 @@
-package src;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import static java.lang.Math.abs;
@@ -40,16 +38,22 @@ public class Player{
     private Weapon currentWeapon;
     private Point MousePoint;
     private int WeaponTracker = 0;
+    private double HealthBarY = 0;
+    private int FrameWorldLeft = -300;
+    private int FrameWorldRight = 1450;
+    private int FrameWorldTop = 0;
+    private int FrameWorldBot = WorldBot;
     
+    //resource counters
     private int logCount;
-    //private int metalCount = 0;
+    private int coinCount;
     
     //Constructor
     public Player() {
-	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDown.png"); //character image
+	ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDown.png"); //character image
 	setStill(i.getImage());
-        //starting Player position/velocity/acceleration
-	XCoord = 10;
+        //starting Player postion/velocity/acceleration
+	XCoord = 10; //was 10
 	YCoord = WorldBot - VerticalSize;
         YAcc =  .5;
         YVel = 0;
@@ -59,37 +63,42 @@ public class Player{
         AttackSpeed = 20;
         Speed = 4;
         JumpSpeed = -15;
-        logCount = 0;
+	HealthBarY = (this.getYCoord() - 580);
+	
+	logCount = 0;
+	coinCount = 0;
     }
     
     public void move(ArrayList <Terrain> terrain) {
         //add velocities to positions/add gravity to yVel
-	setXCoord(getXCoord() + getXVel());
-	setYVel(getYVel() + getYAcc());
-	setYCoord(getYCoord() + getYVel());
-        //check terrain contact
-        for(Terrain t : terrain){
-            t.CheckPlayerContact(this);
-            
-        }
-        
-	//check world boundaries
-	if((getYCoord() + VerticalSize) >= 700){
-	    setYCoord(getWorldBot() - VerticalSize);
-	    setYVel(0);
-	    setInAir(false);
-	}
-        if(getXCoord() <= 0){
-            setXCoord(0);
-        }
-        else if((getXCoord() + 50) >= 7000){
-            setXCoord(7000 - 50);
-        }
-        
-        setScrollX(getXCoord()*(-1)); //For background
-	setScrollY(getYCoord()); //For background
+	if(Board.getState() == Board.STATE.GAME){
 
+	    setXCoord(getXCoord() + getXVel());
+	    setYVel(getYVel() + getYAcc());
+	    setYCoord(getYCoord() + getYVel());
+	    //check terrain contact
+	    for(Terrain t : terrain){
+		t.CheckPlayerContact(this);
+            
+	    }
         
+	    //check world boundaries
+	    if((getYCoord() + VerticalSize) >= 700){
+		setYCoord(getWorldBot() - VerticalSize);
+		setYVel(0);
+		setInAir(false);
+	    }
+	    if(getXCoord() <= 0){
+		setXCoord(0);
+	    }
+	    else if((getXCoord() + 50) >= 7000){
+		setXCoord(7000 - 50);
+	    }
+	        
+	    setScrollX(getXCoord()*(-1)); //For background
+	    setScrollY(getYCoord()); //For background
+
+        }
     }
     
     public void paintPlayer(Graphics g){
@@ -97,53 +106,53 @@ public class Player{
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 
-        //only repaint if player's health is above 0
         if(this.getHp() >= 0){
-            g.setColor(Color.white);
-            g.fillRect((int) (this.getXCoord() -10) , (int) (this.getYCoord() - 10), this.getHp(), 7);
+            g.drawRect((int) (this.getXCoord() -280) , (int) getHealthBarY(), 100 * 7, 20);
+            g.setColor(Color.RED);
+            g.fillRect((int) (this.getXCoord() -280) , (int) getHealthBarY(), this.getHp() * 7, 20);
         }
-        else if (this.getHp() < 0){
-        	Board.setState(Board.STATE.GAMEOVER);
-        }
+	else {
+	    Board.setState(Board.STATE.GAMEOVER);
+	}
     }
     
-public void AttackAnimation(Graphics g){
-//change player image depending on attack and facing
-if(isAttacking()){
-    if(getFacing() == 0){
+    public void AttackAnimation(Graphics g){
+	//change player image depending on attack and facing
+	if(isAttacking()){
+	    if(getFacing() == 0){
 
-        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpLeft.png"); //character image
-        setStill(i.getImage());
+		ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpLeft.png"); //character image
+		setStill(i.getImage());
 
 
+	    }
+	    else if(getFacing() == 1){
+		ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpRight.png");
+		setStill(i.getImage());
+
+	    }
+
+	}else{
+	    if(getFacing() == 0){
+		ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownLeft.png");
+		setStill(i.getImage());
+	    }else{
+		ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownRight.png");
+		setStill(i.getImage());
+	    }
+	}
     }
-    else if(getFacing() == 1){
-        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpRight.png");
-        setStill(i.getImage());
-
-    }
-
-}else{
-    if(getFacing() == 0){
-        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownLeft.png");
-        setStill(i.getImage());
-    }else{
-        ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownRight.png");
-        setStill(i.getImage());
-    }
-}
-}
     
-//subtract Hp by enemy attack
+    //subtract Hp by enemy attack
     public void takeDmg(Enemies e){
         setHp(getHp() - e.getAttack());
     }
-//add weapon    
+    //add weapon    
     public void AddWeapon(Weapon w){
         weapon.add(w);
         currentWeapon = w;
     }
-//switch current weapon
+    //switch current weapon
     public void switchWeapon(){
         if(WeaponTracker < weapon.size()){
             WeaponTracker++;
@@ -154,18 +163,19 @@ if(isAttacking()){
             currentWeapon = weapon.get(WeaponTracker);
         }
     }
-//get mouse coords
-// if attacking, shoot weapon
-//readjust mouse coords
+    //get mouse coords
+    // if attacking, shoot weapon
+    //readjust mouse coords
     public void PlayerAttack(Graphics g){
-        Board.MouseCoords.x += (this.getXCoord() - 300);
+        Board.MouseCoords.x += (this.getXCoord() - 800);
+	//-300 relates to painting player in Board
         setMousePoint(Board.MouseCoords);
         if(isAttacking()){
             getCurrentWeapon().shoot(this.getMousePoint(), g);
         }
-        Board.MouseCoords.x -= (this.getXCoord() - 300);
+        Board.MouseCoords.x -= (this.getXCoord() - 800);
     }
-//get player coords in point form
+    //get player coords in point form
     public Point getPlayerPoint(){
         Point p = new Point((int)this.getXCoord(), (int)this.getYCoord());
         return p;
@@ -173,8 +183,9 @@ if(isAttacking()){
     
     //player movement input
     public void keyPressed(KeyEvent e) {
+
 	int key = e.getKeyCode();
-        //input changes velocity
+        //input cahnges velocity
 	if (key == KeyEvent.VK_A){
             if(!isAttacking()){
                 ImageIcon iLeft = new ImageIcon("images/playerImages/guy/guySideDownLeft.png"); // character image
@@ -200,11 +211,12 @@ if(isAttacking()){
             }
         }
     }
-    
+
     //player movement input
     public void keyReleased(KeyEvent e) {
+
 	int key = e.getKeyCode();
-        //realease of L/R key's result in 0 horiz vel
+        //release of L/R key's result in 0 horiz vel
 	if (key == KeyEvent.VK_A)
 	    setXVel(0);
 	
@@ -212,8 +224,6 @@ if(isAttacking()){
 	    setXVel(0);
     }
 
-    
-    
     //-----------------Getters/Setters------------------------------------------------------------------------------------------------
     public double getXCoord() {
         return XCoord;
@@ -430,7 +440,7 @@ if(isAttacking()){
      * @param jumpspeed the jumpspeed to set
      */
     public void setJumpspeed(double jumpspeed) {
-        this.JumpSpeed = jumpspeed;
+        this.setJumpSpeed(jumpspeed);
     }
 
     /**
@@ -516,6 +526,30 @@ if(isAttacking()){
     public void setScrollY(double scrollY) {
         this.scrollY = scrollY;
     }
+    
+        /**
+     * @param JumpSpeed the JumpSpeed to set
+     */
+    public void setJumpSpeed(double JumpSpeed) {
+        this.JumpSpeed = JumpSpeed;
+    }
+
+    /**
+     * @return the HealthBarY
+     */
+    public double getHealthBarY() {
+        return HealthBarY;
+    }
+
+    /**
+     * @param HealthBarY the HealthBarY to set
+     */
+    public void setHealthBarY(double HealthBarY) {
+        this.HealthBarY = HealthBarY;
+    }
+
+
+//RESOURCES SETTER/GETTERS
 
     public int getLogCount(){
 	return logCount;
@@ -523,6 +557,14 @@ if(isAttacking()){
 
     public void setLogCount(int logCount){
 	this.logCount = logCount;
+    }
+
+    public int getCoinCount(){
+	return coinCount;
+    }
+
+    public void setCoinCount(int coinCount){
+	this.coinCount = coinCount;
     }
 
 }

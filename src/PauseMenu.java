@@ -14,13 +14,13 @@ public class PauseMenu extends JFrame{
     public JPanel shop ;
     public JPanel save;
     public JPanel help;
-    JButton clicked;
-    ArrayList<String> weaponNames = new ArrayList<String>(Arrays.asList("sword", "stick", "axe", "gun"));
+    //JButton clicked;
+    //ArrayList<String> weaponNames = new ArrayList<String>(Arrays.asList("sword", "stick", "axe", "gun"));
     
     public PauseMenu(){
 	setTitle("Pause Menu");
 	setSize(500,350);
-	setBackground(Color.gray);
+	//setBackground(Color.gray);
         
         //set the location of the pause menu in the middle of the board
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -30,7 +30,7 @@ public class PauseMenu extends JFrame{
 	setFocusable(true);
 
 	setUndecorated(true);
-	setOpacity(.85f);
+	//setOpacity(.85f);
 	//this.setLocationRelativeTo(null);
 
 	JPanel topPanel = new JPanel();
@@ -38,7 +38,8 @@ public class PauseMenu extends JFrame{
 	getContentPane().add(topPanel);
 	this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	
-	createShopPage();
+	shop = new ShopPanel();
+	//createShopPage();
 	createSavePage();
 	createHelpPage();
 	
@@ -50,7 +51,7 @@ public class PauseMenu extends JFrame{
 	
     }
     
-    public void createShopPage(){
+    /*public void createShopPage(){
     	//create the panel for the shop
 	shop = new JPanel();
 	shop.setLayout(new FlowLayout());
@@ -69,13 +70,13 @@ public class PauseMenu extends JFrame{
 	//shop.add(new JButton(gun));
 	//shop.add(new JButton(axe));
 	this.getContentPane().add(BorderLayout.NORTH, shop);
-    }
+	}
     
     ActionListener actionListener = new ActionListener() {
 	public void actionPerformed(ActionEvent actionEvent) {
 	    System.out.println(actionEvent.getSource());
 	}
-    };
+	};*/
     
     public void createSavePage(){
     	//create the panel for the save game feature

@@ -15,7 +15,7 @@ public class Menu {
 	Font fnt0 = new Font("arial", Font.BOLD, 50);
 	g.setFont(fnt0);
 	g.setColor(Color.white);
-	g.drawString("Attack of the Trees", 250, 100);
+	g.drawString("Attack of the Trees", -150, 100);
 	
 	Font fnt1 = new Font("arial", Font.BOLD, 30);
 	g.setFont(fnt1);
