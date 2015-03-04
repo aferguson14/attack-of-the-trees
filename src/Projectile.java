@@ -1,5 +1,3 @@
-package src;
-
 import static java.lang.Math.*;
 import java.awt.Color;
 import java.awt.Graphics;
