@@ -47,8 +47,10 @@ public class Board extends JPanel implements ActionListener {
     private int WorldLeft = 0;
     private int WorldRight = 7478;
     private int WorldTop = 0;
+
     public static Point MouseCoords;
     public static Point BoardLoc;
+
     public static boolean PlayerAttack = false;
     private boolean StartLevel = true;
     private int level = 0;
@@ -80,7 +82,7 @@ public class Board extends JPanel implements ActionListener {
 	menu = new Menu();
 	charmenu = new CharacterMenu();
 	pmenu = new PauseMenu(p);
-	goscreen = new GameOverScreen();
+	goscreen = new GameOverScreen(this);
         MouseInput m = new MouseInput();
 	addMouseListener(m);
         addMouseMotionListener(m);

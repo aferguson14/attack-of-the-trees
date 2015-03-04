@@ -122,7 +122,6 @@ public class PauseMenu extends JFrame{
     }
 
     public void keyPressedMenu(KeyEvent e) {
-	// TODO Auto-generated method stub
 	int key = e.getKeyCode();
 	//check to see if the key pressed is P
 	//if so if the state is in game then change it to pause
