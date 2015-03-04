@@ -91,33 +91,33 @@ public class Board extends JPanel implements ActionListener {
 		ImageIcon far = new ImageIcon("images/backgrounds/far-background.png");
 
 		farBackground = far.getImage();
-		ImageIcon far2 = new ImageIcon("images/backgrounds/far-background.png");
-		ImageIcon near = new ImageIcon("images/backgrounds/near-background.png");
-		ImageIcon near2 = new ImageIcon("images/backgrounds/near-background.png");
+		ImageIcon far2 = new ImageIcon("../images/backgrounds/far-background.png");
+		ImageIcon near = new ImageIcon("../images/backgrounds/near-background.png");
+		ImageIcon near2 = new ImageIcon("../images/backgrounds/near-background.png");
 		nearBackground = near.getImage();
-		ImageIcon far3 = new ImageIcon("images/backgrounds/far-background.png");
+		ImageIcon far3 = new ImageIcon("../images/backgrounds/far-background.png");
 
 		Far3 = far.getImage();
 		Far2 = far2.getImage();
 		Near2 = near2.getImage();
 
 		//RESOURCE IMAGES
-		ImageIcon logImage = new ImageIcon("images/sourceImage/wood.png");
+		ImageIcon logImage = new ImageIcon("../images/sourceImage/wood.png");
 		LogImage = logImage.getImage();
-		ImageIcon coinImage = new ImageIcon("images/sourceImage/coin.png");
+		ImageIcon coinImage = new ImageIcon("../images/sourceImage/coin.png");
 		CoinImage = coinImage.getImage();
 		//TIME
 		time = new Timer(5, this);
 		time.start();
 
 		//WEAPON IMAGES
-		ImageIcon axeImage = new ImageIcon("images/weaponImage/axe.png");
+		ImageIcon axeImage = new ImageIcon("../images/weaponImage/axe.png");
 		AxeImage = axeImage.getImage();
-		ImageIcon swordImage = new ImageIcon("images/weaponImage/sword.png");
+		ImageIcon swordImage = new ImageIcon("../images/weaponImage/sword.png");
 		SwordImage = swordImage.getImage();
-		ImageIcon stickImage = new ImageIcon("images/weaponImage/stick.png");
+		ImageIcon stickImage = new ImageIcon("../images/weaponImage/stick.png");
 		StickImage = stickImage.getImage();
-		ImageIcon gunImage = new ImageIcon("images/weaponImage/gun.png");
+		ImageIcon gunImage = new ImageIcon("../images/weaponImage/gun.png");
 		GunImage = gunImage.getImage();
 
 		//WEAPONS
