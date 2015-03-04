@@ -10,7 +10,7 @@ public class ResourceCoin extends Resource{
     public ResourceCoin(double x, double y){
 	super(x,y);
 	//Image needs to be replaced by log
-	ImageIcon i = new ImageIcon("images/sourceImage/coin.png");
+	ImageIcon i = new ImageIcon("../images/sourceImage/coin.png");
 	this.setResourceImage(i.getImage());
 	this.setResourceType("coin");
     }
