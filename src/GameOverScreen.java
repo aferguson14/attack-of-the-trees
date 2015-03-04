@@ -6,14 +6,20 @@ import javax.swing.border.Border;
 
 public class GameOverScreen extends JFrame {
 
+	public JPanel board;
 	public JPanel buttonPanel;
 	public JPanel labelPanel;
 	public JButton playAgainButton;
 	public JButton exitButton;
 	public JLabel label;
 
-	public GameOverScreen() {
+	public GameOverScreen(JPanel b) {
+		
+		// superclass constructor
 		super();
+		
+		board = b;
+		
 		// set frame characteristics
 		this.setTitle("Game Over Screen");
 		this.setSize(750, 300);
@@ -21,8 +27,9 @@ public class GameOverScreen extends JFrame {
 		// set location of game over screen to middle of board
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        this.setLocationRelativeTo(null);
+        	this.setLocationRelativeTo(null);
 
+		// remove frame buttons
 //	    this.setVisible(true);
 		this.setFocusable(true);
 		this.setUndecorated(true);
@@ -76,8 +83,9 @@ public class GameOverScreen extends JFrame {
 	 * @param e ActionEvent
 	 */	
 	public void playAgain(ActionEvent e) {
-		this.dispose();
 		Board.setState(Board.STATE.MENU);
+		board.repaint();
+		this.dispose();
 	}
 
 	/*
@@ -92,8 +100,8 @@ public class GameOverScreen extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (Board.getState() == Board.STATE.GAMEOVER)
 				playAgain(e);
-//			else if (Board.getState() == Board.STATE.GAME)
-//				displayGOScreen(e);
+			else if (Board.getState() == Board.STATE.GAME)
+				displayGOScreen(e);
 		}	
 	} //PAL
 
