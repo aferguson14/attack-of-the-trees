@@ -58,9 +58,9 @@ public class Player{
 
 	//Constructor
 	public Player() {
-		ImageIcon i = new ImageIcon("images/playerImages/guy/guyArmlessRight.png"); //character image
+		ImageIcon i = new ImageIcon("../images/playerImages/guy/guyArmlessRight.png"); //character image
 		setStill(i.getImage());
-		ImageIcon iArm = new ImageIcon ("images/playerImages/guy/armRight.png");
+		ImageIcon iArm = new ImageIcon ("../images/playerImages/guy/armRight.png");
 		setArmStill(iArm.getImage());
 		//starting Player postion/velocity/acceleration
 		XCoord = 10; //was 10
@@ -261,10 +261,10 @@ public class Player{
 				 */
 			}
 			ImageIcon iRight = new ImageIcon
-					("images/playerImages/guy/guyArmlessRight.png");
+					("../images/playerImages/guy/guyArmlessRight.png");
 			setStill(iRight.getImage());
 			ImageIcon iArmRight = new ImageIcon
-					("images/playerImages/guy/armRight.png");
+					("../images/playerImages/guy/armRight.png");
 			setArmStill(iArmRight.getImage());
 
 			setXVel(getSpeed());
