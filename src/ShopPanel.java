@@ -5,6 +5,9 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -27,12 +30,16 @@ public class ShopPanel extends JPanel {
     int[] coinCost = {1,0,5,10};
     String[] weaponDescrip;
     int[] weaponsBought = {0,0,0,0};
+    JPopupMenu jmenu;
     
     public ShopPanel(Player p) {
 	// shop.setLayout(new GridLayout(2,2));
 	//setBackground(Color.gray);
 	//add buttons for the different weapons
 	this.p = p;
+	jmenu = new JPopupMenu();
+	jmenu.add("You don't have enough resources");
+	jmenu.addKeyListener(new keyListener());
 	for (int i = 0; i < weaponNames.size(); i++) {
 	    JButton j = new JButton(new ImageIcon("../images/weaponImage/" + weaponNames.get(i) + ".png"));
 	    buttons.add(i, j);
@@ -45,6 +52,7 @@ public class ShopPanel extends JPanel {
 	    public void actionPerformed(ActionEvent actionEvent) {
 		//System.out.println(actionEvent.getSource());
 		//check to see which button was clicked 
+		jmenu.setVisible(false);
 		JButton b = (JButton) actionEvent.getSource();
 
 		if(b.equals(buttons.get(0))){
@@ -71,34 +79,44 @@ public class ShopPanel extends JPanel {
 		    //add weapon to player's list of weapons...
 		    logs = p.getLogCount();
 		    coins = p.getCoinCount();
-		    //System.out.println(logs + " " + coins);
-		    if(logs >= logCost[indexClicked] && coins >= coinCost[indexClicked]){
-			p.setCoinCount(coins-coinCost[indexClicked]);
-			p.setLogCount(logs-logCost[indexClicked]);
+		    if(logs >= logCost[indexClicked] && coins >= coinCost[indexClicked] && weaponsBought[indexClicked] == 0){
+			p.setCoinCount((coins-coinCost[indexClicked]));
+			p.setLogCount((logs-logCost[indexClicked]));
 			weaponsBought[indexClicked] = 1;
+			repaint();
 			//System.out.println(logs + " " + coins);
-			//need to add this weapon to the players arraylist of weapons, but can't yet
+			//need to add this weapon to the players arraylist of weapons
 		    }
-		    else{
-			JPopupMenu jmenu = new JPopupMenu();
-			jmenu.add("You don't have enough resources");
-			jmenu.setLocation(200,100);
+		    else if (weaponsBought[indexClicked] == 0){
+			jmenu.setLocation(700,500);
 			jmenu.setVisible(true);
 			//JFrame jf = new JFrame();
 			//System.out.println("Don't have enough resources");
 		    }
+		    //jmenu.setVisible(false);
+		    //repaint();
 		}
 		//shop.remove(cost);
 	    }
     };
     
+    private class keyListener extends KeyAdapter {
+	public void keyPressed(KeyEvent e){
+	    int key = e.getKeyCode();
+	    if(key == KeyEvent.VK_P){
+		jmenu.setVisible(false);
+	    }
+	}
+    }
+
+
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	Graphics2D g2d = (Graphics2D) g;
 	
 	this.remove(buy);
 	this.remove(purchased);
-
+	
 	//paint the different images and costs for the weapons and the purchase button
 	ImageIcon i = new ImageIcon("../images/weaponImage/" + weaponNames.get(indexClicked) + ".png");
 	Image weapon = i.getImage();
