@@ -88,17 +88,14 @@ public class Board extends JPanel implements ActionListener {
         addMouseMotionListener(m);
 	setFocusable(true);
         //not stitched together, used multiple background images
-	ImageIcon far = new 
-	    ImageIcon("../images/backgrounds/far-background.png");
+	ImageIcon far = new ImageIcon("../images/backgrounds/far-background.png");
         
         farBackground = far.getImage();
         ImageIcon far2 = new ImageIcon("../images/backgrounds/far-background.png");
-	ImageIcon near = new 
-	    ImageIcon("../images/backgrounds/near-background.png");
+	ImageIcon near = new ImageIcon("../images/backgrounds/near-background.png");
         ImageIcon near2 = new ImageIcon("../images/backgrounds/near-background.png");
 	nearBackground = near.getImage();
-        ImageIcon far3 = new 
-	    ImageIcon("../images/backgrounds/far-background.png");
+        ImageIcon far3 = new ImageIcon("../images/backgrounds/far-background.png");
         
         Far3 = far.getImage();
         Far2 = far2.getImage();
@@ -135,7 +132,6 @@ public class Board extends JPanel implements ActionListener {
 	//above to be uncommented when implemented
     }
     
-    
     public void actionPerformed(ActionEvent e) {
 	//move player, move weapon
 	
@@ -168,7 +164,6 @@ public class Board extends JPanel implements ActionListener {
 			
 			resources.add(getEnemies().get(i).getResource());
 			
-			
 			getEnemies().remove(i);
 			if(lvlhandler.getProgress() < lvlhandler.getProgressNeeded()){
 			    lvlhandler.setProgress(lvlhandler.getProgress() + 1);
@@ -192,7 +187,6 @@ public class Board extends JPanel implements ActionListener {
 			    boss.add(gnome);
 			}
 		    }
-		        
 		}
 	    }
 	    else{
@@ -225,7 +219,6 @@ public class Board extends JPanel implements ActionListener {
 	        
 	    //if Player runs over resource, collect
 	    for(int i = 0; i< getResources().size();i++){
-		        
 		if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
 		   (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
 		   (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
@@ -382,8 +375,7 @@ public class Board extends JPanel implements ActionListener {
 	}
     }
 
-    
-    
+
     //------------------------------Getters/Setters---------------------------[
     /**
      * @return the p
