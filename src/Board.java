@@ -503,7 +503,7 @@ public class Board extends JPanel implements ActionListener {
     /**
      * @return the game over screen
      */
-    public GameOverScreen getGoscreen(){
+    public static GameOverScreen getGoscreen(){
 	return goscreen;
     }
     
