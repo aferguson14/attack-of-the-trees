@@ -75,13 +75,6 @@ public class GameOverScreen extends JFrame {
 	/*
 	 * @param e ActionEvent
 	 */	
-	public void displayGOScreen(ActionEvent e) {
-		this.setVisible(true);
-	}
-
-	/*
-	 * @param e ActionEvent
-	 */	
 	public void playAgain(ActionEvent e) {
 		Board.setState(Board.STATE.MENU);
 		board.repaint();
@@ -100,8 +93,6 @@ public class GameOverScreen extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (Board.getState() == Board.STATE.GAMEOVER)
 				playAgain(e);
-			else if (Board.getState() == Board.STATE.GAME)
-				displayGOScreen(e);
 		}	
 	} //PAL
 
