@@ -118,14 +118,18 @@ public class Player{
 	//  g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 
 	//Arm movement
+	int mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX() - (int) Board.BoardLoc.getX() ;
+	int mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY() - (int) Board.BoardLoc.getY();
 	if(this.getFacing()==0){
 	    double angle = Math.atan2(
-	      ((Board.MouseCoords.y)-(this.getYCoord()+60)), 
-	      ((Board.MouseCoords.x-600+this.getXCoord())-(this.getXCoord()-15+40)));
+	      ((mouseY)-(this.getYCoord()+60)), 
+	      ((mouseX-600+this.getXCoord())-(this.getXCoord()-15+40)));
 	    //Test Printing
-	    /*	    System.out.println("MouseCoord: (" + (Board.MouseCoords.x-600+this.getXCoord()) + ", " + Board.MouseCoords.y+ ")");
-	    System.out.println("PlayerCoord: (" + this.getXCoord() + ", " + this.getYCoord() + ")");
-	    */
+	    System.out.println("MouseCoord: (" + (mouseX) + ", " + (mouseY) + ")");
+System.out.println("MouseGameCoord: (" + (Board.MouseCoords.x) + ", " + Board.MouseCoords.y+ ")");
+
+		   //System.out.println("PlayerCoord: (" + this.getXCoord() + ", " + this.getYCoord() + ")");
+	    
 	
 	    g2d.rotate(angle, this.getXCoord()-15+40, this.getYCoord()+60+3);
 	    g2d.rotate(Math.PI, this.getXCoord()-15+40, this.getYCoord()+60+3);
@@ -140,9 +144,11 @@ public class Player{
 
 	if(this.getFacing()==1){
 	    g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
+
 	    double angle = Math.atan2(
-	      ((Board.MouseCoords.y)-(this.getYCoord()+60)), 
-	      ((Board.MouseCoords.x-600+this.getXCoord())-(this.getXCoord()+15)));	
+	      ((mouseY)-(this.getYCoord()+60)), 
+	      ((mouseX-600+this.getXCoord())-(this.getXCoord()+15)));
+	
 	
 	    g2d.rotate(angle, this.getXCoord()+15, this.getYCoord()+60+3);
 	    g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+33, (int) (this.getYCoord())+60-7, null);

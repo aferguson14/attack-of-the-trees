@@ -48,6 +48,7 @@ public class Board extends JPanel implements ActionListener {
     private int WorldRight = 7478;
     private int WorldTop = 0;
     public static Point MouseCoords;
+    public static Point BoardLoc;
     public static boolean PlayerAttack = false;
     private boolean StartLevel = true;
     private int level = 0;
@@ -76,8 +77,8 @@ public class Board extends JPanel implements ActionListener {
         
 	addKeyListener(new AL());
 	menu = new Menu();
-	pmenu = new PauseMenu(p);
-	goscreen = new GameOverScreen();
+	pmenu = new PauseMenu(p);	
+goscreen = new GameOverScreen();
         MouseInput m = new MouseInput();
 	addMouseListener(m);
         addMouseMotionListener(m);
@@ -248,6 +249,8 @@ public class Board extends JPanel implements ActionListener {
 	super.paint(g);
 	Graphics2D g2d = (Graphics2D) g;
 	
+	BoardLoc = this.getLocationOnScreen();
+
         //background images
 	g2d.translate((p.getXCoord()*-1)+600, 0); //+600 because of player pos.
 	//above line changes where player appears on screen
@@ -560,6 +563,10 @@ public class Board extends JPanel implements ActionListener {
      */
     public Point getMouseCoords() {
         return MouseCoords;
+    }
+    
+    public Point getBoardLoc(){
+	return BoardLoc;
     }
 
     /**
