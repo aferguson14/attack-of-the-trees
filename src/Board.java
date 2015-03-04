@@ -82,7 +82,7 @@ public class Board extends JPanel implements ActionListener {
 	menu = new Menu();
 	charmenu = new CharacterMenu();
 	pmenu = new PauseMenu(p);
-	goscreen = new GameOverScreen();
+	goscreen = new GameOverScreen(this);
         MouseInput m = new MouseInput();
 	addMouseListener(m);
         addMouseMotionListener(m);
