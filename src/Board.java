@@ -38,8 +38,9 @@ public class Board extends JPanel implements ActionListener {
     private Timer time;
     private boolean attack = false;
     private Menu menu;
+    private CharacterMenu charmenu;
     private PauseMenu pmenu;
-    private GameOverScreen goscreen;
+    private static GameOverScreen goscreen;
 
     //world dimensions
     private int WorldBot = 700;
@@ -55,6 +56,7 @@ public class Board extends JPanel implements ActionListener {
     //states
     public static enum STATE {
 	MENU,
+	CHARMENU,
 	GAME,
 	PAUSE,
         GAMEOVER
@@ -75,6 +77,7 @@ public class Board extends JPanel implements ActionListener {
         
 	addKeyListener(new AL());
 	menu = new Menu();
+	charmenu = new CharacterMenu();
 	pmenu = new PauseMenu(p);
 	goscreen = new GameOverScreen();
         MouseInput m = new MouseInput();
@@ -149,7 +152,7 @@ public class Board extends JPanel implements ActionListener {
 	    else{
 		getP().setAttacking(false);
 	    }
-	    
+	        
 	    //if any enemies are below 0 health, delete
 	    if(boss.size() == 0){
 		for(int i = 0; i < getEnemies().size(); i++){
@@ -172,21 +175,21 @@ public class Board extends JPanel implements ActionListener {
 				generator.updateLVL1Enemies(enemies);
 				enemies.get(enemies.size()-1).setTerrainDimensions(terrain);
 			    } else if(level == 1){
-                            generator.updateLVL2Enemies(enemies);
-                            enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
+				generator.updateLVL2Enemies(enemies);
+				enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
 			    }else{
 				generator.updateLVL3Enemies(enemies);
 				enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
 			    }
 			} else if(enemies.size() > 0){
-			    
+			        
 			} else{
 			    //boss stuff
 			    EnemyGnome gnome = new EnemyGnome(2000, getWorldBot() - 115);
 			    boss.add(gnome);
 			}
 		    }
-		    
+		        
 		}
 	    }
 	    else{
@@ -196,7 +199,7 @@ public class Board extends JPanel implements ActionListener {
 			(boss.get(0).getXCoord());
 		    boss.get(0).getResource().setYCoord
 			(boss.get(0).getYCoord()+70);
-		    
+		        
 		    resources.add(boss.get(0).getResource());
 
 		    boss.remove(0);
@@ -216,23 +219,23 @@ public class Board extends JPanel implements ActionListener {
 		}
 		
 	    }
-	    
+	        
 	    //if Player runs over resource, collect
 	    for(int i = 0; i< getResources().size();i++){
-	        
+		        
 		if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
 		   (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
 		   (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
 		   (getP().getYCoord() >= getResources().get(i).getYCoord()-70) ){
-		    
+		        
 		    if(getResources().get(i).getResourceType() == "log")
 			getP().setLogCount(getP().getLogCount() + 1);
 		    else if(getResources().get(i).getResourceType() == "coin")
 			getP().setCoinCount(getP().getCoinCount() + 1);
 		    /*else if(getResources().get(i).getResourceType() == "coal")
-		      getP().setCoalCount(getP().getCoalCount() + 1);
-		      else if(getResources().get(i).getResourceType() == "oil")
-		      getP().setOilCount(getP().getOilCount() + 1);
+		            getP().setCoalCount(getP().getCoalCount() + 1);
+			          else if(getResources().get(i).getResourceType() == "oil")
+				        getP().setOilCount(getP().getOilCount() + 1);
 		    */
 		    //**ABOVE IS TO BE UNCOMMENTED ONCE WE HAVE IMAGES**
 		    getResources().remove(i);
@@ -258,7 +261,13 @@ public class Board extends JPanel implements ActionListener {
         g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
 
-        
+	if(getState() == STATE.MENU) {
+	    getMenu().render(g);
+	}
+
+	if(getState() == STATE.CHARMENU) {
+	    //TO IMPLEMENT
+	}
 
 	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
             g.drawRect((int) (p.getXCoord() -280) , (int) p.getHealthBarY() + 40, 700, 30);
@@ -280,12 +289,10 @@ public class Board extends JPanel implements ActionListener {
                 getP().PlayerAttack(g);
             }
 
-
 	    //Paint resources
 	    for(Resource r : getResources()){
 		r.paintResource(g);
 	    }
-
 
 	    for(Enemies e : getEnemies()){
 		e.AI(getP(), g, terrain, enemies);
@@ -300,7 +307,7 @@ public class Board extends JPanel implements ActionListener {
 	    if(getState() == STATE.PAUSE){
 		pmenu.requestFocusInWindow();
 	    }
-	        
+	            
 	    //RESOURCE BAR
 	    int resourceBarX = (int)getP().getXCoord()+630;
 	    Stroke oldStroke = g2d.getStroke();
@@ -315,7 +322,6 @@ public class Board extends JPanel implements ActionListener {
 
 	    g2d.setStroke(oldStroke);
 
-	        
 	    //WEAPON BAR
 	    int weaponBarX = (int)getP().getXCoord()-560;
 	    //oldStroke = g2d.getStroke();
@@ -332,9 +338,7 @@ public class Board extends JPanel implements ActionListener {
 	    g2d.drawImage(GunImage, weaponBarX, 230, null);
 	    g.drawString("4", weaponBarX-10, 230+5);
 
-
-	    g2d.setStroke(oldStroke);
-	        
+	    g2d.setStroke(oldStroke);	            
 
             //paint player and weapon
 	    getP().paintPlayer(g);
@@ -352,11 +356,6 @@ public class Board extends JPanel implements ActionListener {
 		g.setColor(new Color(0,0,0,brightness));
 		g.fillRect((int)getP().getXCoord()-1000, 0, 7478, 1000);
 	    }
-	}
-        //if State!=Game, perform other State actions
-	
-	else if(getState() == STATE.MENU) {
-	    getMenu().render(g);
 	}
 	else if (getState() == STATE.GAMEOVER){
 	    goscreen.requestFocusInWindow();
@@ -478,6 +477,20 @@ public class Board extends JPanel implements ActionListener {
      */
     public PauseMenu getPmenu() {
         return pmenu;
+    }
+
+    /**
+     * @return the charmenu
+     */
+    public CharacterMenu getCharmenu() {
+	return charmenu;
+    }
+
+    /**
+     * @param charmenu the menu to set
+     */
+    public void setCharmenu(CharacterMenu charmenu) {
+	this.charmenu = charmenu;
     }
 
     /**

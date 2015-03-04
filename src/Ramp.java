@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,7 +11,7 @@ public class Ramp extends Terrain{
 //constrcutor
     public Ramp(int x, int y) {
         super(x, y);
-        ImageIcon i = new ImageIcon("../images/blockImage/rampUp.png");
+        ImageIcon i = new ImageIcon("images/blockImage/rampUp.png");
         setStill(i.getImage());
         setIgnoreLeft(true);
         setHorizontalSize(100);

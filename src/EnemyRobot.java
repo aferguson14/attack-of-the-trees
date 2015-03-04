@@ -9,7 +9,7 @@ public class EnemyRobot extends Enemies{
     //Constructor
     public EnemyRobot(double x, double y){
         super(x, y);
-        ImageIcon i = new ImageIcon("../images/enemyImages/robot/robotFront.png");
+        ImageIcon i = new ImageIcon("images/enemyImages/robot/robotFront.png");
 	ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
 
         this.setStill(i.getImage());

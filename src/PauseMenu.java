@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,9 +26,9 @@ public class PauseMenu extends JFrame{
 	setSize(500,350);
 	//setBackground(Color.gray);
         
-        //set the location of the pause menu in the middle of the board
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+    //set the location of the pause menu in the middle of the board
+    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	
 	addKeyListener(new KL());
 	setFocusable(true);
@@ -59,14 +61,14 @@ public class PauseMenu extends JFrame{
 	shop.setLayout(new FlowLayout());
 	//shop.setLayout(new GridLayout(2,2));
 	for(int i = 0; i < weaponNames.size(); i++){
-	    JButton j = new JButton(new ImageIcon("../images/weaponImage/" + weaponNames.get(i) + ".png")); 
+	    JButton j = new JButton(new ImageIcon("images/weaponImage/" + weaponNames.get(i) + ".png")); 
 	    shop.add(j);
 	    j.addActionListener(actionListener);
 	}
-	//ImageIcon sword = new ImageIcon("../images/weaponImage/sword.png");
-	//ImageIcon stick = new ImageIcon("../images/weaponImage/stick.png");
-	//ImageIcon gun = new ImageIcon("../images/weaponImage/gun.png");
-	//ImageIcon axe = new ImageIcon("../images/weaponImage/axe.png");
+	//ImageIcon sword = new ImageIcon("images/weaponImage/sword.png");
+	//ImageIcon stick = new ImageIcon("images/weaponImage/stick.png");
+	//ImageIcon gun = new ImageIcon("images/weaponImage/gun.png");
+	//ImageIcon axe = new ImageIcon("images/weaponImage/axe.png");
 	//shop.add(new JButton(sword));
 	//shop.add(new JButton(stick));
 	//shop.add(new JButton(gun));

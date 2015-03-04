@@ -98,7 +98,7 @@ public class ShopPanel extends JPanel {
 		}
 		//shop.remove(cost);
 	    }
-    };
+	};
     
     private class keyListener extends KeyAdapter {
 	public void keyPressed(KeyEvent e){
@@ -136,8 +136,8 @@ public class ShopPanel extends JPanel {
 	// and just some text)
 	else{ //if(weaponsBought[indexClicked] == 1){
 	    /*Rectangle box = new Rectangle(20, 50, 200, 275);
-	      g2d.draw(box);
-	      g2d.drawString("Already Purchased", 205, 280);*/
+	            g2d.draw(box);
+		    g2d.drawString("Already Purchased", 205, 280);*/
 	    purchased.setLocation(170,275);
 	    this.add(purchased);
 	}

@@ -58,6 +58,6 @@ public class Menu {
 	g2d.draw(newGameButtonInline);
 	g2d.draw(loadGameButtonOutline);
 	g2d.draw(loadGameButtonInline);
-	g2d.setStroke(oldStroke);	
+	g2d.setStroke(oldStroke);
     }
 }
