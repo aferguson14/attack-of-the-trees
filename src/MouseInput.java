@@ -10,19 +10,16 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     @Override
     public void mouseClicked(MouseEvent arg0) {
 	// TODO Auto-generated method stub
-	
     }
     
     @Override
     public void mouseEntered(MouseEvent arg0) {
 	// TODO Auto-generated method stub
-	
     }
     
     @Override
     public void mouseExited(MouseEvent arg0) {
 	// TODO Auto-generated method stub
-	
     }
     
     //If in Menu, perform MenuMouse
@@ -72,7 +69,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
         //if within newGameButton, set state to Game
         if(mx >= Board.WIDTH /2 + 680 && mx <= Board.WIDTH /2 + 1000) {
-            if(my >= 200 && my <= 300){
+            if(my >= 250 && my <= 320){
                 //Pressed newGameButton
                 Board.setState(Board.STATE.GAME);
             }
