@@ -1,5 +1,3 @@
-package src;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,6 +5,9 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,14 +30,18 @@ public class ShopPanel extends JPanel {
     int[] coinCost = {1,0,5,10};
     String[] weaponDescrip;
     int[] weaponsBought = {0,0,0,0};
+    JPopupMenu jmenu;
     
     public ShopPanel(Player p) {
 	// shop.setLayout(new GridLayout(2,2));
 	//setBackground(Color.gray);
 	//add buttons for the different weapons
 	this.p = p;
+	jmenu = new JPopupMenu();
+	jmenu.add("You don't have enough resources");
+	jmenu.addKeyListener(new keyListener());
 	for (int i = 0; i < weaponNames.size(); i++) {
-	    JButton j = new JButton(new ImageIcon("images/weaponImage/" + weaponNames.get(i) + ".png"));
+	    JButton j = new JButton(new ImageIcon("../images/weaponImage/" + weaponNames.get(i) + ".png"));
 	    buttons.add(i, j);
 	    this.add(buttons.get(i));
 	    buttons.get(i).addActionListener(actionListener);
@@ -47,6 +52,7 @@ public class ShopPanel extends JPanel {
 	    public void actionPerformed(ActionEvent actionEvent) {
 		//System.out.println(actionEvent.getSource());
 		//check to see which button was clicked 
+		jmenu.setVisible(false);
 		JButton b = (JButton) actionEvent.getSource();
 
 		if(b.equals(buttons.get(0))){
@@ -73,83 +79,68 @@ public class ShopPanel extends JPanel {
 		    //add weapon to player's list of weapons...
 		    logs = p.getLogCount();
 		    coins = p.getCoinCount();
-		    System.out.println(logs + " " + coins);
-		    if(logs >= logCost[indexClicked] && coins >= coinCost[indexClicked]){
-			p.setCoinCount(coins-coinCost[indexClicked]);
-			p.setLogCount(logs-logCost[indexClicked]);
+		    if(logs >= logCost[indexClicked] && coins >= coinCost[indexClicked] && weaponsBought[indexClicked] == 0){
+			p.setCoinCount((coins-coinCost[indexClicked]));
+			p.setLogCount((logs-logCost[indexClicked]));
 			weaponsBought[indexClicked] = 1;
-			//need to add this weapon to the players arraylist of weapons, but can't yet
+			repaint();
+			//System.out.println(logs + " " + coins);
+			//need to add this weapon to the players arraylist of weapons
 		    }
-		    else{
-			JPopupMenu jmenu = new JPopupMenu("You don't have enough resources :(");
+		    else if (weaponsBought[indexClicked] == 0){
+			jmenu.setLocation(700,500);
 			jmenu.setVisible(true);
+			//JFrame jf = new JFrame();
+			//System.out.println("Don't have enough resources");
 		    }
+		    //jmenu.setVisible(false);
+		    //repaint();
 		}
 		//shop.remove(cost);
 	    }
-    };
+	};
     
+    private class keyListener extends KeyAdapter {
+	public void keyPressed(KeyEvent e){
+	    int key = e.getKeyCode();
+	    if(key == KeyEvent.VK_P){
+		jmenu.setVisible(false);
+	    }
+	}
+    }
+
+
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	Graphics2D g2d = (Graphics2D) g;
 	
+	this.remove(buy);
+	this.remove(purchased);
+	
 	//paint the different images and costs for the weapons and the purchase button
-	ImageIcon i = new ImageIcon("images/weaponImage/" + weaponNames.get(indexClicked) + ".png");
+	ImageIcon i = new ImageIcon("../images/weaponImage/" + weaponNames.get(indexClicked) + ".png");
 	Image weapon = i.getImage();
 	g2d.drawImage(weapon, 220, 150, null);
 	g2d.drawString("Cost: " + logCost[indexClicked] + " logs, " + coinCost[indexClicked] + " coins", 185, 220);
 	//g2d.drawString(weaponDescrip[indexClicked], 150, 250);
-	/*if(indexClicked == 0){
-	    ImageIcon i = new ImageIcon("images/weaponImage/sword.png");
-	    Image weapon = i.getImage();
-	    g2d.drawImage(weapon, 220, 150, null);
-	    g2d.drawString("Cost: 20 gold, 10 coins", 175, 220);
-	    g2d.drawString("Pointy weapon with a short range", 150, 250);
-	    //this.remove(buy);
-	    //buy.setLocation(220, 300);
-	    //this.add(buy);
-	}
 	
-	if(indexClicked == 1){
-	    ImageIcon i = new ImageIcon("images/weaponImage/stick.png");
-	    Image weapon = i.getImage();
-	    g2d.drawImage(weapon, 220, 150, null);
-	    g2d.drawString("Cost: 5 wood", 175, 220);
-	    g2d.drawString("Weak weapon with a short range", 150, 250);
-	}
-	
-	if(indexClicked == 2){
-	    ImageIcon i = new ImageIcon("images/weaponImage/axe.png");
-	    Image weapon = i.getImage();
-	    g2d.drawImage(weapon, 220, 150, null);
-	    g2d.drawString("Cost: 15 wood, 20 gold, 10 coins", 175, 220);
-	    g2d.drawString("Strong weapon with a short range", 150, 250);
-	}
-
-	if(indexClicked == 3){
-	    ImageIcon i = new ImageIcon("images/weaponImage/gun.png");
-	    Image weapon = i.getImage();
-	    g2d.drawImage(weapon, 220, 150, null);
-	    g2d.drawString("Cost: 30 fire, 20 gold, 10 coins", 175, 220);
-	    g2d.drawString("Powerful weapon with a long range", 150, 250);
-	    }*/
 	// check to see if they've already purchased that item
 	// if not draw buy button
 	if(weaponsBought[indexClicked] == 0){
 	    buy.setLocation(200, 275);
 	    this.add(buy);
+	    buy.addActionListener(actionListener);
 	}
-	
-	else{ //if(weaponsBought[indexClicked] == 1){
-	    /*Rectangle box = new Rectangle(20, 50, 200, 275);
-	      g2d.draw(box);
-	      g2d.drawString("Already Purchased", 205, 280);*/
-	    purchased.setLocation(200,275);
-	    this.add(purchased);
-	}
-	
+ 
 	// if so, draw already purchased (which might not want to be a button
 	// and just some text)
+	else{ //if(weaponsBought[indexClicked] == 1){
+	    /*Rectangle box = new Rectangle(20, 50, 200, 275);
+	            g2d.draw(box);
+		    g2d.drawString("Already Purchased", 205, 280);*/
+	    purchased.setLocation(170,275);
+	    this.add(purchased);
+	}
     }
 
 }

@@ -33,53 +33,55 @@ public class TreeProjectile extends Projectile{
     @Override
      public void move(Player p){
         //adjust velocities
-         
-         setTerrainDimensions(p.getTerrains());
-        for(int i = 0; i < getTerrains().size(); i++){
-            getTerrains().get(i).CheckProjectileContact(this, i);
-            
-        }
+
+	if(Board.getState() == Board.STATE.GAME){
+	    setTerrainDimensions(p.getTerrains());
+	    for(int i = 0; i < getTerrains().size(); i++){
+		getTerrains().get(i).CheckProjectileContact(this, i);
+		
+	    }
+	    
+	    time++;
+	    if(time >= 700){
+		this.setRemove(true);
+	    }
+	    
+	    getXY(this.getSpeed(), findAngle(p.getPlayerPoint()));
+	    if((p.getXCoord() > this.getXCoord()) && ((this.getXVel() < 0) || (Math.abs(this.getXVel()) < this.getSpeed()))){
+		setXAcc(.5);
+	    }
+	    else if((p.getXCoord() < this.getXCoord()) && ((this.getXVel() > 0) || (Math.abs(this.getXVel()) < this.getSpeed()))){
+		setXAcc(-.5);
+	    } else{
+		setXAcc(0);
+	    }
+	    
+	    setXVel(getXVel() + getXAcc());
+	    setYVel(getYVel() + getYAcc());
+	    
+	    //adjust coords
+	    setXCoord(getXCoord() + getXVel());
+	    setYCoord(getYCoord() + getYVel());
+	    
+	    //check world boundaries
+	    if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
+		setRemove(true);
+	    }
+	    if(getXCoord() <= getWorldLeft()){
+		setRemove(true);
+	    }
+	    if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
+		setRemove(true);
+	    }
+	    if(getYCoord() <= getWorldTop()){
+		setRemove(true);
+	    }
         
-         time++;
-         if(time >= 700){
-             this.setRemove(true);
-         }
-         
-        getXY(this.getSpeed(), findAngle(p.getPlayerPoint()));
-        if((p.getXCoord() > this.getXCoord()) && ((this.getXVel() < 0) || (Math.abs(this.getXVel()) < this.getSpeed()))){
-             setXAcc(.5);
-         }
-         else if((p.getXCoord() < this.getXCoord()) && ((this.getXVel() > 0) || (Math.abs(this.getXVel()) < this.getSpeed()))){
-             setXAcc(-.5);
-         } else{
-             setXAcc(0);
-         }
-        
-        setXVel(getXVel() + getXAcc());
-        setYVel(getYVel() + getYAcc());
-        
-        //adjust coords
-        setXCoord(getXCoord() + getXVel());
-        setYCoord(getYCoord() + getYVel());
-        
-        //check world boundaries
-        if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
-            setRemove(true);
-        }
-        if(getXCoord() <= getWorldLeft()){
-            setRemove(true);
-        }
-        if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
-            setRemove(true);
-        }
-        if(getYCoord() <= getWorldTop()){
-            setRemove(true);
-        }
-        
-        //if player contact, deal dmg
-        if(PlayerContact(p) == true){
-            dealDmg(p);
-        }
+	    //if player contact, deal dmg
+	    if(PlayerContact(p) == true){
+		dealDmg(p);
+	    }
+	}
     }
     //paints projectile
     public void CreateImage(Graphics g){

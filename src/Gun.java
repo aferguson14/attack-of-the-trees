@@ -12,8 +12,8 @@ public class Gun extends Weapon{
         setXCoord(x);
         setYCoord(y);
         setAttack(40);
-        setAttackSpeed(300);
-        setAttackSpeedTimer(299);
+        setAttackSpeed(100);
+        setAttackSpeedTimer(99);
         setSpeed(3);
         setXVel(0);
         setYVel(0);
