@@ -1,3 +1,4 @@
+package src;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,7 +12,7 @@ public class Rock extends Terrain{
 //Construcotr
     public Rock(int x, int y) {
         super(x, y);
-        ImageIcon i = new ImageIcon("../images/blockImage/block.png");
+        ImageIcon i = new ImageIcon("images/blockImage/block.png");
         setStill(i.getImage());
         setHorizontalSize(100);
         setVerticalSize(100);

@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import static java.lang.Math.abs;
@@ -9,7 +11,7 @@ public class EnemyTree extends Enemies{
     //Constrcutor
     public EnemyTree(double x, double y){
         super(x, y);
-        ImageIcon i = new ImageIcon("../images/enemyImages/tree/treeFront.png");
+        ImageIcon i = new ImageIcon("images/enemyImages/tree/treeFront.png");
         ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
         this.setStill(i.getImage());
         this.setHorizontalSize(81);

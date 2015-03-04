@@ -1,3 +1,4 @@
+package src;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -10,7 +11,7 @@ public class SunFlowerProjectile extends Projectile{
     //Constructor
     public SunFlowerProjectile(double x, double y, int direction, Graphics g, double angle) {
         super(x + 5, y, direction, g, angle);
-        ImageIcon i = new ImageIcon("../images/sourceImage/fire.png");
+        ImageIcon i = new ImageIcon("images/sourceImage/fire.png");
         this.setStill(i.getImage());
         setXAcc(0);
         setYAcc(0);

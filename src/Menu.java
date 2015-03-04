@@ -4,9 +4,9 @@ import java.awt.*;
 
 public class Menu {
     //Menu buttons
-    public Rectangle newGameButtonOutline = new Rectangle((Board.WIDTH/2+98), 198, 303, 73);
-    public Rectangle newGameButtonInline = new Rectangle((Board.WIDTH/2+102), 202, 296, 66);
-	public Rectangle newGameButton = new Rectangle((Board.WIDTH/2+100), 200, 300, 70);
+    public Rectangle newGameButtonOutline = new Rectangle((Board.WIDTH/2+98), 248, 303, 73);
+    public Rectangle newGameButtonInline = new Rectangle((Board.WIDTH/2+102), 252, 296, 66);
+	public Rectangle newGameButton = new Rectangle((Board.WIDTH/2+100), 250, 300, 70);
     public Rectangle loadGameButtonOutline = new Rectangle((Board.WIDTH/2+98), 398, 303, 73);
     public Rectangle loadGameButtonInline = new Rectangle((Board.WIDTH/2+102), 402, 296, 66);
     public Rectangle loadGameButton = new Rectangle((Board.WIDTH/2+100), 400, 300, 70);

@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import static java.lang.Math.abs;

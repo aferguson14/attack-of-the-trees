@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -34,7 +36,7 @@ public class ShopPanel extends JPanel {
 	//add buttons for the different weapons
 	this.p = p;
 	for (int i = 0; i < weaponNames.size(); i++) {
-	    JButton j = new JButton(new ImageIcon("../images/weaponImage/" + weaponNames.get(i) + ".png"));
+	    JButton j = new JButton(new ImageIcon("images/weaponImage/" + weaponNames.get(i) + ".png"));
 	    buttons.add(i, j);
 	    this.add(buttons.get(i));
 	    buttons.get(i).addActionListener(actionListener);
@@ -98,7 +100,7 @@ public class ShopPanel extends JPanel {
 	g2d.drawString("Cost: " + logCost[indexClicked] + " logs, " + coinCost[indexClicked] + " coins", 185, 220);
 	//g2d.drawString(weaponDescrip[indexClicked], 150, 250);
 	/*if(indexClicked == 0){
-	    ImageIcon i = new ImageIcon("../images/weaponImage/sword.png");
+	    ImageIcon i = new ImageIcon("images/weaponImage/sword.png");
 	    Image weapon = i.getImage();
 	    g2d.drawImage(weapon, 220, 150, null);
 	    g2d.drawString("Cost: 20 gold, 10 coins", 175, 220);
@@ -109,7 +111,7 @@ public class ShopPanel extends JPanel {
 	}
 	
 	if(indexClicked == 1){
-	    ImageIcon i = new ImageIcon("../images/weaponImage/stick.png");
+	    ImageIcon i = new ImageIcon("images/weaponImage/stick.png");
 	    Image weapon = i.getImage();
 	    g2d.drawImage(weapon, 220, 150, null);
 	    g2d.drawString("Cost: 5 wood", 175, 220);
@@ -117,7 +119,7 @@ public class ShopPanel extends JPanel {
 	}
 	
 	if(indexClicked == 2){
-	    ImageIcon i = new ImageIcon("../images/weaponImage/axe.png");
+	    ImageIcon i = new ImageIcon("images/weaponImage/axe.png");
 	    Image weapon = i.getImage();
 	    g2d.drawImage(weapon, 220, 150, null);
 	    g2d.drawString("Cost: 15 wood, 20 gold, 10 coins", 175, 220);
@@ -125,7 +127,7 @@ public class ShopPanel extends JPanel {
 	}
 
 	if(indexClicked == 3){
-	    ImageIcon i = new ImageIcon("../images/weaponImage/gun.png");
+	    ImageIcon i = new ImageIcon("images/weaponImage/gun.png");
 	    Image weapon = i.getImage();
 	    g2d.drawImage(weapon, 220, 150, null);
 	    g2d.drawString("Cost: 30 fire, 20 gold, 10 coins", 175, 220);

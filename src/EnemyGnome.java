@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import static java.lang.Math.abs;
@@ -9,7 +11,7 @@ public class EnemyGnome extends Enemies{
     //Costructor
     public EnemyGnome(double x, double y){
         super(x, y);
-        ImageIcon i = new ImageIcon("../images/enemyImages/gnome/gnomeSide.png");
+        ImageIcon i = new ImageIcon("images/enemyImages/gnome/gnomeSide.png");
         ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
 	this.setStill(i.getImage());
         this.setHorizontalSize(81);
