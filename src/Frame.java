@@ -1,5 +1,3 @@
-package src;
-
 /*
 need to create a terrain enemy relationship to check terrain sides on ramps and such
 create progression system
