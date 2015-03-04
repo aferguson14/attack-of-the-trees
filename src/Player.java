@@ -120,24 +120,18 @@ public class Player{
 		//Arm movement
 		int mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX() - (int) Board.BoardLoc.getX() ;
 		int mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY() - (int) Board.BoardLoc.getY();
-		if(this.getFacing()==0){
+		if(this.getFacing()==0){ //images are drawn in specific order
 			double angle = Math.atan2(
-					((mouseY)-(this.getYCoord()+60)), 
-					((mouseX-600+this.getXCoord())-(this.getXCoord()-15+40)));
-			//Test Printing
-			System.out.println("MouseCoord: (" + (mouseX) + ", " + (mouseY) + ")");
-			System.out.println("MouseGameCoord: (" + (Board.MouseCoords.x) + ", " + Board.MouseCoords.y+ ")");
+			((mouseY)-(this.getYCoord()+60)), 
+			((mouseX-600+this.getXCoord())-(this.getXCoord()+25)));
 
-			//System.out.println("PlayerCoord: (" + this.getXCoord() + ", " + this.getYCoord() + ")");
-
-
-			g2d.rotate(angle, this.getXCoord()-15+40, this.getYCoord()+60+3);
-			g2d.rotate(Math.PI, this.getXCoord()-15+40, this.getYCoord()+60+3);
+			g2d.rotate(angle, this.getXCoord()+25, this.getYCoord()+63);
+			g2d.rotate(Math.PI, this.getXCoord()+25, this.getYCoord()+63);
 			g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())-15, (int) (this.getYCoord())+60, null);
-			g2d.drawImage(this.getCurrentWeapon().getStillLeft(),(int) (this.getXCoord())-15-37, (int) (this.getYCoord())+60-7, null);
+			g2d.drawImage(this.getCurrentWeapon().getStillLeft(),(int) (this.getXCoord())-52, (int) (this.getYCoord())+53, null);
 
-			g2d.rotate(-Math.PI, this.getXCoord()-15+40, this.getYCoord()+60+3);
-			g2d.rotate(-angle, this.getXCoord()-15+40, this.getYCoord()+60+3);
+			g2d.rotate(-Math.PI, this.getXCoord()+25, this.getYCoord()+63);
+			g2d.rotate(-angle, this.getXCoord()+25, this.getYCoord()+63);
 			g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 
 		}
@@ -243,10 +237,10 @@ public class Player{
 			if(!isAttacking()){
 			}
 			ImageIcon iLeft = new ImageIcon
-					("images/playerImages/guy/guyArmlessLeft.png");
+					("../images/playerImages/guy/guyArmlessLeft.png");
 			setStill(iLeft.getImage());
 			ImageIcon iArmLeft = new ImageIcon
-					("images/playerImages/guy/armLeft.png");
+					("../images/playerImages/guy/armLeft.png");
 			setArmStill(iArmLeft.getImage());
 
 			setXVel(-1 * (this.getSpeed()));
