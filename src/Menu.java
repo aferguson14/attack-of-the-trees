@@ -1,9 +1,12 @@
 import java.awt.*;
 
-
 public class Menu {
     //Menu buttons
+    public Rectangle newGameButtonOutline = new Rectangle((Board.WIDTH/2+98), 198, 303, 73);
+    public Rectangle newGameButtonInline = new Rectangle((Board.WIDTH/2+102), 202, 296, 66);
     public Rectangle newGameButton = new Rectangle((Board.WIDTH/2+100), 200, 300, 70);
+    public Rectangle loadGameButtonOutline = new Rectangle((Board.WIDTH/2+98), 398, 303, 73);
+    public Rectangle loadGameButtonInline = new Rectangle((Board.WIDTH/2+102), 402, 296, 66);
     public Rectangle loadGameButton = new Rectangle((Board.WIDTH/2+100), 400, 300, 70);
     private int x = -100;
     private int y = 150;
@@ -45,12 +48,16 @@ public class Menu {
 	g.setColor(new Color(0xEEFFEE));
 	g.drawString("New Game", ngx, ngy);
 	g.drawString("Load Game", lgx, lgy);
-
+	
 	g2d.setStroke(new BasicStroke(4));
 	g2d.draw(loadGameButton);
 	g2d.draw(newGameButton);
+	g2d.setColor(new Color(0x000066));
 	g2d.setStroke(oldStroke);
-	
-}
-    
+	g2d.draw(newGameButtonOutline);
+	g2d.draw(newGameButtonInline);
+	g2d.draw(loadGameButtonOutline);
+	g2d.draw(loadGameButtonInline);
+	g2d.setStroke(oldStroke);	
+    }
 }
