@@ -15,8 +15,8 @@ public class Bullet extends PlayerProjectile{
         setSpeed(6);
         setYVel(0);
         CreateImage(g);
-        setHorizontalSize(10);
-        setVerticalSize(5);
+        setHorizontalSize(25);
+        setVerticalSize(6);
         setAttack(500);
 	ImageIcon iLeft = new ImageIcon("../images/attackImage/bulletLeft.png");
 	ImageIcon iRight = new ImageIcon ("../images/attackImage/bulletRight.png");
@@ -32,18 +32,18 @@ public class Bullet extends PlayerProjectile{
         //paint, if goint left starting point changes based on facing direction
 	
 		if(getFacing() == 0){
-		    g2d.rotate(this.getMouseAngle(), this.getXCoord()+25, this.getYCoord()+63);
-		    g2d.rotate(Math.PI, this.getXCoord()+25, this.getYCoord()+63);
-		    g2d.drawImage(this.getStillLeft(),(int) (this.getXCoord())-52, (int) (this.getYCoord())+53, null);
+		    g2d.rotate(this.getMouseAngle(), this.getXCoord()/*+25*/, this.getYCoord()/*+63*/);
+		    g2d.rotate(Math.PI, this.getXCoord()/*+25*/, this.getYCoord()/*+63*/);
+		    g2d.drawImage(this.getStillLeft(),(int) (this.getXCoord())/*-52*/, (int) (this.getYCoord())+10/*+53*/, null);
 
-		    g2d.rotate(-Math.PI, this.getXCoord()+25, this.getYCoord()+63);
-		    g2d.rotate(-this.getMouseAngle(), this.getXCoord()+25, this.getYCoord()+63);
+		    g2d.rotate(-Math.PI, this.getXCoord()/*+25*/, this.getYCoord()/*+63*/);
+		    g2d.rotate(-this.getMouseAngle(), this.getXCoord()/*+25*/, this.getYCoord()/*+63*/);
 
 	    	}
 	    	else if(getFacing() == 1){
-		    g2d.rotate(this.getMouseAngle(), this.getXCoord()+15, this.getYCoord()+60+3);
-		    g2d.drawImage(this.getStillRight(),(int) (this.getXCoord())+15+33, (int) (this.getYCoord())+60-7, null);
-		    g2d.rotate(-this.getMouseAngle(), this.getXCoord()+15, this.getYCoord()+60+3);
+		    g2d.rotate(this.getMouseAngle(), this.getXCoord()/*+15*/, this.getYCoord()/*+60+3*/);
+		    g2d.drawImage(this.getStillRight(),(int) (this.getXCoord())/*+15+33*/, (int) (this.getYCoord())/*+60-7*/, null);
+		    g2d.rotate(-this.getMouseAngle(), this.getXCoord()/*+15*/, this.getYCoord()/*+60+3*/);
 	    }
 	
     }	

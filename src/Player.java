@@ -147,7 +147,7 @@ public class Player{
 
 
 			g2d.rotate(angle, this.getXCoord()+15, this.getYCoord()+60+3);
-			g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+33, (int) (this.getYCoord())+60-7, null);
+			g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5, null);//was +33,-7
 
 			g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())+15, (int) (this.getYCoord())+60, null);
 			g2d.rotate(-angle, this.getXCoord()+15, this.getYCoord()+60+3);

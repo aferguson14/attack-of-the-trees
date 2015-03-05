@@ -26,7 +26,7 @@ public class Gun extends Weapon{
    }
     //creates projectile towards mouse point
     public void shoot(Point p, Graphics g, Player player){
-        if(p.getX() > getXCoord()){
+        if(p.getX() > getXCoord()-20){ //not sure if -20 needed (it is to make cetner by the shoulder of arm)
             setFacing(1);
         } else{
             setFacing(0);
@@ -38,6 +38,7 @@ public class Gun extends Weapon{
 		    bullet.setMouseY(this.getMouseY());
 		    bullet.setMouseX(this.getMouseX());
 		    bullet.setMouseAngle(this.getMouseAngle());
+	   	    bullet.setPlayerDirection(this.getPlayerDirection());
 		    this.addProjectile(bullet);
 		    this.setAttackSpeedTimer(0);
 		    //System.out.println(findAngle(p)*180/Math.PI);

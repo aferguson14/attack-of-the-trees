@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 //extremely similar to Projectile Class
 //difference being: made to attck enemies rather than player
@@ -29,13 +30,41 @@ public class PlayerProjectile {
     private double Angle;
     private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
     private ArrayList<Double> tops = new ArrayList<Double>();
-      private double mouseX;
+    private double mouseX;
     private double mouseY;
     private double mouseAngle;
+    private int playerDirection;
     //Constructor
     public PlayerProjectile(double x, double y, int direction, Graphics g, double angle, Player p){
-        setXCoord(x);
-        setYCoord(y);
+	if((direction == 0) && (this.getPlayerDirection()== 0)){
+	    double cx = x+25; //25, center x  of arm rotation
+	    double cy = y+53; //center y  of arm rotation
+	    double r = -77;//77
+	    setXCoord(cx-r*Math.cos(angle));
+	    setYCoord(cy+r*Math.sin(angle));
+	}
+	else if((direction == 0) && (this.getPlayerDirection()== 1)){
+	    double cx = x+25; //center x  of arm rotation
+	    double cy = y+53; //center y  of arm rotation
+	    double r = -142;//77
+	    setXCoord(cx-r*Math.cos(angle));
+	    setYCoord(cy+r*Math.sin(angle));
+	}
+
+	else if((direction == 1) && (this.getPlayerDirection()==0)){
+	    double cx = x+13; //15
+	    double cy = y+63;
+	    double r = 75;
+	    setXCoord(cx+r*Math.cos(angle)/*+Math.sin(angle)*10*/);
+	    setYCoord((cy-r*Math.sin(angle))/*-Math.cos(angle)*10*/);
+	}
+	else if((direction == 1) && (this.getPlayerDirection()==1)){
+	    double cx = x+13; //15
+	    double cy = y+63;
+	    double r = 75;
+	    setXCoord(cx+r*Math.cos(angle)/*+Math.sin(angle)*10*/);
+	    setYCoord((cy-r*Math.sin(angle))/*-Math.cos(angle)*10*/);
+	}
         setFacing(direction);
         setTerrainDimensions(p.getTerrains());
     }
@@ -98,7 +127,7 @@ public boolean EnemyContact(Enemies enem){
     
     public void CreateImage(Graphics g){}
     
-    //paint projectile
+    //paint projectile **REMOVE CALL TO THIS FUNCTION TO RID RED PROJECTILE**
     public void paintImage(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         Rectangle rect = new Rectangle((int) getXCoord(), 
@@ -115,12 +144,14 @@ public boolean EnemyContact(Enemies enem){
         setXVel(xvel);
         setYVel(yvel);
         
-        if(this.getFacing() == 0){
-            setXVel(-1 * (getXVel()));
+	setXVel(getXVel());
+	/*       if(this.getFacing() == 0){
+	   setXVel(-1 * (getXVel()));
         }
 	else{
             setXVel(getXVel());
-        }
+	}
+	*/
     }
     
     public void setTerrainDimensions(ArrayList <Terrain> ter){
@@ -475,4 +506,13 @@ public boolean EnemyContact(Enemies enem){
     public void setMouseAngle(double mouseAngle) {
         this.mouseAngle = mouseAngle;
     }
+
+    public int getPlayerDirection(){
+	return playerDirection;
+    }
+
+    public void setPlayerDirection(int playerDirection){
+	this.playerDirection = playerDirection;
+    }
+
 }

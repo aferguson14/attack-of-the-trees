@@ -2,6 +2,11 @@ import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.PointerInfo;
+import java.lang.Math;
 
 public abstract class Weapon {
     //private data
@@ -23,6 +28,7 @@ public abstract class Weapon {
     private double mouseAngle;
     private ArrayList <PlayerProjectile> projectiles = new ArrayList<PlayerProjectile>();
     private int facing = 0;
+    private int playerDirection;
 
     
     public void AttackAnimation(Graphics g){}
@@ -32,26 +38,35 @@ public abstract class Weapon {
     public void shoot(Point p, Graphics g, Player player){}
     //move weapon in correspondence with player
     public void move(Player p){
-        if(p.getFacing() == 1){
-            setXCoord(p.getXCoord()+ p.getHorizontalSize() + 50); //changed
-            setYCoord(p.getYCoord() + 25); //25 to make weapon lower
+  	/*        if(p.getFacing() == 1){
+            setXCoord(p.getXCoord()+15); //changed
+            setYCoord(p.getYCoord()+63); //25 to make weapon lower
         }
         else{
-            setXCoord(p.getXCoord());
-            setYCoord(p.getYCoord());
+            setXCoord(p.getXCoord()+25);
+            setYCoord(p.getYCoord()+63);//25
         }
-        
+        */
+
+	setXCoord(p.getXCoord());
+	setYCoord(p.getYCoord());
+	setPlayerDirection(p.getFacing());
+	//above line necessary for projectiles to know player facing
+
 	//check boundaries, if on ground, InAir = false
 	if((getYCoord() + p.getVerticalSize()) >= 700){
 	    setYCoord(p.getWorldBot() - p.getVerticalSize());
 	    setYVel(0);
 	}
+	/*
         if(p.getXCoord() <= 0){
             setXCoord(p.getHorizontalSize());
         }
         else if((p.getXCoord() + 50) >= 7000){
             setXCoord(1024 - 50 + p.getHorizontalSize());
         }
+	*/
+
     }
     //move then paint weapon's projectiles
     public void paintProjectile(ArrayList <Enemies> e, Graphics g, Player p){
@@ -80,7 +95,20 @@ public abstract class Weapon {
     }
     //find angle between player and point
     public double findAngle(Point p){
-       return -Math.atan2((p.getY()-this.getYCoord()),(p.getX()-this.getXCoord()));
+	//	    return -Math.atan2((p.getY()-this.getYCoord()),(p.getX()-this.getXCoord()));
+
+	if(facing == 1){
+	System.out.print("Angle: " + -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+15-this.getXCoord())));
+	    return -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+15-this.getXCoord()));
+	    
+	}
+	else if(facing == 0){
+	System.out.print("Angle: " + -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+25-this.getXCoord())));
+	    return -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+25-this.getXCoord()));
+	}
+
+	return -1;
+
     }
     public abstract void paintWeapon(Graphics g, Player p,  
                                         ArrayList <Enemies> e);
@@ -353,5 +381,12 @@ public abstract class Weapon {
         this.mouseAngle = mouseAngle;
     }
     
+    public int getPlayerDirection(){
+	return playerDirection;
+    }
+
+    public void setPlayerDirection(int playerDirection){
+	this.playerDirection = playerDirection;
+    }
     
 }
