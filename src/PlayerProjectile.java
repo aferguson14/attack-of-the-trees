@@ -15,7 +15,8 @@ public class PlayerProjectile {
     private double XCoord, YCoord;
     private double XVel, YVel;
     private double XAcc, YAcc;
-    private Image still;
+    private Image stillLeft;
+    private Image stillRight;
     private int facing;
     private int HorizontalSize, VerticalSize;
     private int WorldBot = 700;
@@ -28,22 +29,24 @@ public class PlayerProjectile {
     private double Angle;
     private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
     private ArrayList<Double> tops = new ArrayList<Double>();
-    
+      private double mouseX;
+    private double mouseY;
+    private double mouseAngle;
     //Constructor
-    public PlayerProjectile(double x, double y, int direction, Graphics g, double angle){
+    public PlayerProjectile(double x, double y, int direction, Graphics g, double angle, Player p){
         setXCoord(x);
         setYCoord(y);
         setFacing(direction);
+        setTerrainDimensions(p.getTerrains());
     }
 
     //move same as Projectile
         public void move(ArrayList<Enemies> e, Player p){
             if(Board.getState() == Board.STATE.GAME){
                 //adjust velocities
-                    setTerrainDimensions(p.getTerrains());
                 for(int i = 0; i < terrains.size(); i++){
-                    terrains.get(i).CheckPlayerProjectileContact(this, i);
-                }    
+                    terrains.get(i).CheckPlayerProjectileContact(this, i, p);
+                }
 
                 setXVel(getXVel() + getXAcc());
                 setYVel(getYVel() + getYAcc());
@@ -130,6 +133,10 @@ public boolean EnemyContact(Enemies enem){
          for(int i = 0; i < getTerrains().size(); i++){
              getTerrains().get(i).UpdateSides(this, i);
          }
+     }
+     
+     public void setTopIndex(int index, double value){
+         tops.set(index, value);
      }
     
     
@@ -218,19 +225,7 @@ public boolean EnemyContact(Enemies enem){
         this.YAcc = YAcc;
     }
 
-    /**
-     * @return the still
-     */
-    public Image getStill() {
-        return still;
-    }
 
-    /**
-     * @param still the still to set
-     */
-    public void setStill(Image still) {
-        this.still = still;
-    }
 
     /**
      * @return the facing
@@ -409,5 +404,75 @@ public boolean EnemyContact(Enemies enem){
      */
     public void setTops(ArrayList<Double> tops) {
         this.tops = tops;
+    }
+
+    /**
+     * @return the stillLeft
+     */
+    public Image getStillLeft() {
+        return stillLeft;
+    }
+
+    /**
+     * @param stillLeft the stillLeft to set
+     */
+    public void setStillLeft(Image stillLeft) {
+        this.stillLeft = stillLeft;
+    }
+
+    /**
+     * @return the stillRight
+     */
+    public Image getStillRight() {
+        return stillRight;
+    }
+
+    /**
+     * @param stillRight the stillRight to set
+     */
+    public void setStillRight(Image stillRight) {
+        this.stillRight = stillRight;
+    }
+
+    /**
+     * @return the mouseX
+     */
+    public double getMouseX() {
+        return mouseX;
+    }
+
+    /**
+     * @param mouseX the mouseX to set
+     */
+    public void setMouseX(double mouseX) {
+        this.mouseX = mouseX;
+    }
+
+    /**
+     * @return the mouseY
+     */
+    public double getMouseY() {
+        return mouseY;
+    }
+
+    /**
+     * @param mouseY the mouseY to set
+     */
+    public void setMouseY(double mouseY) {
+        this.mouseY = mouseY;
+    }
+
+    /**
+     * @return the mouseAngle
+     */
+    public double getMouseAngle() {
+        return mouseAngle;
+    }
+
+    /**
+     * @param mouseAngle the mouseAngle to set
+     */
+    public void setMouseAngle(double mouseAngle) {
+        this.mouseAngle = mouseAngle;
     }
 }

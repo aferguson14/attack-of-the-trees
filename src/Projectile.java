@@ -13,7 +13,8 @@ public class Projectile {
     private double XCoord, YCoord;
     private double XVel, YVel;
     private double XAcc, YAcc;
-    private Image still;
+    private Image stillLeft;
+    private Image stillRight;
     private int facing;
     private int HorizontalSize, VerticalSize;
      private int WorldBot = 700;
@@ -28,18 +29,17 @@ public class Projectile {
     private ArrayList<Double> tops = new ArrayList<Double>();
     
     //constructor
-    public Projectile(double x, double y, int direction, Graphics g, double angle){
+    public Projectile(double x, double y, int direction, Graphics g, double angle, Player p){
         setXCoord(x);
         setYCoord(y);
         setFacing(direction);
-        
+        setTerrainDimensions(p.getTerrains());
     }
     //moves projectile
     public void move(Player p){
         //adjust velocities
-        setTerrainDimensions(p.getTerrains());
         for(int i = 0; i < getTerrains().size(); i++){
-            getTerrains().get(i).CheckProjectileContact(this, i);
+            getTerrains().get(i).CheckProjectileContact(this, i, p);
             
         }
         
@@ -73,11 +73,15 @@ public class Projectile {
     
 //return true if player contact
 public boolean PlayerContact(Player p){
-    if((getXCoord() >= p.getXCoord()) && 
-            (getXCoord() <= (p.getXCoord() + p.getHorizontalSize())) && 
+    if(((((getXCoord() >= p.getXCoord()) && 
+            (getXCoord() <= (p.getXCoord() + p.getHorizontalSize()))) || 
+            (((getXCoord() + getHorizontalSize()) >= p.getXCoord()) && 
+            ((getXCoord() + getHorizontalSize()) <= (p.getXCoord() + p.getHorizontalSize())))) && 
             ((getYCoord() + getVerticalSize()) <= 
                 (p.getYCoord() + p.getVerticalSize())) && 
-            (getYCoord() >= p.getYCoord())){
+            (getYCoord() >= p.getYCoord()))){
+        
+        
         return true;
     }
     else{
@@ -97,9 +101,13 @@ public boolean PlayerContact(Player p){
     //paint projectile
     public void paintImage(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        Rectangle rect = new Rectangle((int) getXCoord(), (int) getYCoord(), 20, 10);
-			    g2d.setColor(Color.red);
-			    g2d.fill(rect);
+	if(getFacing() == 0){
+	    g2d.drawImage(this.getStillLeft(),(int) (this.getXCoord()), (int) (this.getYCoord() + 5), null);
+	}
+	else if(getFacing() == 1){
+	    g2d.drawImage(this.getStillLeft(),(int) (this.getXCoord() + this.getHorizontalSize()), (int) (this.getYCoord() + 5), null);
+	    
+	}
     }
     
     //gets xy velocities based on angle and hypotenuse (speed)
@@ -221,19 +229,7 @@ public boolean PlayerContact(Player p){
         this.YAcc = YAcc;
     }
 
-    /**
-     * @return the still
-     */
-    public Image getStill() {
-        return still;
-    }
 
-    /**
-     * @param still the still to set
-     */
-    public void setStill(Image still) {
-        this.still = still;
-    }
 
     /**
      * @return the facing
@@ -412,5 +408,33 @@ public boolean PlayerContact(Player p){
      */
     public void setTops(ArrayList<Double> tops) {
         this.tops = tops;
+    }
+
+    /**
+     * @return the stillLeft
+     */
+    public Image getStillLeft() {
+        return stillLeft;
+    }
+
+    /**
+     * @param stillLeft the stillLeft to set
+     */
+    public void setStillLeft(Image stillLeft) {
+        this.stillLeft = stillLeft;
+    }
+
+    /**
+     * @return the stillRight
+     */
+    public Image getStillRight() {
+        return stillRight;
+    }
+
+    /**
+     * @param stillRight the stillRight to set
+     */
+    public void setStillRight(Image stillRight) {
+        this.stillRight = stillRight;
     }
 }

@@ -25,7 +25,7 @@ public class Gun extends Weapon{
  
    }
     //creates projectile towards mouse point
-    public void shoot(Point p, Graphics g){
+    public void shoot(Point p, Graphics g, Player player){
         if(p.getX() > getXCoord()){
             setFacing(1);
         } else{
@@ -34,9 +34,13 @@ public class Gun extends Weapon{
         this.setAttackSpeedTimer(this.getAttackSpeedTimer() + 1);
         if(this.getAttackSpeedTimer() == this.getAttackSpeed()){
 		    Bullet bullet = new Bullet(this.getXCoord(), 
-                    this.getYCoord() + 45, this.getFacing(), g, findAngle(p));
+					       this.getYCoord(), this.getFacing(), g, findAngle(p), player); //+45
+		    bullet.setMouseY(this.getMouseY());
+		    bullet.setMouseX(this.getMouseX());
+		    bullet.setMouseAngle(this.getMouseAngle());
 		    this.addProjectile(bullet);
 		    this.setAttackSpeedTimer(0);
+		    //System.out.println(findAngle(p)*180/Math.PI);
                 }
     }
     @Override

@@ -18,12 +18,13 @@ public class EnemySunFlower extends Enemies{
         
 	this.setResource(coin);
         this.setHp(50);
+        this.setTotalHp(getHp());
         this.setAttack(30);
-        this.setSpeed(1);
-        this.setAttackSpeed(200);
+        this.setSpeed(2.5);
+        this.setAttackSpeed(150);
         this.setAttackRange(600);
         this.setJumpSpeed(-20);
-        this.setAttackSpeedCount(19);
+        this.setAttackSpeedCount(149);
     }
         @Override
     public void Attack(Player p, Graphics g){
@@ -38,7 +39,7 @@ public class EnemySunFlower extends Enemies{
             //create a projectile towards the player
                SunFlowerProjectile fire = new SunFlowerProjectile(this.getXCoord()
                         , this.getYCoord(), this.getFacing(), g, 
-                        findAngle(p.getPlayerPoint()));
+                        findAngle(p.getPlayerPoint()), p);
                 this.addProjectile(fire);
             //reset attack speed count
                 this.setAttackSpeedCount(0);
@@ -56,7 +57,11 @@ public class EnemySunFlower extends Enemies{
                 setStartedJump(false);
             }
         }
-         if(checkMove()){
+        if(isInAir() && checkInAirMove()){
+            this.setYVel(Math.abs(getYVel()));
+            setYAcc(.5);
+        }
+        else if(checkMove()){
                     this.setYVel(this.getJumpSpeed());
                     setYAcc(.5);
                     setInAir(true);
@@ -99,18 +104,7 @@ public class EnemySunFlower extends Enemies{
     public void die(){
     //not sure if needed, keep just in case
     }
-    @Override
-    public void paintEnemy(Player p, Graphics g){
-        //paint enemy and it's projectiles
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(this.getStill(), (int) this.getXCoord(), (int) this.getYCoord(), null);
 
-
-	g.setColor(Color.red);
-	g.fillRect((int) (this.getXCoord() -10) , (int) (this.getYCoord() - 10), this.getHp(), 7);        
-        paintProjectile(p, g);
-        deleteProjectiles();
-    }
     
     public void attackAnimation(Graphics g){
         

@@ -6,25 +6,24 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 
-public class SunFlowerProjectile extends Projectile{
+public class FishProjectile extends Projectile{
     //Constructor
-    public SunFlowerProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {
-        super(x + 5, y, direction, g, angle, p);
-        ImageIcon iLeft = new ImageIcon("../images/attackImage/SunFlowerAttack.png");
-	ImageIcon iRight = new ImageIcon ("../images/attackImage/SunFlowerAttack.png");
+    public FishProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {
+        super(x, y, direction, g, angle, p);
+        ImageIcon iLeft = new ImageIcon("../images/sourceImage/water.png");
+	ImageIcon iRight = new ImageIcon ("../images/sourceImage/water.png");
         setStillLeft(iLeft.getImage());
 	setStillRight(iRight.getImage());
         setXAcc(0);
-        setYAcc(0);
-        setSpeed(5);
-        setYVel(0);
+        setYAcc(.5);
+        setSpeed(4);
+        setYVel(-20);
+        setXVel(4);
         CreateImage(g);
-        setHorizontalSize(25);
-        setVerticalSize(25);
-        setAttack(20);
+        setHorizontalSize(30);
+        setVerticalSize(43);
+        setAttack(15);
         
-                
-        getXY(this.getSpeed(), angle);
     }
     //paints projectile
     public void CreateImage(Graphics g){
@@ -39,5 +38,6 @@ public class SunFlowerProjectile extends Projectile{
 	    
 	}	
     }
+
 
 }

@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -6,8 +7,8 @@ import java.awt.Rectangle;
 
 public class RobotProjectile extends Projectile{
     //Constructor
-    public RobotProjectile(double x, double y, int direction, Graphics g, double angle) {
-        super(x, y, direction, g, angle);
+    public RobotProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {
+        super(x, y, direction, g, angle, p);
         setXAcc(0);
         setYAcc(0);
         setSpeed(4);

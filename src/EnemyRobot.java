@@ -20,6 +20,7 @@ public class EnemyRobot extends Enemies{
         this.setXAcc(0);
         this.setYAcc(0);
         this.setHp(100);
+        this.setTotalHp(getHp());
         this.setAttack(10);
         this.setSpeed(2);
         this.setAttackSpeed(150);
@@ -41,7 +42,7 @@ public class EnemyRobot extends Enemies{
             //create a projectile towards the player
                 RobotProjectile laser = new RobotProjectile(this.getXCoord()
                         , this.getYCoord(), this.getFacing(), g, 
-                        findAngle(p.getPlayerPoint()));
+                        findAngle(p.getPlayerPoint()), p);
                 this.addProjectile(laser);
             //reset attack speed count
                 this.setAttackSpeedCount(0);
@@ -59,7 +60,11 @@ public class EnemyRobot extends Enemies{
                 setStartedJump(false);
             }
         }
-         if(checkMove()){
+        if(isInAir() && checkInAirMove()){
+            this.setYVel(Math.abs(getYVel()));
+            setYAcc(.5);
+        }
+        else if(checkMove()){
                     this.setYVel(this.getJumpSpeed());
                     setYAcc(.5);
                     setInAir(true);
@@ -101,18 +106,7 @@ public class EnemyRobot extends Enemies{
     public void die(){
     //not sure if needed, keep just in case
     }
-    @Override
-    public void paintEnemy(Player p, Graphics g){
-        //paint enemy and it's projectiles
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(this.getStill(), (int) this.getXCoord(), (int) this.getYCoord(), null);
 
-
-	g.setColor(Color.red);
-	g.fillRect((int) (this.getXCoord() -10) , (int) (this.getYCoord() - 10), this.getHp(), 7);        
-        paintProjectile(p, g);
-        deleteProjectiles();
-    }
     
     public void attackAnimation(Graphics g){
 	//to do

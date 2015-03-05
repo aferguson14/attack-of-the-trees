@@ -17,12 +17,13 @@ public class EnemyTree extends Enemies{
         
         this.setResource(log);
         this.setHp(80);
+        this.setTotalHp(getHp());
         this.setAttack(15);
-        this.setSpeed(2);
-        this.setAttackSpeed(500);
+        this.setSpeed(2.5);
+        this.setAttackSpeed(350);
         this.setAttackRange(500);
         this.setJumpSpeed(-20);
-        this.setAttackSpeedCount(499);
+        this.setAttackSpeedCount(349);
     }
         @Override
     public void Attack(Player p, Graphics g){
@@ -37,7 +38,7 @@ public class EnemyTree extends Enemies{
             //create a projectile towards the player
                 TreeProjectile leaf = new TreeProjectile(this.getXCoord()
                         , this.getYCoord() + 30, this.getFacing(), g, 
-                        findAngle(p.getPlayerPoint()));
+                        findAngle(p.getPlayerPoint()), p);
                 this.addProjectile(leaf);
             //reset attack speed count
                 this.setAttackSpeedCount(0);
@@ -55,7 +56,11 @@ public class EnemyTree extends Enemies{
                 setStartedJump(false);
             }
         }
-         if(checkMove()){
+        if(isInAir() && checkInAirMove()){
+            this.setYVel(Math.abs(getYVel()));
+            setYAcc(.5);
+        }
+        else if(checkMove()){
                     this.setYVel(this.getJumpSpeed());
                     setStartedJump(true);
                     setYAcc(.5);
@@ -102,18 +107,7 @@ public class EnemyTree extends Enemies{
     public void die(){
     //not sure if needed, keep just in case
     }
-    @Override
-    public void paintEnemy(Player p, Graphics g){
-        //paint enemy and it's projectiles
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(this.getStill(), (int) this.getXCoord(), (int) this.getYCoord(), null);
 
-
-	g.setColor(Color.red);
-	g.fillRect((int) (this.getXCoord() -10) , (int) (this.getYCoord() - 10), this.getHp(), 7);        
-        paintProjectile(p, g);
-        deleteProjectiles();
-    }
     public void attackAnimation(Graphics g){
         
         

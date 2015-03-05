@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import static java.lang.Math.abs;
@@ -10,6 +11,7 @@ public abstract class Enemies {
     private double XVel, YVel;
     private double XAcc, YAcc;
     private Image still;
+    private Image stillRight;
     private boolean InAir;
     private boolean IsAttacking;
     private int HorizontalSize, VerticalSize;
@@ -34,8 +36,11 @@ public abstract class Enemies {
     private boolean startAttacking = false;
     private boolean cantMove = false;
     private double lastCoord1 = 0, lastCoord2;
+    private double lastCoord1Y = 0, lastCoord2Y;
     private boolean startedJump = false;
     private Resource resource;
+    private double angle = 0;
+    private int totalHp;
     
     //Constructor
     public Enemies(double x, double y){
@@ -45,7 +50,7 @@ public abstract class Enemies {
 
     //Move Method, Similar to Player's
     public void move(ArrayList <Terrain> terrain, ArrayList <Enemies> enem){
-
+       
         if(Board.getState() == Board.STATE.GAME){
         //adjust velocities
         setXVel(getXVel() + getXAcc());
@@ -82,25 +87,36 @@ public abstract class Enemies {
         if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
             setXCoord(WorldRight = getHorizontalSize());
         }
-        if(getYCoord() <= getWorldTop()){
-            setYCoord(0);
-        }
+
         //set the last coordinate for future checking
             setLastCoord2(getLastCoord1());
             setLastCoord1(getXCoord());
+            setLastCoord2Y(getLastCoord1Y());
+            setLastCoord1Y(getYCoord());
         }
+        
     }
     //if current coord and last coord are equal, and not attacking, return true
     //basically, if not moving and not attacking return true
     public boolean checkMove(){
         if((getLastCoord1() <= getLastCoord2()) && (getLastCoord1() 
-                >= getLastCoord2()) && !attacking){
+                >= getLastCoord2()) && !attacking && !isInAir()){
             return true;
         }
         return false;
     }
     public boolean checkSpeed(){
         if((abs(getLastCoord2() - getLastCoord1()) < abs(this.getSpeed())) && !isAttacking() && !isInAir()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public boolean checkInAirMove(){
+        if(checkMove() && (getLastCoord1Y() <= getLastCoord2Y() && (getLastCoord1Y() 
+                >= getLastCoord2Y()))){
             return true;
         }
         else{
@@ -128,7 +144,17 @@ public abstract class Enemies {
     public void die(){
 	
     }
-    public void paintEnemy(Player p , Graphics g){}
+    public void paintEnemy(Player p , Graphics g){
+    //paint enemy and it's projectiles
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(this.getStill(), (int) this.getXCoord(), (int) this.getYCoord(), null);
+
+            
+	g.setColor(Color.red);
+	g.fillRect((int) (this.getXCoord() -10) , (int) (this.getYCoord() - 10), (int) ((double)this.getHp() * (double)(100/(double)this.getTotalHp())) , 7);        
+        paintProjectile(p, g);
+        deleteProjectiles();
+    }
     
     //move enemies projectiles, then paint them
     public void paintProjectile(Player p, Graphics g){
@@ -604,6 +630,76 @@ public abstract class Enemies {
 
     public void setResource(Resource resource){
 	this.resource = resource;
+    }
+
+    /**
+     * @return the angle
+     */
+    public double getAngle() {
+        return angle;
+    }
+
+    /**
+     * @param angle the angle to set
+     */
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+
+    /**
+     * @return the totalHp
+     */
+    public int getTotalHp() {
+        return totalHp;
+    }
+
+    /**
+     * @param totalHp the totalHp to set
+     */
+    public void setTotalHp(int totalHp) {
+        this.totalHp = totalHp;
+    }
+
+    /**
+     * @return the lastCoord2Y
+     */
+    public double getLastCoord2Y() {
+        return lastCoord2Y;
+    }
+
+    /**
+     * @param lastCoord2Y the lastCoord2Y to set
+     */
+    public void setLastCoord2Y(double lastCoord2Y) {
+        this.lastCoord2Y = lastCoord2Y;
+    }
+
+    /**
+     * @return the lastCoord1Y
+     */
+    public double getLastCoord1Y() {
+        return lastCoord1Y;
+    }
+
+    /**
+     * @param lastCoord1Y the lastCoord1Y to set
+     */
+    public void setLastCoord1Y(double lastCoord1Y) {
+        this.lastCoord1Y = lastCoord1Y;
+    }
+
+    /**
+     * @return the stillRight
+     */
+    public Image getStillRight() {
+        return stillRight;
+    }
+
+    /**
+     * @param stillRight the stillRight to set
+     */
+    public void setStillRight(Image stillRight) {
+        this.stillRight = stillRight;
     }
 
 }
