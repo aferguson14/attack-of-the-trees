@@ -57,7 +57,7 @@ public class Board extends JPanel implements ActionListener {
     
         //states
     public static enum STATE {
-    	MENU,
+    		MENU,
 		CHARMENU,
 		GAME,
 		PAUSE,
@@ -87,17 +87,14 @@ public class Board extends JPanel implements ActionListener {
         addMouseMotionListener(m);
         setFocusable(true);
         //not stitched together, used multiple background images
-	ImageIcon far = new 
-	    ImageIcon("../images/backgrounds/far-background.png");
+	ImageIcon far = new ImageIcon("../images/backgrounds/far-background.png");
         
         farBackground = far.getImage();
         ImageIcon far2 = new ImageIcon("../images/backgrounds/far-background.png");
-	ImageIcon near = new 
-	    ImageIcon("../images/backgrounds/near-background.png");
+	ImageIcon near = new ImageIcon("../images/backgrounds/near-background.png");
         ImageIcon near2 = new ImageIcon("../images/backgrounds/near-background.png");
 	nearBackground = near.getImage();
-        ImageIcon far3 = new 
-	    ImageIcon("../images/backgrounds/far-background.png");
+        ImageIcon far3 = new ImageIcon("../images/backgrounds/far-background.png");
         
         Far3 = far.getImage();
         Far2 = far2.getImage();
@@ -267,7 +264,9 @@ public class Board extends JPanel implements ActionListener {
         g2d.drawImage(Far2,-4500, -1800,null);
         g2d.drawImage(Near2,-7473 , -1305,null);
 
-        
+	if(getState() == STATE.MENU) {
+		getMenu().render(g);
+	}        
 
 	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
         g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL1() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
