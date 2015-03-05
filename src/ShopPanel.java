@@ -1,19 +1,20 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
@@ -30,16 +31,22 @@ public class ShopPanel extends JPanel {
     int[] coinCost = {1,0,5,10};
     String[] weaponDescrip;
     int[] weaponsBought = {0,0,0,0};
-    JPopupMenu jmenu;
-    
+    //JPopupMenu jmenu;
+    JFrame jf;
+
     public ShopPanel(Player p) {
-	// shop.setLayout(new GridLayout(2,2));
 	//setBackground(Color.gray);
-	//add buttons for the different weapons
 	this.p = p;
-	jmenu = new JPopupMenu();
-	jmenu.add("You don't have enough resources");
-	jmenu.addKeyListener(new keyListener());
+	//jmenu = new JPopupMenu();
+	//jmenu.add("You don't have enough resources");
+	jf = new JFrame();
+	jf.add(new JMenuItem("You don't have enough resources"));
+	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+	jf.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+	//jf.setLocationRelativeTo(null);
+	jf.pack();
+
+	//add buttons for the different weapons
 	for (int i = 0; i < weaponNames.size(); i++) {
 	    JButton j = new JButton(new ImageIcon("../images/weaponImage/" + weaponNames.get(i) + ".png"));
 	    buttons.add(i, j);
@@ -52,7 +59,8 @@ public class ShopPanel extends JPanel {
 	    public void actionPerformed(ActionEvent actionEvent) {
 		//System.out.println(actionEvent.getSource());
 		//check to see which button was clicked 
-		jmenu.setVisible(false);
+		//jmenu.setVisible(false);
+		jf.setVisible(false);
 		JButton b = (JButton) actionEvent.getSource();
 
 		if(b.equals(buttons.get(0))){
@@ -83,32 +91,24 @@ public class ShopPanel extends JPanel {
 			p.setCoinCount((coins-coinCost[indexClicked]));
 			p.setLogCount((logs-logCost[indexClicked]));
 			weaponsBought[indexClicked] = 1;
-			repaint();
+
 			//System.out.println(logs + " " + coins);
 			//need to add this weapon to the players arraylist of weapons
+			//Uncomment next three lines when we have the other classes
+			//if(indexClicked == 0) p.AddWeapon(new Sword(p.getXCoord(), p.getYCoord()));
+			//if(indexClicked == 1) p.AddWeapon(new Stick(p.getXCoord(), p.getYCoord()));
+			//if(indexClicked == 2) p.AddWeapon(new Axe(p.getXCoord(), p.getYCoord()));
+			if(indexClicked == 3) p.AddWeapon(new Gun(p.getXCoord(), p.getYCoord()));
+
+			repaint();
 		    }
 		    else if (weaponsBought[indexClicked] == 0){
-			jmenu.setLocation(700,500);
-			jmenu.setVisible(true);
-			//JFrame jf = new JFrame();
-			//System.out.println("Don't have enough resources");
+			//jmenu.setLocation(700,500);
+			//jmenu.setVisible(true);
+			jf.setVisible(true);
 		    }
-		    //jmenu.setVisible(false);
-		    //repaint();
 		}
-		//shop.remove(cost);
 	    }
-	};
-    
-    private class keyListener extends KeyAdapter {
-	public void keyPressed(KeyEvent e){
-	    int key = e.getKeyCode();
-	    if(key == KeyEvent.VK_P){
-		jmenu.setVisible(false);
-	    }
-	}
-    }
-
 
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
