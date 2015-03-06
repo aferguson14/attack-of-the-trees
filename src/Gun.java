@@ -17,7 +17,7 @@ public class Gun extends Weapon{
         setSpeed(3);
         setXVel(0);
         setYVel(0);
-
+	setWeaponType("Gun");
 	ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/gunLeft.png");
 	setStillLeft(iWeapLeft.getImage());
 	ImageIcon iWeapRight = new ImageIcon("../images/weaponImage/gunRight.png");

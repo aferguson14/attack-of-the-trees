@@ -34,6 +34,7 @@ public class Board extends JPanel implements ActionListener {
 	public Image AxeImage;
 	public Image StickImage;
 	public Image GunImage;
+        public Image BowImage;
 
 	private Image img;
 	private Timer time;
@@ -118,6 +119,7 @@ public class Board extends JPanel implements ActionListener {
 		ImageIcon gunImage = new ImageIcon("../images/weaponImage/gun.png");
 		GunImage = gunImage.getImage();
 		ImageIcon bowImage = new ImageIcon("../images/weaponImage/bowRight.png");
+		BowImage = bowImage.getImage();
 
 		//WEAPONS
 		Gun g = new Gun(p.getXCoord(),p.getYCoord());
@@ -329,20 +331,38 @@ public class Board extends JPanel implements ActionListener {
 
 			//WEAPON BAR
 			int weaponBarX = (int)getP().getXCoord()-560;
+
+			Color transpColor = new Color(70, 70, 70, 150);
+			g.setColor(transpColor);
+			g.fillRect(weaponBarX-20, 32, 100, 390);
+			
+			Color whiteTransp = new Color(255,255,255,200);
+			g.setColor(whiteTransp);
+			if(getP().getCurrentWeapon().getWeaponType()=="Gun"){
+			    g.fillRect(weaponBarX-20, 240, 100, 60);
+			}
+			else if(getP().getCurrentWeapon().getWeaponType()=="Bow"){
+			    g.fillRect(weaponBarX-20, 300, 100, 122);
+			}
+			
+
+
 			//oldStroke = g2d.getStroke();
 			//fnt0 = new Font("arial", Font.BOLD, 25);
 			g.setFont(fnt0);
 			g.setColor(Color.white);
-
+		       
 			g2d.drawImage(StickImage, weaponBarX, 50, null);
 			g.drawString("1", weaponBarX-10, 50+5);	
-			g2d.drawImage(SwordImage, weaponBarX, 110, null);
-			g.drawString("2", weaponBarX-10, 110+5);	
-			g2d.drawImage(AxeImage, weaponBarX, 170, null);
-			g.drawString("3", weaponBarX-10, 170+5);	
-			g2d.drawImage(GunImage, weaponBarX, 230, null);
-			g.drawString("4", weaponBarX-10, 230+5);	
-
+			g2d.drawImage(SwordImage, weaponBarX, 120, null);
+			g.drawString("2", weaponBarX-10, 120+5);	
+			g2d.drawImage(AxeImage, weaponBarX, 190, null);
+			g.drawString("3", weaponBarX-10, 190+5);	
+			g2d.drawImage(GunImage, weaponBarX, 260, null);
+			g.drawString("4", weaponBarX-10, 260+5);
+			g2d.drawImage(BowImage, weaponBarX, 330, null);
+			g.drawString("5", weaponBarX-10, 330+5);
+			
 			g2d.setStroke(oldStroke);
 
 			//paint player and weapon
