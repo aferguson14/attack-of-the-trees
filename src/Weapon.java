@@ -29,6 +29,7 @@ public abstract class Weapon {
     private ArrayList <PlayerProjectile> projectiles = new ArrayList<PlayerProjectile>();
     private int facing = 0;
     private int playerDirection;
+    private String weaponType;
 
     
     public void AttackAnimation(Graphics g){}
@@ -387,6 +388,15 @@ public abstract class Weapon {
 
     public void setPlayerDirection(int playerDirection){
 	this.playerDirection = playerDirection;
+    }
+
+
+    public void setWeaponType(String weaponType){
+	this.weaponType = weaponType;
+    }
+
+    public String getWeaponType(){
+	return weaponType;
     }
     
 }
