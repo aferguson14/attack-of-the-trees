@@ -45,8 +45,8 @@ public class Board extends JPanel implements ActionListener {
 	private Timer time;
 	private boolean attack = false;
 	private Menu menu;
-	private CharacterMenu charmenu;
 	private PauseMenu pmenu;
+        private static WinScreen winscreen;
 	private static GameOverScreen goscreen;
 	//world dimensions
 	private int WorldBot = 700;
@@ -65,7 +65,6 @@ public class Board extends JPanel implements ActionListener {
 	//states
 	public static enum STATE {
 		MENU,
-		CHARMENU,
 		GAME,
 		PAUSE,
 		GAMEOVER, 
@@ -87,8 +86,8 @@ public class Board extends JPanel implements ActionListener {
 
 		addKeyListener(new AL());
 		menu = new Menu();
-		charmenu = new CharacterMenu();
 		pmenu = new PauseMenu(p, this);
+		winscreen = new WinScreen(this);
 		goscreen = new GameOverScreen(this);
 		MouseInput m = new MouseInput();
 		addMouseListener(m);
@@ -292,8 +291,6 @@ public class Board extends JPanel implements ActionListener {
 		g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
 		//above line changes where player appears on screen
 
-			
-
 		g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
 		g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
 		g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 9000, -1800, null);
@@ -308,6 +305,11 @@ public class Board extends JPanel implements ActionListener {
 		}        
 
 		if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
+
+		    // if you win the game, display win screen
+		    if (TotalProgress > 20){
+			setState(STATE.GAMEOVER);
+		    }
 
 		    g.setColor(greyTransp);
 		    g.fillRect((int)p.getXCoord()-300, (int) p.getHealthBarY()-20 , 750, 120);
@@ -359,8 +361,6 @@ public class Board extends JPanel implements ActionListener {
 				pmenu.requestFocusInWindow();
 			}
 
-
-
 			//RESOURCE BAR
 			int resourceBarX = (int)getP().getXCoord()+630;
 			
@@ -382,7 +382,6 @@ public class Board extends JPanel implements ActionListener {
 			//WEAPON BAR
 			int weaponBarX = (int)getP().getXCoord()-560;
 
-
 			g.setColor(greyTransp);
 			g.fillRect(weaponBarX-20, 32, 100, 390);
 			
@@ -394,8 +393,6 @@ public class Board extends JPanel implements ActionListener {
 			else if(getP().getCurrentWeapon().getWeaponType()=="Bow"){
 			    g.fillRect(weaponBarX-20, 300, 100, 122);
 			}
-			
-
 
 			//oldStroke = g2d.getStroke();
 			//fnt0 = new Font("arial", Font.BOLD, 25);
@@ -441,7 +438,7 @@ public class Board extends JPanel implements ActionListener {
 			getP().setYAcc(.5);
 			getP().setYVel(0);
 			getP().setXVel(0);
-			getP().setHp(1);
+			getP().setHp(100);
 			getP().setAttack(500);
 			getP().setAttackSpeed(50);
 			getP().setSpeed(4);
@@ -450,11 +447,21 @@ public class Board extends JPanel implements ActionListener {
 			getP().setLogCount(0);
 			getP().setCoinCount(0);
 			
-			// display game over screen
-			getGoscreen().requestFocusInWindow();
-			int brightness = (int)(256 - 256 * 0.5f);
-			g.setColor(new Color(0,0,0,brightness));
-			g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+			// if you win, display win screen
+			if (TotalProgress > 20){
+			    getWinscreen().setVisible(true);
+			    getWinscreen().requestFocusInWindow();
+			    int brightness = (int)(256 - 256 * 0.5f);
+			    g.setColor(new Color(0,0,0,brightness));
+			    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+			}
+			// else display game over screen
+			else{
+			    getGoscreen().requestFocusInWindow();
+			    int brightness = (int)(256 - 256 * 0.5f);
+			    g.setColor(new Color(0,0,0,brightness));
+			    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+			}
 		}
 	}
 
@@ -692,5 +699,18 @@ public class Board extends JPanel implements ActionListener {
 	public void setLevel(int level) {
 		this.level = level;
 	}
+	
+	/**
+	 * @return the winscreen
+	 */
+	public static WinScreen getWinscreen() {
+		return winscreen;
+	}
 
+	/**
+	 * @param aWinscreen the winscreen to set
+	 */
+	public static void setWinscreen(WinScreen aWinscreen) {
+		winscreen = aWinscreen;
+	}
 }
