@@ -197,7 +197,7 @@ if(isAttacking()){
         weapon.add(w);
         currentWeapon = w;
     }
-//switch current weapon
+//switch current weapon forward
     public void switchWeapon(){
         if(WeaponTracker < weapon.size()){
             WeaponTracker++;
@@ -208,6 +208,20 @@ if(isAttacking()){
             currentWeapon = weapon.get(WeaponTracker);
         }
     }
+
+
+//switch current weapon backward
+    public void switchWeaponBackward(){
+        if(WeaponTracker > 0){
+            WeaponTracker--;
+            currentWeapon = weapon.get(WeaponTracker);
+        }
+        else if(WeaponTracker == 0){
+            WeaponTracker = weapon.size();
+            currentWeapon = weapon.get(WeaponTracker);
+        }
+    }
+
 //get mouse coords
 // if attacking, shoot weapon
 //readjust mouse coords
@@ -269,6 +283,40 @@ if(isAttacking()){
 				setInAir(true);    
 			}
 		}
+		//WEAPON SWITCHING
+		if(key == KeyEvent.VK_E){
+		    switchWeapon();
+		}
+		
+		if(key == KeyEvent.VK_Q){
+		    switchWeaponBackward();
+		}
+
+		if(key == KeyEvent.VK_1){
+		    if(weapon.get(0)!=null)
+			currentWeapon = weapon.get(0);
+		}
+		if(key == KeyEvent.VK_2){
+		    if(weapon.get(1)!=null)
+			currentWeapon = weapon.get(1);
+		}
+		if(key == KeyEvent.VK_3){
+		    if(weapon.get(2)!=null)
+			currentWeapon = weapon.get(2);
+		}
+		if(key == KeyEvent.VK_4){
+		    if(weapon.get(3)!=null)
+			currentWeapon = weapon.get(3);
+		}
+		if(key == KeyEvent.VK_5){
+		    if(weapon.get(4)!=null)
+			currentWeapon = weapon.get(4);
+		}
+		if(key == KeyEvent.VK_6){
+		    if(weapon.get(5)!=null)
+			currentWeapon = weapon.get(5);
+		}
+
 	}
 
 	//player movement input
