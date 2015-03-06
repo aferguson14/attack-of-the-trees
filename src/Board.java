@@ -262,18 +262,27 @@ public class Board extends JPanel implements ActionListener {
 		g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
 		//above line changes where player appears on screen
 
+			
+
 		g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
 		g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
 		g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 9000, -1800, null);
 		g2d.drawImage(nearBackground,0, -1300, null);
 		g2d.drawImage(Far2,-4500, -1800,null);
 		g2d.drawImage(Near2,-7473 , -1305,null);
+		Color prev = g.getColor();
+		Color greyTransp = new Color(70, 70, 70, 150);
 
 		if(getState() == STATE.MENU) {
 			getMenu().render(g);
 		}        
 
 		if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
+
+		    g.setColor(greyTransp);
+		    g.fillRect((int)p.getXCoord()-300, (int) p.getHealthBarY()-20 , 750, 120);
+		    g.setColor(Color.blue);
+
 			g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL1() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
 			g.drawRect((int) (p.getXCoord() -280) + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL2() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
 			g.drawRect((int) (p.getXCoord() -280)  + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))) + (lvlhandler.getProgressNeededLVL2()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL3() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
@@ -320,7 +329,7 @@ public class Board extends JPanel implements ActionListener {
 				pmenu.requestFocusInWindow();
 			}
 
-			Color greyTransp = new Color(70, 70, 70, 150);
+
 
 			//RESOURCE BAR
 			int resourceBarX = (int)getP().getXCoord()+630;
