@@ -17,6 +17,7 @@ public class Bow extends Weapon{
         setSpeed(3);
         setXVel(0);
         setYVel(0);
+	setWeaponType("Bow");
 
 	ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/bowLeft.png");
 	setStillLeft(iWeapLeft.getImage());
