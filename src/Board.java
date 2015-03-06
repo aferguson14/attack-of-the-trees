@@ -122,10 +122,15 @@ public class Board extends JPanel implements ActionListener {
 		BowImage = bowImage.getImage();
 
 		//WEAPONS
+		Gun w = new Gun(0,0); //temp holder to intialize arrayList
+		for(int i=0;i<7;i++){
+		    p.AddWeapon(i, w);
+		}
+
 		Gun g = new Gun(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(g);
+		p.AddWeapon(3, g);
 		Bow b = new Bow(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(b);
+		p.AddWeapon(4, b);//index in arraylist
 		//Stick s = new Stick(p.getXCoord(),p.getYCord());
 		//p.AddWeapon(s);
 		//Axe a = new Axe(p.getXCoord(),p.getYCord());
@@ -315,8 +320,14 @@ public class Board extends JPanel implements ActionListener {
 				pmenu.requestFocusInWindow();
 			}
 
+			Color greyTransp = new Color(70, 70, 70, 150);
+
 			//RESOURCE BAR
 			int resourceBarX = (int)getP().getXCoord()+630;
+			
+			g.setColor(greyTransp);
+			g.fillRect(resourceBarX-20, 25, 300, 160);
+			
 			Stroke oldStroke = g2d.getStroke();
 			Font fnt0 = new Font("arial", Font.BOLD, 25);
 			g.setFont(fnt0);
@@ -332,8 +343,8 @@ public class Board extends JPanel implements ActionListener {
 			//WEAPON BAR
 			int weaponBarX = (int)getP().getXCoord()-560;
 
-			Color transpColor = new Color(70, 70, 70, 150);
-			g.setColor(transpColor);
+
+			g.setColor(greyTransp);
 			g.fillRect(weaponBarX-20, 32, 100, 390);
 			
 			Color whiteTransp = new Color(255,255,255,200);

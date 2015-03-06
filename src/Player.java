@@ -36,7 +36,7 @@ public class Player{
     private double Speed;
     private double JumpSpeed;
     private ArrayList<Weapon> weapon = new ArrayList<Weapon>(); 
-     private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
+    private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
     private Weapon currentWeapon;
     private Point MousePoint;
     private int WeaponTracker = 0;
@@ -72,6 +72,7 @@ public class Player{
 	
 	logCount = 0;
 	coinCount = 0;
+
     }
     
     public void move(ArrayList <Terrain> terrain) {
@@ -126,8 +127,17 @@ public class Player{
 
 			g2d.rotate(angle, this.getXCoord()+25, this.getYCoord()+63);
 			g2d.rotate(Math.PI, this.getXCoord()+25, this.getYCoord()+63);
+			
+			//WEAPONS POSITIONED DIFFERENTLY
+			if(this.getCurrentWeapon().getWeaponType()=="Gun"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillLeft(),(int) (this.getXCoord())-52, (int) (this.getYCoord())+53, null);
+			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillLeft(),(int) (this.getXCoord())-52+30, (int) (this.getYCoord())+53-25, null);
+			}
+			//END WEAPON POSITIONING
 			g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())-15, (int) (this.getYCoord())+60, null);
-			g2d.drawImage(this.getCurrentWeapon().getStillLeft(),(int) (this.getXCoord())-52, (int) (this.getYCoord())+53, null);
+
 
 			g2d.rotate(-Math.PI, this.getXCoord()+25, this.getYCoord()+63);
 			g2d.rotate(-angle, this.getXCoord()+25, this.getYCoord()+63);
@@ -143,8 +153,15 @@ public class Player{
 			this.getCurrentWeapon().setMouseAngle(angle);
 
 			g2d.rotate(angle, this.getXCoord()+15, this.getYCoord()+60+3);
-			g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5, null);//was +33,-7
 
+			//WEAPONS POSITIONED DIFFERENTLY
+			if(this.getCurrentWeapon().getWeaponType()=="Gun"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5, null);//was +33,-7
+			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5-30, null);//was +33
+			}
+			//END WEAPON POSITIONING
 			g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())+15, (int) (this.getYCoord())+60, null);
 			g2d.rotate(-angle, this.getXCoord()+15, this.getYCoord()+60+3);
 
@@ -193,8 +210,8 @@ if(isAttacking()){
         setHp(getHp() - e.getAttack());
     }
 //add weapon    
-    public void AddWeapon(Weapon w){
-        weapon.add(w);
+    public void AddWeapon(int index, Weapon w){
+        weapon.add(index, w);
         currentWeapon = w;
     }
 //switch current weapon forward
