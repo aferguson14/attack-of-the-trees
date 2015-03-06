@@ -56,6 +56,7 @@ public class Player{
 	setStill(i.getImage());
         ImageIcon iArm = new ImageIcon ("../images/playerImages/guy/armRight.png");
 	setArmStill(iArm.getImage());
+        
         //starting Player postion/velocity/acceleration
 	XCoord = 10; //was 10
 	YCoord = WorldBot - VerticalSize;
@@ -88,7 +89,6 @@ public class Player{
                 t.CheckPlayerContact(this);
 
             }
-
             //check world boundaries
             if((getYCoord() + VerticalSize) >= 700){
                 setYCoord(getWorldBot() - VerticalSize);
@@ -101,7 +101,6 @@ public class Player{
             else if((getXCoord() + 50) >= 7000){
                 setXCoord(7000 - 50);
             }
-
             setScrollX(getXCoord()*(-1)); //For background
             setScrollY(getYCoord()); //For background
 
@@ -125,7 +124,6 @@ public class Player{
 			((mouseX-600+this.getXCoord())-(this.getXCoord()+25)));
 			this.getCurrentWeapon().setMouseAngle(angle);
 
-
 			g2d.rotate(angle, this.getXCoord()+25, this.getYCoord()+63);
 			g2d.rotate(Math.PI, this.getXCoord()+25, this.getYCoord()+63);
 			g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())-15, (int) (this.getYCoord())+60, null);
@@ -134,7 +132,6 @@ public class Player{
 			g2d.rotate(-Math.PI, this.getXCoord()+25, this.getYCoord()+63);
 			g2d.rotate(-angle, this.getXCoord()+25, this.getYCoord()+63);
 			g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
-
 		}
 
 		if(this.getFacing()==1){
@@ -145,7 +142,6 @@ public class Player{
 					((mouseX-600+this.getXCoord())-(this.getXCoord()+15)));
 			this.getCurrentWeapon().setMouseAngle(angle);
 
-
 			g2d.rotate(angle, this.getXCoord()+15, this.getYCoord()+60+3);
 			g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5, null);//was +33,-7
 
@@ -154,7 +150,6 @@ public class Player{
 
 		}
 		//End Arm Movement
-
 		if(this.getHp() >= 0){
 			g.drawRect((int) (this.getXCoord() -280) , (int) getHealthBarY(), 100 * 7, 20);
 			g.setColor(Color.RED);
@@ -175,13 +170,10 @@ if(isAttacking()){
 
 				//	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpLeft.png"); //character image
 				//setStill(i.getImage());
-
-
 			}
 			else if(getFacing() == 1){
 				//ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpRight.png");
 				//setStill(i.getImage());
-
 			}
 
 		}else{
