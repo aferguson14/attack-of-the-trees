@@ -34,7 +34,7 @@ public class Gun extends Weapon{
         this.setAttackSpeedTimer(this.getAttackSpeedTimer() + 1);
         if(this.getAttackSpeedTimer() == this.getAttackSpeed()){
 		    Bullet bullet = new Bullet(this.getXCoord(), 
-					       this.getYCoord(), this.getFacing(), g, findAngle(p), player); //+45
+					       this.getYCoord(), this.getFacing(), g, findAngle(p), player);
 		    bullet.setMouseY(this.getMouseY());
 		    bullet.setMouseX(this.getMouseX());
 		    bullet.setMouseAngle(this.getMouseAngle());
