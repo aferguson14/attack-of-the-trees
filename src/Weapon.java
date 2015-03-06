@@ -3,13 +3,15 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.PointerInfo;
+import java.lang.Math;
 
 public abstract class Weapon {
     //private data
     private Image stillLeft;
     private Image stillRight;
-    
     private int Attack;
     private int AttackSpeed;
     private int AttackSpeedTimer;
@@ -21,37 +23,50 @@ public abstract class Weapon {
     private double XCoord;
     private double YCoord;
     private double YVel, XVel;
+    private double mouseX;
+    private double mouseY;
+    private double mouseAngle;
     private ArrayList <PlayerProjectile> projectiles = new ArrayList<PlayerProjectile>();
     private int facing = 0;
+    private int playerDirection;
 
     
     public void AttackAnimation(Graphics g){}
     public void Attack(){}
     public void DealDmgP(Player p){}
     public void DealDmgE(Enemies e){}
-    public void shoot(Point p, Graphics g){}
+    public void shoot(Point p, Graphics g, Player player){}
     //move weapon in correspondence with player
     public void move(Player p){
-        if(p.getFacing() == 1){
-            setXCoord(p.getXCoord()+ p.getHorizontalSize()); //changed
-            setYCoord(p.getYCoord() + 25); //25 to make weapon lower
+  	/*        if(p.getFacing() == 1){
+            setXCoord(p.getXCoord()+15); //changed
+            setYCoord(p.getYCoord()+63); //25 to make weapon lower
         }
         else{
-            setXCoord(p.getXCoord());
-            setYCoord(p.getYCoord() + 25);
+            setXCoord(p.getXCoord()+25);
+            setYCoord(p.getYCoord()+63);//25
         }
-        
+        */
+
+	setXCoord(p.getXCoord());
+	setYCoord(p.getYCoord());
+	setPlayerDirection(p.getFacing());
+	//above line necessary for projectiles to know player facing
+
 	//check boundaries, if on ground, InAir = false
 	if((getYCoord() + p.getVerticalSize()) >= 700){
 	    setYCoord(p.getWorldBot() - p.getVerticalSize());
 	    setYVel(0);
 	}
+	/*
         if(p.getXCoord() <= 0){
             setXCoord(p.getHorizontalSize());
         }
         else if((p.getXCoord() + 50) >= 7000){
             setXCoord(1024 - 50 + p.getHorizontalSize());
         }
+	*/
+
     }
     //move then paint weapon's projectiles
     public void paintProjectile(ArrayList <Enemies> e, Graphics g, Player p){
@@ -60,6 +75,7 @@ public abstract class Weapon {
         }
         for(PlayerProjectile proj : this.getProjectiles()){
             proj.paintImage(g);
+            proj.CreateImage(g);
         }
     }
     //if projectile needs to be removed, remove
@@ -79,8 +95,20 @@ public abstract class Weapon {
     }
     //find angle between player and point
     public double findAngle(Point p){
-        return Math.sinh((this.getYCoord() - p.getY()) 
-                / p.distance(this.getXCoord(), this.getYCoord()));
+	//	    return -Math.atan2((p.getY()-this.getYCoord()),(p.getX()-this.getXCoord()));
+
+	if(facing == 1){
+	System.out.print("Angle: " + -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+15-this.getXCoord())));
+	    return -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+15-this.getXCoord()));
+	    
+	}
+	else if(facing == 0){
+	System.out.print("Angle: " + -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+25-this.getXCoord())));
+	    return -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+25-this.getXCoord()));
+	}
+
+	return -1;
+
     }
     public abstract void paintWeapon(Graphics g, Player p,  
                                         ArrayList <Enemies> e);
@@ -282,21 +310,83 @@ public abstract class Weapon {
     public void setXVel(double XVel) {
         this.XVel = XVel;
     }
-    
+
+    /**
+     * @return the stillLeft
+     */
     public Image getStillLeft() {
         return stillLeft;
     }
 
+    /**
+     * @param stillLeft the stillLeft to set
+     */
     public void setStillLeft(Image stillLeft) {
         this.stillLeft = stillLeft;
     }
 
+    /**
+     * @return the stillRight
+     */
     public Image getStillRight() {
         return stillRight;
     }
 
+    /**
+     * @param stillRight the stillRight to set
+     */
     public void setStillRight(Image stillRight) {
         this.stillRight = stillRight;
+    }
+
+    /**
+     * @return the mouseX
+     */
+    public double getMouseX() {
+        return mouseX;
+    }
+
+    /**
+     * @param mouseX the mouseX to set
+     */
+    public void setMouseX(double mouseX) {
+        this.mouseX = mouseX;
+    }
+
+    /**
+     * @return the mouseY
+     */
+    public double getMouseY() {
+        return mouseY;
+    }
+
+    /**
+     * @param mouseY the mouseY to set
+     */
+    public void setMouseY(double mouseY) {
+        this.mouseY = mouseY;
+    }
+
+    /**
+     * @return the mouseAngle
+     */
+    public double getMouseAngle() {
+        return mouseAngle;
+    }
+
+    /**
+     * @param mouseAngle the mouseAngle to set
+     */
+    public void setMouseAngle(double mouseAngle) {
+        this.mouseAngle = mouseAngle;
+    }
+    
+    public int getPlayerDirection(){
+	return playerDirection;
+    }
+
+    public void setPlayerDirection(int playerDirection){
+	this.playerDirection = playerDirection;
     }
     
 }

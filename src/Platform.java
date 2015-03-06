@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 
-public class Rock extends Terrain{
+public class Platform extends Terrain{
 //Construcotr
-    public Rock(int x, int y) {
+    public Platform(int x, int y) {
         super(x, y);
-        ImageIcon i = new ImageIcon("../images/blockImage/block.png");
+        ImageIcon i = new ImageIcon("../images/blockImage/step.png");
         setStill(i.getImage());
         setHorizontalSize(100);
-        setVerticalSize(100);
+        setVerticalSize(22);
         setLeftSide(x);
         setRightSide(x + getHorizontalSize());
         setTop(y);

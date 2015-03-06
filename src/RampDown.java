@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 
-public class Ramp extends Terrain{
+public class RampDown extends Terrain{
 //constrcutor
-    public Ramp(int x, int y) {
+    public RampDown(int x, int y) {
         super(x, y);
-        ImageIcon i = new ImageIcon("../images/blockImage/rampUp.png");
+        ImageIcon i = new ImageIcon("../images/blockImage/rampDown.png");
         setStill(i.getImage());
-        setIgnoreLeft(true);
+        setIgnoreRight(true);
         setHorizontalSize(100);
-        setVerticalSize(0);
+        setVerticalSize(100);
         setLeftSide(x);
         setRightSide(x + getHorizontalSize());
         setTop(y);
@@ -26,6 +26,7 @@ public class Ramp extends Terrain{
         setEnemyLeft(getLeftSide());
         setEnemyRight(getRightSide());
         setEnemyBot(getBot());
+        
     }
     
     //paints a triangle
@@ -48,45 +49,45 @@ public class Ramp extends Terrain{
             }
         }
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(this.getStill(), (int) this.getXCoord(), (int) this.getYCoord() - 100, null);
+        g2d.drawImage(this.getStill(), (int) this.getXCoord(), (int) this.getYCoord(), null);
         
     }
 //becuase of triangle's slope, changes the top based on the player's position 
 //in correspondence with the triangle's slope
 public void Updatesides(Player p){
-    if(((p.getXCoord() + p.getHorizontalSize()/2) >= this.getXCoord()) && 
-       (p.getXCoord() <= this.getXCoord() + 
+    if(((p.getXCoord() + p.getHorizontalSize()/2) > this.getXCoord()) && 
+       (p.getXCoord() < this.getXCoord() + 
                 this.getHorizontalSize() - (p.getHorizontalSize()/2))){
-        setTop(this.getYCoord() - (p.getXCoord() - 
-                    this.getXCoord() + (p.getHorizontalSize()/2)));
+        setTop(this.getYCoord() - (this.getXCoord() - 
+                    p.getXCoord() - (p.getHorizontalSize()/2)));
     }
 }
 //same as previous method, but for enemies
 public void Updatesides(Enemies e, int index){
-    if(((e.getXCoord() + e.getHorizontalSize()/2) >= this.getXCoord()) && 
-            (e.getXCoord() <= this.getXCoord() + 
+    if(((e.getXCoord() + e.getHorizontalSize()/2) > this.getXCoord()) && 
+            (e.getXCoord() < this.getXCoord() + 
                 this.getHorizontalSize() - (e.getHorizontalSize()/2))){
-        e.getTops().set(index, this.getYCoord() - (e.getXCoord() - 
-                    this.getXCoord() + (e.getHorizontalSize()/2)));
+        e.getTops().set(index, this.getYCoord() - (this.getXCoord() - 
+                    e.getXCoord() - (e.getHorizontalSize()/2)));
     }
 }
 public void Updatesides(Projectile e, int index){
-    if(((e.getXCoord() + e.getHorizontalSize()/2) >= this.getXCoord()) && 
-            (e.getXCoord() <= this.getXCoord() + 
+    if(((e.getXCoord() + e.getHorizontalSize()/2) > this.getXCoord()) && 
+            (e.getXCoord() < this.getXCoord() + 
                 this.getHorizontalSize() - (e.getHorizontalSize()/2))){
-        e.getTops().set(index, this.getYCoord() - (e.getXCoord() - 
-                    this.getXCoord() + (e.getHorizontalSize()/2)));
+        e.getTops().set(index, this.getYCoord() - (this.getXCoord() - 
+                    e.getXCoord() - (e.getHorizontalSize()/2)));
     }
 }
 public void Updatesides(PlayerProjectile e, int index){
    
-    if(((e.getXCoord() + (e.getHorizontalSize()/2)) >= this.getXCoord()) && 
-            (e.getXCoord() <= (this.getXCoord() + 
-                this.getHorizontalSize()) - (e.getHorizontalSize()/2))){
+    if(((e.getXCoord() + (e.getHorizontalSize()/2)) > this.getXCoord()) && 
+            (e.getXCoord() < (this.getXCoord() + 
+                this.getHorizontalSize()) + (e.getHorizontalSize()/2))){
          
     
-        e.setTopIndex(index, this.getYCoord() - (e.getXCoord() - 
-                    this.getXCoord() + (e.getHorizontalSize()/2)));
+        e.setTopIndex(index, this.getYCoord() - (this.getXCoord() - 
+                    e.getXCoord() - (e.getHorizontalSize()/2)));
 //        System.out.println(" Update: ");
 //        System.out.println("proj: " + (e.getYCoord() + e.getVerticalSize()));
 //    System.out.println("terr: " + (e.getTops().get(5)));

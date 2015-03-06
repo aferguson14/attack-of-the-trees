@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 //extremely similar to Projectile Class
 //difference being: made to attck enemies rather than player
@@ -15,7 +16,8 @@ public class PlayerProjectile {
     private double XCoord, YCoord;
     private double XVel, YVel;
     private double XAcc, YAcc;
-    private Image still;
+    private Image stillLeft;
+    private Image stillRight;
     private int facing;
     private int HorizontalSize, VerticalSize;
     private int WorldBot = 700;
@@ -28,22 +30,52 @@ public class PlayerProjectile {
     private double Angle;
     private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
     private ArrayList<Double> tops = new ArrayList<Double>();
-    
+    private double mouseX;
+    private double mouseY;
+    private double mouseAngle;
+    private int playerDirection;
     //Constructor
-    public PlayerProjectile(double x, double y, int direction, Graphics g, double angle){
-        setXCoord(x);
-        setYCoord(y);
+    public PlayerProjectile(double x, double y, int direction, Graphics g, double angle, Player p){
+	if((direction == 0) && (this.getPlayerDirection()== 0)){
+	    double cx = x+25; //25, center x  of arm rotation
+	    double cy = y+53; //center y  of arm rotation
+	    double r = -77;//77
+	    setXCoord(cx-r*Math.cos(angle));
+	    setYCoord(cy+r*Math.sin(angle));
+	}
+	else if((direction == 0) && (this.getPlayerDirection()== 1)){
+	    double cx = x+25; //center x  of arm rotation
+	    double cy = y+53; //center y  of arm rotation
+	    double r = -142;//77
+	    setXCoord(cx-r*Math.cos(angle));
+	    setYCoord(cy+r*Math.sin(angle));
+	}
+
+	else if((direction == 1) && (this.getPlayerDirection()==0)){
+	    double cx = x+13; //15
+	    double cy = y+63;
+	    double r = 75;
+	    setXCoord(cx+r*Math.cos(angle)/*+Math.sin(angle)*10*/);
+	    setYCoord((cy-r*Math.sin(angle))/*-Math.cos(angle)*10*/);
+	}
+	else if((direction == 1) && (this.getPlayerDirection()==1)){
+	    double cx = x+13; //15
+	    double cy = y+63;
+	    double r = 75;
+	    setXCoord(cx+r*Math.cos(angle)/*+Math.sin(angle)*10*/);
+	    setYCoord((cy-r*Math.sin(angle))/*-Math.cos(angle)*10*/);
+	}
         setFacing(direction);
+        setTerrainDimensions(p.getTerrains());
     }
 
     //move same as Projectile
         public void move(ArrayList<Enemies> e, Player p){
             if(Board.getState() == Board.STATE.GAME){
                 //adjust velocities
-                    setTerrainDimensions(p.getTerrains());
                 for(int i = 0; i < terrains.size(); i++){
-                    terrains.get(i).CheckPlayerProjectileContact(this, i);
-                }    
+                    terrains.get(i).CheckPlayerProjectileContact(this, i, p);
+                }
 
                 setXVel(getXVel() + getXAcc());
                 setYVel(getYVel() + getYAcc());
@@ -95,7 +127,7 @@ public boolean EnemyContact(Enemies enem){
     
     public void CreateImage(Graphics g){}
     
-    //paint projectile
+    //paint projectile **REMOVE CALL TO THIS FUNCTION TO RID RED PROJECTILE**
     public void paintImage(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         Rectangle rect = new Rectangle((int) getXCoord(), 
@@ -112,12 +144,14 @@ public boolean EnemyContact(Enemies enem){
         setXVel(xvel);
         setYVel(yvel);
         
-        if(this.getFacing() == 0){
-            setXVel(-1 * (getXVel()));
+	setXVel(getXVel());
+	/*       if(this.getFacing() == 0){
+	   setXVel(-1 * (getXVel()));
         }
 	else{
             setXVel(getXVel());
-        }
+	}
+	*/
     }
     
     public void setTerrainDimensions(ArrayList <Terrain> ter){
@@ -130,6 +164,10 @@ public boolean EnemyContact(Enemies enem){
          for(int i = 0; i < getTerrains().size(); i++){
              getTerrains().get(i).UpdateSides(this, i);
          }
+     }
+     
+     public void setTopIndex(int index, double value){
+         tops.set(index, value);
      }
     
     
@@ -218,19 +256,7 @@ public boolean EnemyContact(Enemies enem){
         this.YAcc = YAcc;
     }
 
-    /**
-     * @return the still
-     */
-    public Image getStill() {
-        return still;
-    }
 
-    /**
-     * @param still the still to set
-     */
-    public void setStill(Image still) {
-        this.still = still;
-    }
 
     /**
      * @return the facing
@@ -410,4 +436,83 @@ public boolean EnemyContact(Enemies enem){
     public void setTops(ArrayList<Double> tops) {
         this.tops = tops;
     }
+
+    /**
+     * @return the stillLeft
+     */
+    public Image getStillLeft() {
+        return stillLeft;
+    }
+
+    /**
+     * @param stillLeft the stillLeft to set
+     */
+    public void setStillLeft(Image stillLeft) {
+        this.stillLeft = stillLeft;
+    }
+
+    /**
+     * @return the stillRight
+     */
+    public Image getStillRight() {
+        return stillRight;
+    }
+
+    /**
+     * @param stillRight the stillRight to set
+     */
+    public void setStillRight(Image stillRight) {
+        this.stillRight = stillRight;
+    }
+
+    /**
+     * @return the mouseX
+     */
+    public double getMouseX() {
+        return mouseX;
+    }
+
+    /**
+     * @param mouseX the mouseX to set
+     */
+    public void setMouseX(double mouseX) {
+        this.mouseX = mouseX;
+    }
+
+    /**
+     * @return the mouseY
+     */
+    public double getMouseY() {
+        return mouseY;
+    }
+
+    /**
+     * @param mouseY the mouseY to set
+     */
+    public void setMouseY(double mouseY) {
+        this.mouseY = mouseY;
+    }
+
+    /**
+     * @return the mouseAngle
+     */
+    public double getMouseAngle() {
+        return mouseAngle;
+    }
+
+    /**
+     * @param mouseAngle the mouseAngle to set
+     */
+    public void setMouseAngle(double mouseAngle) {
+        this.mouseAngle = mouseAngle;
+    }
+
+    public int getPlayerDirection(){
+	return playerDirection;
+    }
+
+    public void setPlayerDirection(int playerDirection){
+	this.playerDirection = playerDirection;
+    }
+
 }

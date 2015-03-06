@@ -9,21 +9,21 @@ import javax.swing.Timer;
 
 
 
-public class TreeProjectile extends Projectile{
+public class FishFollowingProjectile extends Projectile{
     //Constructor
     private int time = 0;
-    public TreeProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {
+    public FishFollowingProjectile (double x, double y, int direction, Graphics g, double angle, Player p) {
         super(x, y, direction, g, angle, p);
         setXAcc(0);
         setYAcc(0);
         setSpeed(2.5);
         setYVel(0);
         CreateImage(g);
-        setHorizontalSize(8);
-        setVerticalSize(5);
-        setAttack(15);
-        ImageIcon iLeft = new ImageIcon("../images/attackImage/treeAttackLeft.png");
-	ImageIcon iRight = new ImageIcon ("../images/attackImage/treeAttackRight.png");
+        setHorizontalSize(43);
+        setVerticalSize(8);
+        setAttack(5);
+        ImageIcon iLeft = new ImageIcon("../images/attackImage/beeAttackLeft.png");
+	ImageIcon iRight = new ImageIcon ("../images/attackImage/beeAttackRight.png");
 	setStillLeft(iLeft.getImage());
 	setStillRight(iRight.getImage());
         if(direction == 0){
