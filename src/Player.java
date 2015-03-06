@@ -126,8 +126,17 @@ public class Player{
 
 			g2d.rotate(angle, this.getXCoord()+25, this.getYCoord()+63);
 			g2d.rotate(Math.PI, this.getXCoord()+25, this.getYCoord()+63);
+			
+
+			if(this.getCurrentWeapon().getWeaponType()=="Gun"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillLeft(),(int) (this.getXCoord())-52, (int) (this.getYCoord())+53, null);
+			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillLeft(),(int) (this.getXCoord())-52+30, (int) (this.getYCoord())+53-25, null);
+			}
+			
 			g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())-15, (int) (this.getYCoord())+60, null);
-			g2d.drawImage(this.getCurrentWeapon().getStillLeft(),(int) (this.getXCoord())-52, (int) (this.getYCoord())+53, null);
+
 
 			g2d.rotate(-Math.PI, this.getXCoord()+25, this.getYCoord()+63);
 			g2d.rotate(-angle, this.getXCoord()+25, this.getYCoord()+63);
@@ -143,8 +152,12 @@ public class Player{
 			this.getCurrentWeapon().setMouseAngle(angle);
 
 			g2d.rotate(angle, this.getXCoord()+15, this.getYCoord()+60+3);
-			g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5, null);//was +33,-7
-
+			if(this.getCurrentWeapon().getWeaponType()=="Gun"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5, null);//was +33,-7
+			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5-30, null);//was +33
+			}
 			g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())+15, (int) (this.getYCoord())+60, null);
 			g2d.rotate(-angle, this.getXCoord()+15, this.getYCoord()+60+3);
 
