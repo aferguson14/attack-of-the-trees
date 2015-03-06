@@ -3,8 +3,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+
 import javax.swing.*;
-import javax.swing.JTabbedPane;
+
 import java.util.*;
 
 
@@ -17,9 +20,13 @@ public class PauseMenu extends JFrame{
     //JButton clicked;
     //ArrayList<String> weaponNames = new ArrayList<String>(Arrays.asList("sword", "stick", "axe", "gun"));
     Player p;
+    Board bd;
+    JButton saveGame;
+    JButton saveNQuit;
     
-    public PauseMenu(Player p){
+    public PauseMenu(Player p, Board b){
 	this.p = p;
+	bd = b;
 	setTitle("Pause Menu");
 	setSize(500,350);
 	//setBackground(Color.gray);
@@ -41,7 +48,6 @@ public class PauseMenu extends JFrame{
 	this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	
 	shop = new ShopPanel(p);
-	//createShopPage();
 	createSavePage();
 	createHelpPage();
 	
@@ -53,41 +59,56 @@ public class PauseMenu extends JFrame{
 	
     }
     
-    /*public void createShopPage(){
-    	//create the panel for the shop
-	shop = new JPanel();
-	shop.setLayout(new FlowLayout());
-	//shop.setLayout(new GridLayout(2,2));
-	for(int i = 0; i < weaponNames.size(); i++){
-	    JButton j = new JButton(new ImageIcon("images/weaponImage/" + weaponNames.get(i) + ".png")); 
-	    shop.add(j);
-	    j.addActionListener(actionListener);
+	public void createSavePage() {
+		// create the panel for the save game feature
+		save = new JPanel();
+		// save.setLayout(new GridLayout(1,2));
+		saveGame = new JButton("Save");
+		saveNQuit = new JButton("Save and Exit");
+		saveGame.addActionListener(actionListener);
+		saveNQuit.addActionListener(actionListener);
+		save.add(saveGame);
+		save.add(saveNQuit);
 	}
-	//ImageIcon sword = new ImageIcon("images/weaponImage/sword.png");
-	//ImageIcon stick = new ImageIcon("images/weaponImage/stick.png");
-	//ImageIcon gun = new ImageIcon("images/weaponImage/gun.png");
-	//ImageIcon axe = new ImageIcon("images/weaponImage/axe.png");
-	//shop.add(new JButton(sword));
-	//shop.add(new JButton(stick));
-	//shop.add(new JButton(gun));
-	//shop.add(new JButton(axe));
-	this.getContentPane().add(BorderLayout.NORTH, shop);
-	}
-    
-    ActionListener actionListener = new ActionListener() {
-	public void actionPerformed(ActionEvent actionEvent) {
-	    System.out.println(actionEvent.getSource());
-	}
-	};*/
-    
-    public void createSavePage(){
-    	//create the panel for the save game feature
-	save = new JPanel();
-	//save.setLayout(new GridLayout(1,2));
-	save.add(new Button("Save"));
-	save.add(new Button("Save and Exit"));
-    }
-    
+
+	ActionListener actionListener = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent ae) {
+			// TODO Auto-generated method stub
+			JButton b = (JButton) ae.getSource();
+			if (b.equals(saveGame) || b.equals(saveNQuit)) {
+				// save the game
+				try {
+					// Doesn't save progress, can't buy weapons, and don't have
+					// enemy images
+					FileOutputStream fs = new FileOutputStream("saved.ser");
+					ObjectOutputStream os = new ObjectOutputStream(fs);
+					os.flush();
+					// os.writeObject(bd);
+					os.writeObject(bd.getP());
+					os.writeObject(bd.getEnemies());
+					os.writeObject(bd.getResources());
+					os.writeInt(bd.getTotalProgress());
+					os.writeInt(bd.getLevel());
+					//System.out.println(bd.getTotalProgress());
+					//System.out.println(bd.getLevel());
+
+					os.close();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
+				if (b.equals(saveNQuit)) {
+					System.exit(0);
+				}
+			}
+
+		}
+
+	};
+	
+	
     public void createHelpPage(){
     	//create the help menu
 	help = new JPanel();

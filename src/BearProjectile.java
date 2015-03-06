@@ -3,10 +3,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
 
-public class BearProjectile extends Projectile{
+public class BearProjectile extends Projectile implements Serializable{
     //Constructor
     private int time = 0;
     public BearProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {
@@ -47,37 +49,39 @@ public class BearProjectile extends Projectile{
     
     public void move(Player p){
         //adjust velocities
-        for(int i = 0; i < getTerrains().size(); i++){
-            getTerrains().get(i).CheckProjectileContact(this, i, p);
-            
-        }
-
-        
-        setXVel(getXVel() + getXAcc());
-        setYVel(getYVel() + getYAcc());
-        
-        //adjust coords
-        setXCoord(getXCoord() + getXVel());
-        setYCoord(getYCoord() + getYVel());
-        
-        //check world boundaries
-        if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
-            setRemove(true);
-        }
-        if(getXCoord() <= getWorldLeft()){
-            setRemove(true);
-        }
-        if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
-            setRemove(true);
-        }
-        if(getYCoord() <= getWorldTop()){
-            setRemove(true);
-        }
-        
-        
-        //if player contact, deal dmg
-        if(PlayerContact(p) == true){
-            dealDmg(p);
+        if(Board.getState() == Board.STATE.GAME){
+	    	for(int i = 0; i < getTerrains().size(); i++){
+	            getTerrains().get(i).CheckProjectileContact(this, i, p);
+	            
+	        }
+	
+	        
+	        setXVel(getXVel() + getXAcc());
+	        setYVel(getYVel() + getYAcc());
+	        
+	        //adjust coords
+	        setXCoord(getXCoord() + getXVel());
+	        setYCoord(getYCoord() + getYVel());
+	        
+	        //check world boundaries
+	        if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
+	            setRemove(true);
+	        }
+	        if(getXCoord() <= getWorldLeft()){
+	            setRemove(true);
+	        }
+	        if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
+	            setRemove(true);
+	        }
+	        if(getYCoord() <= getWorldTop()){
+	            setRemove(true);
+	        }
+	        
+	        
+	        //if player contact, deal dmg
+	        if(PlayerContact(p) == true){
+	            dealDmg(p);
+	        }
         }
     }
     public void dealDmg(Player p){

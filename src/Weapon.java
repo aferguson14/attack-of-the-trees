@@ -1,17 +1,18 @@
 import java.awt.*;
-import java.awt.Graphics;
-import java.awt.Point;
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.PointerInfo;
+import java.io.Serializable;
 import java.lang.Math;
 
-public abstract class Weapon {
+public abstract class Weapon implements Serializable{
     //private data
-    private Image stillLeft;
-    private Image stillRight;
+    private ImageIcon stillLeft;
+    private ImageIcon stillRight;
     private int Attack;
     private int AttackSpeed;
     private int AttackSpeedTimer;
@@ -315,28 +316,28 @@ public abstract class Weapon {
     /**
      * @return the stillLeft
      */
-    public Image getStillLeft() {
+    public ImageIcon getStillLeft() {
         return stillLeft;
     }
 
     /**
      * @param stillLeft the stillLeft to set
      */
-    public void setStillLeft(Image stillLeft) {
+    public void setStillLeft(ImageIcon stillLeft) {
         this.stillLeft = stillLeft;
     }
 
     /**
      * @return the stillRight
      */
-    public Image getStillRight() {
+    public ImageIcon getStillRight() {
         return stillRight;
     }
 
     /**
      * @param stillRight the stillRight to set
      */
-    public void setStillRight(Image stillRight) {
+    public void setStillRight(ImageIcon stillRight) {
         this.stillRight = stillRight;
     }
 

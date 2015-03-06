@@ -1,17 +1,21 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
+
 import static java.lang.Math.abs;
+
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
-public class EnemyGnome extends Enemies{
+public class EnemyGnome extends Enemies implements Serializable{
 
     //Costructor
     public EnemyGnome(double x, double y){
         super(x, y);
         ImageIcon i = new ImageIcon("../images/enemyImages/gnome/gnomeSide.png");
         ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
-	this.setStill(i.getImage());
+	this.setStill(i);
         this.setHorizontalSize(81);
         this.setVerticalSize(115);
         

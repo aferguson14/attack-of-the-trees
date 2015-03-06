@@ -1,17 +1,21 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
+
 import static java.lang.Math.abs;
+
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
-public class EnemyBee extends Enemies{
+public class EnemyBee extends Enemies implements Serializable{
 private boolean allgood = false;
     //Constrcutor
     public EnemyBee(double x, double y){
         super(x, y);
         ImageIcon i = new ImageIcon("../images/enemyImages/bee/beeFront.png");
         ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
-        this.setStill(i.getImage());
+        this.setStill(i);
         this.setHorizontalSize(74);
         this.setVerticalSize(115);
         

@@ -1,16 +1,19 @@
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 
-public abstract class Terrain {
+
+public abstract class Terrain implements Serializable{
     //private data
     private double YCoord;
     private double XCoord;
     private double HorizontalSize;
     private double VerticalSize;
-    private Image still;
+    private ImageIcon still;
     private boolean InAir;
     private double LeftSide;
     private double RightSide;
@@ -410,14 +413,14 @@ public abstract class Terrain {
     /**
      * @return the still
      */
-    public Image getStill() {
+    public ImageIcon getStill() {
         return still;
     }
 
     /**
      * @param still the still to set
      */
-    public void setStill(Image still) {
+    public void setStill(ImageIcon still) {
         this.still = still;
     }
 

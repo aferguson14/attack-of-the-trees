@@ -1,10 +1,14 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
+
 import static java.lang.Math.abs;
+
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
-public class EnemyRobot extends Enemies{
+public class EnemyRobot extends Enemies implements Serializable{
 
     //Constructor
     public EnemyRobot(double x, double y){
@@ -12,7 +16,7 @@ public class EnemyRobot extends Enemies{
         ImageIcon i = new ImageIcon("../images/enemyImages/robot/robotFront.png");
 	ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
 
-        this.setStill(i.getImage());
+        this.setStill(i);
         this.setHorizontalSize(81);
         this.setVerticalSize(115);
 

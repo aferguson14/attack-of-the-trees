@@ -3,10 +3,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
 
-public class SunFlowerProjectile extends Projectile{
+public class SunFlowerProjectile extends Projectile implements Serializable{
     //Constructor
     public SunFlowerProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {
         super(x + 5, y, direction, g, angle, p);

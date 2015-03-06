@@ -1,10 +1,14 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
+
 import static java.lang.Math.abs;
+
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
-public class Fish extends Enemies{
+public class Fish extends Enemies implements Serializable{
 
     //Constrcutor
     public Fish(double x, double y){
@@ -12,8 +16,8 @@ public class Fish extends Enemies{
         ImageIcon iLeft = new ImageIcon("../images/enemyImages/fish/fishLeft.png");
         ImageIcon iRight = new ImageIcon("../images/enemyImages/fish/fishRight.png");
         ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
-        this.setStill(iLeft.getImage());
-        this.setStillRight(iRight.getImage());
+        this.setStill(iLeft);
+        this.setStillRight(iRight);
         this.setHorizontalSize(120);
         this.setVerticalSize(115);
         

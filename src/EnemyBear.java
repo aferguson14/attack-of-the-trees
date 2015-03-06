@@ -1,10 +1,14 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
+
 import static java.lang.Math.abs;
+
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
-public class EnemyBear extends Enemies{
+public class EnemyBear extends Enemies implements Serializable{
 
     //Constructor
     private boolean attackdone = false;
@@ -12,7 +16,7 @@ public class EnemyBear extends Enemies{
         super(x, y);
         ImageIcon i = new ImageIcon("../images/enemyImages/bear/bearSide.png");
 	ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
-        this.setStill(i.getImage());
+        this.setStill(i);
         this.setHorizontalSize(60);
         this.setVerticalSize(115);
         
