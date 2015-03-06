@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class Player{
+<<<<<<< HEAD
     //private data
     private double XCoord;
     private double XVel;
@@ -135,6 +136,104 @@ public class Player{
 	    g2d.rotate(-Math.PI, this.getXCoord()+25, this.getYCoord()+63);
 	    g2d.rotate(-angle, this.getXCoord()+25, this.getYCoord()+63);
 	    g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
+=======
+	//private data
+	private double XCoord;
+	private double XVel;
+	private double YCoord;
+	private double YVel;
+	private double XAcc;
+	private double YAcc;
+	private double scrollX;
+	private double scrollY;
+	private int hp;
+	private int attack;
+
+	private Image still;
+	private Image armStill;
+
+	private boolean InAir = false;
+	private boolean attacking = false;
+	private int facing = 1;
+	private int AttackSpeed;
+	private int AttackSpeedCount = 49;
+
+	//player size
+	private int HorizontalSize = 50;
+	private int VerticalSize = 115;
+
+	//world dimensions
+	private int WorldBot = 700;
+	private int WorldLeft = 0;
+	private int WorldRight = 7478;
+	private int WorldTop = 0;
+	private double Speed;
+	private double JumpSpeed;
+	private ArrayList<Weapon> weapon = new ArrayList<Weapon>(); 
+	private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
+	private Weapon currentWeapon;
+	private Point MousePoint;
+	private int WeaponTracker = 0;
+	private double HealthBarY = 0;
+	private int FrameWorldLeft = -300;
+	private int FrameWorldRight = 1450;
+	private int FrameWorldTop = 0;
+	private int FrameWorldBot = WorldBot;
+
+	//resource counters
+	private int logCount;
+	private int coinCount;
+
+	//Constructor
+	public Player() {
+		ImageIcon i = new ImageIcon("../images/playerImages/guy/guyArmlessRight.png"); //character image
+		setStill(i.getImage());
+		ImageIcon iArm = new ImageIcon ("../images/playerImages/guy/armRight.png");
+		setArmStill(iArm.getImage());
+		//starting Player postion/velocity/acceleration
+		XCoord = 10; //was 10
+		YCoord = WorldBot - VerticalSize;
+		YAcc =  .5;
+		YVel = 0;
+		XVel = 0;
+		hp = 100;
+		attack = 10;
+		AttackSpeed = 50;
+		Speed = 4;
+		JumpSpeed = -15;
+		HealthBarY = (this.getYCoord() - 580);
+
+		logCount = 0;
+		coinCount = 0;
+	}
+
+	public void move(ArrayList <Terrain> terrain) {
+		//add velocities to positions/add gravity to yVel
+		if(Board.getState() == Board.STATE.GAME){
+
+
+			setXCoord(getXCoord() + getXVel());
+			setYVel(getYVel() + getYAcc());
+			setYCoord(getYCoord() + getYVel());
+			//check terrain contact
+			for(Terrain t : terrain){
+				t.CheckPlayerContact(this);
+
+			}
+
+			//check world boundaries
+			if((getYCoord() + VerticalSize) >= 700){
+				setYCoord(getWorldBot() - VerticalSize);
+				setYVel(0);
+				setInAir(false);
+			}
+			if(getXCoord() <= 0){
+				setXCoord(0);
+			}
+			else if((getXCoord() + 50) >= 7000){
+				setXCoord(7000 - 50);
+			}
+>>>>>>> dde9b90be5dd9fccd5b9fc41e9a0979e28024427
 
 	}
 
@@ -258,6 +357,7 @@ public class Player{
                 setStill(iRight.getImage());
 		ImageIcon iArmRight = new ImageIcon("images/playerImages/guy/armRight.png");
 		setArmStill(iArmRight.getImage());
+<<<<<<< HEAD
 		*/
 	    }
 	    ImageIcon iRight = new ImageIcon
@@ -269,6 +369,39 @@ public class Player{
 
 	    setXVel(getSpeed());
 	    setFacing(1);
+=======
+				 */
+			}
+			ImageIcon iRight = new ImageIcon
+					("../images/playerImages/guy/guyArmlessRight.png");
+			setStill(iRight.getImage());
+			ImageIcon iArmRight = new ImageIcon
+					("../images/playerImages/guy/armRight.png");
+			setArmStill(iArmRight.getImage());
+
+			setXVel(getSpeed());
+			setFacing(1);
+		}
+		//if on ground, can jump
+		if(!isInAir()){
+			if(key == KeyEvent.VK_W){
+				setYAcc(.5);
+				setYVel((getJumpSpeed()));
+				setInAir(true);    
+			}
+		}
+	}
+
+	//player movement input
+	public void keyReleased(KeyEvent e) {
+		int key = e.getKeyCode();
+		//realease of L/R key's result in 0 horiz vel
+		if (key == KeyEvent.VK_A)
+			setXVel(0);
+
+		if (key == KeyEvent.VK_D)
+			setXVel(0);
+>>>>>>> dde9b90be5dd9fccd5b9fc41e9a0979e28024427
 	}
 	//if on ground, can jump
 	if(!isInAir()){
