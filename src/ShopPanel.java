@@ -93,7 +93,7 @@ public class ShopPanel extends JPanel {
 			//if(indexClicked == 0) p.AddWeapon(new Sword(p.getXCoord(), p.getYCoord()));
 			//if(indexClicked == 1) p.AddWeapon(new Stick(p.getXCoord(), p.getYCoord()));
 			//if(indexClicked == 2) p.AddWeapon(new Axe(p.getXCoord(), p.getYCoord()));
-			if(indexClicked == 3) p.AddWeapon(new Gun(p.getXCoord(), p.getYCoord()));
+			if(indexClicked == 3) p.AddWeapon(3, new Gun(p.getXCoord(), p.getYCoord()));
 			repaint();
 		    }
 		    else if (weaponsBought[indexClicked] == 0){
