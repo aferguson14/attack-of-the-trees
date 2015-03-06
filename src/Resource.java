@@ -1,13 +1,13 @@
 import java.awt.*;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Resource{
+import javax.swing.ImageIcon;
+
+public class Resource implements Serializable{
 
     private double XCoord, YCoord;
-    private Image resourceImage;
+    private ImageIcon resourceImage;
     private String resourceType;
     public Resource(double x, double y){
 	setXCoord(x);
@@ -35,11 +35,11 @@ public class Resource{
 	return YCoord;
     }
 
-    public void setResourceImage(Image resourceImage){
+    public void setResourceImage(ImageIcon resourceImage){
 	this.resourceImage = resourceImage;
     }
 
-    public Image getResourceImage(){
+    public ImageIcon getResourceImage(){
 	return resourceImage;
     }
 

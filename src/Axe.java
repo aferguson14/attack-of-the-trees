@@ -2,11 +2,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
 
-public class Axe extends Weapon{
+public class Axe extends Weapon implements Serializable{
     //constructor
     public Axe(double x, double y){
         setXCoord(x);
@@ -19,9 +21,9 @@ public class Axe extends Weapon{
         setYVel(0);
 
 	ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/axe.png");
-	setStillLeft(iWeapLeft.getImage());
+	setStillLeft(iWeapLeft);
 	ImageIcon iWeapRight = new ImageIcon("../images/weaponImage/axe.png");
-	setStillRight(iWeapRight.getImage());
+	setStillRight(iWeapRight);
  
    }
     //creates projectile towards mouse point

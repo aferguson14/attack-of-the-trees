@@ -1,17 +1,21 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
+
 import static java.lang.Math.abs;
+
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
-public class EnemyTree extends Enemies{
+public class EnemyTree extends Enemies implements Serializable{
 
     //Constrcutor
     public EnemyTree(double x, double y){
         super(x, y);
         ImageIcon i = new ImageIcon("../images/enemyImages/tree/treeFront.png");
         ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
-        this.setStill(i.getImage());
+        this.setStill(i);
         this.setHorizontalSize(81);
         this.setVerticalSize(115);
         

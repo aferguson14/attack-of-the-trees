@@ -1,4 +1,6 @@
+import java.io.Serializable;
 
-public class MovingPlat {
+
+public class MovingPlat implements Serializable{
     
 }

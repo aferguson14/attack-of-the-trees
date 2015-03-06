@@ -1,4 +1,5 @@
 import static java.lang.Math.*;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -38,37 +39,39 @@ public class Projectile {
     //moves projectile
     public void move(Player p){
         //adjust velocities
-        for(int i = 0; i < getTerrains().size(); i++){
-            getTerrains().get(i).CheckProjectileContact(this, i, p);
-            
-        }
-        
-        setXVel(getXVel() + getXAcc());
-        setYVel(getYVel() + getYAcc());
-        
-        //adjust coords
-        setXCoord(getXCoord() + getXVel());
-        setYCoord(getYCoord() + getYVel());
-        
-        //check world boundaries
-        if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
-            setRemove(true);
-        }
-        if(getXCoord() <= getWorldLeft()){
-            setRemove(true);
-        }
-        if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
-            setRemove(true);
-        }
-        if(getYCoord() <= getWorldTop()){
-            setRemove(true);
-        }
-        
-        
-        //if player contact, deal dmg
-        if(PlayerContact(p) == true){
-            dealDmg(p);
-        }
+    	if(Board.getState() == Board.STATE.GAME){
+	        for(int i = 0; i < getTerrains().size(); i++){
+	            getTerrains().get(i).CheckProjectileContact(this, i, p);
+	            
+	        }
+	        
+	        setXVel(getXVel() + getXAcc());
+	        setYVel(getYVel() + getYAcc());
+	        
+	        //adjust coords
+	        setXCoord(getXCoord() + getXVel());
+	        setYCoord(getYCoord() + getYVel());
+	        
+	        //check world boundaries
+	        if((this.getYCoord() + this.getVerticalSize()) >= getWorldBot()){
+	            setRemove(true);
+	        }
+	        if(getXCoord() <= getWorldLeft()){
+	            setRemove(true);
+	        }
+	        if((this.getXCoord() + this.getHorizontalSize()) >= getWorldRight()){
+	            setRemove(true);
+	        }
+	        if(getYCoord() <= getWorldTop()){
+	            setRemove(true);
+	        }
+	        
+	        
+	        //if player contact, deal dmg
+	        if(PlayerContact(p) == true){
+	            dealDmg(p);
+	        }
+    	}
     }
     
 //return true if player contact

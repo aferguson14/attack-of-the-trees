@@ -3,11 +3,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
 
-public class AxeProjectile extends PlayerProjectile{
+public class AxeProjectile extends PlayerProjectile implements Serializable{
     private int time = 0;
  public AxeProjectile(double x, double y, int direction, Graphics g, double angle, Player player) {
         super(x, y, direction, g, angle, player);

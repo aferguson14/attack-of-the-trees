@@ -70,5 +70,13 @@ public class MouseInput implements MouseListener, MouseMotionListener {
                 Board.setState(Board.STATE.GAME);
             }
         }
+        
+        //if within loadGameButton, set state to Load
+        if(mx >= Board.WIDTH/2 + 680 && mx <= Board.WIDTH/2 + 1000) {
+        	if(my >= 400 && my <= 470) {
+        		// pressed loadGameButton
+        		Board.setState(Board.STATE.LOAD);
+        	}
+        }
     }   
 }

@@ -1,17 +1,21 @@
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
+
 import static java.lang.Math.abs;
+
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
-public abstract class Enemies {
+public abstract class Enemies implements Serializable{
     //Private Data
     private double XCoord, YCoord;
     private double XVel, YVel;
     private double XAcc, YAcc;
-    private Image still;
-    private Image stillRight;
+    private ImageIcon still;
+    private ImageIcon stillRight;
     private boolean InAir;
     private boolean IsAttacking;
     private int HorizontalSize, VerticalSize;
@@ -147,7 +151,7 @@ public abstract class Enemies {
     public void paintEnemy(Player p , Graphics g){
     //paint enemy and it's projectiles
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(this.getStill(), (int) this.getXCoord(), (int) this.getYCoord(), null);
+        g2d.drawImage(this.getStill().getImage(), (int) this.getXCoord(), (int) this.getYCoord(), null);
 
             
 	g.setColor(Color.red);
@@ -352,11 +356,11 @@ public abstract class Enemies {
         this.YAcc = YAcc;
     }
 
-    public Image getStill() {
+    public ImageIcon getStill() {
         return still;
     }
 
-    public void setStill(Image still) {
+    public void setStill(ImageIcon still) {
         this.still = still;
     }
 
@@ -691,14 +695,14 @@ public abstract class Enemies {
     /**
      * @return the stillRight
      */
-    public Image getStillRight() {
+    public ImageIcon getStillRight() {
         return stillRight;
     }
 
     /**
      * @param stillRight the stillRight to set
      */
-    public void setStillRight(Image stillRight) {
+    public void setStillRight(ImageIcon stillRight) {
         this.stillRight = stillRight;
     }
 

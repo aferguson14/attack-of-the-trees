@@ -4,12 +4,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 
 
-public class TreeProjectile extends Projectile{
+public class TreeProjectile extends Projectile implements Serializable{
     //Constructor
     private int time = 0;
     public TreeProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {

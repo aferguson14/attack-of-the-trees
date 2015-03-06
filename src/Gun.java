@@ -19,9 +19,9 @@ public class Gun extends Weapon{
         setYVel(0);
 	setWeaponType("Gun");
 	ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/gunLeft.png");
-	setStillLeft(iWeapLeft.getImage());
+	setStillLeft(iWeapLeft);
 	ImageIcon iWeapRight = new ImageIcon("../images/weaponImage/gunRight.png");
-	setStillRight(iWeapRight.getImage());
+	setStillRight(iWeapRight);
  
    }
     //creates projectile towards mouse point

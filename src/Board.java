@@ -1,8 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+
 import static java.lang.Math.abs;
+
 import java.util.ArrayList;
 import java.util.Random;
+
 import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
@@ -19,17 +24,17 @@ public class Board extends JPanel implements ActionListener {
 	private EnemyGenerator generator = new EnemyGenerator(this);
 	private int TotalProgress = 0;
 
-	//Background Images
+	//Background ../images
 	public Image farBackground;
 	public Image nearBackground;
 	public Image Far2, Far3;
 	public Image Near2;
 
-	//Resource Images
+	//Resource ../images
 	public Image LogImage;
 	public Image CoinImage;
 
-	//Weapon Images
+	//Weapon ../images
 	public Image SwordImage;
 	public Image AxeImage;
 	public Image StickImage;
@@ -53,6 +58,8 @@ public class Board extends JPanel implements ActionListener {
 	public static boolean PlayerAttack = false;
 	private boolean StartLevel = true;
 	private int level = 0;
+	
+
 	private LevelHandler lvlhandler = new LevelHandler();
 
 	//states
@@ -61,14 +68,15 @@ public class Board extends JPanel implements ActionListener {
 		CHARMENU,
 		GAME,
 		PAUSE,
-		GAMEOVER
+		GAMEOVER, 
+		LOAD
 	};
 	//initial state = MENU
 	private static STATE State = STATE.MENU;
 
 
 	public Board() {
-		//creates player, enemies, terrain, weapon, menu, and background images
+		//creates player, enemies, terrain, weapon, menu, and background ../images
 		p = new Player();
 		lvlhandler.HandleLVL1Start(enemies, terrain, generator);
 
@@ -80,13 +88,13 @@ public class Board extends JPanel implements ActionListener {
 		addKeyListener(new AL());
 		menu = new Menu();
 		charmenu = new CharacterMenu();
-		pmenu = new PauseMenu(p);
+		pmenu = new PauseMenu(p, this);
 		goscreen = new GameOverScreen(this);
 		MouseInput m = new MouseInput();
 		addMouseListener(m);
 		addMouseMotionListener(m);
 		setFocusable(true);
-		//not stitched together, used multiple background images
+		//not stitched together, used multiple background ../images
 		ImageIcon far = new ImageIcon("../images/backgrounds/far-background.png");
 
 		farBackground = far.getImage();
@@ -100,7 +108,7 @@ public class Board extends JPanel implements ActionListener {
 		Far2 = far2.getImage();
 		Near2 = near2.getImage();
 
-		//RESOURCE IMAGES
+		//RESOURCE ../images
 		ImageIcon logImage = new ImageIcon("../images/sourceImage/wood.png");
 		LogImage = logImage.getImage();
 		ImageIcon coinImage = new ImageIcon("../images/sourceImage/coin.png");
@@ -109,7 +117,7 @@ public class Board extends JPanel implements ActionListener {
 		time = new Timer(5, this);
 		time.start();
 
-		//WEAPON IMAGES
+		//WEAPON ../images
 		ImageIcon axeImage = new ImageIcon("../images/weaponImage/axe.png");
 		AxeImage = axeImage.getImage();
 		ImageIcon swordImage = new ImageIcon("../images/weaponImage/sword.png");
@@ -243,7 +251,7 @@ public class Board extends JPanel implements ActionListener {
 		else if(getResources().get(i).getResourceType() == "oil")
 		    getP().setOilCount(getP().getOilCount() + 1);
 					 */
-					//**ABOVE IS TO BE UNCOMMENTED ONCE WE HAVE IMAGES**
+					//**ABOVE IS TO BE UNCOMMENTED ONCE WE HAVE ../images**
 					getResources().remove(i);
 				}
 			}
@@ -256,9 +264,31 @@ public class Board extends JPanel implements ActionListener {
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 
+		if (getState() == STATE.LOAD) {
+			System.out.println("Pressed load game");
+			// System.exit(0);
+			try {
+				FileInputStream fs = new FileInputStream("saved.ser");
+				ObjectInputStream os = new ObjectInputStream(fs);
+				p = (Player) os.readObject();
+				enemies = (ArrayList<Enemies>) os.readObject();
+				resources = (ArrayList<Resource>) os.readObject();
+				TotalProgress = os.readInt();
+				level = os.readInt();
+				//System.out.println(getTotalProgress());
+				//System.out.println(getLevel());
+				os.close();
+				setState(STATE.GAME);
+				// System.out.println("in try catch");
+				// repaint();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		
 		BoardLoc = this.getLocationOnScreen();
 
-		//background images
+		//background ../images
 		g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
 		//above line changes where player appears on screen
 
@@ -645,6 +675,22 @@ public class Board extends JPanel implements ActionListener {
 	 */
 	public static void setGoscreen(GameOverScreen aGoscreen) {
 		goscreen = aGoscreen;
+	}
+	
+	public int getTotalProgress() {
+		return TotalProgress;
+	}
+
+	public void setTotalProgress(int totalProgress) {
+		TotalProgress = totalProgress;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 }

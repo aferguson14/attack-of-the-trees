@@ -11,14 +11,14 @@ public class ResourceLog extends Resource{
 	super(x,y);
 	//Image needs to be replaced by log
 	ImageIcon i = new ImageIcon("../images/sourceImage/wood.png");
-	this.setResourceImage(i.getImage());
+	this.setResourceImage(i);
 	this.setResourceType("log");
     }
 
     public void paintResource(Graphics g){
 	//paint resource
 	Graphics2D g2d = (Graphics2D) g;
-	g2d.drawImage(this.getResourceImage(),(int) this.getXCoord(), (int) this.getYCoord(), null);
+	g2d.drawImage(this.getResourceImage().getImage(),(int) this.getXCoord(), (int) this.getYCoord(), null);
 	// implement gravity if not on ground
     }
 

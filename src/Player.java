@@ -1,12 +1,17 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+
 import static java.lang.Math.abs;
+
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 
-public class Player{
+public class Player implements Serializable{
     //private data
     private double XCoord;
     private double XVel;
@@ -18,8 +23,8 @@ public class Player{
     private double scrollY;
     private int hp;
     private int attack;
-    private Image still;
-    private Image armStill;
+    private ImageIcon still;
+    private ImageIcon armStill;
     private boolean InAir = false;
     private boolean attacking = false;
     private int facing = 1;
@@ -53,9 +58,9 @@ public class Player{
     //Constructor
     public Player() {
 	ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDown.png"); //character image
-	setStill(i.getImage());
+	setStill(i);
         ImageIcon iArm = new ImageIcon ("../images/playerImages/guy/armRight.png");
-	setArmStill(iArm.getImage());
+	setArmStill(iArm);
         
         //starting Player postion/velocity/acceleration
 	XCoord = 10; //was 10
@@ -130,22 +135,22 @@ public class Player{
 			
 			//WEAPONS POSITIONED DIFFERENTLY
 			if(this.getCurrentWeapon().getWeaponType()=="Gun"){
-			    g2d.drawImage(this.getCurrentWeapon().getStillLeft(),(int) (this.getXCoord())-52, (int) (this.getYCoord())+53, null);
+			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-52, (int) (this.getYCoord())+53, null);
 			}
 			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
-			    g2d.drawImage(this.getCurrentWeapon().getStillLeft(),(int) (this.getXCoord())-52+30, (int) (this.getYCoord())+53-25, null);
+			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-52+30, (int) (this.getYCoord())+53-25, null);
 			}
 			//END WEAPON POSITIONING
-			g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())-15, (int) (this.getYCoord())+60, null);
+			g2d.drawImage(this.getArmStill().getImage(), (int) (this.getXCoord())-15, (int) (this.getYCoord())+60, null);
 
 
 			g2d.rotate(-Math.PI, this.getXCoord()+25, this.getYCoord()+63);
 			g2d.rotate(-angle, this.getXCoord()+25, this.getYCoord()+63);
-			g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
+			g2d.drawImage(this.getStill().getImage(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 		}
 
 		if(this.getFacing()==1){
-			g2d.drawImage(this.getStill(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
+			g2d.drawImage(this.getStill().getImage(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 
 			double angle = Math.atan2(
 					((mouseY)-(this.getYCoord()+60)), 
@@ -156,13 +161,13 @@ public class Player{
 
 			//WEAPONS POSITIONED DIFFERENTLY
 			if(this.getCurrentWeapon().getWeaponType()=="Gun"){
-			    g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5, null);//was +33,-7
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5, null);//was +33,-7
 			}
 			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
-			    g2d.drawImage(this.getCurrentWeapon().getStillRight(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5-30, null);//was +33
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5-30, null);//was +33
 			}
 			//END WEAPON POSITIONING
-			g2d.drawImage(this.getArmStill(), (int) (this.getXCoord())+15, (int) (this.getYCoord())+60, null);
+			g2d.drawImage(this.getArmStill().getImage(), (int) (this.getXCoord())+15, (int) (this.getYCoord())+60, null);
 			g2d.rotate(-angle, this.getXCoord()+15, this.getYCoord()+60+3);
 
 		}
@@ -266,10 +271,10 @@ if(isAttacking()){
 			}
 			ImageIcon iLeft = new ImageIcon
 					("../images/playerImages/guy/guyArmlessLeft.png");
-			setStill(iLeft.getImage());
+			setStill(iLeft);
 			ImageIcon iArmLeft = new ImageIcon
 					("../images/playerImages/guy/armLeft.png");
-			setArmStill(iArmLeft.getImage());
+			setArmStill(iArmLeft);
 
 			setXVel(-1 * (this.getSpeed()));
 			setFacing(0);
@@ -284,10 +289,10 @@ if(isAttacking()){
 			}
 			ImageIcon iRight = new ImageIcon
 					("../images/playerImages/guy/guyArmlessRight.png");
-			setStill(iRight.getImage());
+			setStill(iRight);
 			ImageIcon iArmRight = new ImageIcon
 					("../images/playerImages/guy/armRight.png");
-			setArmStill(iArmRight.getImage());
+			setArmStill(iArmRight);
 
 			setXVel(getSpeed());
 			setFacing(1);
@@ -414,11 +419,11 @@ if(isAttacking()){
         this.attack = attack;
     }
 
-    public Image getStill() {
+    public ImageIcon getStill() {
         return still;
     }
 
-    public void setStill(Image still) {
+    public void setStill(ImageIcon still) {
         this.still = still;
     }
 
@@ -709,14 +714,14 @@ if(isAttacking()){
     /**
      * @return the armStill
      */
-    public Image getArmStill() {
+    public ImageIcon getArmStill() {
         return armStill;
     }
 
     /**
      * @param armStill the armStill to set
      */
-    public void setArmStill(Image armStill) {
+    public void setArmStill(ImageIcon armStill) {
         this.armStill = armStill;
     }
 

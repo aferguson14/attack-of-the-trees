@@ -3,10 +3,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
 
-public class Bullet extends PlayerProjectile{
+public class Bullet extends PlayerProjectile implements Serializable{
     
  public Bullet(double x, double y, int direction, Graphics g, double angle, Player player) {
         super(x, y, direction, g, angle, player);

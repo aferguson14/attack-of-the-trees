@@ -1,10 +1,14 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
+
 import static java.lang.Math.abs;
+
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
-public class EnemySunFlower extends Enemies{
+public class EnemySunFlower extends Enemies implements Serializable{
 
     //Constructor
     public EnemySunFlower(double x, double y){
@@ -12,7 +16,7 @@ public class EnemySunFlower extends Enemies{
         ImageIcon i = new ImageIcon("../images/enemyImages/sunflower/sunflowerFront.png");
 	ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
 
-        this.setStill(i.getImage());
+        this.setStill(i);
         this.setHorizontalSize(90);
         this.setVerticalSize(115);
         

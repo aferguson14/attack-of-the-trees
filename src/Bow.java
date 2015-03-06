@@ -2,11 +2,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
 
-public class Bow extends Weapon{
+public class Bow extends Weapon implements Serializable{
     //constructor
     public Bow(double x, double y){
         setXCoord(x);
@@ -20,9 +22,9 @@ public class Bow extends Weapon{
 	setWeaponType("Bow");
 
 	ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/bowLeft.png");
-	setStillLeft(iWeapLeft.getImage());
+	setStillLeft(iWeapLeft);
 	ImageIcon iWeapRight = new ImageIcon("../images/weaponImage/bowRight.png");
-	setStillRight(iWeapRight.getImage());
+	setStillRight(iWeapRight);
  
    }
     //creates projectile towards mouse point

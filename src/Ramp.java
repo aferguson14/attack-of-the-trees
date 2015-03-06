@@ -4,16 +4,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
 
-public class Ramp extends Terrain{
+public class Ramp extends Terrain implements Serializable{
 //constrcutor
     public Ramp(int x, int y) {
         super(x, y);
         ImageIcon i = new ImageIcon("../images/blockImage/rampUp.png");
-        setStill(i.getImage());
+        setStill(i);
         setIgnoreLeft(true);
         setHorizontalSize(100);
         setVerticalSize(0);
@@ -48,7 +50,7 @@ public class Ramp extends Terrain{
             }
         }
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(this.getStill(), (int) this.getXCoord(), (int) this.getYCoord() - 100, null);
+        g2d.drawImage(this.getStill().getImage(), (int) this.getXCoord(), (int) this.getYCoord() - 100, null);
         
     }
 //becuase of triangle's slope, changes the top based on the player's position 
