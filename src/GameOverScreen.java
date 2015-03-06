@@ -27,10 +27,9 @@ public class GameOverScreen extends JFrame {
 		// set location of game over screen to middle of board
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        	this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
 
 		// remove frame buttons
-//	    this.setVisible(true);
 		this.setFocusable(true);
 		this.setUndecorated(true);
 
@@ -76,9 +75,9 @@ public class GameOverScreen extends JFrame {
 	 * @param e ActionEvent
 	 */	
 	public void playAgain(ActionEvent e) {
+		this.dispose();
 		Board.setState(Board.STATE.MENU);
 		board.repaint();
-		this.dispose();
 	}
 
 	/*
