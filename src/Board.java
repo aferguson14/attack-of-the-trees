@@ -117,11 +117,13 @@ public class Board extends JPanel implements ActionListener {
 		StickImage = stickImage.getImage();
 		ImageIcon gunImage = new ImageIcon("../images/weaponImage/gun.png");
 		GunImage = gunImage.getImage();
+		ImageIcon bowImage = new ImageIcon("../images/weaponImage/bowRight.png");
 
 		//WEAPONS
 		Gun g = new Gun(p.getXCoord(),p.getYCoord());
-		// Axe axe = new Axe(p.getXCoord(), p.getYCoord());
 		p.AddWeapon(g);
+		Bow b = new Bow(p.getXCoord(),p.getYCoord());
+		p.AddWeapon(b);
 		//Stick s = new Stick(p.getXCoord(),p.getYCord());
 		//p.AddWeapon(s);
 		//Axe a = new Axe(p.getXCoord(),p.getYCord());
