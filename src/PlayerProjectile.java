@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
@@ -11,7 +12,7 @@ import javax.swing.ImageIcon;
 //difference being: made to attck enemies rather than player
 
 
-public class PlayerProjectile {
+public class PlayerProjectile implements Serializable {
     //private data
     private double XCoord, YCoord;
     private double XVel, YVel;
