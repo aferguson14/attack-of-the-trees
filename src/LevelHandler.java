@@ -326,9 +326,9 @@ public class LevelHandler {
     public void createSegment4(ArrayList<Terrain> terrain){
         int RightShift = 4200;
         
-        Platform plat1 = new Platform(RightShift, WorldBot - 200);
+        Platform plat1 = new Platform(RightShift + 50, WorldBot - 200);
         plat1.setIgnoreRight(true);
-        Platform plat2 = new Platform(100 + RightShift, WorldBot - 200);
+        Platform plat2 = new Platform(150 + RightShift, WorldBot - 200);
         plat2.setIgnoreLeft(true);
         Platform plat3 = new Platform(6850, WorldBot - 200);
         Rock block1 = new Rock(800 + RightShift, WorldBot - 100);

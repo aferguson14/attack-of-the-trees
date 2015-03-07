@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,7 +26,7 @@ public class ShopPanel extends JPanel {
     JButton purchased = new JButton("Already Purchased");
     Player p;
     int logs, coins;
-    int[] logCost = {5,1,10,20};
+    int[] logCost = {5,1,10,50};
     int[] coinCost = {1,0,5,10};
     String[] weaponDescrip;
     int[] weaponsBought = {0,0,0,0};

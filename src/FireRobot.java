@@ -8,28 +8,30 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
-public class EnemyGnome extends Enemies implements Serializable{
+public class FireRobot extends Enemies implements Serializable{
 
-    //Costructor
-    public EnemyGnome(double x, double y){
+    //Constrcutor
+    public FireRobot(double x, double y){
         super(x, y);
-        ImageIcon i = new ImageIcon("../images/enemyImages/gnome/gnomeSide.png");
-        ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
-	this.setStill(i);
-        this.setHorizontalSize(81);
+        ImageIcon iLeft = new ImageIcon("../images/enemyImages/robot/RobotFront.png");
+        ImageIcon iRight = new ImageIcon("../images/enemyImages/robot/RobotFront.png");
+        ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
+        this.setStill(iLeft);
+        this.setStillRight(iRight);
+        this.setHorizontalSize(102);
         this.setVerticalSize(115);
         
-	this.setResource(coin);
-        this.setHp(50);
+        this.setResource(log);
+        this.setHp(300);
         this.setTotalHp(getHp());
-        this.setAttack(15);
-        this.setSpeed(.5);
-        this.setAttackSpeed(100);
-        this.setAttackRange(20);
+        this.setAttack(20);
+        this.setSpeed(4);
+        this.setAttackSpeed(200);
+        this.setAttackRange(600);
         this.setJumpSpeed(-20);
         this.setAttackSpeedCount(99);
     }
-    @Override
+        @Override
     public void Attack(Player p, Graphics g){
         if(Board.getState() == Board.STATE.GAME){
         //if attacking and in attack range
@@ -38,18 +40,34 @@ public class EnemyGnome extends Enemies implements Serializable{
             //increment attack speed count
             this.setAttackSpeedCount(this.getAttackSpeedCount() + 1);
             //if attack speed count == the enemies attack speed
-            if(this.getAttackSpeedCount() == this.getAttackSpeed()){
+            if(this.getAttackSpeedCount() == getAttackSpeed() - 40){
             //create a projectile towards the player
-                GrenadeProjectile grenade = new GrenadeProjectile(this.getXCoord()
-                        , this.getYCoord(), this.getFacing(), g, 
+                FireRobotProjectile fire = new FireRobotProjectile(this.getXCoord()
+                        , this.getYCoord() + 30, this.getFacing(), g, 
                         findAngle(p.getPlayerPoint()), p);
-                this.addProjectile(grenade);
+                this.addProjectile(fire);
+            }
+            else if(this.getAttackSpeedCount() == getAttackSpeed() - 20){
+                FireRobotProjectile fire = new FireRobotProjectile(this.getXCoord()
+                        , this.getYCoord() + 30, this.getFacing(), g, 
+                        findAngle(p.getPlayerPoint()), p);
+                this.addProjectile(fire);
+            } else if(this.getAttackSpeedCount() == getAttackSpeed()){
+                FireRobotProjectile fire = new FireRobotProjectile(this.getXCoord()
+                        , this.getYCoord() + 30, this.getFacing(), g, 
+                        findAngle(p.getPlayerPoint()), p);
+                this.addProjectile(fire);
+            }
+                
+                
             //reset attack speed count
+            if(getAttackSpeedCount() == getAttackSpeed()){
                 this.setAttackSpeedCount(0);
             }
             }
+            }
         }
-        }
+        
     }
    
     @Override
@@ -66,12 +84,14 @@ public class EnemyGnome extends Enemies implements Serializable{
         }
         else if(checkMove()){
                     this.setYVel(this.getJumpSpeed());
+                    setStartedJump(true);
                     setYAcc(.5);
                     setInAir(true);
         }    
          else if(checkSpeed()){
                     this.setYVel(this.getJumpSpeed());
                     this.setXVel(this.getSpeed());
+                    setStartedJump(true);
                     setYAcc(.5);
                     setInAir(true);
          }
@@ -100,7 +120,10 @@ public class EnemyGnome extends Enemies implements Serializable{
             else if(p.getXCoord() < getXCoord()){
                 setFacing(0);
             }   
-        
+    }
+    @Override
+    public void dropItem(){
+    //Do once items have been implemented
     }
     @Override
     public void die(){
@@ -114,7 +137,7 @@ public class EnemyGnome extends Enemies implements Serializable{
 
     @Override
     public void print() {
-        System.out.println("Gnome");
+        System.out.println("Tree");
     }
 
     

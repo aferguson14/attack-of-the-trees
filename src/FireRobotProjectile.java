@@ -8,12 +8,12 @@ import java.io.Serializable;
 import javax.swing.ImageIcon;
 
 
-public class SunFlowerProjectile extends Projectile implements Serializable{
+public class FireRobotProjectile extends Projectile implements Serializable{
     //Constructor
-    public SunFlowerProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {
+    public FireRobotProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {
         super(x + 5, y, direction, g, angle, p);
-        ImageIcon iLeft = new ImageIcon("../images/attackImage/SunFlowerAttack.png");
-	ImageIcon iRight = new ImageIcon ("../images/attackImage/SunFlowerAttack.png");
+        ImageIcon iLeft = new ImageIcon("../images/sourceImage/fire.png");
+	ImageIcon iRight = new ImageIcon ("../images/sourceImage/fire.png");
         setStillLeft(iLeft.getImage());
 	setStillRight(iRight.getImage());
         setXAcc(0);
@@ -21,8 +21,8 @@ public class SunFlowerProjectile extends Projectile implements Serializable{
         setSpeed(5);
         setYVel(0);
         CreateImage(g);
-        setHorizontalSize(25);
-        setVerticalSize(25);
+        setHorizontalSize(28);
+        setVerticalSize(43);
         setAttack(20);
         
                 

@@ -306,7 +306,7 @@ public abstract class Enemies implements Serializable{
              terrains.get(i).UpdateSides(this, i);
          }
      }
-    
+        
     //-------------Getters/Setters---------------------------------------------
     public double getXCoord() {
         return XCoord;

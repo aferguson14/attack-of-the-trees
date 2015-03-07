@@ -19,7 +19,7 @@ public class Bullet extends PlayerProjectile implements Serializable{
         CreateImage(g);
         setHorizontalSize(25);
         setVerticalSize(6);
-        setAttack(500);
+        setAttack(30);
 	ImageIcon iLeft = new ImageIcon("../images/attackImage/bulletLeft.png");
 	ImageIcon iRight = new ImageIcon ("../images/attackImage/bulletRight.png");
 	setStillLeft(iLeft.getImage());

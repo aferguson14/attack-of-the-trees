@@ -142,4 +142,3 @@ public class EnemyBear extends Enemies implements Serializable{
 
     
 }
-

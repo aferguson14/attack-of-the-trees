@@ -10,29 +10,27 @@ import javax.swing.ImageIcon;
 
 public class EnemyRobot extends Enemies implements Serializable{
 
-    //Constructor
+    //Constrcutor
     public EnemyRobot(double x, double y){
         super(x, y);
-        ImageIcon i = new ImageIcon("../images/enemyImages/robot/robotFront.png");
-	ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
-
-        this.setStill(i);
-        this.setHorizontalSize(81);
+        ImageIcon iLeft = new ImageIcon("../images/enemyImages/robot/RobotFront.png");
+        ImageIcon iRight = new ImageIcon("../images/enemyImages/robot/RobotFront.png");
+        ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
+        this.setStill(iLeft);
+        this.setStillRight(iRight);
+        this.setHorizontalSize(102);
         this.setVerticalSize(115);
-
-	this.setResource(coin);
-        this.setXAcc(0);
-        this.setYAcc(0);
-        this.setHp(100);
+        
+        this.setResource(log);
+        this.setHp(300);
         this.setTotalHp(getHp());
-        this.setAttack(10);
-        this.setSpeed(2);
-        this.setAttackSpeed(150);
-        this.setAttackRange(300);
+        this.setAttack(20);
+        this.setSpeed(4);
+        this.setAttackSpeed(200);
+        this.setAttackRange(700);
         this.setJumpSpeed(-20);
-        this.setAttackSpeedCount(19);
+        this.setAttackSpeedCount(99);
     }
-    
         @Override
     public void Attack(Player p, Graphics g){
         if(Board.getState() == Board.STATE.GAME){
@@ -42,18 +40,37 @@ public class EnemyRobot extends Enemies implements Serializable{
             //increment attack speed count
             this.setAttackSpeedCount(this.getAttackSpeedCount() + 1);
             //if attack speed count == the enemies attack speed
-            if(this.getAttackSpeedCount() == this.getAttackSpeed()){
+            if(this.getAttackSpeedCount() == getAttackSpeed() - 40){
             //create a projectile towards the player
-                RobotProjectile laser = new RobotProjectile(this.getXCoord()
-                        , this.getYCoord(), this.getFacing(), g, 
+                TreeProjectile leaf = new TreeProjectile(this.getXCoord()
+                        , this.getYCoord() + 30, this.getFacing(), g, 
                         findAngle(p.getPlayerPoint()), p);
-                this.addProjectile(laser);
+                leaf.setSpeed(4);
+                this.addProjectile(leaf);
+            }
+            else if(this.getAttackSpeedCount() == getAttackSpeed() - 20){
+                TreeProjectile leaf = new TreeProjectile(this.getXCoord()
+                        , this.getYCoord() + 30, this.getFacing(), g, 
+                        findAngle(p.getPlayerPoint()), p);
+                leaf.setSpeed(4);
+                this.addProjectile(leaf);
+            } else if(this.getAttackSpeedCount() == getAttackSpeed()){
+                TreeProjectile leaf = new TreeProjectile(this.getXCoord()
+                        , this.getYCoord() + 30, this.getFacing(), g, 
+                        findAngle(p.getPlayerPoint()), p);
+                leaf.setSpeed(4);
+                this.addProjectile(leaf);
+            }
+                
+                
             //reset attack speed count
+            if(getAttackSpeedCount() == getAttackSpeed()){
                 this.setAttackSpeedCount(0);
             }
             }
+            }
         }
-        }
+        
     }
    
     @Override
@@ -70,12 +87,14 @@ public class EnemyRobot extends Enemies implements Serializable{
         }
         else if(checkMove()){
                     this.setYVel(this.getJumpSpeed());
+                    setStartedJump(true);
                     setYAcc(.5);
                     setInAir(true);
         }    
          else if(checkSpeed()){
                     this.setYVel(this.getJumpSpeed());
                     this.setXVel(this.getSpeed());
+                    setStartedJump(true);
                     setYAcc(.5);
                     setInAir(true);
          }
@@ -104,21 +123,25 @@ public class EnemyRobot extends Enemies implements Serializable{
             else if(p.getXCoord() < getXCoord()){
                 setFacing(0);
             }   
-        
+    }
+    @Override
+    public void dropItem(){
+    //Do once items have been implemented
     }
     @Override
     public void die(){
     //not sure if needed, keep just in case
     }
 
-    
     public void attackAnimation(Graphics g){
-	//to do
+        
+        
     }
 
     @Override
     public void print() {
-        System.out.println("Robot");
+        System.out.println("Tree");
     }
 
+    
 }

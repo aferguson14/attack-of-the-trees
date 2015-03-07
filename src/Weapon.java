@@ -100,12 +100,12 @@ public abstract class Weapon implements Serializable{
 	//	    return -Math.atan2((p.getY()-this.getYCoord()),(p.getX()-this.getXCoord()));
 
 	if(facing == 1){
-	System.out.print("Angle: " + -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+15-this.getXCoord())));
+	//System.out.print("Angle: " + -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+15-this.getXCoord())));
 	    return -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+15-this.getXCoord()));
 	    
 	}
 	else if(facing == 0){
-	System.out.print("Angle: " + -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+25-this.getXCoord())));
+	//System.out.print("Angle: " + -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+25-this.getXCoord())));
 	    return -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+25-this.getXCoord()));
 	}
 

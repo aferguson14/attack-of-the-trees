@@ -45,7 +45,7 @@ public class FishFollowingProjectile extends Projectile{
 	        }
 	        
 	         time++;
-	         if(time >= 700){
+	         if(time >= 300){
 	             this.setRemove(true);
 	         }
 	         
@@ -84,6 +84,12 @@ public class FishFollowingProjectile extends Projectile{
 	        if(PlayerContact(p) == true){
 	            dealDmg(p);
 	        }
+                if(getXVel() > 0){
+                    setFacing(1);
+                }
+                else{
+                    setFacing(0);
+                }
          }
     }
     //paints projectile
@@ -109,5 +115,3 @@ public class FishFollowingProjectile extends Projectile{
     }
 
 }
-
-

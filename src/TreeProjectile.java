@@ -110,5 +110,3 @@ public class TreeProjectile extends Projectile implements Serializable{
     }
 
 }
-
-

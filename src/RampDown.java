@@ -4,13 +4,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Rectangle;
-import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 
 
-public class RampDown extends Terrain implements Serializable{
+public class RampDown extends Terrain{
 //constrcutor
     public RampDown(int x, int y) {
         super(x, y);

@@ -8,28 +8,28 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
-public class Fish extends Enemies implements Serializable{
+public class WaterRobot extends Enemies implements Serializable{
 
     //Constrcutor
-    public Fish(double x, double y){
+    public WaterRobot(double x, double y){
         super(x, y);
-        ImageIcon iLeft = new ImageIcon("../images/enemyImages/fish/fishLeft.png");
-        ImageIcon iRight = new ImageIcon("../images/enemyImages/fish/fishRight.png");
+        ImageIcon iLeft = new ImageIcon("../images/enemyImages/robot/RobotFront.png");
+        ImageIcon iRight = new ImageIcon("../images/enemyImages/robot/RobotFront.png");
         ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
         this.setStill(iLeft);
         this.setStillRight(iRight);
-        this.setHorizontalSize(120);
+        this.setHorizontalSize(102);
         this.setVerticalSize(115);
         
         this.setResource(log);
-        this.setHp(600);
+        this.setHp(300);
         this.setTotalHp(getHp());
-        this.setAttack(15);
-        this.setSpeed(3);
-        this.setAttackSpeed(300);
-        this.setAttackRange(700);
+        this.setAttack(20);
+        this.setSpeed(4);
+        this.setAttackSpeed(200);
+        this.setAttackRange(500);
         this.setJumpSpeed(-20);
-        this.setAttackSpeedCount(299);
+        this.setAttackSpeedCount(99);
     }
         @Override
     public void Attack(Player p, Graphics g){
@@ -40,48 +40,57 @@ public class Fish extends Enemies implements Serializable{
             //increment attack speed count
             this.setAttackSpeedCount(this.getAttackSpeedCount() + 1);
             //if attack speed count == the enemies attack speed
-            if(this.getAttackSpeedCount() == this.getAttackSpeed()){
+            if(this.getAttackSpeedCount() == getAttackSpeed() - 40){
             //create a projectile towards the player
-                FishFollowingProjectile sting1 = new FishFollowingProjectile(this.getXCoord()
+                FishProjectile water = new FishProjectile(this.getXCoord()
                         , this.getYCoord() + 30, this.getFacing(), g, 
                         findAngle(p.getPlayerPoint()), p);
-                FishFollowingProjectile sting2 = new FishFollowingProjectile(this.getXCoord()
+                if(getFacing() == 1){
+                this.setXVel(((Math.abs(p.getXCoord() - this.getXCoord()))/2)/((Math.sqrt(400 + Math.abs(p.getYCoord() - this.getYCoord()))) + 20));
+                this.setYVel(Math.sqrt(400 + Math.abs(p.getYCoord() - this.getYCoord())));
+                }else{
+                    this.setXVel(((Math.abs(p.getXCoord() - this.getXCoord()))/2)/((Math.sqrt(400 + Math.abs(p.getYCoord() - this.getYCoord()))) + 20));
+                this.setYVel(Math.sqrt(400 + Math.abs(p.getYCoord() - this.getYCoord())));
+                }
+                this.addProjectile(water);
+            }
+            else if(this.getAttackSpeedCount() == getAttackSpeed() - 20){
+                FishProjectile water = new FishProjectile(this.getXCoord()
                         , this.getYCoord() + 30, this.getFacing(), g, 
                         findAngle(p.getPlayerPoint()), p);
-                sting2.setSpeed(2);
-                FishFollowingProjectile sting3 = new FishFollowingProjectile(this.getXCoord()
+                if(p.getXCoord() >= this.getXCoord()){
+                this.setXVel(water.getSpeed());
+                this.setYVel(water.getSpeed());
+                }
+                else{
+                this.setXVel(-1 * water.getSpeed());
+                this.setYVel(water.getSpeed());
+                }
+                this.addProjectile(water);
+            } else if(this.getAttackSpeedCount() == getAttackSpeed()){
+                FishProjectile water = new FishProjectile(this.getXCoord()
                         , this.getYCoord() + 30, this.getFacing(), g, 
                         findAngle(p.getPlayerPoint()), p);
-                sting3.setSpeed(1.5);
+                if(p.getXCoord() >= this.getXCoord()){
+                this.setXVel(water.getSpeed());
+                this.setYVel(water.getSpeed());
+                }
+                else{
+                this.setXVel(-1 * water.getSpeed());
+                this.setYVel(water.getSpeed());
+                }
+                this.addProjectile(water);
+            }
                 
-                
-                FishProjectile water1 = new FishProjectile(this.getXCoord() + 30, this.getYCoord() + 30, 0, g, findAngle(p.getPlayerPoint()), p);
-                water1.setXVel(-1 * water1.getSpeed());
-                water1.setYVel(-15);
-                FishProjectile water2 = new FishProjectile(this.getXCoord() + 30, this.getYCoord(), 1, g, findAngle(p.getPlayerPoint()), p);
-                water2.setXVel(water2.getSpeed());
-                water2.setYVel(-15);
-                FishProjectile water3 = new FishProjectile(this.getXCoord()-30, this.getYCoord() + 30, 0, g, findAngle(p.getPlayerPoint()), p);
-                water3.setXVel(-1 * water3.getSpeed());
-                water3.setYVel(-15);
-                FishProjectile water4 = new FishProjectile(this.getXCoord() - 30, this.getYCoord(), 1, g, findAngle(p.getPlayerPoint()), p);
-                water4.setXVel(water4.getSpeed());
-                water4.setYVel(-15);
-                
-                this.addProjectile(sting1);
-                this.addProjectile(sting2);
-                this.addProjectile(sting3);
-                this.addProjectile(water1);
-                this.addProjectile(water2);
-                this.addProjectile(water3);
-                this.addProjectile(water4);
                 
             //reset attack speed count
+            if(getAttackSpeedCount() == getAttackSpeed()){
                 this.setAttackSpeedCount(0);
             }
             }
+            }
         }
-        }
+        
     }
    
     @Override

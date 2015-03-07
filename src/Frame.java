@@ -1,7 +1,7 @@
 /*
-need to create a terrain enemy relationship to check terrain sides on ramps and such
-create progression system
-make enemies unique
+//fix water robot
+//update gnome with grenade
+//ask ted for a few new images
 */
 
 import javax.swing.*;

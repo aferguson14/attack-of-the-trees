@@ -25,7 +25,7 @@ private boolean allgood = false;
         this.setAttack(30);
         this.setSpeed(6);
         this.setAttackSpeed(500);
-        this.setAttackRange(5);
+        this.setAttackRange(200);
         this.setJumpSpeed(-20);
         this.setAttackSpeedCount(499);
         
@@ -36,8 +36,10 @@ private boolean allgood = false;
     @Override
     public void AI(Player p, Graphics g, ArrayList<Terrain>terrain, ArrayList<Enemies> enem){
 
-
-        this.move(terrain, enem, p);
+        
+        
+            this.move(terrain, enem, p);
+        
          
                 
             
@@ -54,7 +56,12 @@ private boolean allgood = false;
         //adjust velocities
          if(Board.getState() == Board.STATE.GAME){
              Point point = p.getPlayerPoint();
-             point.setLocation(point.getX(), point.getY() - 20);
+             if(this.checkInRange(p)){
+                 point.setLocation(point.getX(), point.getY());
+             }
+             else{
+                 point.setLocation(point.getX(), point.getY() - 300);
+             }
              
                 getXY(this.getSpeed(), findAngle(point));
              

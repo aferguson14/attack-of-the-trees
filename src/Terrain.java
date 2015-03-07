@@ -79,7 +79,6 @@ public abstract class Terrain implements Serializable{
              //adjust coords accordingly
            
            e.setXCoord(this.getXCoord() - e.getHorizontalSize() - e.getSpeed()); 
-           System.out.println("Left");
            return;
            }
          }
@@ -100,7 +99,6 @@ public abstract class Terrain implements Serializable{
              //adjust coords accordingly
              
                 e.setXCoord(this.getXCoord() + this.getHorizontalSize() + e.getSpeed()); 
-                System.out.println("Right");
                 return;
              }
          }
@@ -118,7 +116,6 @@ public abstract class Terrain implements Serializable{
                 e.setYCoord(e.getTops().get(index) - e.getVerticalSize());
                 e.setYVel(0);
                 e.setYAcc(0);
-                System.out.println("Top");
                 return;
              }
          }
@@ -348,6 +345,64 @@ public abstract class Terrain implements Serializable{
                         + e.getHorizontalSize()) <= this.getRightSide()))))){
             //adjust vel accordingly
                e.setRemove(true);
+         }
+           }
+     }
+       public void CheckGrenadeProjectileContact(GrenadeProjectile e, int index, Player p){
+          //check player coords, if in contact ith left
+           if((this.getXCoord() >= p.getXCoord() + FrameWorldLeft) && (this.getXCoord() <= p.getXCoord() + FrameWorldRight)){
+         if((((e.getXCoord() + e.getHorizontalSize()) >= this.getXCoord()) 
+                 && (e.getXCoord() + e.getHorizontalSize() 
+                 <= this.getXCoord() + e.getSpeed()))
+                 && (((e.getYCoord() >= e.getTops().get(index)) 
+                 && ((e.getYCoord()) <= this.getBot()))
+                 || ((((e.getYCoord() + e.getVerticalSize()) 
+                 >= e.getTops().get(index)) && ((e.getYCoord() + e.getVerticalSize()) 
+                 <= this.getBot() + 1)))
+                 || ((e.getTops().get(index) >= e.getYCoord()) 
+                 && (this.getBot() <= e.getYCoord() + e.getVerticalSize())))
+                 ){
+             //adjust coords accordingly
+           e.explode(p);
+         }
+         //if player coords in contact with right
+         else if((((e.getXCoord()) 
+                 <= (this.getXCoord() + this.getHorizontalSize())) 
+                 && (e.getXCoord() >= this.getXCoord() + 
+                    this.getHorizontalSize() - e.getSpeed()))
+                 && (((e.getYCoord() >= e.getTops().get(index)) && ((e.getYCoord()) 
+                 <= this.getBot()))
+                 || ((((e.getYCoord() + e.getVerticalSize()) >= e.getTops().get(index)) 
+                 && ((e.getYCoord() + e.getVerticalSize()) 
+                    <= this.getBot() + 1)))
+                 || ((e.getTops().get(index) >= e.getYCoord()) && (this.getBot() 
+                    <= e.getYCoord() + e.getVerticalSize())))
+                 ){
+             //adjust coords accordingly
+                 e.explode(p);
+         }
+         //if player coords in contact with top of terrain
+         else if(((((e.getYCoord() + e.getVerticalSize()) >= e.getTops().get(index)) 
+                 && (e.getYCoord() <= e.getTops().get(index))))
+                 && (((e.getXCoord() >= this.getXCoord()) 
+                 && ((e.getXCoord()) <= this.getRightSide()))
+                 || ((((e.getXCoord() + e.getHorizontalSize()) 
+                    >= this.getXCoord()) && ((e.getXCoord() 
+                        + e.getHorizontalSize()) <= this.getRightSide()))))){
+             //adjust vel, acc, and coords accordngly
+                 e.explode(p);
+         }
+         //if player coords in contact with bot
+        else if((((e.getYCoord()) <= (e.getTops().get(index) + this.getVerticalSize()))
+                && (e.getYCoord() + e.getVerticalSize() 
+                    >= (e.getTops().get(index) + this.getVerticalSize())))
+                 && (((e.getXCoord() >= this.getXCoord()) && ((e.getXCoord()) 
+                    <= this.getRightSide()))
+                 || ((((e.getXCoord() + e.getHorizontalSize()) 
+                    >= this.getXCoord()) && ((e.getXCoord() 
+                        + e.getHorizontalSize()) <= this.getRightSide()))))){
+            //adjust vel accordingly
+               e.explode(p);
          }
            }
      }

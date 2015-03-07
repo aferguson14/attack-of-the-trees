@@ -8,20 +8,20 @@ import java.io.Serializable;
 import javax.swing.ImageIcon;
 
 
-public class SunFlowerProjectile extends Projectile implements Serializable{
+public class TreeBossProjectile extends Projectile implements Serializable{
     //Constructor
-    public SunFlowerProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {
+    public TreeBossProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {
         super(x + 5, y, direction, g, angle, p);
-        ImageIcon iLeft = new ImageIcon("../images/attackImage/SunFlowerAttack.png");
-	ImageIcon iRight = new ImageIcon ("../images/attackImage/SunFlowerAttack.png");
+        ImageIcon iLeft = new ImageIcon("../images/attackImage/treeAttackLeft.png");
+	ImageIcon iRight = new ImageIcon ("../images/attackImage/treeAttackRight.png");
         setStillLeft(iLeft.getImage());
 	setStillRight(iRight.getImage());
         setXAcc(0);
         setYAcc(0);
-        setSpeed(5);
+        setSpeed(6);
         setYVel(0);
         CreateImage(g);
-        setHorizontalSize(25);
+        setHorizontalSize(38);
         setVerticalSize(25);
         setAttack(20);
         

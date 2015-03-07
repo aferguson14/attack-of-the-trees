@@ -168,13 +168,35 @@ public void updateLVL3Enemies(ArrayList<Enemies> enem2){
             this.generateEnemy(gnomey, enem2, getBoard().getP(), randomGenerator);
         }
 }
+
+public void createLVL1Boss(ArrayList<Enemies> boss){
+            Random randomGenerator = new Random();
+            Fish fish = new Fish(0, getBoard().getWorldBot() - 115);
+            this.generateEnemy(fish, boss, getBoard().getP(), randomGenerator);
+}
+public void createLVL2Boss(ArrayList<Enemies> boss){
+            Random randomGenerator = new Random();
+            Random randomGenerator2 = new Random();
+            Random randomGenerator3 = new Random();
+            EnemyRobot robo = new EnemyRobot(0, getBoard().getWorldBot() - 115);
+            this.generateEnemy(robo, boss, getBoard().getP(), randomGenerator);
+            FireRobot firerobo = new FireRobot(0, getBoard().getWorldBot() - 115);
+            this.generateEnemy(firerobo, boss, getBoard().getP(), randomGenerator2);
+            WaterRobot waterrobo = new WaterRobot(0, getBoard().getWorldBot() - 115);
+            this.generateEnemy(waterrobo, boss, getBoard().getP(), randomGenerator3);
+}
+public void createLVL3Boss(ArrayList<Enemies> boss){
+            Random randomGenerator = new Random();
+            TreeBoss tree = new TreeBoss(0, getBoard().getWorldBot() - 115);
+            this.generateEnemy(tree, boss, getBoard().getP(), randomGenerator);
+}
     
 public void testLevel(ArrayList<Enemies> enem2){
     //Random randomGenerator = new Random();
 //        EnemySunFlower flower = new EnemySunFlower(0, getBoard().getWorldBot() - 115);
 //        this.generateEnemy(flower, enem2, getBoard().getP(), randomGenerator);
-        Fish fish = new Fish(2800, getBoard().getWorldBot() - 450);
-        enem2.add(fish);
+        EnemyBee bee = new EnemyBee(5000, getBoard().getWorldBot() - 115);
+        enem2.add(bee);
          //this.generateEnemy(bear, enem2, getBoard().getP(), randomGenerator);
 }
 //--------------------Getters/Setters--------------------------------------------

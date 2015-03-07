@@ -2,20 +2,18 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-
 import static java.lang.Math.abs;
-
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
 
-	//private data
+    
+    //private data
 
-	//Objects
-	Random randomGenerator = new Random();
+    //Objects
+    	Random randomGenerator = new Random();
 	private Player p;
 	private ArrayList <Enemies> enemies = new ArrayList<Enemies>();
 	private ArrayList <Terrain> terrain = new ArrayList<Terrain>();
@@ -58,65 +56,67 @@ public class Board extends JPanel implements ActionListener {
 	public static boolean PlayerAttack = false;
 	private boolean StartLevel = true;
 	private int level = 0;
-	
-
-	private LevelHandler lvlhandler = new LevelHandler();
-
-	//states
-	public static enum STATE {
-		MENU,
+    private LevelHandler lvlhandler = new LevelHandler();
+    
+        //states
+    public static enum STATE {
+    	MENU,
+		CHARMENU,
 		GAME,
 		PAUSE,
-		GAMEOVER, 
-		LOAD
-	};
-	//initial state = MENU
-	private static STATE State = STATE.MENU;
+		GAMEOVER,
+                LOAD
+    };
+    //initial state = MENU
+    private static STATE State = STATE.MENU;
+    
+    
+    public Board() {
+        //creates player, enemies, terrain, weapon, menu, and background images
+	p = new Player();
+        lvlhandler.HandleLVL1Start(enemies, terrain, generator);
+        
+        for(int i = 0; i < enemies.size(); i++){
+            enemies.get(i).setTerrainDimensions(terrain);
+        }
+        p.setTerrains(terrain);
+        
+	addKeyListener(new AL());
+	menu = new Menu();
+        //pmenu = new PauseMenu(p);
+        winscreen = new WinScreen(this);
+        goscreen = new GameOverScreen(this);
+        MouseInput m = new MouseInput();
+        addMouseListener(m);
+        addMouseMotionListener(m);
+        setFocusable(true);
+        //not stitched together, used multiple background images
+	ImageIcon far = new 
+	ImageIcon("../images/backgrounds/far-background.png");
+        
+        farBackground = far.getImage();
+        ImageIcon far2 = new ImageIcon("../images/backgrounds/far-background.png");
+	ImageIcon near = new 
+	ImageIcon("../images/backgrounds/near-background.png");
+        ImageIcon near2 = new ImageIcon("../images/backgrounds/near-background.png");
+	nearBackground = near.getImage();
+        ImageIcon far3 = new 
+	ImageIcon("../images/backgrounds/far-background.png");
+        
+        Far3 = far.getImage();
+        Far2 = far2.getImage();
+        Near2 = near2.getImage();
+	
+	//RESOURCE IMAGES
+	ImageIcon logImage = new ImageIcon("../images/sourceImage/wood.png");
+	LogImage = logImage.getImage();
+	ImageIcon coinImage = new ImageIcon("../images/sourceImage/coin.png");
+	CoinImage = coinImage.getImage();
+	//TIME
+	time = new Timer(5, this);
+	time.start();
 
-
-	public Board() {
-		//creates player, enemies, terrain, weapon, menu, and background ../images
-		p = new Player();
-		lvlhandler.HandleLVL1Start(enemies, terrain, generator);
-
-		for(int i = 0; i < enemies.size(); i++){
-			enemies.get(i).setTerrainDimensions(terrain);
-		}
-		p.setTerrains(terrain);
-
-		addKeyListener(new AL());
-		menu = new Menu();
-		pmenu = new PauseMenu(p, this);
-		winscreen = new WinScreen(this);
-		goscreen = new GameOverScreen(this);
-		MouseInput m = new MouseInput();
-		addMouseListener(m);
-		addMouseMotionListener(m);
-		setFocusable(true);
-		//not stitched together, used multiple background ../images
-		ImageIcon far = new ImageIcon("../images/backgrounds/far-background.png");
-
-		farBackground = far.getImage();
-		ImageIcon far2 = new ImageIcon("../images/backgrounds/far-background.png");
-		ImageIcon near = new ImageIcon("../images/backgrounds/near-background.png");
-		ImageIcon near2 = new ImageIcon("../images/backgrounds/near-background.png");
-		nearBackground = near.getImage();
-		ImageIcon far3 = new ImageIcon("../images/backgrounds/far-background.png");
-
-		Far3 = far.getImage();
-		Far2 = far2.getImage();
-		Near2 = near2.getImage();
-
-		//RESOURCE ../images
-		ImageIcon logImage = new ImageIcon("../images/sourceImage/wood.png");
-		LogImage = logImage.getImage();
-		ImageIcon coinImage = new ImageIcon("../images/sourceImage/coin.png");
-		CoinImage = coinImage.getImage();
-		//TIME
-		time = new Timer(5, this);
-		time.start();
-
-		//WEAPON ../images
+	//WEAPON ../images
 		ImageIcon axeImage = new ImageIcon("../images/weaponImage/axe.png");
 		AxeImage = axeImage.getImage();
 		ImageIcon swordImage = new ImageIcon("../images/weaponImage/sword.png");
@@ -147,123 +147,146 @@ public class Board extends JPanel implements ActionListener {
 		//above to be uncommented when implemented
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		//move player, move weapon
-		if(getState() == STATE.PAUSE){
-			getP().setXVel(0);
-			getP().setYVel(0);
-		} //fixes the player moving after resuming
+    
+    public void actionPerformed(ActionEvent e) {
+         //move player, move weapon
 
-		if(getState() == STATE.GAME){
-			getP().move(terrain);
-			getP().getCurrentWeapon().move(getP());
-			//check Player attacking
-			if(Board.PlayerAttack){
-				getP().setAttacking(true);
-				//            Board.MouseCoords
-			}
-			else{
-				getP().setAttacking(false);
-			}
+	if(getState() == STATE.PAUSE){
+	    getP().setXVel(0);
+	    getP().setYVel(0);
+	} //fixes the player moving after resuming
+        
+        if(getState() == STATE.GAME){
+        getP().move(terrain);
+        getP().getCurrentWeapon().move(getP());
+        //check Player attacking
+        if(Board.PlayerAttack){
+            getP().setAttacking(true);
+//            Board.MouseCoords
+        }
+        else{
+            getP().setAttacking(false);
+        }
 
-			//if any enemies are below 0 health, delete
-			if(boss.size() == 0){
-				for(int i = 0; i < getEnemies().size(); i++){
-					if(getEnemies().get(i).getHp() <= 0){
-						//Resource Drop
-						getEnemies().get(i).getResource().setXCoord
-						(getEnemies().get(i).getXCoord());
-						getEnemies().get(i).getResource().setYCoord
-						(getEnemies().get(i).getYCoord()+70);
+        //if any enemies are below 0 health, delete
+        if(boss.size() == 0){
+            for(int i = 0; i < getEnemies().size(); i++){
+                if(getEnemies().get(i).getHp() <= 0){
+		    //Resource Drop
+		    getEnemies().get(i).getResource().setXCoord
+			(getEnemies().get(i).getXCoord());
+		    getEnemies().get(i).getResource().setYCoord
+			(getEnemies().get(i).getYCoord()+70);
+       
+		    resources.add(getEnemies().get(i).getResource());
 
-						resources.add(getEnemies().get(i).getResource());
 
-						getEnemies().remove(i);
-						if(lvlhandler.getProgress() < lvlhandler.getProgressNeeded()){
-							lvlhandler.setProgress(lvlhandler.getProgress() + 1);
-						}
-						if(lvlhandler.getProgress()<lvlhandler.getProgressNeeded()){
-							if(level == 0){
-								generator.updateLVL1Enemies(enemies);
-								enemies.get(enemies.size()-1).setTerrainDimensions(terrain);
-							} else if(level == 1){
-								generator.updateLVL2Enemies(enemies);
-								enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
-							}else{
-								generator.updateLVL3Enemies(enemies);
-								enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
-							}
-						} else if(enemies.size() > 0){
+                    getEnemies().remove(i);
+                    if(lvlhandler.getProgress() < lvlhandler.getProgressNeeded()){
+                        lvlhandler.setProgress(lvlhandler.getProgress() + 1);
+                    }
+                    if(lvlhandler.getProgress()<lvlhandler.getProgressNeeded()){
+                        if(level == 0){
+                        generator.updateLVL1Enemies(enemies);
+                        enemies.get(enemies.size()-1).setTerrainDimensions(terrain);
+                        } else if(level == 1){
+                            generator.updateLVL2Enemies(enemies);
+                            enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
+                        }else{
+                            generator.updateLVL3Enemies(enemies);
+                            enemies.get(enemies.size() - 1).setTerrainDimensions(terrain);
+                        }
+                    } else if(enemies.size() > 0){
 
-						} else{
-							//boss stuff
-							Fish fish = new Fish(2800, getWorldBot() - 450);
-							boss.add(fish);
-						}
-					}
+                    } else{
+                        //boss stuff
+                        if(level == 0){
+                            generator.createLVL1Boss(boss);
+                            for(int x = 0; x < boss.size(); x++){
+                                boss.get(x).setTerrainDimensions(terrain);
+                             }
+                        }
+                        else if(level ==1){
+                            generator.createLVL2Boss(boss);
+                            for(int x = 0; x < boss.size(); x++){
+                                boss.get(x).setTerrainDimensions(terrain);
+                             }
+                        }else{
+                            generator.createLVL3Boss(boss);
+                            for(int x = 0; x < boss.size(); x++){
+                                boss.get(x).setTerrainDimensions(terrain);
+                             }
+                        }
+                    }
+                }
 
-				}
-			}
-			else{
-				if(boss.get(0).getHp() <= 0){
-					TotalProgress += lvlhandler.getProgress();
-					//Resource Drop **NEEDS TO BE UPDATED FOR MORE BOSSES**
-					boss.get(0).getResource().setXCoord
-					(boss.get(0).getXCoord());
-					boss.get(0).getResource().setYCoord
-					(boss.get(0).getYCoord()+70);
+            }
+        }
+        else{
+            for(int y = 0; y < boss.size(); y++){
+                if(boss.get(y).getHp() <= 0){
+                    boss.get(y).getResource().setXCoord
+			(boss.get(y).getXCoord());
+		    boss.get(y).getResource().setYCoord
+			(boss.get(y).getYCoord()+70);
+       
+		    resources.add(boss.get(y).getResource());
 
-					resources.add(boss.get(0).getResource());
+                    boss.remove(y);
+                }
+            }
+                if(boss.isEmpty()){
+                    TotalProgress += lvlhandler.getProgress();
+		    //Resource Drop **NEEDS TO BE UPDATED FOR MORE BOSSES**
+		    
+                    level++;
+                    if(level == 1){
+                    lvlhandler.HandleLVL2Start(enemies, terrain, generator);
+                        for(int i = 0; i < enemies.size(); i++){
+                            enemies.get(i).setTerrainDimensions(terrain);
+                         }
+                    }
+                    else{
+                        lvlhandler.HandleLVL3Start(enemies, terrain, generator);
+                            for(int i = 0; i < enemies.size(); i++){
+                                enemies.get(i).setTerrainDimensions(terrain);
+                            }
+                    }
+                }
+                    
 
-					boss.remove(0);
-					level++;
-					if(level == 1){
-						lvlhandler.HandleLVL2Start(enemies, terrain, generator);
-						for(int i = 0; i < enemies.size(); i++){
-							enemies.get(i).setTerrainDimensions(terrain);
-						}
-					}
-					else{
-						lvlhandler.HandleLVL3Start(enemies, terrain, generator);
-						for(int i = 0; i < enemies.size(); i++){
-							enemies.get(i).setTerrainDimensions(terrain);
-						}
-					}
-				}
+        }
 
-			}
+	//if Player runs over resource, collect
+	for(int i = 0; i< getResources().size();i++){
+	    
+	    if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
+	       (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
+	       (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
+	       (getP().getYCoord() >= getResources().get(i).getYCoord()-70) ){
 
-			//if Player runs over resource, collect
-			for(int i = 0; i< getResources().size();i++){
-
-				if((getP().getXCoord() >= getResources().get(i).getXCoord()-25) && 
-						(getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
-						(getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
-						(getP().getYCoord() >= getResources().get(i).getYCoord()-70) ){
-
-					if(getResources().get(i).getResourceType() == "log")
-						getP().setLogCount(getP().getLogCount() + 1);
-					else if(getResources().get(i).getResourceType() == "coin")
-						getP().setCoinCount(getP().getCoinCount() + 1);
-					/*	else if(getResources().get(i).getResourceType() == "coal")
+		if(getResources().get(i).getResourceType() == "log")
+		    getP().setLogCount(getP().getLogCount() + 1);
+		else if(getResources().get(i).getResourceType() == "coin")
+		    getP().setCoinCount(getP().getCoinCount() + 1);
+	     /*	else if(getResources().get(i).getResourceType() == "coal")
 		    getP().setCoalCount(getP().getCoalCount() + 1);
 		else if(getResources().get(i).getResourceType() == "oil")
 		    getP().setOilCount(getP().getOilCount() + 1);
-					 */
-					//**ABOVE IS TO BE UNCOMMENTED ONCE WE HAVE ../images**
-					getResources().remove(i);
-				}
-			}
-		}
-		repaint();
+		*/
+		//**ABOVE IS TO BE UNCOMMENTED ONCE WE HAVE IMAGES**
+		getResources().remove(i);
+	    }
 	}
-
-	public void paint(Graphics g) {
-		//Player is painted last to make him in front of enemies
-		super.paint(g);
-		Graphics2D g2d = (Graphics2D) g;
-
-		if (getState() == STATE.LOAD) {
+}
+		repaint();
+    }
+    
+    public void paint(Graphics g) {
+	//Player is painted last to make him in front of enemies
+	super.paint(g);
+	Graphics2D g2d = (Graphics2D) g;
+        if (getState() == STATE.LOAD) {
 			System.out.println("Pressed load game");
 			// System.exit(0);
 			try {
@@ -284,14 +307,13 @@ public class Board extends JPanel implements ActionListener {
 				ex.printStackTrace();
 			}
 		}
-		
-		BoardLoc = this.getLocationOnScreen();
+        BoardLoc = this.getLocationOnScreen();
+	
+        //background images
+	g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
+	//above line changes where player appears on screen
 
-		//background ../images
-		g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
-		//above line changes where player appears on screen
-
-		g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
+	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
 		g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
 		g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 9000, -1800, null);
 		g2d.drawImage(nearBackground,0, -1300, null);
@@ -304,65 +326,64 @@ public class Board extends JPanel implements ActionListener {
 			getMenu().render(g);
 		}        
 
-		if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
+        
 
-		    // if you win the game, display win screen
-		    if (TotalProgress > 20){
+	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
+         if (TotalProgress > 20){
 			setState(STATE.GAMEOVER);
 		    }
+        g.setColor(greyTransp);
+	g.fillRect((int)p.getXCoord()-300, (int) p.getHealthBarY()-20 , 750, 120);
+	g.setColor(Color.blue);
+                    
+        g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL1() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+        g.drawRect((int) (p.getXCoord() -280) + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL2() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+        g.drawRect((int) (p.getXCoord() -280)  + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))) + (lvlhandler.getProgressNeededLVL2()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL3() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+        g.setColor(Color.white);
+        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
+		  (lvlhandler.getProgress() + TotalProgress) * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+        g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 700, 10);
+        g.setColor(Color.YELLOW);
+        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 
+		  p.getCurrentWeapon().getAttackSpeedTimer() * (700/p.getCurrentWeapon().getAttackSpeed()), 10);
+            //paint terrain
+            
+            //perform player attack, perform enemy AI
+            if(getP().isAttacking()){
+                getP().PlayerAttack(g);
+            }
+            else{
+                getP().getCurrentWeapon().setAttackSpeedTimer(0);
+            }
+	    for(Enemies e : getEnemies()){
+		e.AI(getP(), g, terrain, enemies);
+		e.paintEnemy(getP(), g);
+	    }
+            for(Enemies b : boss){
+                b.AI(getP(), g, terrain, enemies);
+		b.paintEnemy(getP(), g);
+            }
+            for(Terrain t : terrain){
+                for(int i = 0; i < enemies.size(); i++){
+                    t.paintTerrain(g, getP(),enemies, enemies.get(i).getProjectiles(), p.getCurrentWeapon().getProjectiles());
+                }
+                for(int i = 0; i < boss.size(); i++){
+                    t.paintTerrain(g, getP(),boss, boss.get(i).getProjectiles(), p.getCurrentWeapon().getProjectiles());
+                }
+            }
 
-		    g.setColor(greyTransp);
-		    g.fillRect((int)p.getXCoord()-300, (int) p.getHealthBarY()-20 , 750, 120);
-		    g.setColor(Color.blue);
+	    //Paint resources
+	    for(Resource r : getResources()){
+		r.paintResource(g);
+	    }
 
-			g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL1() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-			g.drawRect((int) (p.getXCoord() -280) + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL2() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-			g.drawRect((int) (p.getXCoord() -280)  + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))) + (lvlhandler.getProgressNeededLVL2()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL3() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-			g.setColor(Color.white);
-			g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
-					(lvlhandler.getProgress() + TotalProgress) * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-			g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 700, 10);
-			g.setColor(Color.YELLOW);
-			g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 
-					p.getCurrentWeapon().getAttackSpeedTimer() * (700/p.getCurrentWeapon().getAttackSpeed()), 10);
-			//paint terrain
-
-			//perform player attack, perform enemy AI
-			if(getP().isAttacking()){
-				getP().PlayerAttack(g);
-			}
-			else{
-				getP().getCurrentWeapon().setAttackSpeedTimer(0);
-			}
-			for(Enemies e : getEnemies()){
-				e.AI(getP(), g, terrain, enemies);
-				e.paintEnemy(getP(), g);
-			}
-			for(Enemies b : boss){
-				b.AI(getP(), g, terrain, enemies);
-				b.paintEnemy(getP(), g);
-			}
-			for(Terrain t : terrain){
-				for(int i = 0; i < enemies.size(); i++){
-					t.paintTerrain(g, getP(),enemies, enemies.get(i).getProjectiles(), p.getCurrentWeapon().getProjectiles());
-				}
-				for(int i = 0; i < boss.size(); i++){
-					t.paintTerrain(g, getP(),boss, boss.get(i).getProjectiles(), p.getCurrentWeapon().getProjectiles());
-				}
-			}
-
-			//Paint resources
-			for(Resource r : getResources()){
-				r.paintResource(g);
-			}
-
-			getP().AttackAnimation(g);
-			if(getState() == STATE.PAUSE){
-				pmenu.requestFocusInWindow();
-			}
-
-			//RESOURCE BAR
-			int resourceBarX = (int)getP().getXCoord()+630;
+	    getP().AttackAnimation(g);
+	    if(getState() == STATE.PAUSE){
+	   	pmenu.requestFocusInWindow();
+	    }
+	    
+	    //RESOURCE BAR
+	    int resourceBarX = (int)getP().getXCoord()+630;
 			
 			g.setColor(greyTransp);
 			g.fillRect(resourceBarX-20, 25, 300, 160);
@@ -473,13 +494,14 @@ public class Board extends JPanel implements ActionListener {
 
 		public void keyPressed(KeyEvent e) {
 			getP().keyPressed(e);
-			pmenu.keyPressedMenu(e);
+			//pmenu.keyPressedMenu(e);
 		}
 	}
 
 
-
-	//------------------------------Getters/Setters---------------------------[
+    
+    
+    //------------------------------Getters/Setters---------------------------[
 	/**
 	 * @return the p
 	 */

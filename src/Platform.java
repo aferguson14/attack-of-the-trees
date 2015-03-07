@@ -5,11 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 
 
-public class Platform extends Terrain implements Serializable{
+public class Platform extends Terrain{
 //Construcotr
     public Platform(int x, int y) {
         super(x, y);
