@@ -83,7 +83,7 @@ public class Board extends JPanel implements ActionListener {
         
 	addKeyListener(new AL());
 	menu = new Menu();
-        //pmenu = new PauseMenu(p);
+        pmenu = new PauseMenu(p, this);
         winscreen = new WinScreen(this);
         goscreen = new GameOverScreen(this);
         MouseInput m = new MouseInput();
@@ -494,7 +494,7 @@ public class Board extends JPanel implements ActionListener {
 
 		public void keyPressed(KeyEvent e) {
 			getP().keyPressed(e);
-			//pmenu.keyPressedMenu(e);
+			pmenu.keyPressedMenu(e);
 		}
 	}
 
