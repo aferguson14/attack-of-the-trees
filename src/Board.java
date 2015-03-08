@@ -333,17 +333,6 @@ public class Board extends JPanel implements ActionListener {
 	g2d.drawImage(Far2,-4500, -1800,null);
 	g2d.drawImage(Near2,-7473 , -1305,null);
 
-	//Grass Images
-	int q = 0;
-	while(q<7478){
-	    g2d.drawImage(Grass3, q+73, 657, null);
-	    g2d.drawImage(Grass1, q, 657, null); //657
-	    q+=75;
-	    q+=28;
-	    g2d.drawImage(Grass2, q, 658, null);
-	    q+=80;
-
-	}
 
 	Color prev = g.getColor();
 	Color greyTransp = new Color(70, 70, 70, 150);
@@ -358,6 +347,20 @@ public class Board extends JPanel implements ActionListener {
          if (TotalProgress > 20){
 			setState(STATE.GAMEOVER);
 		    }
+
+	//Grass Images
+	int q = 0;
+	while(q<7478){
+	    g2d.drawImage(Grass3, q+73, 657, null);
+	    g2d.drawImage(Grass1, q, 657, null); //657
+	    q+=75;
+	    q+=28;
+	    g2d.drawImage(Grass2, q, 658, null);
+	    q+=80;
+
+	}
+
+
         g.setColor(greyTransp);
 	g.fillRect((int)p.getXCoord()-300, (int) p.getHealthBarY()-20 , 750, 120);
 	g.setColor(Color.blue);
