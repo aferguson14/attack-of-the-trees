@@ -28,6 +28,11 @@ public class Board extends JPanel implements ActionListener {
 	public Image Far2, Far3;
 	public Image Near2;
 
+        //Grass ../images
+    public Image Grass1;
+    public Image Grass2;
+    public Image Grass3;
+
 	//Resource ../images
 	public Image LogImage;
 	public Image CoinImage;
@@ -107,6 +112,14 @@ public class Board extends JPanel implements ActionListener {
         Far2 = far2.getImage();
         Near2 = near2.getImage();
 	
+	ImageIcon grass1 = new ImageIcon("../images/grassImages/grass1.png");
+	ImageIcon grass2 = new ImageIcon("../images/grassImages/grass2.png");
+	ImageIcon grass3 = new ImageIcon("../images/grassImages/grass3.png");
+
+	Grass1 = grass1.getImage();
+	Grass2 = grass2.getImage();
+	Grass3 = grass3.getImage();
+
 	//RESOURCE IMAGES
 	ImageIcon logImage = new ImageIcon("../images/sourceImage/wood.png");
 	LogImage = logImage.getImage();
@@ -314,17 +327,30 @@ public class Board extends JPanel implements ActionListener {
 	//above line changes where player appears on screen
 
 	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
-		g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
-		g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 9000, -1800, null);
-		g2d.drawImage(nearBackground,0, -1300, null);
-		g2d.drawImage(Far2,-4500, -1800,null);
-		g2d.drawImage(Near2,-7473 , -1305,null);
-		Color prev = g.getColor();
-		Color greyTransp = new Color(70, 70, 70, 150);
+	g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
+	g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 9000, -1800, null);
+	g2d.drawImage(nearBackground,0, -1300, null);
+	g2d.drawImage(Far2,-4500, -1800,null);
+	g2d.drawImage(Near2,-7473 , -1305,null);
 
-		if(getState() == STATE.MENU) {
-			getMenu().render(g);
-		}        
+	//Grass Images
+	int q = 0;
+	while(q<7478){
+	    g2d.drawImage(Grass3, q+73, 657, null);
+	    g2d.drawImage(Grass1, q, 657, null); //657
+	    q+=75;
+	    q+=28;
+	    g2d.drawImage(Grass2, q, 658, null);
+	    q+=80;
+
+	}
+
+	Color prev = g.getColor();
+	Color greyTransp = new Color(70, 70, 70, 150);
+
+	if(getState() == STATE.MENU) {
+	    getMenu().render(g);
+	}        
 
         
 
