@@ -459,6 +459,12 @@ public class Board extends JPanel implements ActionListener {
 			else if(getP().getCurrentWeapon().getWeaponType()=="Bow"){
 			    g.fillRect(weaponBarX-20, 300, 100, 122);
 			}
+			else if(getP().getCurrentWeapon().getWeaponType()=="Axe"){
+			    g.fillRect(weaponBarX-20, 300, 100, 122);
+			}
+			else if(getP().getCurrentWeapon().getWeaponType()=="Sword"){
+			    g.fillRect(weaponBarX-20, 300, 100, 122);
+			}
 
 			//oldStroke = g2d.getStroke();
 			//fnt0 = new Font("arial", Font.BOLD, 25);
