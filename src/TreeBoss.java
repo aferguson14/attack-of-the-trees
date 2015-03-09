@@ -15,8 +15,8 @@ public class TreeBoss extends Enemies implements Serializable{
     private int AttackSpeed3 = 250;
     public TreeBoss(double x, double y){
         super(x, y);
-        ImageIcon iLeft = new ImageIcon("../images/enemyImages/treeBoss/treeBossSideLeft.png");
-        ImageIcon iRight = new ImageIcon("../images/enemyImages/treeBoss/treeBossSideRight.png");
+        ImageIcon iLeft = new ImageIcon("../images/enemyImages/treeBossSideLeft.png");
+        ImageIcon iRight = new ImageIcon("../images/enemyImages/treeBossSideRight.png");
         ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
         this.setStill(iLeft);
         this.setStillRight(iRight);
