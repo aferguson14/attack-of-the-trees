@@ -22,7 +22,7 @@ public class WinScreen extends JFrame {
 		
 		// set frame characteristics
 		this.setTitle("Win Screen");
-		this.setSize(750, 300);
+		this.setSize(500, 300);
 
 		// set location of game over screen to middle of board
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
