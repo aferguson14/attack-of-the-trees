@@ -32,7 +32,7 @@ public class Board extends JPanel implements ActionListener {
     public Image Grass1;
     public Image Grass2;
     public Image Grass3;
-
+    public Image DirtBlock;
 	//Resource ../images
 	public Image LogImage;
 	public Image CoinImage;
@@ -43,6 +43,7 @@ public class Board extends JPanel implements ActionListener {
 	public Image StickImage;
 	public Image GunImage;
         public Image BowImage;
+
 
 	private Image img;
 	private Timer time;
@@ -119,6 +120,9 @@ public class Board extends JPanel implements ActionListener {
 	Grass1 = grass1.getImage();
 	Grass2 = grass2.getImage();
 	Grass3 = grass3.getImage();
+
+	ImageIcon dirt = new ImageIcon("../images/grassImages/dirt.png");
+	DirtBlock = dirt.getImage();
 
 	//RESOURCE IMAGES
 	ImageIcon logImage = new ImageIcon("../images/sourceImage/wood.png");
@@ -349,6 +353,12 @@ public class Board extends JPanel implements ActionListener {
 		    }
 
 	//Grass Images
+	/*int q=0; //this is for the dirt under grass
+	while(q<7478){ //188x29
+	    g2d.drawImage(DirtBlock, q, 720, null);
+	    q+=324;
+	}
+	*/
 	int q = 0;
 	while(q<7478){
 	    g2d.drawImage(Grass3, q+73, 657, null);
@@ -358,6 +368,12 @@ public class Board extends JPanel implements ActionListener {
 	    g2d.drawImage(Grass2, q, 658, null);
 	    q+=80;
 
+	}
+
+	q=0;
+	while(q<7478){ //188x29
+	    g2d.drawImage(DirtBlock, q, 700, null);
+	    q+=128;
 	}
 
 
