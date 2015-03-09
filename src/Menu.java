@@ -40,7 +40,8 @@ public class Menu {
 		g.drawString("Load Game", lgx+1, lgy-1);
 		g.drawString("Load Game", lgx+1, lgy+1);
 
-		g.setColor(new Color(0xEEFFEE));
+		//g.setColor(new Color(0xEEFFEE));
+		g.setColor(Color.white);
 		g.drawString("New Game", ngx, ngy);
 		g.drawString("Load Game", lgx, lgy);
 
