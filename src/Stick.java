@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 
-public class Axe extends Weapon implements Serializable{
+public class Stick extends Weapon implements Serializable{
     //constructor
-    public Axe(double x, double y){
+    public Stick(double x, double y){
         setXCoord(x);
         setYCoord(y);
         setAttack(40);
@@ -19,11 +19,11 @@ public class Axe extends Weapon implements Serializable{
         setSpeed(3);
         setXVel(0);
         setYVel(0);
-	setWeaponType("Axe");
+	setWeaponType("Stick");
 
-	ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/axeLeft.png");
+	ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/stickLeft.png");
 	setStillLeft(iWeapLeft);
-	ImageIcon iWeapRight = new ImageIcon("../images/weaponImage/axeRight.png");
+	ImageIcon iWeapRight = new ImageIcon("../images/weaponImage/stickRight.png");
 	setStillRight(iWeapRight);
  
    }
@@ -52,7 +52,7 @@ public class Axe extends Weapon implements Serializable{
 
     @Override
     public void print() {
-        System.out.println("axe");
+        System.out.println("sword");
     }
 
     //paints weapon (pending)

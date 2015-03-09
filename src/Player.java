@@ -140,6 +140,16 @@ public class Player implements Serializable{
 			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
 			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-52+30, (int) (this.getYCoord())+53-25, null);
 			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Axe"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-55, (int) (this.getYCoord())+53-15, null);
+			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Sword"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-68, (int) (this.getYCoord())+31, null);
+			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Stick"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-64, (int) (this.getYCoord())+35, null);
+			}
+			
 			//END WEAPON POSITIONING
 			g2d.drawImage(this.getArmStill().getImage(), (int) (this.getXCoord())-15, (int) (this.getYCoord())+60, null);
 
@@ -166,6 +176,16 @@ public class Player implements Serializable{
 			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
 			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5-30, null);//was +33
 			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Axe"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+34, (int) (this.getYCoord())+35, null);
+			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Sword"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+43, (int) (this.getYCoord())+28, null);
+			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Stick"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+39, (int) (this.getYCoord())+32, null);
+			}
+
 			//END WEAPON POSITIONING
 			g2d.drawImage(this.getArmStill().getImage(), (int) (this.getXCoord())+15, (int) (this.getYCoord())+60, null);
 			g2d.rotate(-angle, this.getXCoord()+15, this.getYCoord()+60+3);
@@ -221,28 +241,46 @@ if(isAttacking()){
     }
 //switch current weapon forward
     public void switchWeapon(){
-        if(WeaponTracker < weapon.size()){
-            WeaponTracker++;
-            currentWeapon = weapon.get(WeaponTracker);
-        }
-        else if(WeaponTracker == weapon.size()){
-            WeaponTracker = 0;
-            currentWeapon = weapon.get(WeaponTracker);
-        }
+	for(int i = 10; i>0; i--){
+	    if(WeaponTracker < weapon.size()-1){
+		WeaponTracker++;
+		currentWeapon = weapon.get(WeaponTracker);
+	    }
+	    else{
+		WeaponTracker = 0;
+		currentWeapon = weapon.get(WeaponTracker);
+	    }
+
+	    if(currentWeapon.getWeaponType()!="empty"){
+		break;
+	    }		
+
+
+	}
+
     }
 
 
 //switch current weapon backward
     public void switchWeaponBackward(){
-        if(WeaponTracker > 0){
-            WeaponTracker--;
-            currentWeapon = weapon.get(WeaponTracker);
-        }
-        else if(WeaponTracker == 0){
-            WeaponTracker = weapon.size();
-            currentWeapon = weapon.get(WeaponTracker);
-        }
+	for(int i = 10; i>0; i--){
+	    if(WeaponTracker > 0){
+		WeaponTracker--;
+		currentWeapon = weapon.get(WeaponTracker);
+	    }
+	    else{
+		WeaponTracker = weapon.size()-1;
+		currentWeapon = weapon.get(WeaponTracker);
+	    }
+
+	    if(currentWeapon.getWeaponType()!="empty"){
+		break;
+	    }		
+
+
+	}
     }
+
 
 //get mouse coords
 // if attacking, shoot weapon
@@ -315,27 +353,27 @@ if(isAttacking()){
 		}
 
 		if(key == KeyEvent.VK_1){
-		    if(weapon.get(0)!=null)
+		    if(weapon.get(0).getWeaponType()!="empty")
 			currentWeapon = weapon.get(0);
 		}
 		if(key == KeyEvent.VK_2){
-		    if(weapon.get(1)!=null)
+		    if(weapon.get(1).getWeaponType()!="empty")
 			currentWeapon = weapon.get(1);
 		}
 		if(key == KeyEvent.VK_3){
-		    if(weapon.get(2)!=null)
+		    if(weapon.get(2).getWeaponType()!="empty")
 			currentWeapon = weapon.get(2);
 		}
 		if(key == KeyEvent.VK_4){
-		    if(weapon.get(3)!=null)
+		    if(weapon.get(3).getWeaponType()!="empty")
 			currentWeapon = weapon.get(3);
 		}
 		if(key == KeyEvent.VK_5){
-		    if(weapon.get(4)!=null)
+		    if(weapon.get(4).getWeaponType()!="empty")
 			currentWeapon = weapon.get(4);
 		}
 		if(key == KeyEvent.VK_6){
-		    if(weapon.get(5)!=null)
+		    if(weapon.get(5).getWeaponType()!="empty")
 			currentWeapon = weapon.get(5);
 		}
 

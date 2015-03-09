@@ -21,8 +21,8 @@ public class AxeProjectile extends PlayerProjectile implements Serializable{
         setHorizontalSize(50);
         setVerticalSize(40);
         setAttack(20);
-	ImageIcon iLeft = new ImageIcon("../images/attackImage/bulletLeft.png");
-	ImageIcon iRight = new ImageIcon ("../images/attackImage/bulletRight.png");
+	ImageIcon iLeft = new ImageIcon(""/*"../images/attackImage/bulletLeft.png"*/);
+	ImageIcon iRight = new ImageIcon (""/*"../images/attackImage/bulletRight.png"*/);
 	setStillLeft(iLeft.getImage());
 	setStillRight(iRight.getImage());
         //modify x and y velocities based on angle fired 

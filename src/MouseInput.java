@@ -63,7 +63,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
         int mx = e.getX();
         int my = e.getY();
 
-        if(mx >= 1000 && mx <= 1353) {
+        if(mx >= 1210 && mx <= 1563) {
             //if within newGameButton, set state to Game
             if(my >= 308 && my <= 381){
                 //Pressed newGameButton
