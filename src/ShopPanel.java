@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 
 public class ShopPanel extends JPanel {
 
-    ArrayList<String> weaponNames = new ArrayList<String>(Arrays.asList("sword", "stick", "axe", "gun"));
+    ArrayList<String> weaponNames = new ArrayList<String>(Arrays.asList("sword", "bow", "axe", "gun"));
     ArrayList<JButton> buttons = new ArrayList<JButton>();
     int indexClicked;
     JButton buy = new JButton("Purchase");
@@ -44,7 +44,8 @@ public class ShopPanel extends JPanel {
 	//jf.setLocationRelativeTo(null);
 	jf.pack();
 	for (int i = 0; i < weaponNames.size(); i++) {
-	    JButton j = new JButton(new ImageIcon("../images/weaponImage/" + weaponNames.get(i) + ".png"));
+	    JButton j = new JButton(new ImageIcon("../images/weaponImage/" + weaponNames.get(i) + "Left.png"));
+	    j.setPreferredSize(new Dimension(100,100));
 	    buttons.add(i, j);
 	    this.add(buttons.get(i));
 	    buttons.get(i).addActionListener(actionListener);
@@ -115,10 +116,10 @@ public class ShopPanel extends JPanel {
 	this.remove(purchased);
 	
 	//paint the different images and costs for the weapons and the purchase button
-	ImageIcon i = new ImageIcon("../images/weaponImage/" + weaponNames.get(indexClicked) + ".png");
+	ImageIcon i = new ImageIcon("../images/weaponImage/" + weaponNames.get(indexClicked) + "Left.png");
 	Image weapon = i.getImage();
 	g2d.drawImage(weapon, 220, 150, null);
-	g2d.drawString("Cost: " + logCost[indexClicked] + " logs, " + coinCost[indexClicked] + " coins", 185, 220);
+	g2d.drawString("Cost: " + logCost[indexClicked] + " logs, " + coinCost[indexClicked] + " coins", 185, 250);
 	//g2d.drawString(weaponDescrip[indexClicked], 150, 250);
 	
 	// check to see if they've already purchased that item
