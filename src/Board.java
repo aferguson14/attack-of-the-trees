@@ -58,7 +58,7 @@ public class Board extends JPanel implements ActionListener {
 	public static boolean PlayerAttack = false;
 	private boolean StartLevel = true;
 	private int level = 0;
-    private LevelHandler lvlhandler = new LevelHandler();
+    	private LevelHandler lvlhandler;
     
         //states
     public static enum STATE {
@@ -76,6 +76,7 @@ public class Board extends JPanel implements ActionListener {
     public Board() {
         //creates player, enemies, terrain, weapon, menu, and background images
 	p = new Player();
+	lvlhandler = new LevelHandler();
         lvlhandler.HandleLVL1Start(enemies, terrain, generator);
         
         for(int i = 0; i < enemies.size(); i++){
@@ -510,6 +511,8 @@ public class Board extends JPanel implements ActionListener {
 				getP().setHealthBarY((getP().getYCoord() - 580));
 				getP().setLogCount(0);
 				getP().setCoinCount(0);
+				lvlhandler =  new LevelHandler();
+				setTotalProgress(0);
 				
 				// if game is won display win screen
 				if (TotalProgress > 20){
