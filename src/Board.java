@@ -303,236 +303,241 @@ public class Board extends JPanel implements ActionListener {
 	//Player is painted last to make him in front of enemies
 	super.paint(g);
 	Graphics2D g2d = (Graphics2D) g;
-        if (getState() == STATE.LOAD) {
-			System.out.println("Pressed load game");
-			// System.exit(0);
-			try {
-				FileInputStream fs = new FileInputStream("saved.ser");
-				ObjectInputStream os = new ObjectInputStream(fs);
-				p = (Player) os.readObject();
-				enemies = (ArrayList<Enemies>) os.readObject();
-				resources = (ArrayList<Resource>) os.readObject();
-				TotalProgress = os.readInt();
-				level = os.readInt();
-				//System.out.println(getTotalProgress());
-				//System.out.println(getLevel());
-				os.close();
-				setState(STATE.GAME);
-				// System.out.println("in try catch");
-				// repaint();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-        BoardLoc = this.getLocationOnScreen();
 	
-        //background images
-	g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
-	//above line changes where player appears on screen
-
-	g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
-	g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
-	g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 9000, -1800, null);
-	g2d.drawImage(nearBackground,0, -1300, null);
-	g2d.drawImage(Far2,-4500, -1800,null);
-	g2d.drawImage(Near2,-7473 , -1305,null);
-
-
-	Color prev = g.getColor();
-	Color greyTransp = new Color(70, 70, 70, 150);
-
 	if(getState() == STATE.MENU) {
 	    getMenu().render(g);
-	}        
-
-        
-
-	if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
-         if (TotalProgress > 20){
-			setState(STATE.GAMEOVER);
-		    }
-
-	//Grass Images
-	/*int q=0; //this is for the dirt under grass
-	while(q<7478){ //188x29
-	    g2d.drawImage(DirtBlock, q, 720, null);
-	    q+=324;
 	}
-	*/
-	int q = 0;
-	while(q<7478){
-	    g2d.drawImage(Grass3, q+73, 657, null);
-	    g2d.drawImage(Grass1, q, 657, null); //657
-	    q+=75;
-	    q+=28;
-	    g2d.drawImage(Grass2, q, 658, null);
-	    q+=80;
-
-	}
-
-	q=0;
-	while(q<7478){ //188x29
-	    g2d.drawImage(DirtBlock, q, 700, null);
-	    q+=128;
-	}
-
-
-        g.setColor(greyTransp);
-	g.fillRect((int)p.getXCoord()-300, (int) p.getHealthBarY()-20 , 750, 120);
-	g.setColor(Color.blue);
-                    
-        g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL1() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-        g.drawRect((int) (p.getXCoord() -280) + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL2() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-        g.drawRect((int) (p.getXCoord() -280)  + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))) + (lvlhandler.getProgressNeededLVL2()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL3() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-        g.setColor(Color.white);
-        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
-		  (lvlhandler.getProgress() + TotalProgress) * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-        g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 700, 10);
-        g.setColor(Color.YELLOW);
-        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 
-		  p.getCurrentWeapon().getAttackSpeedTimer() * (700/p.getCurrentWeapon().getAttackSpeed()), 10);
-            //paint terrain
-            
-            //perform player attack, perform enemy AI
-            if(getP().isAttacking()){
-                getP().PlayerAttack(g);
-            }
-            else{
-                getP().getCurrentWeapon().setAttackSpeedTimer(0);
-            }
-	    for(Enemies e : getEnemies()){
-		e.AI(getP(), g, terrain, enemies);
-		e.paintEnemy(getP(), g);
-	    }
-            for(Enemies b : boss){
-                b.AI(getP(), g, terrain, enemies);
-		b.paintEnemy(getP(), g);
-            }
-            for(Terrain t : terrain){
-                for(int i = 0; i < enemies.size(); i++){
-                    t.paintTerrain(g, getP(),enemies, enemies.get(i).getProjectiles(), p.getCurrentWeapon().getProjectiles());
-                }
-                for(int i = 0; i < boss.size(); i++){
-                    t.paintTerrain(g, getP(),boss, boss.get(i).getProjectiles(), p.getCurrentWeapon().getProjectiles());
-                }
-            }
-
-	    //Paint resources
-	    for(Resource r : getResources()){
-		r.paintResource(g);
-	    }
-
-	    getP().AttackAnimation(g);
-	    if(getState() == STATE.PAUSE){
-	   	pmenu.requestFocusInWindow();
-	    }
-	    
-	    //RESOURCE BAR
-	    int resourceBarX = (int)getP().getXCoord()+630;
-			
-			g.setColor(greyTransp);
-			g.fillRect(resourceBarX-20, 25, 300, 160);
-			
-			Stroke oldStroke = g2d.getStroke();
-			Font fnt0 = new Font("arial", Font.BOLD, 25);
-			g.setFont(fnt0);
-			g.setColor(Color.white);
-
-			g2d.drawImage(LogImage, resourceBarX, 50, null);
-			g.drawString("x" + getP().getLogCount()+"", resourceBarX, 50);	
-			g2d.drawImage(CoinImage, resourceBarX, 125, null);
-			g.drawString("x" + getP().getCoinCount()+"", resourceBarX, 125);	
-
-			g2d.setStroke(oldStroke);
-
-			//WEAPON BAR
-			int weaponBarX = (int)getP().getXCoord()-560;
-
-			g.setColor(greyTransp);
-			g.fillRect(weaponBarX-20, 32, 100, 390);
-			
-			Color whiteTransp = new Color(255,255,255,200);
-			g.setColor(whiteTransp);
-			if(getP().getCurrentWeapon().getWeaponType()=="Gun"){
-			    g.fillRect(weaponBarX-20, 240, 100, 60);
+	else{
+		
+	        if (getState() == STATE.LOAD) {
+				System.out.println("Pressed load game");
+				// System.exit(0);
+				try {
+					FileInputStream fs = new FileInputStream("saved.ser");
+					ObjectInputStream os = new ObjectInputStream(fs);
+					p = (Player) os.readObject();
+					enemies = (ArrayList<Enemies>) os.readObject();
+					resources = (ArrayList<Resource>) os.readObject();
+					TotalProgress = os.readInt();
+					level = os.readInt();
+					//System.out.println(getTotalProgress());
+					//System.out.println(getLevel());
+					os.close();
+					setState(STATE.GAME);
+					// System.out.println("in try catch");
+					// repaint();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
-			else if(getP().getCurrentWeapon().getWeaponType()=="Bow"){
-			    g.fillRect(weaponBarX-20, 300, 100, 122);
-			}
-			else if(getP().getCurrentWeapon().getWeaponType()=="Axe"){
-			    g.fillRect(weaponBarX-20, 300, 100, 122);
-			}
-			else if(getP().getCurrentWeapon().getWeaponType()=="Sword"){
-			    g.fillRect(weaponBarX-20, 300, 100, 122);
-			}
-
-			//oldStroke = g2d.getStroke();
-			//fnt0 = new Font("arial", Font.BOLD, 25);
-			g.setFont(fnt0);
-			g.setColor(Color.white);
-		       
-			g2d.drawImage(StickImage, weaponBarX, 50, null);
-			g.drawString("1", weaponBarX-10, 50+5);	
-			g2d.drawImage(SwordImage, weaponBarX, 120, null);
-			g.drawString("2", weaponBarX-10, 120+5);	
-			g2d.drawImage(AxeImage, weaponBarX, 190, null);
-			g.drawString("3", weaponBarX-10, 190+5);	
-			g2d.drawImage(GunImage, weaponBarX, 260, null);
-			g.drawString("4", weaponBarX-10, 260+5);
-			g2d.drawImage(BowImage, weaponBarX, 330, null);
-			g.drawString("5", weaponBarX-10, 330+5);
-			
-			g2d.setStroke(oldStroke);
-
-			//paint player and weapon
-			getP().paintPlayer(g);
-			if(getEnemies().size() > 0){
-				getP().getCurrentWeapon().paintWeapon(g, getP(), getEnemies());
-			} else if(boss.size() > 0){
-				getP().getCurrentWeapon().paintWeapon(g, getP(), boss);
-			}
-
-			//ATTACK ANIMATION
-			getP().AttackAnimation(g);
-			if(getState() == STATE.PAUSE){
-				pmenu.requestFocusInWindow();
-				int brightness = (int)(256 - 256 * 0.5f);
-				g.setColor(new Color(0,0,0,brightness));
-				g.fillRect((int)getP().getXCoord()-1000, 0, 7478, 1000);
-			}
+	        BoardLoc = this.getLocationOnScreen();
+		
+	        //background images
+		g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
+		//above line changes where player appears on screen
+	
+		g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
+		g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 4500, -1800, null);
+		g2d.drawImage(Far3, (int) p.getXCoord()/2*(-1) + 9000, -1800, null);
+		g2d.drawImage(nearBackground,0, -1300, null);
+		g2d.drawImage(Far2,-4500, -1800,null);
+		g2d.drawImage(Near2,-7473 , -1305,null);
+	
+	
+		Color prev = g.getColor();
+		Color greyTransp = new Color(70, 70, 70, 150);
+	
+		        
+	
+	        
+	
+		if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
+	         if (TotalProgress > 20){
+				setState(STATE.GAMEOVER);
+			    }
+	
+		//Grass Images
+		/*int q=0; //this is for the dirt under grass
+		while(q<7478){ //188x29
+		    g2d.drawImage(DirtBlock, q, 720, null);
+		    q+=324;
 		}
-		//if State!=Game, perform other State actions
-
-		else if (getState() == STATE.GAMEOVER){
-			// reset Player stats
-			getP().setXCoord(10); //was 10
-			getP().setYCoord(WorldBot - getP().getVerticalSize());
-			getP().setYAcc(.5);
-			getP().setYVel(0);
-			getP().setXVel(0);
-			getP().setHp(100);
-			getP().setAttack(500);
-			getP().setAttackSpeed(50);
-			getP().setSpeed(4);
-			getP().setJumpSpeed(-15);
-			getP().setHealthBarY((getP().getYCoord() - 580));
-			getP().setLogCount(0);
-			getP().setCoinCount(0);
-			
-			// if you win, display win screen
-			if (TotalProgress > 20){
-			    getWinscreen().setVisible(true);
-			    getWinscreen().requestFocusInWindow();
-			    int brightness = (int)(256 - 256 * 0.5f);
-			    g.setColor(new Color(0,0,0,brightness));
-			    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+		*/
+		int q = 0;
+		while(q<7478){
+		    g2d.drawImage(Grass3, q+73, 657, null);
+		    g2d.drawImage(Grass1, q, 657, null); //657
+		    q+=75;
+		    q+=28;
+		    g2d.drawImage(Grass2, q, 658, null);
+		    q+=80;
+	
+		}
+	
+		q=0;
+		while(q<7478){ //188x29
+		    g2d.drawImage(DirtBlock, q, 700, null);
+		    q+=128;
+		}
+	
+	
+	        g.setColor(greyTransp);
+		g.fillRect((int)p.getXCoord()-300, (int) p.getHealthBarY()-20 , 750, 120);
+		g.setColor(Color.blue);
+	                    
+	        g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL1() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+	        g.drawRect((int) (p.getXCoord() -280) + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL2() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+	        g.drawRect((int) (p.getXCoord() -280)  + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))) + (lvlhandler.getProgressNeededLVL2()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL3() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+	        g.setColor(Color.white);
+	        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
+			  (lvlhandler.getProgress() + TotalProgress) * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+	        g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 700, 10);
+	        g.setColor(Color.YELLOW);
+	        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 
+			  p.getCurrentWeapon().getAttackSpeedTimer() * (700/p.getCurrentWeapon().getAttackSpeed()), 10);
+	            //paint terrain
+	            
+	            //perform player attack, perform enemy AI
+	            if(getP().isAttacking()){
+	                getP().PlayerAttack(g);
+	            }
+	            else{
+	                getP().getCurrentWeapon().setAttackSpeedTimer(0);
+	            }
+		    for(Enemies e : getEnemies()){
+			e.AI(getP(), g, terrain, enemies);
+			e.paintEnemy(getP(), g);
+		    }
+	            for(Enemies b : boss){
+	                b.AI(getP(), g, terrain, enemies);
+			b.paintEnemy(getP(), g);
+	            }
+	            for(Terrain t : terrain){
+	                for(int i = 0; i < enemies.size(); i++){
+	                    t.paintTerrain(g, getP(),enemies, enemies.get(i).getProjectiles(), p.getCurrentWeapon().getProjectiles());
+	                }
+	                for(int i = 0; i < boss.size(); i++){
+	                    t.paintTerrain(g, getP(),boss, boss.get(i).getProjectiles(), p.getCurrentWeapon().getProjectiles());
+	                }
+	            }
+	
+		    //Paint resources
+		    for(Resource r : getResources()){
+			r.paintResource(g);
+		    }
+	
+		    getP().AttackAnimation(g);
+		    if(getState() == STATE.PAUSE){
+		   	pmenu.requestFocusInWindow();
+		    }
+		    
+		    //RESOURCE BAR
+		    int resourceBarX = (int)getP().getXCoord()+630;
+				
+				g.setColor(greyTransp);
+				g.fillRect(resourceBarX-20, 25, 300, 160);
+				
+				Stroke oldStroke = g2d.getStroke();
+				Font fnt0 = new Font("arial", Font.BOLD, 25);
+				g.setFont(fnt0);
+				g.setColor(Color.white);
+	
+				g2d.drawImage(LogImage, resourceBarX, 50, null);
+				g.drawString("x" + getP().getLogCount()+"", resourceBarX, 50);	
+				g2d.drawImage(CoinImage, resourceBarX, 125, null);
+				g.drawString("x" + getP().getCoinCount()+"", resourceBarX, 125);	
+	
+				g2d.setStroke(oldStroke);
+	
+				//WEAPON BAR
+				int weaponBarX = (int)getP().getXCoord()-560;
+	
+				g.setColor(greyTransp);
+				g.fillRect(weaponBarX-20, 32, 100, 390);
+				
+				Color whiteTransp = new Color(255,255,255,200);
+				g.setColor(whiteTransp);
+				if(getP().getCurrentWeapon().getWeaponType()=="Gun"){
+				    g.fillRect(weaponBarX-20, 240, 100, 60);
+				}
+				else if(getP().getCurrentWeapon().getWeaponType()=="Bow"){
+				    g.fillRect(weaponBarX-20, 300, 100, 122);
+				}
+				else if(getP().getCurrentWeapon().getWeaponType()=="Axe"){
+				    g.fillRect(weaponBarX-20, 300, 100, 122);
+				}
+				else if(getP().getCurrentWeapon().getWeaponType()=="Sword"){
+				    g.fillRect(weaponBarX-20, 300, 100, 122);
+				}
+	
+				//oldStroke = g2d.getStroke();
+				//fnt0 = new Font("arial", Font.BOLD, 25);
+				g.setFont(fnt0);
+				g.setColor(Color.white);
+			       
+				g2d.drawImage(StickImage, weaponBarX, 50, null);
+				g.drawString("1", weaponBarX-10, 50+5);	
+				g2d.drawImage(SwordImage, weaponBarX, 120, null);
+				g.drawString("2", weaponBarX-10, 120+5);	
+				g2d.drawImage(AxeImage, weaponBarX, 190, null);
+				g.drawString("3", weaponBarX-10, 190+5);	
+				g2d.drawImage(GunImage, weaponBarX, 260, null);
+				g.drawString("4", weaponBarX-10, 260+5);
+				g2d.drawImage(BowImage, weaponBarX, 330, null);
+				g.drawString("5", weaponBarX-10, 330+5);
+				
+				g2d.setStroke(oldStroke);
+	
+				//paint player and weapon
+				getP().paintPlayer(g);
+				if(getEnemies().size() > 0){
+					getP().getCurrentWeapon().paintWeapon(g, getP(), getEnemies());
+				} else if(boss.size() > 0){
+					getP().getCurrentWeapon().paintWeapon(g, getP(), boss);
+				}
+	
+				//ATTACK ANIMATION
+				getP().AttackAnimation(g);
+				if(getState() == STATE.PAUSE){
+					pmenu.requestFocusInWindow();
+					int brightness = (int)(256 - 256 * 0.5f);
+					g.setColor(new Color(0,0,0,brightness));
+					g.fillRect((int)getP().getXCoord()-1000, 0, 7478, 1000);
+				}
 			}
-			// else display game over screen
-			else{
-			    getGoscreen().requestFocusInWindow();
-			    int brightness = (int)(256 - 256 * 0.5f);
-			    g.setColor(new Color(0,0,0,brightness));
-			    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+			//if State!=Game, perform other State actions
+	
+			else if (getState() == STATE.GAMEOVER){
+				// reset Player stats
+				getP().setXCoord(10); //was 10
+				getP().setYCoord(WorldBot - getP().getVerticalSize());
+				getP().setYAcc(.5);
+				getP().setYVel(0);
+				getP().setXVel(0);
+				getP().setHp(100);
+				getP().setAttack(500);
+				getP().setAttackSpeed(50);
+				getP().setSpeed(4);
+				getP().setJumpSpeed(-15);
+				getP().setHealthBarY((getP().getYCoord() - 580));
+				getP().setLogCount(0);
+				getP().setCoinCount(0);
+				
+				// if you win, display win screen
+				if (TotalProgress > 20){
+				    getWinscreen().setVisible(true);
+				    getWinscreen().requestFocusInWindow();
+				    int brightness = (int)(256 - 256 * 0.5f);
+				    g.setColor(new Color(0,0,0,brightness));
+				    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+				}
+				// else display game over screen
+				else{
+				    getGoscreen().requestFocusInWindow();
+				    int brightness = (int)(256 - 256 * 0.5f);
+				    g.setColor(new Color(0,0,0,brightness));
+				    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+				}
 			}
 		}
 	}
