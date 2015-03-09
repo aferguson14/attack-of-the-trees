@@ -153,7 +153,8 @@ public class Board extends JPanel implements ActionListener {
 		    
 		}
 
-
+		Stick s = new Stick(p.getXCoord(),p.getYCoord());
+		p.AddWeapon(0, s);
 		Sword sw = new Sword(p.getXCoord(),p.getYCoord());
 		p.AddWeapon(1, sw);
 		Axe a = new Axe(p.getXCoord(),p.getYCoord());
@@ -162,14 +163,7 @@ public class Board extends JPanel implements ActionListener {
 		p.AddWeapon(3, g);
 		Bow b = new Bow(p.getXCoord(),p.getYCoord());
 		p.AddWeapon(4, b);//index in arraylist
-		//Stick s = new Stick(p.getXCoord(),p.getYCoord());
-		//p.AddWeapon(0, s); //last so it is equip first
-
-		//Stick s = new Stick(p.getXCoord(),p.getYCord());
-		//p.AddWeapon(s);
-		//Sword sw = new Sword(p.getXCoord(),p.getYCord());
-		//p.AddWeapon(sw);
-		//above to be uncommented when implemented
+		p.setCurrentWeapon(s);
 	}
 
     
@@ -472,10 +466,13 @@ public class Board extends JPanel implements ActionListener {
 				    g.fillRect(weaponBarX-20, 300, 100, 122);
 				}
 				else if(getP().getCurrentWeapon().getWeaponType()=="Axe"){
-				    g.fillRect(weaponBarX-20, 300, 100, 122);
+				    g.fillRect(weaponBarX-20, 173, 100, 67);
 				}
 				else if(getP().getCurrentWeapon().getWeaponType()=="Sword"){
-				    g.fillRect(weaponBarX-20, 300, 100, 122);
+				    g.fillRect(weaponBarX-20, 103, 100, 70);
+				}
+				else if(getP().getCurrentWeapon().getWeaponType()=="Stick"){
+				    g.fillRect(weaponBarX-20, 32, 100, 71);
 				}
 	
 				//oldStroke = g2d.getStroke();
