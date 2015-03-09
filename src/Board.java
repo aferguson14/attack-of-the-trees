@@ -153,14 +153,19 @@ public class Board extends JPanel implements ActionListener {
 		    
 		}
 
+		Axe a = new Axe(p.getXCoord(),p.getYCoord());
+		p.AddWeapon(1, a);
+		//Sword sw = new Sword(p.getXCoord(),p.getYCoord());
+		//p.AddWeapon(2, sw);
 		Gun g = new Gun(p.getXCoord(),p.getYCoord());
 		p.AddWeapon(3, g);
 		Bow b = new Bow(p.getXCoord(),p.getYCoord());
 		p.AddWeapon(4, b);//index in arraylist
+		//Stick s = new Stick(p.getXCoord(),p.getYCoord());
+		//p.AddWeapon(0, s); //last so it is equip first
+
 		//Stick s = new Stick(p.getXCoord(),p.getYCord());
 		//p.AddWeapon(s);
-		//Axe a = new Axe(p.getXCoord(),p.getYCord());
-		//p.AddWeapon(a);
 		//Sword sw = new Sword(p.getXCoord(),p.getYCord());
 		//p.AddWeapon(sw);
 		//above to be uncommented when implemented

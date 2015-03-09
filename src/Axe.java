@@ -19,10 +19,11 @@ public class Axe extends Weapon implements Serializable{
         setSpeed(3);
         setXVel(0);
         setYVel(0);
+	setWeaponType("Axe");
 
-	ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/axe.png");
+	ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/axeLeft.png");
 	setStillLeft(iWeapLeft);
-	ImageIcon iWeapRight = new ImageIcon("../images/weaponImage/axe.png");
+	ImageIcon iWeapRight = new ImageIcon("../images/weaponImage/axeRight.png");
 	setStillRight(iWeapRight);
  
    }
