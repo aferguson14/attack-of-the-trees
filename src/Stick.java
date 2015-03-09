@@ -13,8 +13,8 @@ public class Stick extends Weapon implements Serializable{
     public Stick(double x, double y){
         setXCoord(x);
         setYCoord(y);
-        setAttack(40);
-        setAttackSpeed(100);
+        setAttack(100);
+        setAttackSpeed(20);
         setAttackSpeedTimer(99);
         setSpeed(3);
         setXVel(0);
