@@ -6,16 +6,19 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
 //extremely similar to player projectile
-public class Projectile {
+public class Projectile implements Serializable{
     //private data
     private double XCoord, YCoord;
     private double XVel, YVel;
     private double XAcc, YAcc;
-    private Image stillLeft;
-    private Image stillRight;
+    private ImageIcon stillLeft;
+    private ImageIcon stillRight;
     private int facing;
     private int HorizontalSize, VerticalSize;
      private int WorldBot = 700;
@@ -105,10 +108,10 @@ public boolean PlayerContact(Player p){
     public void paintImage(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 	if(getFacing() == 0){
-	    g2d.drawImage(this.getStillLeft(),(int) (this.getXCoord()), (int) (this.getYCoord() + 5), null);
+	    g2d.drawImage(this.getStillLeft().getImage(),(int) (this.getXCoord()), (int) (this.getYCoord() + 5), null);
 	}
 	else if(getFacing() == 1){
-	    g2d.drawImage(this.getStillLeft(),(int) (this.getXCoord() + this.getHorizontalSize()), (int) (this.getYCoord() + 5), null);
+	    g2d.drawImage(this.getStillLeft().getImage(),(int) (this.getXCoord() + this.getHorizontalSize()), (int) (this.getYCoord() + 5), null);
 	    
 	}
     }
@@ -416,28 +419,28 @@ public boolean PlayerContact(Player p){
     /**
      * @return the stillLeft
      */
-    public Image getStillLeft() {
+    public ImageIcon getStillLeft() {
         return stillLeft;
     }
 
     /**
      * @param stillLeft the stillLeft to set
      */
-    public void setStillLeft(Image stillLeft) {
+    public void setStillLeft(ImageIcon stillLeft) {
         this.stillLeft = stillLeft;
     }
 
     /**
      * @return the stillRight
      */
-    public Image getStillRight() {
+    public ImageIcon getStillRight() {
         return stillRight;
     }
 
     /**
      * @param stillRight the stillRight to set
      */
-    public void setStillRight(Image stillRight) {
+    public void setStillRight(ImageIcon stillRight) {
         this.stillRight = stillRight;
     }
 }

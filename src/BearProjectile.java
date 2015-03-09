@@ -17,14 +17,15 @@ public class BearProjectile extends Projectile implements Serializable{
         setYAcc(0);
         setSpeed(0);
         setYVel(0);
-        CreateImage(g);
+        
         setHorizontalSize(43);
         setVerticalSize(9);
         setAttack(1);
         ImageIcon iLeft = new ImageIcon("../images/attackImage/bearAttackLeft.png");
 	ImageIcon iRight = new ImageIcon ("../images/attackImage/bearAttackRight.png");
-        setStillLeft(iLeft.getImage());
-	setStillRight(iRight.getImage());
+        setStillLeft(iLeft);
+	setStillRight(iRight);
+	CreateImage(g);
         if(getFacing() == 0){
 	    setXCoord(getXCoord() -20);
 	}
@@ -39,10 +40,10 @@ public class BearProjectile extends Projectile implements Serializable{
     public void CreateImage(Graphics g){
 	Graphics2D g2d = (Graphics2D) g;
 	if(getFacing() == 0){
-	    g2d.drawImage(this.getStillLeft(),(int) (this.getXCoord()), (int) (this.getYCoord()), null);
+	    g2d.drawImage(this.getStillLeft().getImage(),(int) (this.getXCoord()), (int) (this.getYCoord()), null);
 	}
 	else if(getFacing() == 1){
-	    g2d.drawImage(this.getStillRight(),(int) (this.getXCoord()), (int) (this.getYCoord()), null);
+	    g2d.drawImage(this.getStillRight().getImage(),(int) (this.getXCoord()), (int) (this.getYCoord()), null);
 	    
 	}	
     }

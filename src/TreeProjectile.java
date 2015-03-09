@@ -20,14 +20,15 @@ public class TreeProjectile extends Projectile implements Serializable{
         setYAcc(0);
         setSpeed(2.5);
         setYVel(0);
-        CreateImage(g);
+       
         setHorizontalSize(8);
         setVerticalSize(5);
         setAttack(15);
-        ImageIcon iLeft = new ImageIcon("../images/attackImage/treeAttackLeft.png");
-	ImageIcon iRight = new ImageIcon ("../images/attackImage/treeAttackRight.png");
-	setStillLeft(iLeft.getImage());
-	setStillRight(iRight.getImage());
+        ImageIcon iLeft = new ImageIcon("images/attackImage/treeAttackLeft.png");
+	ImageIcon iRight = new ImageIcon ("images/attackImage/treeAttackRight.png");
+	setStillLeft(iLeft);
+	setStillRight(iRight);
+	CreateImage(g);
         if(direction == 0){
             setXVel(-1 * (getSpeed()));
         }
@@ -93,11 +94,11 @@ public class TreeProjectile extends Projectile implements Serializable{
 	Graphics2D g2d = (Graphics2D) g;
 	if(getFacing() == 0){
 	    g2d = (Graphics2D) g;
-            g2d.drawImage(this.getStillLeft(), (int) (this.getXCoord()), (int) (this.getYCoord() + 5), null);
+            g2d.drawImage(this.getStillLeft().getImage(), (int) (this.getXCoord()), (int) (this.getYCoord() + 5), null);
 	}
 	else if(getFacing() == 1){
 	    g2d = (Graphics2D) g;
-            g2d.drawImage(this.getStillRight(), (int) (this.getXCoord() + 57), (int) (this.getYCoord() + 5), null);
+            g2d.drawImage(this.getStillRight().getImage(), (int) (this.getXCoord() + 57), (int) (this.getYCoord() + 5), null);
 	    
 	}	
     }
