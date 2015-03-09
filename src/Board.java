@@ -146,9 +146,11 @@ public class Board extends JPanel implements ActionListener {
 		BowImage = bowImage.getImage();
 
 		//WEAPONS
-		Gun w = new Gun(0,0); //temp holder to intialize arrayList
-		for(int i=0;i<7;i++){
+		Gun w = new Gun(0,0);//temp holder to intialize arrayList
+		w.setWeaponType("empty");
+		for(int i=0;i<7;i++){ //7
 		    p.AddWeapon(i, w);
+		    
 		}
 
 		Gun g = new Gun(p.getXCoord(),p.getYCoord());

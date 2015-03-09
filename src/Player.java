@@ -221,28 +221,73 @@ if(isAttacking()){
     }
 //switch current weapon forward
     public void switchWeapon(){
+	/*
         if(WeaponTracker < weapon.size()){
-            WeaponTracker++;
-            currentWeapon = weapon.get(WeaponTracker);
+	    WeaponTracker++;
+	    if(currentWeapon.getWeaponType()!="empty"){
+		currentWeapon = weapon.get(WeaponTracker);
+	    }		
+	    else{
+		while(currentWeapon.getWeaponType()=="empty"){
+		    WeaponTracker++;
+		    currentWeapon = weapon.get(WeaponTracker);
+		}
+	    }
+
         }
         else if(WeaponTracker == weapon.size()){
             WeaponTracker = 0;
-            currentWeapon = weapon.get(WeaponTracker);
+	    if(currentWeapon.getWeaponType()!="empty"){
+		currentWeapon = weapon.get(WeaponTracker);
+	    }		
+	    else{
+		while(currentWeapon.getWeaponType()=="empty"){
+		    WeaponTracker++;
+		    currentWeapon = weapon.get(WeaponTracker);
+		}
+	    }
         }
+	*/
+	for(int i = 10; i>0; i--){
+	    if(WeaponTracker < weapon.size()-1){
+		WeaponTracker++;
+		currentWeapon = weapon.get(WeaponTracker);
+	    }
+	    else{
+		WeaponTracker = 0;
+		currentWeapon = weapon.get(WeaponTracker);
+	    }
+
+	    if(currentWeapon.getWeaponType()!="empty"){
+		break;
+	    }		
+
+
+	}
+
     }
 
 
 //switch current weapon backward
     public void switchWeaponBackward(){
-        if(WeaponTracker > 0){
-            WeaponTracker--;
-            currentWeapon = weapon.get(WeaponTracker);
-        }
-        else if(WeaponTracker == 0){
-            WeaponTracker = weapon.size();
-            currentWeapon = weapon.get(WeaponTracker);
-        }
+	for(int i = 10; i>0; i--){
+	    if(WeaponTracker > 0){
+		WeaponTracker--;
+		currentWeapon = weapon.get(WeaponTracker);
+	    }
+	    else{
+		WeaponTracker = weapon.size()-1;
+		currentWeapon = weapon.get(WeaponTracker);
+	    }
+
+	    if(currentWeapon.getWeaponType()!="empty"){
+		break;
+	    }		
+
+
+	}
     }
+
 
 //get mouse coords
 // if attacking, shoot weapon
