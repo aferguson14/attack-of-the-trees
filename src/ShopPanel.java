@@ -26,8 +26,8 @@ public class ShopPanel extends JPanel {
     JButton purchased = new JButton("Already Purchased");
     Player p;
     int logs, coins;
-    int[] logCost = {5,1,10,50};
-    int[] coinCost = {1,0,5,10};
+    int[] logCost = {0,1,5,7};
+    int[] coinCost = {1,3,5,10};
     String[] weaponDescrip;
     int[] weaponsBought = {0,0,0,0};
     JFrame jf;
