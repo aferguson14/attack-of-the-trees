@@ -57,7 +57,7 @@ public class Player implements Serializable{
     
     //Constructor
     public Player() {
-	ImageIcon i = new ImageIcon("../images/playerImages/guy/guySideDown.png"); //character image
+	ImageIcon i = new ImageIcon("../images/playerImages/guy/guyArmlessRight.png"); //character image
 	setStill(i);
         ImageIcon iArm = new ImageIcon ("../images/playerImages/guy/armRight.png");
 	setArmStill(iArm);
