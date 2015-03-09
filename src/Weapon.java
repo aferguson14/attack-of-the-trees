@@ -76,7 +76,7 @@ public abstract class Weapon implements Serializable{
             proj.move(e, p);
         }
         for(PlayerProjectile proj : this.getProjectiles()){
-            proj.paintImage(g);
+	    //            proj.paintImage(g);
             proj.CreateImage(g);
         }
     }

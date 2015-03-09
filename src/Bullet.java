@@ -14,7 +14,7 @@ public class Bullet extends PlayerProjectile implements Serializable{
         super(x, y, direction, g, angle, player);
         setXAcc(0);
         setYAcc(0);
-        setSpeed(6);
+        setSpeed(10);//6
         setYVel(0);
         CreateImage(g);
         setHorizontalSize(15);//25
