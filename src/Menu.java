@@ -10,7 +10,7 @@ public class Menu {
 	public Rectangle loadGameButtonOutline = new Rectangle(1000, 458, 353, 73);
 	public Rectangle loadGameButtonInline = new Rectangle(1004, 462, 346, 66);
 	public Rectangle loadGameButton = new Rectangle(1002, 460, 350, 70);
-	public ImageIcon i = new ImageIcon("../images/backgrounds/mainMenuCropped.jpg");
+	public ImageIcon i = new ImageIcon("../images/backgrounds/mainMenu.jpg");
 	private int x = -100;
 	private int y = 150;
 	private int ngx = newGameButton.x+35;
