@@ -149,6 +149,7 @@ public class Board extends JPanel implements ActionListener {
 
 		Stick s = new Stick(p.getXCoord(),p.getYCoord());
 		p.AddWeapon(0, s);
+		/*
 		Sword sw = new Sword(p.getXCoord(),p.getYCoord());
 		p.AddWeapon(1, sw);
 		Axe a = new Axe(p.getXCoord(),p.getYCoord());
@@ -156,7 +157,7 @@ public class Board extends JPanel implements ActionListener {
 		Gun g = new Gun(p.getXCoord(),p.getYCoord());
 		p.AddWeapon(3, g);
 		Bow b = new Bow(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(4, b);//index in arraylist
+		p.AddWeapon(4, b);//index in arraylist*/
 		p.setCurrentWeapon(s);
 	}
 

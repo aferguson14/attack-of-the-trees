@@ -19,15 +19,15 @@ import javax.swing.JPanel;
 
 public class ShopPanel extends JPanel {
 
-    ArrayList<String> weaponNames = new ArrayList<String>(Arrays.asList("sword", "stick", "axe", "gun"));
+    ArrayList<String> weaponNames = new ArrayList<String>(Arrays.asList("sword", "bow", "axe", "gun"));
     ArrayList<JButton> buttons = new ArrayList<JButton>();
     int indexClicked;
     JButton buy = new JButton("Purchase");
     JButton purchased = new JButton("Already Purchased");
     Player p;
     int logs, coins;
-    int[] logCost = {5,1,10,50};
-    int[] coinCost = {1,0,5,10};
+    int[] logCost = {0,1,5,7};
+    int[] coinCost = {1,3,5,10};
     String[] weaponDescrip;
     int[] weaponsBought = {0,0,0,0};
     JFrame jf;
@@ -44,7 +44,8 @@ public class ShopPanel extends JPanel {
 	//jf.setLocationRelativeTo(null);
 	jf.pack();
 	for (int i = 0; i < weaponNames.size(); i++) {
-	    JButton j = new JButton(new ImageIcon("../images/weaponImage/" + weaponNames.get(i) + ".png"));
+	    JButton j = new JButton(new ImageIcon("../images/weaponImage/" + weaponNames.get(i) + "Left.png"));
+	    j.setPreferredSize(new Dimension(100,100));
 	    buttons.add(i, j);
 	    this.add(buttons.get(i));
 	    buttons.get(i).addActionListener(actionListener);
@@ -90,9 +91,9 @@ public class ShopPanel extends JPanel {
 			//System.out.println(logs + " " + coins);
 			//need to add this weapon to the players arraylist of weapons
 			//Uncomment next three lines when we have the other classes
-			//if(indexClicked == 0) p.AddWeapon(new Sword(p.getXCoord(), p.getYCoord()));
-			//if(indexClicked == 1) p.AddWeapon(new Stick(p.getXCoord(), p.getYCoord()));
-			//if(indexClicked == 2) p.AddWeapon(new Axe(p.getXCoord(), p.getYCoord()));
+			if(indexClicked == 0) p.AddWeapon(1, new Sword(p.getXCoord(), p.getYCoord()));
+			if(indexClicked == 1) p.AddWeapon(4, new Bow(p.getXCoord(), p.getYCoord()));
+			if(indexClicked == 2) p.AddWeapon(2, new Axe(p.getXCoord(), p.getYCoord()));
 			if(indexClicked == 3) p.AddWeapon(3, new Gun(p.getXCoord(), p.getYCoord()));
 			repaint();
 		    }
@@ -115,10 +116,10 @@ public class ShopPanel extends JPanel {
 	this.remove(purchased);
 	
 	//paint the different images and costs for the weapons and the purchase button
-	ImageIcon i = new ImageIcon("../images/weaponImage/" + weaponNames.get(indexClicked) + ".png");
+	ImageIcon i = new ImageIcon("../images/weaponImage/" + weaponNames.get(indexClicked) + "Left.png");
 	Image weapon = i.getImage();
 	g2d.drawImage(weapon, 220, 150, null);
-	g2d.drawString("Cost: " + logCost[indexClicked] + " logs, " + coinCost[indexClicked] + " coins", 185, 220);
+	g2d.drawString("Cost: " + logCost[indexClicked] + " logs, " + coinCost[indexClicked] + " coins", 185, 250);
 	//g2d.drawString(weaponDescrip[indexClicked], 150, 250);
 	
 	// check to see if they've already purchased that item
