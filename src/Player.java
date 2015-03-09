@@ -138,7 +138,7 @@ public class Player implements Serializable{
 			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-52, (int) (this.getYCoord())+53, null);
 			}
 			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
-			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-52+30, (int) (this.getYCoord())+53-25, null);
+			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-52+30, (int) (this.getYCoord())+25, null);
 			}
 			else if(this.getCurrentWeapon().getWeaponType()=="Axe"){
 			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-55, (int) (this.getYCoord())+53-15, null);
@@ -174,7 +174,7 @@ public class Player implements Serializable{
 			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5, null);//was +33,-7
 			}
 			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
-			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5-30, null);//was +33
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+23, null);//was +33
 			}
 			else if(this.getCurrentWeapon().getWeaponType()=="Axe"){
 			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+34, (int) (this.getYCoord())+35, null);
@@ -210,21 +210,17 @@ if(isAttacking()){
 		if(isAttacking()){
 			if(getFacing() == 0){
 
-				//	ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpLeft.png"); //character image
-				//setStill(i.getImage());
 			}
 			else if(getFacing() == 1){
-				//ImageIcon i = new ImageIcon("images/playerImages/guy/guySideUpRight.png");
-				//setStill(i.getImage());
+
 			}
 
-		}else{
+		}
+		else{
 			if(getFacing() == 0){
-				//ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownLeft.png");
-				//setStill(i.getImage());
+
 			}else{
-				//ImageIcon i = new ImageIcon("images/playerImages/guy/guySideDownRight.png");
-				//setStill(i.getImage());
+
 			}
 		}
 }

@@ -8,10 +8,7 @@ import java.util.Random;
 import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
-
-    
     //private data
-
     //Objects
     	Random randomGenerator = new Random();
 	private Player p;
@@ -43,7 +40,6 @@ public class Board extends JPanel implements ActionListener {
 	public Image StickImage;
 	public Image GunImage;
         public Image BowImage;
-
 
 	private Image img;
 	private Timer time;
@@ -99,7 +95,6 @@ public class Board extends JPanel implements ActionListener {
         //not stitched together, used multiple background images
 	ImageIcon far = new 
 	ImageIcon("../images/backgrounds/far-background.png");
-        
         farBackground = far.getImage();
         ImageIcon far2 = new ImageIcon("../images/backgrounds/far-background.png");
 	ImageIcon near = new 
@@ -150,7 +145,6 @@ public class Board extends JPanel implements ActionListener {
 		w.setWeaponType("empty");
 		for(int i=0;i<7;i++){ //7
 		    p.AddWeapon(i, w);
-		    
 		}
 
 		Stick s = new Stick(p.getXCoord(),p.getYCoord());
@@ -199,7 +193,6 @@ public class Board extends JPanel implements ActionListener {
        
 		    resources.add(getEnemies().get(i).getResource());
 
-
                     getEnemies().remove(i);
                     if(lvlhandler.getProgress() < lvlhandler.getProgressNeeded()){
                         lvlhandler.setProgress(lvlhandler.getProgress() + 1);
@@ -238,7 +231,6 @@ public class Board extends JPanel implements ActionListener {
                         }
                     }
                 }
-
             }
         }
         else{
@@ -272,8 +264,6 @@ public class Board extends JPanel implements ActionListener {
                             }
                     }
                 }
-                    
-
         }
 
 	//if Player runs over resource, collect
@@ -310,7 +300,6 @@ public class Board extends JPanel implements ActionListener {
 	    getMenu().render(g);
 	}
 	else{
-		
 	        if (getState() == STATE.LOAD) {
 				System.out.println("Pressed load game");
 				// System.exit(0);
@@ -345,19 +334,13 @@ public class Board extends JPanel implements ActionListener {
 		g2d.drawImage(Far2,-4500, -1800,null);
 		g2d.drawImage(Near2,-7473 , -1305,null);
 	
-	
 		Color prev = g.getColor();
 		Color greyTransp = new Color(70, 70, 70, 150);
-	
-		        
-	
-	        
 	
 		if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
 	         if (TotalProgress > 20){
 				setState(STATE.GAMEOVER);
 			    }
-	
 		//Grass Images
 		/*int q=0; //this is for the dirt under grass
 		while(q<7478){ //188x29
@@ -373,7 +356,6 @@ public class Board extends JPanel implements ActionListener {
 		    q+=28;
 		    g2d.drawImage(Grass2, q, 658, null);
 		    q+=80;
-	
 		}
 	
 		q=0;
@@ -528,7 +510,7 @@ public class Board extends JPanel implements ActionListener {
 				getP().setLogCount(0);
 				getP().setCoinCount(0);
 				
-				// if you win, display win screen
+				// if game is won display win screen
 				if (TotalProgress > 20){
 				    getWinscreen().setVisible(true);
 				    getWinscreen().requestFocusInWindow();
@@ -560,8 +542,6 @@ public class Board extends JPanel implements ActionListener {
 	}
 
 
-    
-    
     //------------------------------Getters/Setters---------------------------[
 	/**
 	 * @return the p
