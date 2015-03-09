@@ -17,7 +17,7 @@ public class Bullet extends PlayerProjectile implements Serializable{
         setSpeed(6);
         setYVel(0);
         CreateImage(g);
-        setHorizontalSize(25);
+        setHorizontalSize(15);//25
         setVerticalSize(6);
         setAttack(30);
 	ImageIcon iLeft = new ImageIcon("../images/attackImage/bulletLeft.png");
@@ -36,7 +36,7 @@ public class Bullet extends PlayerProjectile implements Serializable{
 		if(getFacing() == 0){
 		    g2d.rotate(this.getMouseAngle(), this.getXCoord()/*+25*/, this.getYCoord()/*+63*/);
 		    g2d.rotate(Math.PI, this.getXCoord()/*+25*/, this.getYCoord()/*+63*/);
-		    g2d.drawImage(this.getStillLeft(),(int) (this.getXCoord())/*-52*/, (int) (this.getYCoord())+10/*+53*/, null);
+		    g2d.drawImage(this.getStillLeft(),(int) (this.getXCoord())/*-52*/, (int) (this.getYCoord())+2/*+10*/, null);
 
 		    g2d.rotate(-Math.PI, this.getXCoord()/*+25*/, this.getYCoord()/*+63*/);
 		    g2d.rotate(-this.getMouseAngle(), this.getXCoord()/*+25*/, this.getYCoord()/*+63*/);
