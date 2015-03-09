@@ -143,6 +143,9 @@ public class Player implements Serializable{
 			else if(this.getCurrentWeapon().getWeaponType()=="Axe"){
 			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-55, (int) (this.getYCoord())+53-15, null);
 			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Sword"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-68, (int) (this.getYCoord())+31, null);
+			}
 			
 			//END WEAPON POSITIONING
 			g2d.drawImage(this.getArmStill().getImage(), (int) (this.getXCoord())-15, (int) (this.getYCoord())+60, null);
@@ -171,7 +174,10 @@ public class Player implements Serializable{
 			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5-30, null);//was +33
 			}
 			else if(this.getCurrentWeapon().getWeaponType()=="Axe"){
-			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+34, (int) (this.getYCoord())+35, null);//was +33
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+34, (int) (this.getYCoord())+35, null);
+			}
+			else if(this.getCurrentWeapon().getWeaponType()=="Sword"){
+			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+43, (int) (this.getYCoord())+28, null);
 			}
 
 			//END WEAPON POSITIONING
