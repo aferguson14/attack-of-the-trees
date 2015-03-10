@@ -512,7 +512,6 @@ public class Board extends JPanel implements ActionListener {
 				getP().setLogCount(0);
 				getP().setCoinCount(0);
 				lvlhandler =  new LevelHandler();
-				setTotalProgress(0);
 				
 				// if game is won display win screen
 				if (TotalProgress > 20){
@@ -521,6 +520,7 @@ public class Board extends JPanel implements ActionListener {
 				    int brightness = (int)(256 - 256 * 0.5f);
 				    g.setColor(new Color(0,0,0,brightness));
 				    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					setTotalProgress(0);
 				}
 				// else display game over screen
 				else{
@@ -528,6 +528,7 @@ public class Board extends JPanel implements ActionListener {
 				    int brightness = (int)(256 - 256 * 0.5f);
 				    g.setColor(new Color(0,0,0,brightness));
 				    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					setTotalProgress(0);
 				}
 			}
 		}
