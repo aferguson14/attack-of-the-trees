@@ -12,8 +12,8 @@ public class FishProjectile extends Projectile{
         super(x, y, direction, g, angle, p);
         ImageIcon iLeft = new ImageIcon("../images/sourceImage/water.png");
 	ImageIcon iRight = new ImageIcon ("../images/sourceImage/water.png");
-        setStillLeft(iLeft.getImage());
-	setStillRight(iRight.getImage());
+        setStillLeft(iLeft);
+	setStillRight(iRight);
         setXAcc(0);
         setYAcc(.5);
         setSpeed(4);
@@ -30,11 +30,11 @@ public class FishProjectile extends Projectile{
 	Graphics2D g2d = (Graphics2D) g;
 	if(getFacing() == 0){
 	    g2d = (Graphics2D) g;
-            g2d.drawImage(this.getStillLeft(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
+            g2d.drawImage(this.getStillLeft().getImage(), (int) (this.getXCoord()), (int) (this.getYCoord()), null);
 	}
 	else if(getFacing() == 1){
 	    g2d = (Graphics2D) g;
-            g2d.drawImage(this.getStillRight(), (int) (this.getXCoord() + 57), (int) (this.getYCoord() + 5), null);
+            g2d.drawImage(this.getStillRight().getImage(), (int) (this.getXCoord() + 57), (int) (this.getYCoord() + 5), null);
 	    
 	}	
     }

@@ -74,7 +74,7 @@ public class Board extends JPanel implements ActionListener {
     
     
     public Board() {
-        //creates player, enemies, terrain, weapon, menu, and background images
+        //creates player, enemies, terrain, weapon, menu, and background ../images
 	p = new Player();
 	lvlhandler = new LevelHandler();
         lvlhandler.HandleLVL1Start(enemies, terrain, generator);
@@ -93,7 +93,7 @@ public class Board extends JPanel implements ActionListener {
         addMouseListener(m);
         addMouseMotionListener(m);
         setFocusable(true);
-        //not stitched together, used multiple background images
+        //not stitched together, used multiple background ../images
 	ImageIcon far = new 
 	ImageIcon("../images/backgrounds/far-background.png");
         farBackground = far.getImage();
@@ -325,7 +325,7 @@ public class Board extends JPanel implements ActionListener {
 			}
 	        BoardLoc = this.getLocationOnScreen();
 		
-	        //background images
+	        //background ../images
 		g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
 		//above line changes where player appears on screen
 	
@@ -512,7 +512,6 @@ public class Board extends JPanel implements ActionListener {
 				getP().setLogCount(0);
 				getP().setCoinCount(0);
 				lvlhandler =  new LevelHandler();
-				setTotalProgress(0);
 				
 				// if game is won display win screen
 				if (TotalProgress > 20){
@@ -521,6 +520,7 @@ public class Board extends JPanel implements ActionListener {
 				    int brightness = (int)(256 - 256 * 0.5f);
 				    g.setColor(new Color(0,0,0,brightness));
 				    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					setTotalProgress(0);
 				}
 				// else display game over screen
 				else{
@@ -528,6 +528,7 @@ public class Board extends JPanel implements ActionListener {
 				    int brightness = (int)(256 - 256 * 0.5f);
 				    g.setColor(new Color(0,0,0,brightness));
 				    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					setTotalProgress(0);
 				}
 			}
 		}

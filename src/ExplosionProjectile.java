@@ -17,14 +17,15 @@ public class ExplosionProjectile extends Projectile implements Serializable{
         setYAcc(0);
         setSpeed(0);
         setYVel(0);
-        CreateImage(g);
+       
         setHorizontalSize(50);
         setVerticalSize(50);
         setAttack(30);
         ImageIcon iLeft = new ImageIcon("../images/attackImage/bearAttackLeft.png");
 	ImageIcon iRight = new ImageIcon ("../images/attackImage/bearAttackRight.png");
-        setStillLeft(iLeft.getImage());
-	setStillRight(iRight.getImage());
+        setStillLeft(iLeft);
+	setStillRight(iRight); 
+	CreateImage(g);
         
     }
     //paints projectile

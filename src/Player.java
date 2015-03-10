@@ -315,9 +315,9 @@ if(isAttacking()){
 		}
 		if (key == KeyEvent.VK_D){
 			if(!isAttacking()){
-				/*                ImageIcon iRight = new ImageIcon("images/playerImages/guy/guyArmlessRight.png"); // character image
+				/*                ImageIcon iRight = new ImageIcon("../images/playerImages/guy/guyArmlessRight.png"); // character image
                 setStill(iRight.getImage());
-		ImageIcon iArmRight = new ImageIcon("images/playerImages/guy/armRight.png");
+		ImageIcon iArmRight = new ImageIcon("../images/playerImages/guy/armRight.png");
 		setArmStill(iArmRight.getImage());
 				 */
 			}

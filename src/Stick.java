@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 
 
 public class Stick extends Weapon implements Serializable{
+
     //constructor
     public Stick(double x, double y){
         setXCoord(x);
@@ -21,47 +22,48 @@ public class Stick extends Weapon implements Serializable{
         setYVel(0);
 	setWeaponType("Stick");
 
-	ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/stickLeft.png");
-	setStillLeft(iWeapLeft);
-	ImageIcon iWeapRight = new ImageIcon("../images/weaponImage/stickRight.png");
-	setStillRight(iWeapRight);
- 
-   }
-    //creates projectile towards mouse point
-    public void shoot(Point p, Graphics g, Player player){
-        if(p.getX() > getXCoord()){
-            setFacing(1);
-        } else{
-            setFacing(0);
-        }
-        this.setAttackSpeedTimer(this.getAttackSpeedTimer() + 1);
-        if(this.getAttackSpeedTimer() == this.getAttackSpeed()){
-		    AxeProjectile axeproj = new AxeProjectile(this.getXCoord(), 
-					       this.getYCoord(), this.getFacing(), g, findAngle(p), player); //+45
-		    axeproj.setMouseY(this.getMouseY());
-		    axeproj.setMouseX(this.getMouseX());
-		    axeproj.setMouseAngle(this.getMouseAngle());
-		    this.addProjectile(axeproj);
-		    this.setAttackSpeedTimer(0);
-                }
-    }
-    @Override
-    public void DealDmgE(Enemies e){
-        e.takeDmg(this.getAttack());
-    }
 
-    @Override
-    public void print() {
-        System.out.println("sword");
-    }
+		ImageIcon iWeapLeft = new ImageIcon("../images/weaponImage/stickLeft.png");
+		setStillLeft(iWeapLeft);
+		ImageIcon iWeapRight = new ImageIcon("../images/weaponImage/stickRight.png");
+		setStillRight(iWeapRight);
 
-    //paints weapon (pending)
-    //paints weapon's projectiles
-    @Override
-    public void paintWeapon(Graphics g, Player p, ArrayList <Enemies> e) {
+	}
+	//creates projectile towards mouse point
+	public void shoot(Point p, Graphics g, Player player){
+		if(p.getX() > getXCoord()){
+			setFacing(1);
+		} else{
+			setFacing(0);
+		}
+		this.setAttackSpeedTimer(this.getAttackSpeedTimer() + 1);
+		if(this.getAttackSpeedTimer() == this.getAttackSpeed()){
+			AxeProjectile axeproj = new AxeProjectile(this.getXCoord(), 
+					this.getYCoord(), this.getFacing(), g, findAngle(p), player); //+45
+					axeproj.setMouseY(this.getMouseY());
+					axeproj.setMouseX(this.getMouseX());
+					axeproj.setMouseAngle(this.getMouseAngle());
+					this.addProjectile(axeproj);
+					this.setAttackSpeedTimer(0);
+		}
+	}
+	@Override
+	public void DealDmgE(Enemies e){
+		e.takeDmg(this.getAttack());
+	}
 
-        paintProjectile(e, g, p);
-        deleteProjectiles();
-    }
-    
+	@Override
+	public void print() {
+		System.out.println("sword");
+	}
+
+	//paints weapon (pending)
+	//paints weapon's projectiles
+	@Override
+	public void paintWeapon(Graphics g, Player p, ArrayList <Enemies> e) {
+
+		paintProjectile(e, g, p);
+		deleteProjectiles();
+	}
+
 }
