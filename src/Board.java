@@ -24,7 +24,8 @@ public class Board extends JPanel implements ActionListener {
     public Image nearBackground;
     public Image Far2, Far3;
     public Image Near2;
-
+    public Image BlackFiller;
+    public Image BlackFillerLarge;
     //Grass ../images
     public Image Grass1;
     public Image Grass2;
@@ -110,6 +111,11 @@ public class Board extends JPanel implements ActionListener {
         Far2 = far2.getImage();
         Near2 = near2.getImage();
 	
+	ImageIcon blackFiller = new ImageIcon("../images/backgrounds/blackFiller.png");
+	ImageIcon blackFillerLarge = new ImageIcon("../images/backgrounds/blackFillerLarge.png");
+	BlackFiller = blackFiller.getImage();
+	BlackFillerLarge = blackFillerLarge.getImage();
+
 	ImageIcon grass1 = new ImageIcon("../images/grassImages/grass1.png");
 	ImageIcon grass2 = new ImageIcon("../images/grassImages/grass2.png");
 	ImageIcon grass3 = new ImageIcon("../images/grassImages/grass3.png");
@@ -337,7 +343,7 @@ public class Board extends JPanel implements ActionListener {
 	        BoardLoc = this.getLocationOnScreen();
 		
 	        //background ../images
-		g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
+		g2d.translate((p.getXCoord()*-1)+600, 0); //+600 because of player pos.
 		//above line changes where player appears on screen
 	
 		g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
@@ -346,7 +352,8 @@ public class Board extends JPanel implements ActionListener {
 		g2d.drawImage(nearBackground,0, -1300, null);
 		g2d.drawImage(Far2,-4500, -1800,null);
 		g2d.drawImage(Near2,-7473 , -1305,null);
-	
+		g2d.drawImage(BlackFiller, -600, 0, null);
+		g2d.drawImage(BlackFillerLarge, 7050, 0, null);
 		Color prev = g.getColor();
 		Color greyTransp = new Color(70, 70, 70, 150);
 	
