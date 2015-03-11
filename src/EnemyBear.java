@@ -51,7 +51,7 @@ public class EnemyBear extends Enemies implements Serializable{
 					//if attack speed count == the enemies attack speed
 					if(!attackdone){
 						//create a projectile towards the player
-						BearProjectile claw = new BearProjectile(this.getXCoord()
+						BearProjectile claw = new BearProjectile(this.getXCoord()-34
 								, this.getYCoord(), this.getFacing(), g, 
 								findAngle(p.getPlayerPoint()), p);
 						this.addProjectile(claw);

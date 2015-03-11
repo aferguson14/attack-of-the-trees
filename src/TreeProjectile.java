@@ -24,8 +24,8 @@ public class TreeProjectile extends Projectile implements Serializable{
         setHorizontalSize(8);
         setVerticalSize(5);
         setAttack(15);
-        ImageIcon iLeft = new ImageIcon("images/attackImage/treeAttackLeft.png");
-	ImageIcon iRight = new ImageIcon ("images/attackImage/treeAttackRight.png");
+        ImageIcon iLeft = new ImageIcon("../images/attackImage/treeAttackLeft.png");
+	ImageIcon iRight = new ImageIcon ("../images/attackImage/treeAttackRight.png");
 	setStillLeft(iLeft);
 	setStillRight(iRight);
 	CreateImage(g);
