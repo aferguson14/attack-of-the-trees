@@ -55,7 +55,8 @@ public class LevelHandler {
         Rock block4 = new Rock(-100, WorldBot - 400);
         Rock block5 = new Rock(-100, WorldBot - 500);
         Rock block6 = new Rock(-100, WorldBot - 600);
-         Rock block7 = new Rock(-100, WorldBot - 700);
+	Rock block7 = new Rock(-100, WorldBot - 700);
+	Rock block8 = new Rock(-100, WorldBot);
         
         terrain.add(block1);
         terrain.add(block2);
@@ -64,6 +65,7 @@ public class LevelHandler {
         terrain.add(block5);
         terrain.add(block6);
         terrain.add(block7);
+	terrain.add(block8);
         
         Rock blockEnd1 = new Rock(6950, WorldBot - 100);
         Rock blockEnd2 = new Rock(6950, WorldBot - 200);
@@ -71,8 +73,9 @@ public class LevelHandler {
         Rock blockEnd4 = new Rock(6950, WorldBot - 400);
         Rock blockEnd5 = new Rock(6950, WorldBot - 500);
         Rock blockEnd6 = new Rock(6950, WorldBot - 600);
-         Rock blockEnd7 = new Rock(6950, WorldBot - 700);
-        
+	Rock blockEnd7 = new Rock(6950, WorldBot - 700);
+        Rock blockEnd8 = new Rock(6950, WorldBot);
+
         terrain.add(blockEnd1);
         terrain.add(blockEnd2);
         terrain.add(blockEnd3);
@@ -80,6 +83,7 @@ public class LevelHandler {
         terrain.add(blockEnd5);
         terrain.add(blockEnd6);
         terrain.add(blockEnd7);
+	terrain.add(blockEnd8);
     }
     
     public void createSegment1(ArrayList<Terrain> terrain){
