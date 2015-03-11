@@ -48,7 +48,7 @@ public class TreeProjectile extends Projectile implements Serializable{
         	}
         
         	time++;
-        	if(time >= 700){
+        	if(time >= 250){
         	     this.setRemove(true);
         	}
          
