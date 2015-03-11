@@ -10,14 +10,14 @@ import javax.swing.*;
 public class Board extends JPanel implements ActionListener {
     //private data
     //Objects
-    Random randomGenerator = new Random();
+    Random randomGenerator;
     private Player p;
-    private ArrayList <Enemies> enemies = new ArrayList<Enemies>();
-    private ArrayList <Terrain> terrain = new ArrayList<Terrain>();
-    private ArrayList <Resource> resources = new ArrayList<Resource>();
-    private ArrayList <Enemies> boss = new ArrayList<Enemies>();
-    private EnemyGenerator generator = new EnemyGenerator(this);
-    private int TotalProgress = 0;
+    private ArrayList <Enemies> enemies;
+    private ArrayList <Terrain> terrain;
+    private ArrayList <Resource> resources;
+    private ArrayList <Enemies> boss;
+    private EnemyGenerator generator;
+    private int TotalProgress;
 
     //Background ../images
     public Image farBackground;
@@ -65,7 +65,6 @@ public class Board extends JPanel implements ActionListener {
     //states
     public static enum STATE {
     	MENU,
-	CHARMENU,
 	GAME,
 	PAUSE,
 	GAMEOVER,
@@ -76,9 +75,16 @@ public class Board extends JPanel implements ActionListener {
     
     
     public Board() {
+	randomGenerator = new Random();
         //creates player, enemies, terrain, weapon, menu, and background ../images
 	p = new Player();
+	enemies = new ArrayList<Enemies>();
+	terrain = new ArrayList<Terrain>();
+	resources = new ArrayList<Resource>();
+	boss = new ArrayList<Enemies>();
+	TotalProgress = 0;
 	lvlhandler = new LevelHandler();
+	generator = new EnemyGenerator(this);
         lvlhandler.HandleLVL1Start(enemies, terrain, generator);
         
         for(int i = 0; i < enemies.size(); i++){
@@ -140,37 +146,37 @@ public class Board extends JPanel implements ActionListener {
 	time.start();
 
 	//WEAPON ../images
-		ImageIcon axeImage = new ImageIcon("../images/weaponImage/axe.png");
-		AxeImage = axeImage.getImage();
-		ImageIcon swordImage = new ImageIcon("../images/weaponImage/sword.png");
-		SwordImage = swordImage.getImage();
-		ImageIcon stickImage = new ImageIcon("../images/weaponImage/stick.png");
-		StickImage = stickImage.getImage();
-		ImageIcon gunImage = new ImageIcon("../images/weaponImage/gun.png");
-		GunImage = gunImage.getImage();
-		ImageIcon bowImage = new ImageIcon("../images/weaponImage/bowRight.png");
-		BowImage = bowImage.getImage();
+	ImageIcon axeImage = new ImageIcon("../images/weaponImage/axe.png");
+	AxeImage = axeImage.getImage();
+	ImageIcon swordImage = new ImageIcon("../images/weaponImage/sword.png");
+	SwordImage = swordImage.getImage();
+	ImageIcon stickImage = new ImageIcon("../images/weaponImage/stick.png");
+	StickImage = stickImage.getImage();
+	ImageIcon gunImage = new ImageIcon("../images/weaponImage/gun.png");
+	GunImage = gunImage.getImage();
+	ImageIcon bowImage = new ImageIcon("../images/weaponImage/bowRight.png");
+	BowImage = bowImage.getImage();
 
-		//WEAPONS
-		Gun w = new Gun(0,0);//temp holder to intialize arrayList
-		w.setWeaponType("empty");
-		for(int i=0;i<7;i++){ //7
-		    p.AddWeapon(i, w);
-		}
-
-		Stick s = new Stick(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(0, s);
-		/*
-		Sword sw = new Sword(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(1, sw);
-		Axe a = new Axe(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(2, a);
-		Gun g = new Gun(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(3, g);
-		Bow b = new Bow(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(4, b);//index in arraylist*/
-		p.setCurrentWeapon(s);
+	//WEAPONS
+	Gun w = new Gun(0,0);//temp holder to intialize arrayList
+	w.setWeaponType("empty");
+	for(int i=0;i<7;i++){ //7
+	p.AddWeapon(i, w);
 	}
+
+	Stick s = new Stick(p.getXCoord(),p.getYCoord());
+	p.AddWeapon(0, s);
+	/*
+	Sword sw = new Sword(p.getXCoord(),p.getYCoord());
+	p.AddWeapon(1, sw);
+	Axe a = new Axe(p.getXCoord(),p.getYCoord());
+	p.AddWeapon(2, a);
+	Gun g = new Gun(p.getXCoord(),p.getYCoord());
+	p.AddWeapon(3, g);
+	Bow b = new Bow(p.getXCoord(),p.getYCoord());
+	p.AddWeapon(4, b);//index in arraylist*/
+	p.setCurrentWeapon(s);
+}
 
     
     public void actionPerformed(ActionEvent e) {
@@ -529,24 +535,73 @@ public class Board extends JPanel implements ActionListener {
 				getP().setHealthBarY((getP().getYCoord() - 580));
 				getP().setLogCount(0);
 				getP().setCoinCount(0);
-				lvlhandler =  new LevelHandler();
-				
+
 				// if game is won display win screen
 				if (TotalProgress > 20){
-				    getWinscreen().setVisible(true);
-				    getWinscreen().requestFocusInWindow();
-				    int brightness = (int)(256 - 256 * 0.5f);
-				    g.setColor(new Color(0,0,0,brightness));
-				    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					getWinscreen().setVisible(true);
+					getWinscreen().requestFocusInWindow();
+					int brightness = (int)(256 - 256 * 0.5f);
+					g.setColor(new Color(0,0,0,brightness));
+					g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					
+					// reset level
 					setTotalProgress(0);
+					randomGenerator = new Random();
+					generator = new EnemyGenerator(this);
+					enemies = new ArrayList<Enemies>();
+					terrain = new ArrayList<Terrain>();
+					resources = new ArrayList<Resource>();
+					boss = new ArrayList<Enemies>();
+					TotalProgress = 0;
+					lvlhandler = new LevelHandler();
+					lvlhandler.HandleLVL1Start(enemies, terrain, generator);
+					for(int i = 0; i < enemies.size(); i++){
+						enemies.get(i).setTerrainDimensions(terrain);
+					}
+					p.setTerrains(terrain);
+					
+					//WEAPONS
+					Gun w = new Gun(0,0);//temp holder to initialize arrayList
+					w.setWeaponType("empty");
+					for(int i=0;i<7;i++){ //7
+						getP().AddWeapon(i, w);
+					}
+					Stick s = new Stick(getP().getXCoord(),getP().getYCoord());
+					getP().AddWeapon(0, s);
+					getP().setCurrentWeapon(s);
 				}
 				// else display game over screen
 				else{
-				    getGoscreen().requestFocusInWindow();
-				    int brightness = (int)(256 - 256 * 0.5f);
-				    g.setColor(new Color(0,0,0,brightness));
-				    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					getGoscreen().requestFocusInWindow();
+					int brightness = (int)(256 - 256 * 0.5f);
+					g.setColor(new Color(0,0,0,brightness));
+					g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					
+					// reset level
 					setTotalProgress(0);
+					randomGenerator = new Random();
+					generator = new EnemyGenerator(this);
+					enemies = new ArrayList<Enemies>();
+					terrain = new ArrayList<Terrain>();
+					resources = new ArrayList<Resource>();
+					boss = new ArrayList<Enemies>();
+					TotalProgress = 0;
+					lvlhandler = new LevelHandler();
+					lvlhandler.HandleLVL1Start(enemies, terrain, generator);
+					for(int i = 0; i < enemies.size(); i++){
+						enemies.get(i).setTerrainDimensions(terrain);
+					}
+					getP().setTerrains(terrain);
+
+					//WEAPONS
+					Gun w = new Gun(0,0);//temp holder to initialize arrayList
+					w.setWeaponType("empty");
+					for(int i=0;i<7;i++){ //7
+						getP().AddWeapon(i, w);
+					}
+					Stick s = new Stick(getP().getXCoord(),getP().getYCoord());
+					getP().AddWeapon(0, s);
+					getP().setCurrentWeapon(s);
 				}
 			}
 		}
