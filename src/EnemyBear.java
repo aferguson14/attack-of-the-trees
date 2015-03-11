@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
+import java.util.Random;
 
 import static java.lang.Math.abs;
 
@@ -17,12 +18,19 @@ public class EnemyBear extends Enemies implements Serializable{
 		super(x, y);
 		ImageIcon i = new ImageIcon("../images/enemyImages/bear/bearLeft.png");
 		ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
+		ResourceHeart heart = new ResourceHeart(this.getXCoord(),this.getYCoord());
 		this.setStill(i);
 		ImageIcon iRight = new ImageIcon("../images/enemyImages/bear/bearRight.png");
 		this.setStillRight(iRight);
 		this.setHorizontalSize(60);
 		this.setVerticalSize(115);
-		this.setResource(coin);
+		
+		Random randomGenerator = new Random();
+		int randomInt = randomGenerator.nextInt(6);
+		if(randomInt>2)
+		    this.setResource(coin);
+		else
+		    this.setResource(heart);
 		this.setHp(150);
 		this.setTotalHp(getHp());
 		this.setAttack(10);

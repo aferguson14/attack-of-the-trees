@@ -10,64 +10,65 @@ import javax.swing.*;
 public class Board extends JPanel implements ActionListener {
     //private data
     //Objects
-    	Random randomGenerator = new Random();
-	private Player p;
-	private ArrayList <Enemies> enemies = new ArrayList<Enemies>();
-	private ArrayList <Terrain> terrain = new ArrayList<Terrain>();
-	private ArrayList <Resource> resources = new ArrayList<Resource>();
-	private ArrayList <Enemies> boss = new ArrayList<Enemies>();
-	private EnemyGenerator generator = new EnemyGenerator(this);
-	private int TotalProgress = 0;
+    Random randomGenerator = new Random();
+    private Player p;
+    private ArrayList <Enemies> enemies = new ArrayList<Enemies>();
+    private ArrayList <Terrain> terrain = new ArrayList<Terrain>();
+    private ArrayList <Resource> resources = new ArrayList<Resource>();
+    private ArrayList <Enemies> boss = new ArrayList<Enemies>();
+    private EnemyGenerator generator = new EnemyGenerator(this);
+    private int TotalProgress = 0;
 
-	//Background ../images
-	public Image farBackground;
-	public Image nearBackground;
-	public Image Far2, Far3;
-	public Image Near2;
+    //Background ../images
+    public Image farBackground;
+    public Image nearBackground;
+    public Image Far2, Far3;
+    public Image Near2;
 
-        //Grass ../images
+    //Grass ../images
     public Image Grass1;
     public Image Grass2;
     public Image Grass3;
     public Image DirtBlock;
-	//Resource ../images
-	public Image LogImage;
-	public Image CoinImage;
+    //Resource ../images
+    public Image LogImage;
+    public Image CoinImage;
+    public Image HeartImage;
 
-	//Weapon ../images
-	public Image SwordImage;
-	public Image AxeImage;
-	public Image StickImage;
-	public Image GunImage;
-        public Image BowImage;
+    //Weapon ../images
+    public Image SwordImage;
+    public Image AxeImage;
+    public Image StickImage;
+    public Image GunImage;
+    public Image BowImage;
 
-	private Image img;
-	private Timer time;
-	private boolean attack = false;
-	private Menu menu;
-	private PauseMenu pmenu;
-        private static WinScreen winscreen;
-	private static GameOverScreen goscreen;
-	//world dimensions
-	private int WorldBot = 700;
-	private int WorldLeft = 0;
-	private int WorldRight = 7478;
-	private int WorldTop = 0;
-	public static Point MouseCoords;
-	public static Point BoardLoc;
-	public static boolean PlayerAttack = false;
-	private boolean StartLevel = true;
-	private int level = 0;
-    	private LevelHandler lvlhandler;
+    private Image img;
+    private Timer time;
+    private boolean attack = false;
+    private Menu menu;
+    private PauseMenu pmenu;
+    private static WinScreen winscreen;
+    private static GameOverScreen goscreen;
+    //world dimensions
+    private int WorldBot = 700;
+    private int WorldLeft = 0;
+    private int WorldRight = 7478;
+    private int WorldTop = 0;
+    public static Point MouseCoords;
+    public static Point BoardLoc;
+    public static boolean PlayerAttack = false;
+    private boolean StartLevel = true;
+    private int level = 0;
+    private LevelHandler lvlhandler;
     
-        //states
+    //states
     public static enum STATE {
     	MENU,
-		CHARMENU,
-		GAME,
-		PAUSE,
-		GAMEOVER,
-                LOAD
+	CHARMENU,
+	GAME,
+	PAUSE,
+	GAMEOVER,
+	LOAD
     };
     //initial state = MENU
     private static STATE State = STATE.MENU;
@@ -125,6 +126,9 @@ public class Board extends JPanel implements ActionListener {
 	LogImage = logImage.getImage();
 	ImageIcon coinImage = new ImageIcon("../images/sourceImage/coin.png");
 	CoinImage = coinImage.getImage();
+	ImageIcon heartImage = new ImageIcon("../images/sourceImage/heart.png");
+	HeartImage = heartImage.getImage();
+
 	//TIME
 	time = new Timer(5, this);
 	time.start();
@@ -280,6 +284,13 @@ public class Board extends JPanel implements ActionListener {
 		    getP().setLogCount(getP().getLogCount() + 1);
 		else if(getResources().get(i).getResourceType() == "coin")
 		    getP().setCoinCount(getP().getCoinCount() + 1);
+		else if(getResources().get(i).getResourceType() == "heart"){
+		    if(getP().getHp()>=80)
+			getP().setHp(100);
+		    else
+			getP().setHp(getP().getHp()+20);
+		}
+		    
 	     /*	else if(getResources().get(i).getResourceType() == "coal")
 		    getP().setCoalCount(getP().getCoalCount() + 1);
 		else if(getResources().get(i).getResourceType() == "oil")

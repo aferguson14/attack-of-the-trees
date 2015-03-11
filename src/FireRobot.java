@@ -13,8 +13,8 @@ public class FireRobot extends Enemies implements Serializable{
     //Constrcutor
     public FireRobot(double x, double y){
         super(x, y);
-        ImageIcon iLeft = new ImageIcon("../images/enemyImages/robot/RobotFront.png");
-        ImageIcon iRight = new ImageIcon("../images/enemyImages/robot/RobotFront.png");
+        ImageIcon iLeft = new ImageIcon("../images/enemyImages/robot/robotLeft.png");
+        ImageIcon iRight = new ImageIcon("../images/enemyImages/robot/robotRight.png");
         ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
         this.setStill(iLeft);
         this.setStillRight(iRight);
