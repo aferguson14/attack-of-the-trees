@@ -76,7 +76,7 @@ public class PauseMenu extends JFrame{
 		JTextArea label = new JTextArea("Controls:\n");
 		label.setFont(new Font("arial", Font.BOLD, 18));
 		JTextArea text = new JTextArea("Use A/D to move left/right\n" + "Use W to jump\n" + "Use S to duck\n" 
-				+ "Use your mouse to aim and left-click to shoot\n" + "Use Q and E to swap weapons");
+				+ "Use your mouse to aim and left-click to shoot\n" + "Use Q and E or 1-5 to swap weapons");
 		text.setRows(5);
 		text.setColumns(25);
 		text.setFont(new Font("arial", Font.PLAIN, 15));
