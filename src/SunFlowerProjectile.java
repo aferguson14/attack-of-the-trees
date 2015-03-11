@@ -12,8 +12,8 @@ public class SunFlowerProjectile extends Projectile implements Serializable{
     //Constructor
     public SunFlowerProjectile(double x, double y, int direction, Graphics g, double angle, Player p) {
         super(x + 5, y, direction, g, angle, p);
-        ImageIcon iLeft = new ImageIcon("../images/attackImage/SunFlowerAttack.png");
-	ImageIcon iRight = new ImageIcon ("../images/attackImage/SunFlowerAttack.png");
+        ImageIcon iLeft = new ImageIcon("../images/attackImage/SunflowerAttack.png");
+	ImageIcon iRight = new ImageIcon ("../images/attackImage/SunflowerAttack.png");
         setStillLeft(iLeft);
 	setStillRight(iRight);
         setXAcc(0);

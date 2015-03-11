@@ -13,8 +13,8 @@ public class EnemyRobot extends Enemies implements Serializable{
 	//Constructor
 	public EnemyRobot(double x, double y){
 		super(x, y);
-		ImageIcon iLeft = new ImageIcon("../images/enemyImages/robot/RobotLeft.png");
-		ImageIcon iRight = new ImageIcon("../images/enemyImages/robot/RobotRight.png");
+		ImageIcon iLeft = new ImageIcon("../images/enemyImages/robot/robotLeft.png");
+		ImageIcon iRight = new ImageIcon("../images/enemyImages/robot/robotRight.png");
 		ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
 		this.setStill(iLeft);
 		this.setStillRight(iRight);

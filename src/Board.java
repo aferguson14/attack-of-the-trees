@@ -10,73 +10,81 @@ import javax.swing.*;
 public class Board extends JPanel implements ActionListener {
     //private data
     //Objects
-    	Random randomGenerator = new Random();
-	private Player p;
-	private ArrayList <Enemies> enemies = new ArrayList<Enemies>();
-	private ArrayList <Terrain> terrain = new ArrayList<Terrain>();
-	private ArrayList <Resource> resources = new ArrayList<Resource>();
-	private ArrayList <Enemies> boss = new ArrayList<Enemies>();
-	private EnemyGenerator generator = new EnemyGenerator(this);
-	private int TotalProgress = 0;
+    Random randomGenerator;
+    private Player p;
+    private ArrayList <Enemies> enemies;
+    private ArrayList <Terrain> terrain;
+    private ArrayList <Resource> resources;
+    private ArrayList <Enemies> boss;
+    private EnemyGenerator generator;
+    private int TotalProgress;
 
-	//Background ../images
-	public Image farBackground;
-	public Image nearBackground;
-	public Image Far2, Far3;
-	public Image Near2;
-
-        //Grass ../images
+    //Background ../images
+    public Image farBackground;
+    public Image nearBackground;
+    public Image Far2, Far3;
+    public Image Near2;
+    public Image BlackFiller;
+    public Image BlackFillerLarge;
+    //Grass ../images
     public Image Grass1;
     public Image Grass2;
     public Image Grass3;
     public Image DirtBlock;
-	//Resource ../images
-	public Image LogImage;
-	public Image CoinImage;
+    //Resource ../images
+    public Image LogImage;
+    public Image CoinImage;
+    public Image HeartImage;
 
-	//Weapon ../images
-	public Image SwordImage;
-	public Image AxeImage;
-	public Image StickImage;
-	public Image GunImage;
-        public Image BowImage;
+    //Weapon ../images
+    public Image SwordImage;
+    public Image AxeImage;
+    public Image StickImage;
+    public Image GunImage;
+    public Image BowImage;
 
-	private Image img;
-	private Timer time;
-	private boolean attack = false;
-	private Menu menu;
-	private PauseMenu pmenu;
-        private static WinScreen winscreen;
-	private static GameOverScreen goscreen;
-	//world dimensions
-	private int WorldBot = 700;
-	private int WorldLeft = 0;
-	private int WorldRight = 7478;
-	private int WorldTop = 0;
-	public static Point MouseCoords;
-	public static Point BoardLoc;
-	public static boolean PlayerAttack = false;
-	private boolean StartLevel = true;
-	private int level = 0;
-    	private LevelHandler lvlhandler;
+    private Image img;
+    private Timer time;
+    private boolean attack = false;
+    private Menu menu;
+    private PauseMenu pmenu;
+    private static WinScreen winscreen;
+    private static GameOverScreen goscreen;
+    //world dimensions
+    private int WorldBot = 700;
+    private int WorldLeft = 0;
+    private int WorldRight = 7478;
+    private int WorldTop = 0;
+    public static Point MouseCoords;
+    public static Point BoardLoc;
+    public static boolean PlayerAttack = false;
+    private boolean StartLevel = true;
+    private int level = 0;
+    private LevelHandler lvlhandler;
     
-        //states
+    //states
     public static enum STATE {
     	MENU,
-		CHARMENU,
-		GAME,
-		PAUSE,
-		GAMEOVER,
-                LOAD
+	GAME,
+	PAUSE,
+	GAMEOVER,
+	LOAD
     };
     //initial state = MENU
     private static STATE State = STATE.MENU;
     
     
     public Board() {
+	randomGenerator = new Random();
         //creates player, enemies, terrain, weapon, menu, and background ../images
 	p = new Player();
+	enemies = new ArrayList<Enemies>();
+	terrain = new ArrayList<Terrain>();
+	resources = new ArrayList<Resource>();
+	boss = new ArrayList<Enemies>();
+	TotalProgress = 0;
 	lvlhandler = new LevelHandler();
+	generator = new EnemyGenerator(this);
         lvlhandler.HandleLVL1Start(enemies, terrain, generator);
         
         for(int i = 0; i < enemies.size(); i++){
@@ -109,6 +117,11 @@ public class Board extends JPanel implements ActionListener {
         Far2 = far2.getImage();
         Near2 = near2.getImage();
 	
+	ImageIcon blackFiller = new ImageIcon("../images/backgrounds/blackFiller.png");
+	ImageIcon blackFillerLarge = new ImageIcon("../images/backgrounds/blackFillerLarge.png");
+	BlackFiller = blackFiller.getImage();
+	BlackFillerLarge = blackFillerLarge.getImage();
+
 	ImageIcon grass1 = new ImageIcon("../images/grassImages/grass1.png");
 	ImageIcon grass2 = new ImageIcon("../images/grassImages/grass2.png");
 	ImageIcon grass3 = new ImageIcon("../images/grassImages/grass3.png");
@@ -125,42 +138,45 @@ public class Board extends JPanel implements ActionListener {
 	LogImage = logImage.getImage();
 	ImageIcon coinImage = new ImageIcon("../images/sourceImage/coin.png");
 	CoinImage = coinImage.getImage();
+	ImageIcon heartImage = new ImageIcon("../images/sourceImage/heart.png");
+	HeartImage = heartImage.getImage();
+
 	//TIME
 	time = new Timer(5, this);
 	time.start();
 
 	//WEAPON ../images
-		ImageIcon axeImage = new ImageIcon("../images/weaponImage/axe.png");
-		AxeImage = axeImage.getImage();
-		ImageIcon swordImage = new ImageIcon("../images/weaponImage/sword.png");
-		SwordImage = swordImage.getImage();
-		ImageIcon stickImage = new ImageIcon("../images/weaponImage/stick.png");
-		StickImage = stickImage.getImage();
-		ImageIcon gunImage = new ImageIcon("../images/weaponImage/gun.png");
-		GunImage = gunImage.getImage();
-		ImageIcon bowImage = new ImageIcon("../images/weaponImage/bowRight.png");
-		BowImage = bowImage.getImage();
+	ImageIcon axeImage = new ImageIcon("../images/weaponImage/axe.png");
+	AxeImage = axeImage.getImage();
+	ImageIcon swordImage = new ImageIcon("../images/weaponImage/sword.png");
+	SwordImage = swordImage.getImage();
+	ImageIcon stickImage = new ImageIcon("../images/weaponImage/stick.png");
+	StickImage = stickImage.getImage();
+	ImageIcon gunImage = new ImageIcon("../images/weaponImage/gun.png");
+	GunImage = gunImage.getImage();
+	ImageIcon bowImage = new ImageIcon("../images/weaponImage/bowRight.png");
+	BowImage = bowImage.getImage();
 
-		//WEAPONS
-		Gun w = new Gun(0,0);//temp holder to intialize arrayList
-		w.setWeaponType("empty");
-		for(int i=0;i<7;i++){ //7
-		    p.AddWeapon(i, w);
-		}
-
-		Stick s = new Stick(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(0, s);
-		/*
-		Sword sw = new Sword(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(1, sw);
-		Axe a = new Axe(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(2, a);
-		Gun g = new Gun(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(3, g);
-		Bow b = new Bow(p.getXCoord(),p.getYCoord());
-		p.AddWeapon(4, b);//index in arraylist*/
-		p.setCurrentWeapon(s);
+	//WEAPONS
+	Gun w = new Gun(0,0);//temp holder to intialize arrayList
+	w.setWeaponType("empty");
+	for(int i=0;i<7;i++){ //7
+	p.AddWeapon(i, w);
 	}
+
+	Stick s = new Stick(p.getXCoord(),p.getYCoord());
+	p.AddWeapon(0, s);
+	/*
+	Sword sw = new Sword(p.getXCoord(),p.getYCoord());
+	p.AddWeapon(1, sw);
+	Axe a = new Axe(p.getXCoord(),p.getYCoord());
+	p.AddWeapon(2, a);
+	Gun g = new Gun(p.getXCoord(),p.getYCoord());
+	p.AddWeapon(3, g);
+	Bow b = new Bow(p.getXCoord(),p.getYCoord());
+	p.AddWeapon(4, b);//index in arraylist*/
+	p.setCurrentWeapon(s);
+}
 
     
     public void actionPerformed(ActionEvent e) {
@@ -280,6 +296,13 @@ public class Board extends JPanel implements ActionListener {
 		    getP().setLogCount(getP().getLogCount() + 1);
 		else if(getResources().get(i).getResourceType() == "coin")
 		    getP().setCoinCount(getP().getCoinCount() + 1);
+		else if(getResources().get(i).getResourceType() == "heart"){
+		    if(getP().getHp()>=80)
+			getP().setHp(100);
+		    else
+			getP().setHp(getP().getHp()+20);
+		}
+		    
 	     /*	else if(getResources().get(i).getResourceType() == "coal")
 		    getP().setCoalCount(getP().getCoalCount() + 1);
 		else if(getResources().get(i).getResourceType() == "oil")
@@ -326,7 +349,7 @@ public class Board extends JPanel implements ActionListener {
 	        BoardLoc = this.getLocationOnScreen();
 		
 	        //background ../images
-		g2d.translate((p.getXCoord()*-1)+600, 0); //+300 because of player pos.
+		g2d.translate((p.getXCoord()*-1)+600, 0); //+600 because of player pos.
 		//above line changes where player appears on screen
 	
 		g2d.drawImage(farBackground, (int) p.getXCoord()/2*(-1), -1800, null);
@@ -335,7 +358,8 @@ public class Board extends JPanel implements ActionListener {
 		g2d.drawImage(nearBackground,0, -1300, null);
 		g2d.drawImage(Far2,-4500, -1800,null);
 		g2d.drawImage(Near2,-7473 , -1305,null);
-	
+		g2d.drawImage(BlackFiller, -600, 0, null);
+		g2d.drawImage(BlackFillerLarge, 7050, 0, null);
 		Color prev = g.getColor();
 		Color greyTransp = new Color(70, 70, 70, 150);
 	
@@ -511,24 +535,73 @@ public class Board extends JPanel implements ActionListener {
 				getP().setHealthBarY((getP().getYCoord() - 580));
 				getP().setLogCount(0);
 				getP().setCoinCount(0);
-				lvlhandler =  new LevelHandler();
-				
+
 				// if game is won display win screen
 				if (TotalProgress > 20){
-				    getWinscreen().setVisible(true);
-				    getWinscreen().requestFocusInWindow();
-				    int brightness = (int)(256 - 256 * 0.5f);
-				    g.setColor(new Color(0,0,0,brightness));
-				    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					getWinscreen().setVisible(true);
+					getWinscreen().requestFocusInWindow();
+					int brightness = (int)(256 - 256 * 0.5f);
+					g.setColor(new Color(0,0,0,brightness));
+					g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					
+					// reset level
 					setTotalProgress(0);
+					randomGenerator = new Random();
+					generator = new EnemyGenerator(this);
+					enemies = new ArrayList<Enemies>();
+					terrain = new ArrayList<Terrain>();
+					resources = new ArrayList<Resource>();
+					boss = new ArrayList<Enemies>();
+					TotalProgress = 0;
+					lvlhandler = new LevelHandler();
+					lvlhandler.HandleLVL1Start(enemies, terrain, generator);
+					for(int i = 0; i < enemies.size(); i++){
+						enemies.get(i).setTerrainDimensions(terrain);
+					}
+					p.setTerrains(terrain);
+					
+					//WEAPONS
+					Gun w = new Gun(0,0);//temp holder to initialize arrayList
+					w.setWeaponType("empty");
+					for(int i=0;i<7;i++){ //7
+						getP().AddWeapon(i, w);
+					}
+					Stick s = new Stick(getP().getXCoord(),getP().getYCoord());
+					getP().AddWeapon(0, s);
+					getP().setCurrentWeapon(s);
 				}
 				// else display game over screen
 				else{
-				    getGoscreen().requestFocusInWindow();
-				    int brightness = (int)(256 - 256 * 0.5f);
-				    g.setColor(new Color(0,0,0,brightness));
-				    g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					getGoscreen().requestFocusInWindow();
+					int brightness = (int)(256 - 256 * 0.5f);
+					g.setColor(new Color(0,0,0,brightness));
+					g.fillRect((int)getP().getXCoord()-1000,0,7478,1000);
+					
+					// reset level
 					setTotalProgress(0);
+					randomGenerator = new Random();
+					generator = new EnemyGenerator(this);
+					enemies = new ArrayList<Enemies>();
+					terrain = new ArrayList<Terrain>();
+					resources = new ArrayList<Resource>();
+					boss = new ArrayList<Enemies>();
+					TotalProgress = 0;
+					lvlhandler = new LevelHandler();
+					lvlhandler.HandleLVL1Start(enemies, terrain, generator);
+					for(int i = 0; i < enemies.size(); i++){
+						enemies.get(i).setTerrainDimensions(terrain);
+					}
+					getP().setTerrains(terrain);
+
+					//WEAPONS
+					Gun w = new Gun(0,0);//temp holder to initialize arrayList
+					w.setWeaponType("empty");
+					for(int i=0;i<7;i++){ //7
+						getP().AddWeapon(i, w);
+					}
+					Stick s = new Stick(getP().getXCoord(),getP().getYCoord());
+					getP().AddWeapon(0, s);
+					getP().setCurrentWeapon(s);
 				}
 			}
 		}
