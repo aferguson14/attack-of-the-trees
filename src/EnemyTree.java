@@ -13,10 +13,11 @@ public class EnemyTree extends Enemies implements Serializable{
 	//Constrcutor
 	public EnemyTree(double x, double y){
 		super(x, y);
-		ImageIcon i = new ImageIcon("../images/enemyImages/tree/treeFront.png");
+		ImageIcon i = new ImageIcon("../images/enemyImages/tree/treeSideLeft.png");
+		ImageIcon iRight = new ImageIcon("../images/enemyImages/tree/treeSideRight.png");
 		ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
 		this.setStill(i);
-		this.setStillRight(i);
+		this.setStillRight(iRight);
 		this.setHorizontalSize(81);
 		this.setVerticalSize(115); 
 		this.setResource(log);
