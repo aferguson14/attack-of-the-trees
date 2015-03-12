@@ -3,8 +3,18 @@
 //update gnome with grenade
 //ask ted for a few new images
 */
-
 import javax.swing.*;
+
+/** 
+ * Frame represents the window that contains the game.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class Frame {
     //Sets up frame
