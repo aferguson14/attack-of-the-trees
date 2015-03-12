@@ -5,11 +5,19 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
-
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-
+/** 
+ * TreeProjectile represents the projectile released by the Tree enemy
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class TreeProjectile extends Projectile implements Serializable{
     //Constructor
