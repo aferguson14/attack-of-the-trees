@@ -7,10 +7,20 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
+/** 
+ * PlayerProjectile represents the projectile released by the player.
+ * To be derived from for each of the player's weapons.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
+
 //extremely similar to Projectile Class
 //difference being: made to attck enemies rather than player
-
-
 public class PlayerProjectile {
     //private data
     private double XCoord, YCoord;
