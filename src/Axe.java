@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 /** 
- * Arrow represents the projectile shot by the player from its Bow weapon
+ * Axe represents a weapon the player uses to defeat enemies
  * 
  * @author Shadee Barzin
  * @author Andrew Ferguson
