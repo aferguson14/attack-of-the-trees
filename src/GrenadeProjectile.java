@@ -5,6 +5,16 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
+/** 
+ * GrenadeProjectile represents the projectile released by the Gnome enemy
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class GrenadeProjectile extends Projectile{
     //Constructor

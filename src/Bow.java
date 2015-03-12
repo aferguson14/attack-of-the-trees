@@ -4,9 +4,18 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 
+/** 
+ * Bow represents a weapon the player uses to defeat enemies.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class Bow extends Weapon implements Serializable{
     //constructor

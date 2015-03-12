@@ -8,10 +8,21 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 
-//extremely similar to player projectile
+/** 
+ * Projectile represents the projectile released by the enemies.
+ * To be derived from for each enemy.
+ * Very similar to PlayerProjectile
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
+
 public class Projectile implements Serializable{
     //private data
     private double XCoord, YCoord;

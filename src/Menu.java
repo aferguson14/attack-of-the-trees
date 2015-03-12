@@ -1,6 +1,17 @@
 import java.awt.*;
-
 import javax.swing.ImageIcon;
+
+/** 
+ * Menu represents the window that appears on the user's screen when the game is first opened.
+ * User is able to select new game or load an existing one.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class Menu {
 	//Menu buttons

@@ -3,9 +3,19 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 
+/** 
+ * Terrain represents the terrain on the board the player and enemies must traverse.
+ * Abstract class the specific, concrete terrain derive from.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public abstract class Terrain implements Serializable{
     //private data

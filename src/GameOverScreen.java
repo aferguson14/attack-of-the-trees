@@ -4,6 +4,17 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+/** 
+ * GameOverScreen represents the window that appears on the user's screen when the game is lost.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
+
 public class GameOverScreen extends JFrame {
 
 	public JPanel board;
@@ -13,6 +24,10 @@ public class GameOverScreen extends JFrame {
 	public JButton exitButton;
 	public JLabel label;
 
+	/** 
+	 * @param b JPanel represents the board
+	 * Constructor
+	*/
 	public GameOverScreen(JPanel b) {
 		
 		// superclass constructor
@@ -27,7 +42,7 @@ public class GameOverScreen extends JFrame {
 		// set location of game over screen to middle of board
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        this.setLocationRelativeTo(null);
+        	this.setLocationRelativeTo(null);
 
 		// remove frame buttons
 		this.setFocusable(true);
@@ -81,12 +96,15 @@ public class GameOverScreen extends JFrame {
 	}
 
 	/*
-	 * @param g Graphics object g
+	 * @param g Graphics object
 	 */
 	public void paintComponent(Graphics g) {	
 		super.paint(g);
 	}
 
+	/** 
+	 * inner class for playAgainButton Action Listener
+	*/
 	private class PAL implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -95,6 +113,9 @@ public class GameOverScreen extends JFrame {
 		}	
 	} //PAL
 
+	/** 
+	 * inner class for exitButton Action Listener
+	*/
 	private class EL implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {

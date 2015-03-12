@@ -5,6 +5,16 @@ import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
+/** 
+ * Gun represents a weapon the player uses to defeat enemies.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class Gun extends Weapon{
     //constructor

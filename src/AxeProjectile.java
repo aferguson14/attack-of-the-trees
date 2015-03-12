@@ -5,9 +5,18 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 
+/** 
+ * AxeProjectile represents the projectile released by the player from its Axe weapon
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class AxeProjectile extends PlayerProjectile implements Serializable{
     private int time = 0;

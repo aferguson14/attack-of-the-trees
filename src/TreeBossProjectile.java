@@ -4,9 +4,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.Serializable;
-
 import javax.swing.ImageIcon;
 
+/** 
+ * TreeBossProjectile represents the projectile released by the Tree boss enemy
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class TreeBossProjectile extends Projectile implements Serializable{
     //Constructor
