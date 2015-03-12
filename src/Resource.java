@@ -1,8 +1,19 @@
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
+
+/** 
+ * Resource represents the resources dropped by enemies when they are killed that the player collects.
+ * The specific resources derive from this class.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class Resource implements Serializable{
 
