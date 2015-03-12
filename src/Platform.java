@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -19,7 +18,12 @@ import javax.swing.ImageIcon;
 */
 
 public class Platform extends Terrain{
-//Construcotr
+
+    /**
+     * @param x int x-coordinate
+     * @param y in y-coordinate
+     * Constructor that creates and sets the platform
+     */
     public Platform(int x, int y) {
         super(x, y);
         ImageIcon i = new ImageIcon("../images/blockImage/step.png");
@@ -30,21 +34,31 @@ public class Platform extends Terrain{
         setRightSide(x + getHorizontalSize());
         setTop(y);
         setBot(y + getVerticalSize());
-        
         setEnemyTop(getTop());
         setEnemyLeft(getLeftSide());
         setEnemyRight(getRightSide());
         setEnemyBot(getBot());
     }
-//paints rock
+
+    /**
+     * @param g Graphics
+     * @param p Player
+     * @param e ArrayList<Enemies>
+     * @param proj ArrayList<Projectile>
+     * @param Playerproj ArrayList<PlayerProjectile>
+     * Paints platform onto the Board.
+     */
     @Override
     public void paintTerrain(Graphics g, Player p, ArrayList <Enemies> e, ArrayList <Projectile> proj, ArrayList <PlayerProjectile> Playerproj) {
        Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.getStill().getImage(), (int) this.getXCoord(), (int) this.getYCoord(), null);
     }
 
+    /**
+     * Prints "Platform" to system
+     */
     public void print(){
-        System.out.println("Rock");
+        System.out.println("Platform");
     }
 
 }

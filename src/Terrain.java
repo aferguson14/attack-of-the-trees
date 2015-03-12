@@ -1,4 +1,3 @@
-
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.Serializable;
@@ -35,7 +34,7 @@ public abstract class Terrain implements Serializable{
     private double Bot;
     private double XVel, YVel;
     private double XAcc, YAcc;
-        private int WorldBot = 700;
+    private int WorldBot = 700;
     private int WorldLeft = 0;
     private int WorldRight = 7478;
     private int WorldTop = 0;
@@ -44,35 +43,79 @@ public abstract class Terrain implements Serializable{
     private int FrameWorldLeft = -300;
     private int FrameWorldRight = 1450;
     private int FrameWorldTop = 0;
-    private int FrameWorldBot = WorldBot;
+    private int FrameWorldBot = WorldBot;    
     
-    
-    //Constructor
+    /**
+     * @param x int
+     * @param y int
+     * Constructor
+     * Sets location of the terrain object
+     */
     public Terrain(int x, int y){
         setXCoord(x);
         setYCoord(y);
     }
     
-    //if terrain able to move:
-    public void move(){setXVel(getXVel() + getXAcc());
-    //adjust velocities
+    /**
+     * Move the terrain if can be moved
+     */
+    public void move(){
+	setXVel(getXVel() + getXAcc());
+	//adjust velocities
         setYVel(getYVel() + getYAcc());
         setXVel(getXVel() + getXAcc());
-    //adjust coords
+	//adjust coords
         setXCoord(getXCoord() + getXVel());
         setYCoord(getYCoord() + getYVel());
-
     }
+
+    /**
+     * Method to print String representation of Terrain object.
+     * To be overridden by derived classes.
+     */
     public void print(){}
+
+    /**
+     * 
+     * To be overridden by derived classes.
+     */
     public void UpdateSides(Player p){}
+
+    /**
+     * 
+     * To be overridden by derived classes.
+     */
     public void UpdateSides(Enemies e, int i){}
+
+    /**
+     * 
+     * To be overridden by derived classes.
+     */
     public void UpdateSides(Projectile p, int i){}
+
+    /**
+     * 
+     * To be overridden by derived classes.
+     */
     public void UpdateSides(PlayerProjectile p, int i){}
-     public abstract void paintTerrain(Graphics g, Player p, ArrayList <Enemies> e, ArrayList <Projectile> proj, ArrayList <PlayerProjectile> Playerproj);
+
+    /**
+     * @param g Graphics
+     * @param p Player
+     * @param e ArrayList<Enemies>
+     * @param proj ArrayList<Projectile>
+     * @param Playerproj ArrayList<PlayerProjectile>
+     * Paints terrain object onto the Board.
+     * To be implemented by derived classes.
+     */
+    public abstract void paintTerrain(Graphics g, Player p, ArrayList <Enemies> e, ArrayList <Projectile> proj, ArrayList <PlayerProjectile> Playerproj);
      
-//checks if enemies are in contact with the terrain     
-     public void CheckEnemyContact(Enemies e, int index){
-         
+    /**
+     * @param e Enemies
+     * @param index int
+     * Checks if enemies are in contact with the terrain
+     */
+    public void CheckEnemyContact(Enemies e, int index){        
           //check player coords, if in contact ith left
          if(!ignoreLeft){
          if((((e.getXCoord() + e.getHorizontalSize()) >= this.getXCoord()) 
@@ -86,8 +129,7 @@ public abstract class Terrain implements Serializable{
                  || ((e.getTops().get(index) >= e.getYCoord()) 
                  && (this.getBot() <= e.getYCoord() + e.getVerticalSize())))
                  ){
-             //adjust coords accordingly
-           
+             //adjust coords accordingly           
            e.setXCoord(this.getXCoord() - e.getHorizontalSize() - e.getSpeed()); 
            return;
            }
@@ -139,20 +181,22 @@ public abstract class Terrain implements Serializable{
                  || ((((e.getXCoord() + e.getHorizontalSize()) 
                     >= this.getXCoord()) && ((e.getXCoord() 
                         + e.getHorizontalSize()) <= this.getRightSide()))))){
-            //adjust vel accordingly
-            
+            //adjust vel accordingly            
                 e.setYCoord(this.getYCoord() + this.getVerticalSize());
                 e.setYVel(Math.abs(e.getYVel()));
                 return;
             }
          }
         //else set acc to .5 if 0
-        //(if on ground, reset to 0 in move)
-        
+        //(if on ground, reset to 0 in move)        
             if(e.getYAcc() == 0)
-            e.setYAcc(.5);
-        
+            e.setYAcc(.5);        
      }
+
+    /**
+     * @param p Player
+     * Checks if player is in contact with the terrain
+     */
      public void CheckPlayerContact(Player p){
          if((this.getXCoord() >= p.getXCoord() + FrameWorldLeft) && (this.getXCoord() <= p.getXCoord() + FrameWorldRight)){
          //check player coords, if in contact ith left
@@ -169,7 +213,6 @@ public abstract class Terrain implements Serializable{
                  && (this.getBot() <= p.getYCoord() + p.getVerticalSize())))
                  ){
              //adjust coords accordingly
-           
            p.setXCoord(this.getXCoord() - p.getHorizontalSize() - p.getSpeed()); 
            return;
            }
@@ -188,8 +231,7 @@ public abstract class Terrain implements Serializable{
                  || ((this.getTop() >= p.getYCoord()) && (this.getBot() 
                     <= p.getYCoord() + p.getVerticalSize())))
                  ){
-             //adjust coords accordingly
-             
+             //adjust coords accordingly             
                 p.setXCoord(this.getXCoord() + this.getHorizontalSize() + p.getSpeed()); 
                 return;
              }
@@ -203,8 +245,7 @@ public abstract class Terrain implements Serializable{
                  || ((((p.getXCoord() + p.getHorizontalSize()) 
                     >= this.getXCoord()) && ((p.getXCoord() 
                         + p.getHorizontalSize()) <= this.getRightSide()))))){
-             //adjust vel, acc, and coords accordngly
-             
+             //adjust vel, acc, and coords accordngly             
                 p.setInAir(false);
                 p.setYCoord(this.getTop() - p.getVerticalSize());
                 p.setYVel(0);
@@ -231,12 +272,17 @@ public abstract class Terrain implements Serializable{
          }
         //else set acc to .5 if 0
         //(if on ground, reset to 0 in move)
-        
             if(p.getYAcc() == 0)
-            p.setYAcc(.5);
-        
+            p.setYAcc(.5);        
          }
      }
+
+    /**
+     * @param e PlayerProjectile
+     * @param index int
+     * @param p Player
+     * Checks if player projectile are in contact with the terrain
+     */
       public void CheckPlayerProjectileContact(PlayerProjectile e, int index, Player p){
           //check player coords, if in contact ith left
           if((this.getXCoord() >= p.getXCoord() + FrameWorldLeft) && (this.getXCoord() <= p.getXCoord() + FrameWorldRight)){
@@ -252,9 +298,7 @@ public abstract class Terrain implements Serializable{
                  && (this.getBot() <= e.getYCoord() + e.getVerticalSize())))
                  ){
              //adjust coords accordingly
-            
-           e.setRemove(true); 
-           
+	     e.setRemove(true);            
          }
          //if player coords in contact with right
          else if((((e.getXCoord()) 
@@ -270,8 +314,7 @@ public abstract class Terrain implements Serializable{
                     <= e.getYCoord() + e.getVerticalSize())))
                  ){
              //adjust coords accordingly
-               e.setRemove(true);
-             
+               e.setRemove(true);             
          }
          //if player coords in contact with top of terrain
          else if(((((e.getYCoord() + e.getVerticalSize()) >= e.getTops().get(index)) 
@@ -282,8 +325,7 @@ public abstract class Terrain implements Serializable{
                     >= this.getXCoord()) && ((e.getXCoord() 
                         + e.getHorizontalSize()) <= this.getRightSide()))))){
              //adjust vel, acc, and coords accordngly
-                e.setRemove(true);
-             
+                e.setRemove(true);             
          }
          //if player coords in contact with bot
         else if((((e.getYCoord()) <= (e.getTops().get(index) + this.getVerticalSize()))
@@ -295,11 +337,17 @@ public abstract class Terrain implements Serializable{
                     >= this.getXCoord()) && ((e.getXCoord() 
                         + e.getHorizontalSize()) <= this.getRightSide()))))){
             //adjust vel accordingly
-                e.setRemove(true);
-            
-         }
+                e.setRemove(true);            
+	}
           }
      }
+
+    /**
+     * @param e Projectile
+     * @param index int
+     * @param p Player
+     * Checks if projectiles are in contact with the terrain
+     */
        public void CheckProjectileContact(Projectile e, int index, Player p){
           //check player coords, if in contact ith left
            if((this.getXCoord() >= p.getXCoord() + FrameWorldLeft) && (this.getXCoord() <= p.getXCoord() + FrameWorldRight)){
@@ -358,6 +406,13 @@ public abstract class Terrain implements Serializable{
          }
            }
      }
+
+    /**
+     * @param e GrenadeProjectile
+     * @param index int
+     * @param p Player
+     * Checks if enemies are in contact with the terrain
+     */
        public void CheckGrenadeProjectileContact(GrenadeProjectile e, int index, Player p){
           //check player coords, if in contact ith left
            if((this.getXCoord() >= p.getXCoord() + FrameWorldLeft) && (this.getXCoord() <= p.getXCoord() + FrameWorldRight)){
