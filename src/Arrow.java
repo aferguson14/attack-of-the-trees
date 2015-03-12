@@ -6,6 +6,16 @@ import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
+/** 
+ * Arrow represents the projectile shot by the player from its Bow weapon
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class Arrow extends PlayerProjectile implements Serializable{
     
