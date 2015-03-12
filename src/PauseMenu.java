@@ -8,6 +8,18 @@ import java.io.ObjectOutputStream;
 import javax.swing.*;
 import java.util.*;
 
+/** 
+ * PauseMenu represents the window that appears on the user's screen when the game is paused.
+ * User is able to buy weapons, save, and view instructions.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
+
 public class PauseMenu extends JFrame{
 
 	public JTabbedPane tabbedPane;
