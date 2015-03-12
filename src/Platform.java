@@ -7,6 +7,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
+/** 
+ * Platform represents the platform on the board the player and enemies must traverse.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class Platform extends Terrain{
 //Construcotr
