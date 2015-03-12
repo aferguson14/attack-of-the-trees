@@ -7,9 +7,19 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
+/** 
+ * Ramp represents the ramp terrain on the board the player and enemies must traverse.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class Ramp extends Terrain{
-//constrcutor
+//constructor
     public Ramp(int x, int y) {
         super(x, y);
         ImageIcon i = new ImageIcon("../images/blockImage/rampUp.png");
