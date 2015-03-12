@@ -5,8 +5,18 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
+/** 
+ * EnemyGenerator randomly generates enemies off screen that the player must defeat.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
+
 public class EnemyGenerator {
-    
     private Board board;
     public EnemyGenerator(Board b){
         board = b;
