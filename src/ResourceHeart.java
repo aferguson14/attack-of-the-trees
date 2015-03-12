@@ -1,8 +1,18 @@
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
+
+/** 
+ * ResourceHeart represents the heart dropped by enemies when they are killed that the player collects.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class ResourceHeart extends Resource implements Serializable{
 
