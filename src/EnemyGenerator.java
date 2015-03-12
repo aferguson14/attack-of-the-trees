@@ -18,13 +18,23 @@ import javax.swing.ImageIcon;
 
 public class EnemyGenerator {
     private Board board;
+
+    /** 
+     * @param b the game Board
+     * Constructor
+     */
     public EnemyGenerator(Board b){
         board = b;
     }
     
+    /** 
+     * @param enem Enemies
+     * @param into ArrayList<Enemies> going into the game
+     * @param p Player
+     * @param randomGenerator Random
+     * Randomly creates enemies to be added to the Board.
+     */
     public void generateEnemy(Enemies enem, ArrayList<Enemies> into,Player p, Random randomGenerator){
-         
-         
          long rangeL = (long)this.getBoard().getWorldLeft() + (long)p.getXCoord() - 600;
          long rangeR = (long)6950 - (long)p.getXCoord() - 1150;
          
@@ -54,12 +64,20 @@ public class EnemyGenerator {
          into.add(enem);
      }
     
+    /** 
+     * @param range int
+     * Randomly selects type of enemy to be added
+     */
     public int chooseEnemyType(int range){
         Random randomInt = new Random();
         int number = randomInt.nextInt(range);
         return number;
     }
     
+    /** 
+     * @param enem2 ArrayList<Enemies>
+     * Randomly creates enemies for level 1
+     */
     public void createLVL1Enemies(ArrayList<Enemies> enem2){
 	Random randomGenerator = new Random();
 
@@ -78,6 +96,11 @@ public class EnemyGenerator {
           }
 
 }
+
+    /** 
+     * @param enem2 ArrayList<Enemies>
+     * Randomly creates enemies for level 2
+     */
    public void createLVL2Enemies(ArrayList<Enemies> enem2){
        Random randomGenerator = new Random();
 
@@ -98,6 +121,11 @@ public class EnemyGenerator {
         }
           }
    }    
+
+    /** 
+     * @param enem2 ArrayList<Enemies>
+     * Randomly creates enemies for level 3
+     */
      public void createLVL3Enemies(ArrayList<Enemies> enem2){
        Random randomGenerator = new Random();
 
@@ -122,6 +150,11 @@ public class EnemyGenerator {
           }
      
    }    
+
+    /** 
+     * @param enem2 ArrayList<Enemies>
+     * Updates/adds to the enemies in level 1
+     */
 public void updateLVL1Enemies(ArrayList<Enemies> enem2){
        Random randomGenerator = new Random();
         int randoNum = chooseEnemyType(3);
@@ -135,11 +168,12 @@ public void updateLVL1Enemies(ArrayList<Enemies> enem2){
             EnemySunFlower flower = new EnemySunFlower(0, getBoard().getWorldBot() - 115);
             this.generateEnemy(flower, enem2, getBoard().getP(), randomGenerator);
         }
-          
-
-
-    
 }
+
+    /** 
+     * @param enem2 ArrayList<Enemies>
+     * Updates/adds to the enemies in level 2
+     */
 public void updateLVL2Enemies(ArrayList<Enemies> enem2){
         Random randomGenerator = new Random();
         int randoNum = chooseEnemyType(4);
@@ -156,8 +190,12 @@ public void updateLVL2Enemies(ArrayList<Enemies> enem2){
             EnemyBee bee = new EnemyBee(0, getBoard().getWorldBot() - 115);
             this.generateEnemy(bee, enem2, getBoard().getP(), randomGenerator);
         }
-    
 }
+
+    /** 
+     * @param enem2 ArrayList<Enemies>
+     * Updates/adds to the enemies in level 3
+     */
 public void updateLVL3Enemies(ArrayList<Enemies> enem2){
        Random randomGenerator = new Random();
         int randoNum = chooseEnemyType(5);
@@ -179,11 +217,20 @@ public void updateLVL3Enemies(ArrayList<Enemies> enem2){
         }
 }
 
+    /** 
+     * @param boss ArrayList<Enemies>
+     * Creates Boss enemy (after all other enemies on the level have been killed) for level 1
+     */
 public void createLVL1Boss(ArrayList<Enemies> boss){
             Random randomGenerator = new Random();
             Fish fish = new Fish(0, getBoard().getWorldBot() - 115);
             this.generateEnemy(fish, boss, getBoard().getP(), randomGenerator);
 }
+
+    /** 
+     * @param boss ArrayList<Enemies>
+     * Creates Boss enemy (after all other enemies on the level have been killed) for level 2
+     */
 public void createLVL2Boss(ArrayList<Enemies> boss){
             Random randomGenerator = new Random();
             Random randomGenerator2 = new Random();
@@ -195,12 +242,21 @@ public void createLVL2Boss(ArrayList<Enemies> boss){
             WaterRobot waterrobo = new WaterRobot(0, getBoard().getWorldBot() - 115);
             this.generateEnemy(waterrobo, boss, getBoard().getP(), randomGenerator3);
 }
+
+    /** 
+     * @param boss ArrayList<Enemies>
+     * Creates Boss enemy (after all other enemies on the level have been killed) for level 3
+     */
 public void createLVL3Boss(ArrayList<Enemies> boss){
             Random randomGenerator = new Random();
             TreeBoss tree = new TreeBoss(0, getBoard().getWorldBot() - 115);
             this.generateEnemy(tree, boss, getBoard().getP(), randomGenerator);
 }
     
+    /** 
+     * @param enem2 ArrayList<Enemies>
+     * Creates a level to test enemy creation.
+     */
 public void testLevel(ArrayList<Enemies> enem2){
     //Random randomGenerator = new Random();
 //        EnemySunFlower flower = new EnemySunFlower(0, getBoard().getWorldBot() - 115);
@@ -209,6 +265,8 @@ public void testLevel(ArrayList<Enemies> enem2){
         enem2.add(bee);
          //this.generateEnemy(bear, enem2, getBoard().getP(), randomGenerator);
 }
+
+
 //--------------------Getters/Setters--------------------------------------------
     public Board getBoard() {
         return board;
