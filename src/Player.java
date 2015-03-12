@@ -62,7 +62,9 @@ public class Player implements Serializable{
     private int logCount;
     private int coinCount;
     
-    //Constructor
+    /** 
+     * No-arg constructor that creates the player
+     */
     public Player() {
 	ImageIcon i = new ImageIcon("../images/playerImages/guy/guyArmlessRight.png"); //character image
 	setStill(i);
@@ -84,9 +86,12 @@ public class Player implements Serializable{
 	
 	logCount = 0;
 	coinCount = 0;
-
     }
     
+    /**
+     * @param terrain ArrayList<Terrain>
+     * Moves player from side to side and jumps
+     */
     public void move(ArrayList <Terrain> terrain) {
         //add velocities to positions/add gravity to yVel
         if(Board.getState() == Board.STATE.GAME){
@@ -120,6 +125,10 @@ public class Player implements Serializable{
         }
     }
     
+    /**
+     * @param g Graphics
+     * Paints player onto the Board
+     */
     public void paintPlayer(Graphics g){
         //paint player and health bar
 		Graphics2D g2d = (Graphics2D) g;
@@ -233,16 +242,28 @@ if(isAttacking()){
 }
 }
     
-//subtract Hp by enemy attack
+
+    /**
+     * @param e Enemies
+     * Subtract Hp by enemy attack
+     */
     public void takeDmg(Enemies e){
         setHp(getHp() - e.getAttack());
     }
-//add weapon    
+
+    /**
+     * @param index int
+     * @param w Weaon
+     * Add a weapon to player's hand
+     */
     public void AddWeapon(int index, Weapon w){
         weapon.add(index, w);
         currentWeapon = w;
     }
-//switch current weapon forward
+
+    /**
+     * Switch player's current weapon forward by one.
+     */
     public void switchWeapon(){
 	for(int i = 10; i>0; i--){
 	    if(WeaponTracker < weapon.size()-1){
@@ -253,18 +274,15 @@ if(isAttacking()){
 		WeaponTracker = 0;
 		currentWeapon = weapon.get(WeaponTracker);
 	    }
-
 	    if(currentWeapon.getWeaponType()!="empty"){
 		break;
 	    }		
-
-
 	}
-
     }
 
-
-//switch current weapon backward
+    /**
+     * Switch player's current weapon backward by one.
+     */
     public void switchWeaponBackward(){
 	for(int i = 10; i>0; i--){
 	    if(WeaponTracker > 0){
@@ -284,11 +302,11 @@ if(isAttacking()){
 	}
     }
 
-
-//get mouse coords
-// if attacking, shoot weapon
-//readjust mouse coords
-    public void PlayerAttack(Graphics g){
+    /**
+     * @param g Graphics
+     * Gets mouse coordinates. If attacking, shoots weapon. Readjusts mouse coordinates.
+     */
+  public void PlayerAttack(Graphics g){
         Board.MouseCoords.x += (this.getXCoord() - 650);
 	//-650 relates to painting player in Board
         setMousePoint(Board.MouseCoords);
@@ -297,16 +315,23 @@ if(isAttacking()){
         }
         Board.MouseCoords.x -= (this.getXCoord() - 650);
     }
-//get player coords in point form
+
+
+    /**
+     * @return Point player's coords in point form
+     */
     public Point getPlayerPoint(){
         Point p = new Point((int)this.getXCoord(), (int)this.getYCoord());
         return p;
     }
     
-    //player movement input
+    /**
+     * @param e KeyEvent
+     * Gets player's movement input from user based on keyboard input.
+     */
     public void keyPressed(KeyEvent e) {
 	int key = e.getKeyCode();
-		//input cahnges velocity
+		//input changes velocity
 		if (key == KeyEvent.VK_A){
 			if(!isAttacking()){
 			}
@@ -382,7 +407,10 @@ if(isAttacking()){
 
 	}
 
-	//player movement input
+    /**
+     * @param e KeyEvent
+     * Gets user's keyboard input and moves player based on it.
+     */
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		//realease of L/R key's result in 0 horiz vel
@@ -722,18 +750,30 @@ if(isAttacking()){
 
 //RESOURCES SETTER/GETTERS
 
+    /**
+     * @return the log count
+     */
     public int getLogCount(){
 	return logCount;
     }
 
+    /**
+     * @param logCount the log count to set
+     */
     public void setLogCount(int logCount){
 	this.logCount = logCount;
     }
 
+    /**
+     * @return the coin count
+     */
     public int getCoinCount(){
 	return coinCount;
     }
 
+    /**
+     * @param coinCount the coin count to set
+     */
     public void setCoinCount(int coinCount){
 	this.coinCount = coinCount;
     }
