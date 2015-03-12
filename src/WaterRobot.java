@@ -1,12 +1,20 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
-
 import static java.lang.Math.abs;
-
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
+
+/** 
+ * WaterRobot represents the water robot enemy the player must defeat.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class WaterRobot extends Enemies implements Serializable{
 
