@@ -43,6 +43,10 @@ public class ShopPanel extends JPanel {
     int[] weaponsBought = {0,0,0,0};
     JFrame jf;
     
+    /** 
+     * @param p Player
+     * Constructor
+     */
     public ShopPanel(Player p) {
 	// shop.setLayout(new GridLayout(2,2));
 	//setBackground(Color.gray);
@@ -119,6 +123,10 @@ public class ShopPanel extends JPanel {
 	    }
 	};
     
+    /** 
+     * @param g Graphics
+     * Paints the Shop panel of the PauseMenu
+     */
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	Graphics2D g2d = (Graphics2D) g;
