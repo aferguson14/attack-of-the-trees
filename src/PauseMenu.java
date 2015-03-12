@@ -14,8 +14,6 @@ public class PauseMenu extends JFrame{
 	public JPanel shop ;
 	public JPanel save;
 	public JPanel help;
-	//JButton clicked;
-	//ArrayList<String> weaponNames = new ArrayList<String>(Arrays.asList("sword", "stick", "axe", "gun"));
 	Player p;
 	Board bd;
 	JButton saveGame;
@@ -105,6 +103,7 @@ public class PauseMenu extends JFrame{
 					os.writeObject(bd.getP());
 					os.writeObject(bd.getEnemies());
 					os.writeObject(bd.getResources());
+					os.writeObject(bd.getLvlhandler());
 					os.writeInt(bd.getTotalProgress());
 					os.writeInt(bd.getLevel());
 					//System.out.println(bd.getTotalProgress());
@@ -151,6 +150,14 @@ public class PauseMenu extends JFrame{
 			int key = e.getKeyCode();
 			return key;
 		}
+	}
+	
+	public JPanel getShop() {
+		return shop;
+	}
+
+	public void setShop(JPanel shop) {
+		this.shop = shop;
 	}
 	
 }
