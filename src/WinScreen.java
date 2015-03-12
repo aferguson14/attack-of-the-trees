@@ -4,8 +4,18 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public class WinScreen extends JFrame {
+/** 
+ * WinScreen represents the window that appears on the user's screen when the game is won.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Want
+ * @version CS 48, Winter 2015
+*/
 
+public class WinScreen extends JFrame {
 	public JPanel board;
 	public JPanel buttonPanel;
 	public JPanel labelPanel;
@@ -13,6 +23,10 @@ public class WinScreen extends JFrame {
 	public JButton exitButton;
 	public JLabel label;
 
+/** 
+ * @param b the game Board
+ * Constructor
+*/
 	public WinScreen(JPanel b) {
 		
 		// superclass constructor
@@ -73,6 +87,7 @@ public class WinScreen extends JFrame {
 
 	/*
 	 * @param e ActionEvent
+	 * when Play Again Button is clicked, change state of the game to Menu
 	 */	
 	public void playAgain(ActionEvent e) {
 		this.dispose();
@@ -81,12 +96,15 @@ public class WinScreen extends JFrame {
 	}
 
 	/*
-	 * @param g Graphics object g
+	 * @param g Graphics object
 	 */
 	public void paintComponent(Graphics g) {	
 		super.paint(g);
 	}
-
+	
+	/** 
+	 * inner class that is an Action Listener for playAgainButton 
+	*/
 	private class PAL implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -95,6 +113,9 @@ public class WinScreen extends JFrame {
 		}	
 	} //PAL
 
+	/** 
+	 * inner class that is an Action Listener for exitButton 
+	*/
 	private class EL implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
