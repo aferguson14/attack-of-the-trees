@@ -29,8 +29,11 @@ public class Menu {
 	private int lgx = loadGameButton.x+30;
 	private int lgy = loadGameButton.y+50;
 
+    /** 
+     * @param g Graphics
+     * Paints menu onto screen when called
+     */
 	public void render(Graphics g) {
-		//Paints Menu
 		Graphics2D g2d = (Graphics2D) g; 
 		Stroke oldStroke = g2d.getStroke();
 

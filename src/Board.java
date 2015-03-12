@@ -84,7 +84,9 @@ public class Board extends JPanel implements ActionListener {
     //initial state = MENU
     private static STATE State = STATE.MENU;
     
-    
+    /** 
+     * Constructor
+     */    
     public Board() {
 	randomGenerator = new Random();
         //creates player, enemies, terrain, weapon, menu, and background ../images
@@ -189,7 +191,11 @@ public class Board extends JPanel implements ActionListener {
 	p.setCurrentWeapon(s);
 }
 
-    
+    /** 
+     * @param e ActionEvent 
+     * Takes in Mouse actions and converts them into actions the program will perform.
+     * The system will perform specific actions based on the state of the game.
+     */        
     public void actionPerformed(ActionEvent e) {
          //move player, move weapon
 
@@ -326,7 +332,11 @@ public class Board extends JPanel implements ActionListener {
 }
 		repaint();
     }
-    
+
+    /** 
+     * @param g Graphics
+     * Paints the background, player, enemies, terrain, weapons, etc. onto screen.
+     */            
     public void paint(Graphics g) {
 	//Player is painted last to make him in front of enemies
 	super.paint(g);
@@ -620,12 +630,19 @@ public class Board extends JPanel implements ActionListener {
 		}
 	}
 
-	//User Key Input adapter
 	private class AL extends KeyAdapter {
+	    /**
+	     * @param e KeyEvent
+	     * Takes in user keyboard input and performs specific actions based on the key pressed.
+	     */
 		public void keyReleased(KeyEvent e) {
 			getP().keyReleased(e);
 		}
 
+	    /**
+	     * @param e KeyEvent
+	     * Takes in user keyboard input and performs specific actions based on the key pressed.
+	     */
 		public void keyPressed(KeyEvent e) {
 			getP().keyPressed(e);
 			pmenu.keyPressedMenu(e);
