@@ -17,8 +17,9 @@ import javax.swing.*;
 */
 
 public class Frame {
-    //Sets up frame
-    //executable
+    /** 
+     * No-arg constructor that creates the window for the game.
+     */
     public Frame(){
 	JFrame frame = new JFrame();
 	frame.getContentPane().add(new Board());
@@ -28,7 +29,10 @@ public class Frame {
 	frame.setVisible(true);
 	frame.setLocationRelativeTo(null);
     }
-    
+
+    /** 
+     * Main method that when run, starts the game.
+     */
     public static void main(String args[]){
         Frame frame = new Frame();
     }

@@ -31,6 +31,12 @@ public class PauseMenu extends JFrame{
 	JButton saveGame;
 	JButton saveNQuit;
 
+    /** 
+     * @param p Player
+     * @param b Board
+     * Constructor
+     * Creates the frame for the pause menu and creates the shop, save, and help tabs.
+     */
 	public PauseMenu(Player p, Board b){
 		this.p = p;
 		bd = b;
@@ -65,6 +71,9 @@ public class PauseMenu extends JFrame{
 		topPanel.add(tabbedPane, BorderLayout.CENTER);
 	}
 
+    /**
+     * Creates the page displayed when the Save tab is open.
+     */
 	public void createSavePage() {
 		// create the panel for the save game feature
 		save = new JPanel();
@@ -76,7 +85,10 @@ public class PauseMenu extends JFrame{
 		save.add(saveGame);
 		save.add(saveNQuit);
 	}
-	
+
+    /**
+     * Creates the page displayed when the Help tab is open.
+     */	
 	public void createHelpPage(){
 		//create the help menu
 		help = new JPanel();
@@ -99,9 +111,12 @@ public class PauseMenu extends JFrame{
 	}
 
 	ActionListener actionListener = new ActionListener() {
+		/**
+		 * @param ae ActionEvent
+		 * Takes in user input and performs actions based on the button clicked by the user.
+		 */
 		@Override
 		public void actionPerformed(ActionEvent ae) {
-			// TODO Auto-generated method stub
 			JButton b = (JButton) ae.getSource();
 			if (b.equals(saveGame) || b.equals(saveNQuit)) {
 				// save the game
@@ -131,11 +146,19 @@ public class PauseMenu extends JFrame{
 		}
 	};
 
+    /**
+     * @param g Graphics
+     * Calls superclass's paint method.
+     */
 	public void paintComponent(Graphics g){
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 	}
 
+    /**
+     * @param e KeyEvent
+     * Displays/closes pause menu based on user's keyboard input.
+     */
 	public void keyPressedMenu(KeyEvent e) {
 		int key = e.getKeyCode();
 		//check to see if the key pressed is P
@@ -155,19 +178,34 @@ public class PauseMenu extends JFrame{
 	}	
 
 	private class KL extends KeyAdapter {
-		public void keyPressed(KeyEvent e) {
+	    /**
+	     * @param e KeyEvent
+	     * Takes in user keyboard input and performs specific actions based on the key pressed.
+	     */
+	    public void keyPressed(KeyEvent e) {
 			keyPressedMenu(e);
 		}
+	    /**
+	     * @param e KeyEvent
+	     * @return the integer represention of the key pressed on the keyboard
+	     */
 		public int getKeyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
 			return key;
 		}
 	}
 	
+    /**
+     * @return the Shop panel
+     */
 	public JPanel getShop() {
 		return shop;
 	}
 
+    /**
+     * @param a Shop panel
+     * sets the shop panel
+     */
 	public void setShop(JPanel shop) {
 		this.shop = shop;
 	}
