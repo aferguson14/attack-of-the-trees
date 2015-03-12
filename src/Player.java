@@ -1,15 +1,22 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
-
 import static java.lang.Math.abs;
-
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
-
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
+
+/** 
+ * Player represents the character the user plays as.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class Player implements Serializable{
     //private data
