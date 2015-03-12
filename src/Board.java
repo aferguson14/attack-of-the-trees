@@ -292,11 +292,11 @@ public class Board extends JPanel implements ActionListener {
 	       (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
 	       (getP().getYCoord() >= getResources().get(i).getYCoord()-70) ){
 
-		if(getResources().get(i).getResourceType() == "log")
+		if(getResources().get(i).getResourceType().equals("log"))
 		    getP().setLogCount(getP().getLogCount() + 1);
-		else if(getResources().get(i).getResourceType() == "coin")
+		else if(getResources().get(i).getResourceType().equals("coin"))
 		    getP().setCoinCount(getP().getCoinCount() + 1);
-		else if(getResources().get(i).getResourceType() == "heart"){
+		else if(getResources().get(i).getResourceType().equals("heart")){
 		    if(getP().getHp()>=80)
 			getP().setHp(100);
 		    else
@@ -334,8 +334,10 @@ public class Board extends JPanel implements ActionListener {
 					p = (Player) os.readObject();
 					enemies = (ArrayList<Enemies>) os.readObject();
 					resources = (ArrayList<Resource>) os.readObject();
+					lvlhandler = (LevelHandler) os.readObject();
 					TotalProgress = os.readInt();
 					level = os.readInt();
+					pmenu = new PauseMenu(p, this);
 					//System.out.println(getTotalProgress());
 					//System.out.println(getLevel());
 					os.close();
@@ -853,5 +855,19 @@ public class Board extends JPanel implements ActionListener {
 	 */
 	public static void setWinscreen(WinScreen aWinscreen) {
 		winscreen = aWinscreen;
+	}
+	
+	/**
+	 * @return the levelhandler
+	 */
+	public LevelHandler getLvlhandler() {
+		return lvlhandler;
+	}
+
+	/**
+	 * @param lvlhandler the levelhandler to set
+	 */
+	public void setLvlhandler(LevelHandler lvlhandler) {
+		this.lvlhandler = lvlhandler;
 	}
 }
