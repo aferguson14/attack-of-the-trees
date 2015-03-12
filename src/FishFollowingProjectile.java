@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 /** 
- * FishFollwoingProjectile represents the projectile released by the fish/mermaid boss enemy
+ * FishFollowingProjectile represents the projectile released by the fish/mermaid boss enemy
  * 
  * @author Shadee Barzin
  * @author Andrew Ferguson
