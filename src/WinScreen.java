@@ -11,7 +11,7 @@ import javax.swing.border.Border;
  * @author Andrew Ferguson
  * @author Michele Haque
  * @author Brendan Murphy
- * @author Fengyu Want
+ * @author Fengyu Wang
  * @version CS 48, Winter 2015
 */
 
