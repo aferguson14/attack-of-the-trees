@@ -7,6 +7,17 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
 
+/** 
+ * Board represents the panel where all graphics are displayed and the game is played.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
+
 public class Board extends JPanel implements ActionListener {
     //private data
     //Objects
