@@ -7,7 +7,16 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-
+/** 
+ * FishFollwoingProjectile represents the projectile released by the fish/mermaid boss enemy
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class FishFollowingProjectile extends Projectile{
     //Constructor
