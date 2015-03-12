@@ -5,6 +5,17 @@ import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
+/** 
+ * ResourceLog represents the logs dropped by enemies when they are killed that the player collects.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
+
 public class ResourceLog extends Resource{
 
     public ResourceLog(double x, double y){
