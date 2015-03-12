@@ -1,9 +1,10 @@
 
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class LevelHandler {
+public class LevelHandler implements Serializable {
     private int Progress;
     private int ProgressNeeded;
     private int ProgressNeededLVL1 = 5;
