@@ -24,40 +24,58 @@ public class LevelHandler implements Serializable {
     private int WorldLeft = 0;
     private int WorldRight = 7478;
     private int WorldTop = 0;
+
+    /**
+     * No-arg constructor
+     */
     public LevelHandler(){}
     
+    /**
+     * @param enem ArrayList<Enemies>
+     * @param terrain ArrayList<Terrain>
+     * @param generator EnemyGenerator
+     * Sets up Board for level 1
+     */
     public void HandleLVL1Start(ArrayList<Enemies> enem, ArrayList<Terrain> terrain, EnemyGenerator generator){
         generator.createLVL1Enemies(enem);
         setProgress(0);
         setProgressNeeded(getProgressNeededLVL1());
-        
         createEndOfLevelWalls(terrain);
-        
         createSegment1(terrain);
-        
         createSegment2(terrain);
-        
         createSegment3(terrain);
-        
-        createSegment4(terrain);
-
-        
+        createSegment4(terrain);        
     }
+
+    /**
+     * @param enem ArrayList<Enemies>
+     * @param terrain ArrayList<Terrain>
+     * @param generator EnemyGenerator
+     * Sets up Board for level 2
+     */
     public void HandleLVL2Start(ArrayList<Enemies> enem, ArrayList<Terrain> terrain, EnemyGenerator generator){
         generator.createLVL2Enemies(enem);
         setProgress(0);
         setProgressNeeded(getProgressNeededLVL2());
     }
+
+    /**
+     * @param enem ArrayList<Enemies>
+     * @param terrain ArrayList<Terrain>
+     * @param generator EnemyGenerator
+     * Sets up Board for level 3
+     */
     public void HandleLVL3Start(ArrayList<Enemies> enem, ArrayList<Terrain> terrain, EnemyGenerator generator){
         generator.createLVL3Enemies(enem);
         setProgress(0);
         setProgressNeeded(getProgressNeededLVL3());
     }
     
-    
-    
-    public void createEndOfLevelWalls(ArrayList<Terrain> terrain){
-        
+    /**
+     * @param terrain ArrayList<Terrain>
+     * Creates blocks on either end of the background to show beginnning and end of the level
+     */
+    public void createEndOfLevelWalls(ArrayList<Terrain> terrain){        
         //End of level Walls
         Rock block1 = new Rock(-100, WorldBot - 100);
         Rock block2 = new Rock(-100, WorldBot - 200);
@@ -96,6 +114,10 @@ public class LevelHandler implements Serializable {
 	terrain.add(blockEnd8);
     }
     
+    /**
+     * @param terrain ArrayList<Terrain>
+     * Adds terrain elements to Board for level 1
+     */
     public void createSegment1(ArrayList<Terrain> terrain){
         Platform plat1 = new Platform(0, WorldBot - 200);
         Rock block1 = new Rock(600, WorldBot - 100);
@@ -135,7 +157,11 @@ public class LevelHandler implements Serializable {
         terrain.add(plat6);  
         terrain.add(plat7);
     }
-    
+
+    /**
+     * @param terrain ArrayList<Terrain>
+     * Adds terrain elements to Board for level 2
+     */    
     public void createSegment2(ArrayList<Terrain> terrain){
         int RightShift = 2100;
         Rock block1 = new Rock(0 + RightShift, WorldBot - 100);
@@ -203,7 +229,6 @@ public class LevelHandler implements Serializable {
 //        plat5.setIgnoreLeft(true);
 //        Platform plat6 = new Platform(1800, WorldBot - 450);
         
-
         terrain.add(block1);
         terrain.add(block2);
         terrain.add(block3);
@@ -225,6 +250,10 @@ public class LevelHandler implements Serializable {
         terrain.add(lvl3block4);
     }
     
+    /**
+     * @param terrain ArrayList<Terrain>
+     * Adds terrain elements to Board for level 3
+     */
     public void createSegment3(ArrayList<Terrain> terrain){
         int RightShift = 3400;
         Platform plat1 = new Platform(-600 + RightShift, WorldBot-400);
@@ -337,6 +366,10 @@ public class LevelHandler implements Serializable {
         terrain.add(lvl3block4);
     }
     
+    /**
+     * @param terrain ArrayList<Terrain>
+     * Adds terrain elements to Board for levels
+     */
     public void createSegment4(ArrayList<Terrain> terrain){
         int RightShift = 4200;
         
@@ -456,6 +489,8 @@ public class LevelHandler implements Serializable {
         terrain.add(block43);
         terrain.add(block44);
     }
+
+
 //------------------------------------------------------
     /**
      * @return the Progress
@@ -479,7 +514,7 @@ public class LevelHandler implements Serializable {
     }
 
     /**
-     * @param ProgresNeeded the ProgresNeeded to set
+     * @param ProgressNeeded the ProgressNeeded to set
      */
     public void setProgressNeeded(int ProgressNeeded) {
         this.ProgressNeeded = ProgressNeeded;
