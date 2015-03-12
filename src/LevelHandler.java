@@ -1,8 +1,17 @@
-
 import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/** 
+ * LevelHandler tracks progress needed/achieved for user to complete the game.
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class LevelHandler implements Serializable {
     private int Progress;
