@@ -4,9 +4,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.Serializable;
-
 import javax.swing.ImageIcon;
 
+/** 
+ * SunFlowerProjectile represents the projectile released by the SunFlower enemy
+ * 
+ * @author Shadee Barzin
+ * @author Andrew Ferguson
+ * @author Michele Haque
+ * @author Brendan Murphy
+ * @author Fengyu Wang
+ * @version CS 48, Winter 2015
+*/
 
 public class SunFlowerProjectile extends Projectile implements Serializable{
     //Constructor
