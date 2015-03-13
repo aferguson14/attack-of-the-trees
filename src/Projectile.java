@@ -42,15 +42,25 @@ public class Projectile implements Serializable{
     private double Angle;
     private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
     private ArrayList<Double> tops = new ArrayList<Double>();
-    
-    //constructor
+    /**
+     *@param x double 
+     * @param y double
+     * @param direction int
+     * @param g Graphics
+     * @param angle double
+     * @param p Player
+     * constructor
+     */
     public Projectile(double x, double y, int direction, Graphics g, double angle, Player p){
         setXCoord(x);
         setYCoord(y);
         setFacing(direction);
         setTerrainDimensions(p.getTerrains());
     }
-    //moves projectile
+    /**
+     * @param p Player
+     * move projectile
+     */
     public void move(Player p){
         //adjust velocities
     	if(Board.getState() == Board.STATE.GAME){
@@ -87,8 +97,11 @@ public class Projectile implements Serializable{
 	        }
     	}
     }
-    
-//return true if player contact
+    /**
+     * @param p Player
+     * @return boolean
+     * return true if Player contact
+     */ 
 public boolean PlayerContact(Player p){
     if(((((getXCoord() >= p.getXCoord()) && 
             (getXCoord() <= (p.getXCoord() + p.getHorizontalSize()))) || 
@@ -106,16 +119,24 @@ public boolean PlayerContact(Player p){
     }
 
 }
-
-    //deal dmg to player based on projectile attack
+/**
+ * @param p Player
+ *deal dmg to player based on projectile attack
+ */
     public void dealDmg(Player p){
         p.setHp(p.getHp() - this.getAttack());
         setRemove(true);
     }
-    
+    /**
+     * @param g Graphics
+     * Implemented in subclasses
+     */ 
     public void CreateImage(Graphics g){}
     
-    //paint projectile
+    /**
+     * @param g Graphics
+     * paints projectile based on direction
+     */ 
     public void paintImage(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 	if(getFacing() == 0){
@@ -126,8 +147,11 @@ public boolean PlayerContact(Player p){
 	    
 	}
     }
-    
-    //gets xy velocities based on angle and hypotenuse (speed)
+    /**
+     * @param spd double
+     * @param ang double
+     * gets xy velocities based on angle and hypotenuse (speed)
+    */
     public void getXY(Double spd, Double ang){
         double yvel, xvel;
         yvel = -1 * (spd * (Math.sin(ang)));
@@ -142,18 +166,28 @@ public boolean PlayerContact(Player p){
             setXVel(getXVel());
         }
     }
-    
+    /**
+     * @param p Point
+     * @return double the angle
+     * finds angle based on point
+     */ 
         public double findAngle(Point p){
         return Math.sinh((this.getYCoord() - p.getY()) 
                 / p.distance(this.getXCoord(), this.getYCoord()));
     }
-    
+    /**
+     * @param ter ArrayList <Terrain>
+     * set the dimensions of the terrains' tops
+     */
         public void setTerrainDimensions(ArrayList <Terrain> ter){
          this.setTerrains(ter);
          for(int i = 0; i < getTerrains().size(); i++){
              getTops().add(i, getTerrains().get(i).getTop());
          }
      }
+     /**
+     * Updates the dimensions of the terrains' tops
+     */
      public void updateTerrainDimensions(){
          for(int i = 0; i < getTerrains().size(); i++){
              getTerrains().get(i).UpdateSides(this, i);
