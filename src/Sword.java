@@ -23,8 +23,8 @@ public class Sword extends Weapon implements Serializable{
 		setXCoord(x);
 		setYCoord(y);
 		setAttack(40);
-		setAttackSpeed(100);
-		setAttackSpeedTimer(99);
+		setAttackSpeed(50);
+		setAttackSpeedTimer(49);
 		setSpeed(3);
 		setXVel(0);
 		setYVel(0);
