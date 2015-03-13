@@ -77,7 +77,6 @@ public class PauseMenu extends JFrame{
 	public void createSavePage() {
 		// create the panel for the save game feature
 		save = new JPanel();
-		// save.setLayout(new GridLayout(1,2));
 		saveGame = new JButton("Save");
 		saveNQuit = new JButton("Save and Exit");
 		saveGame.addActionListener(actionListener);
@@ -97,8 +96,8 @@ public class PauseMenu extends JFrame{
 		// add controls instructions
 		JTextArea label = new JTextArea("Controls:\n");
 		label.setFont(new Font("arial", Font.BOLD, 18));
-		JTextArea text = new JTextArea("Use A/D to move left/right\n" + "Use W to jump\n" + "Use S to duck\n" 
-				+ "Use your mouse to aim and left-click to shoot\n" + "Use Q and E or 1-5 to swap weapons");
+		JTextArea text = new JTextArea("Use A/D to move left/right\n" + "Use W to jump\n" + 
+				"Use your mouse to aim and left-click to shoot\n" + "Use Q and E or 1-5 to swap weapons");
 		text.setRows(5);
 		text.setColumns(25);
 		text.setFont(new Font("arial", Font.PLAIN, 15));
@@ -126,15 +125,13 @@ public class PauseMenu extends JFrame{
 					FileOutputStream fs = new FileOutputStream("saved.ser");
 					ObjectOutputStream os = new ObjectOutputStream(fs);
 					os.flush();
-					// os.writeObject(bd);
 					os.writeObject(bd.getP());
 					os.writeObject(bd.getEnemies());
 					os.writeObject(bd.getResources());
 					os.writeObject(bd.getLvlhandler());
+					os.writeObject(((ShopPanel) getShop()).getWeaponsBought());
 					os.writeInt(bd.getTotalProgress());
 					os.writeInt(bd.getLevel());
-					//System.out.println(bd.getTotalProgress());
-					//System.out.println(bd.getLevel());
 					os.close();
 				} catch (Exception ex) {
 					ex.printStackTrace();
