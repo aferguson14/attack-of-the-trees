@@ -23,8 +23,8 @@ public class Bow extends Weapon implements Serializable{
         setXCoord(x);
         setYCoord(y);
         setAttack(10);
-        setAttackSpeed(100);
-        setAttackSpeedTimer(99);
+        setAttackSpeed(80);
+        setAttackSpeedTimer(79);
         setSpeed(3);
         setXVel(0);
         setYVel(0);
