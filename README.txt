@@ -21,3 +21,5 @@ Other Files:
 Known Bugs:
 -.jar doesnt work on linux
 -You cannot save and reload the game if you saved when the player's projectile(arrow or bullet) was moving.
+-Tree Boss enemy sometimes get stuck in blocks
+-In pause menu, if you have not bought a weapon before you have to click on the pause menu frame for the purchase button to show up. Then you can buy the weapon. This only happens the first time.
