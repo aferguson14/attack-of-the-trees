@@ -96,7 +96,6 @@ public class Board extends JPanel implements ActionListener {
         //creates player, enemies, terrain, weapon, menu, and background ../images
 	p = new Player();
 	backgroundMusic = new MP3("../sound/backgroundMusic.mp3");
-	//backgroundMusic.play();
 	backgroundMusic.loop();
 
 	enemies = new ArrayList<Enemies>();
@@ -207,7 +206,6 @@ public class Board extends JPanel implements ActionListener {
      */        
     public void actionPerformed(ActionEvent e) {
          //move player, move weapon
-
 	if(getState() == STATE.PAUSE){
 	    getP().setXVel(0);
 	    getP().setYVel(0);
@@ -317,7 +315,16 @@ public class Board extends JPanel implements ActionListener {
 	       (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
 	       (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
 	       (getP().getYCoord() >= getResources().get(i).getYCoord()-70) ){
+		if(getResources().get(i).getResourceType().equals("heart")
+		   ||getResources().get(i).getResourceType().equals("blueHeart")){
+		    MP3 resourceSound = new MP3("../sound/healthUp.mp3");
+		    resourceSound.play();
 
+		}		    
+		else{	
+		    MP3 resourceSound = new MP3("../sound/resourceSound.mp3");
+		    resourceSound.play();
+		}
 		if(getResources().get(i).getResourceType().equals("log"))
 		    getP().setLogCount(getP().getLogCount() + 1);
 		else if(getResources().get(i).getResourceType().equals("coin"))
@@ -394,6 +401,7 @@ public class Board extends JPanel implements ActionListener {
 		Color greyTransp = new Color(70, 70, 70, 150);
 	
 		if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
+
 	         if (TotalProgress > 20){
 				setState(STATE.GAMEOVER);
 			    }
@@ -656,6 +664,7 @@ public class Board extends JPanel implements ActionListener {
 			pmenu.keyPressedMenu(e);
 		}
 	}
+
 
 
     //------------------------------Getters/Setters---------------------------[

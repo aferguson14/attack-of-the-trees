@@ -98,6 +98,8 @@ public class ShopPanel extends JPanel {
 		    logs = p.getLogCount();
 		    coins = p.getCoinCount();
 		    if(logs >= logCost[indexClicked] && coins >= coinCost[indexClicked] && weaponsBought[indexClicked] == 0){
+			MP3 purchaseSound = new MP3("../sound/purchaseSound.mp3");
+			purchaseSound.play();
 			p.setCoinCount((coins-coinCost[indexClicked]));
 			p.setLogCount((logs-logCost[indexClicked]));
 			weaponsBought[indexClicked] = 1;

@@ -325,7 +325,7 @@ if(isAttacking()){
         Point p = new Point((int)this.getXCoord(), (int)this.getYCoord());
         return p;
     }
-    
+
     /**
      * @param e KeyEvent
      * Gets player's movement input from user based on keyboard input.
