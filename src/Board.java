@@ -434,22 +434,9 @@ public class Board extends JPanel implements ActionListener {
 		}
 	
 	
-	
-	        g.setColor(greyTransp);
-		g.fillRect((int)p.getXCoord()-300, (int) p.getHealthBarY()-20 , 750, 120);
-		g.setColor(Color.blue);
-	                    
-	        g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL1() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-	        g.drawRect((int) (p.getXCoord() -280) + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL2() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-	        g.drawRect((int) (p.getXCoord() -280)  + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))) + (lvlhandler.getProgressNeededLVL2()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL3() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-	        g.setColor(Color.white);
-	        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
-			  (lvlhandler.getProgress() + TotalProgress) * (700/(lvlhandler.getTotalProgressNeeded())), 30);
-	        g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 700, 10);
-	        g.setColor(Color.YELLOW);
-	        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 
-			  p.getCurrentWeapon().getAttackSpeedTimer() * (700/p.getCurrentWeapon().getAttackSpeed()), 10);
-	            //paint terrain
+    
+
+		//paint terrain
 	            
 	            //perform player attack, perform enemy AI
 	            if(getP().isAttacking()){
@@ -475,6 +462,23 @@ public class Board extends JPanel implements ActionListener {
 	                }
 	            }
 	
+		    //paint health bar, progress bar, etc.
+	        g.setColor(greyTransp);
+		g.fillRect((int)p.getXCoord()-300, (int) p.getHealthBarY()-20 , 750, 120);
+		g.setColor(Color.blue);
+	                    
+	        g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL1() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+	        g.drawRect((int) (p.getXCoord() -280) + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL2() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+	        g.drawRect((int) (p.getXCoord() -280)  + (lvlhandler.getProgressNeededLVL1()* (700/(lvlhandler.getTotalProgressNeeded()))) + (lvlhandler.getProgressNeededLVL2()* (700/(lvlhandler.getTotalProgressNeeded()))), (int) p.getHealthBarY() + 40, lvlhandler.getProgressNeededLVL3() * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+	        g.setColor(Color.white);
+	        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 40, 
+			  (lvlhandler.getProgress() + TotalProgress) * (700/(lvlhandler.getTotalProgressNeeded())), 30);
+	        g.drawRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 700, 10);
+	        g.setColor(Color.YELLOW);
+	        g.fillRect((int) (p.getXCoord() -280), (int) p.getHealthBarY() + 80, 
+			  p.getCurrentWeapon().getAttackSpeedTimer() * (700/p.getCurrentWeapon().getAttackSpeed()), 10);
+
+
 		    //Paint resources
 		    for(Resource r : getResources()){
 			r.paintResource(g);
