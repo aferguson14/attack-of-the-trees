@@ -24,8 +24,8 @@ public class EnemyGnome extends Enemies implements Serializable{
 		ImageIcon i = new ImageIcon("../images/enemyImages/gnome/gnomeSideRight.png");
 		ImageIcon iLeft = new ImageIcon("../images/enemyImages/gnome/gnomeSideLeft.png");
 		ResourceCoin coin = new ResourceCoin(this.getXCoord(), this.getYCoord());
-		this.setStill(i);
-		this.setStillRight(iLeft);
+		this.setStill(iLeft);
+		this.setStillRight(i);
 		this.setHorizontalSize(81);
 		this.setVerticalSize(115);
 		this.setResource(coin);
