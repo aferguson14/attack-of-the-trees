@@ -348,6 +348,11 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	}
 }
+	if(getP().getHp()<=0){
+		MP3 gameoverSound = new MP3("../sound/gameoverSound.mp3");
+		gameoverSound.play();
+	}
+
 		repaint();
     }
 
