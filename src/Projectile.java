@@ -124,6 +124,8 @@ public boolean PlayerContact(Player p){
  *deal dmg to player based on projectile attack
  */
     public void dealDmg(Player p){
+	MP3 playerHit = new MP3("../sound/playerHit.mp3");
+	playerHit.play();
         p.setHp(p.getHp() - this.getAttack());
         setRemove(true);
     }

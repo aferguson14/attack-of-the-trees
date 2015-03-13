@@ -34,7 +34,7 @@ public class GameOverScreen extends JFrame {
 		super();
 		
 		board = b;
-		
+
 		// set frame characteristics
 		this.setTitle("Game Over Screen");
 		this.setSize(750, 300);
@@ -108,8 +108,9 @@ public class GameOverScreen extends JFrame {
 	private class PAL implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (Board.getState() == Board.STATE.GAMEOVER)
-				playAgain(e);
+		    if (Board.getState() == Board.STATE.GAMEOVER){
+ 				playAgain(e);
+		    }
 		}	
 	} //PAL
 

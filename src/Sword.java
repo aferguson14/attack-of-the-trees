@@ -53,6 +53,7 @@ public class Sword extends Weapon implements Serializable{
 					axeproj.setMouseAngle(this.getMouseAngle());
 					this.addProjectile(axeproj);
 					this.setAttackSpeedTimer(0);
+					this.playSound();
 		}
 	}
 	@Override
@@ -73,5 +74,12 @@ public class Sword extends Weapon implements Serializable{
 		paintProjectile(e, g, p);
 		deleteProjectiles();
 	}
+
+    @Override
+    public void playSound(){
+	MP3 stickSound = new MP3("../sound/sword.mp3");
+	stickSound.play();
+    }
+
 
 }

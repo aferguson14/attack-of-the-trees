@@ -53,6 +53,7 @@ public class Gun extends Weapon{
 		    this.addProjectile(bullet);
 		    this.setAttackSpeedTimer(0);
 		    //System.out.println(findAngle(p)*180/Math.PI);
+		    this.playSound();
                 }
     }
     @Override
@@ -73,5 +74,12 @@ public class Gun extends Weapon{
         paintProjectile(e, g, p);
         deleteProjectiles();
     }
+
+    @Override
+    public void playSound(){
+	MP3 gunSound = new MP3("../sound/gunSound.mp3");
+	gunSound.play();
+    }
+
     
 }

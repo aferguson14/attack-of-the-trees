@@ -311,6 +311,7 @@ if(isAttacking()){
 	//-650 relates to painting player in Board
         setMousePoint(Board.MouseCoords);
         if(isAttacking()){
+	    //getCurrentWeapon().playSound();
             getCurrentWeapon().shoot(this.getMousePoint(), g, this);
         }
         Board.MouseCoords.x -= (this.getXCoord() - 650);
@@ -324,7 +325,7 @@ if(isAttacking()){
         Point p = new Point((int)this.getXCoord(), (int)this.getYCoord());
         return p;
     }
-    
+
     /**
      * @param e KeyEvent
      * Gets player's movement input from user based on keyboard input.
@@ -366,6 +367,8 @@ if(isAttacking()){
 		//if on ground, can jump
 		if(!isInAir()){
 			if(key == KeyEvent.VK_W){
+			    MP3 jumpSound = new MP3("../sound/jump.mp3");
+			    jumpSound.play();
 				setYAcc(.5);
 				setYVel((getJumpSpeed()));
 				setInAir(true);    

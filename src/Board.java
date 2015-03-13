@@ -6,6 +6,8 @@ import static java.lang.Math.abs;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
+import javax.sound.sampled.*;
+//import javazoom.jl.player.Player;
 
 /** 
  * Board represents the panel where all graphics are displayed and the game is played.
@@ -72,7 +74,9 @@ public class Board extends JPanel implements ActionListener {
     private boolean StartLevel = true;
     private int level = 0;
     private LevelHandler lvlhandler;
-    
+    //    public Sound backgroundMusic;
+    public MP3 backgroundMusic;
+
     //states
     public static enum STATE {
     	MENU,
@@ -91,6 +95,9 @@ public class Board extends JPanel implements ActionListener {
 	randomGenerator = new Random();
         //creates player, enemies, terrain, weapon, menu, and background ../images
 	p = new Player();
+	backgroundMusic = new MP3("../sound/backgroundMusic.mp3");
+	backgroundMusic.loop();
+
 	enemies = new ArrayList<Enemies>();
 	terrain = new ArrayList<Terrain>();
 	resources = new ArrayList<Resource>();
@@ -190,7 +197,7 @@ public class Board extends JPanel implements ActionListener {
 	Bow b = new Bow(p.getXCoord(),p.getYCoord());
 	p.AddWeapon(4, b);//index in arraylist*/
 	p.setCurrentWeapon(s);
-}
+    }
 
     /** 
      * @param e ActionEvent 
@@ -199,7 +206,6 @@ public class Board extends JPanel implements ActionListener {
      */        
     public void actionPerformed(ActionEvent e) {
          //move player, move weapon
-
 	if(getState() == STATE.PAUSE){
 	    getP().setXVel(0);
 	    getP().setYVel(0);
@@ -309,7 +315,16 @@ public class Board extends JPanel implements ActionListener {
 	       (getP().getXCoord() <= getResources().get(i).getXCoord()+25) &&
 	       (getP().getYCoord() <= getResources().get(i).getYCoord()+25) &&
 	       (getP().getYCoord() >= getResources().get(i).getYCoord()-70) ){
+		if(getResources().get(i).getResourceType().equals("heart")
+		   ||getResources().get(i).getResourceType().equals("blueHeart")){
+		    MP3 resourceSound = new MP3("../sound/healthUp.mp3");
+		    resourceSound.play();
 
+		}		    
+		else{	
+		    MP3 resourceSound = new MP3("../sound/resourceSound.mp3");
+		    resourceSound.play();
+		}
 		if(getResources().get(i).getResourceType().equals("log"))
 		    getP().setLogCount(getP().getLogCount() + 1);
 		else if(getResources().get(i).getResourceType().equals("coin"))
@@ -333,6 +348,11 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	}
 }
+	if(getP().getHp()<=0){
+		MP3 gameoverSound = new MP3("../sound/gameoverSound.mp3");
+		gameoverSound.play();
+	}
+
 		repaint();
     }
 
@@ -386,6 +406,7 @@ public class Board extends JPanel implements ActionListener {
 		Color greyTransp = new Color(70, 70, 70, 150);
 	
 		if(getState() == STATE.GAME || getState() == STATE.PAUSE) {
+
 	         if (TotalProgress > 20){
 				setState(STATE.GAMEOVER);
 			    }
@@ -628,7 +649,7 @@ public class Board extends JPanel implements ActionListener {
 				}
 			}
 		}
-	}
+    }
 
 	private class AL extends KeyAdapter {
 	    /**
@@ -648,6 +669,7 @@ public class Board extends JPanel implements ActionListener {
 			pmenu.keyPressedMenu(e);
 		}
 	}
+
 
 
     //------------------------------Getters/Setters---------------------------[

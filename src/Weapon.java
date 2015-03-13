@@ -7,6 +7,7 @@ import java.awt.PointerInfo;
 import java.io.Serializable;
 import java.lang.Math;
 
+
 /** 
  * Weapon represents a weapon the player uses to defeat enemies.
  * An abstract class that the player's weapons will derive from.
@@ -149,7 +150,8 @@ public abstract class Weapon implements Serializable{
      * Prints the weapon's name should be overridden by subclasses
      */
     public abstract void print();
-    
+
+    public abstract void playSound();
     //----------------------------------------Getters/Setters--------------------------------------
     /**
      * @return the Attack
