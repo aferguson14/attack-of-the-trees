@@ -6,6 +6,8 @@ import static java.lang.Math.abs;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
+import javax.sound.sampled.*;
+//import javazoom.jl.player.Player;
 
 /** 
  * Board represents the panel where all graphics are displayed and the game is played.
@@ -72,7 +74,9 @@ public class Board extends JPanel implements ActionListener {
     private boolean StartLevel = true;
     private int level = 0;
     private LevelHandler lvlhandler;
-    
+    //    public Sound backgroundMusic;
+    public MP3 backgroundMusic;
+
     //states
     public static enum STATE {
     	MENU,
@@ -91,6 +95,9 @@ public class Board extends JPanel implements ActionListener {
 	randomGenerator = new Random();
         //creates player, enemies, terrain, weapon, menu, and background ../images
 	p = new Player();
+	backgroundMusic = new MP3("../sound/backgroundMusic.mp3");
+	backgroundMusic.play();
+
 	enemies = new ArrayList<Enemies>();
 	terrain = new ArrayList<Terrain>();
 	resources = new ArrayList<Resource>();
@@ -199,6 +206,8 @@ public class Board extends JPanel implements ActionListener {
      */        
     public void actionPerformed(ActionEvent e) {
          //move player, move weapon
+	//backgroundMusic.play();
+	//stickSound.play();
 
 	if(getState() == STATE.PAUSE){
 	    getP().setXVel(0);
