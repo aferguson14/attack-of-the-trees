@@ -56,6 +56,10 @@ public abstract class Enemies implements Serializable{
 	private double angle = 0;
 	private int totalHp;
 
+	/*
+	@param x
+	@param y
+	*/
 	//Constructor, place an enemy at a specific coordinate
 	public Enemies(double x, double y){
 		XCoord = x;
