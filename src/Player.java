@@ -150,19 +150,19 @@ public class Player implements Serializable{
 			g2d.rotate(Math.PI, this.getXCoord()+25, this.getYCoord()+63);
 			
 			//WEAPONS POSITIONED DIFFERENTLY
-			if(this.getCurrentWeapon().getWeaponType()=="Gun"){
+			if(this.getCurrentWeapon().getWeaponType().equals("Gun")){
 			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-52, (int) (this.getYCoord())+53, null);
 			}
-			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
+			else if(this.getCurrentWeapon().getWeaponType().equals("Bow")){
 			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-52+30, (int) (this.getYCoord())+25, null);
 			}
-			else if(this.getCurrentWeapon().getWeaponType()=="Axe"){
+			else if(this.getCurrentWeapon().getWeaponType().equals("Axe")){
 			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-55, (int) (this.getYCoord())+53-15, null);
 			}
-			else if(this.getCurrentWeapon().getWeaponType()=="Sword"){
+			else if(this.getCurrentWeapon().getWeaponType().equals("Sword")){
 			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-68, (int) (this.getYCoord())+31, null);
 			}
-			else if(this.getCurrentWeapon().getWeaponType()=="Stick"){
+			else if(this.getCurrentWeapon().getWeaponType().equals("Stick")){
 			    g2d.drawImage(this.getCurrentWeapon().getStillLeft().getImage(),(int) (this.getXCoord())-64, (int) (this.getYCoord())+35, null);
 			}
 			
@@ -186,19 +186,19 @@ public class Player implements Serializable{
 			g2d.rotate(angle, this.getXCoord()+15, this.getYCoord()+60+3);
 
 			//WEAPONS POSITIONED DIFFERENTLY
-			if(this.getCurrentWeapon().getWeaponType()=="Gun"){
+			if(this.getCurrentWeapon().getWeaponType().equals("Gun")){
 			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+60-5, null);//was +33,-7
 			}
-			else if(this.getCurrentWeapon().getWeaponType()=="Bow"){
+			else if(this.getCurrentWeapon().getWeaponType().equals("Bow")){
 			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+15+30, (int) (this.getYCoord())+23, null);//was +33
 			}
-			else if(this.getCurrentWeapon().getWeaponType()=="Axe"){
+			else if(this.getCurrentWeapon().getWeaponType().equals("Axe")){
 			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+34, (int) (this.getYCoord())+35, null);
 			}
-			else if(this.getCurrentWeapon().getWeaponType()=="Sword"){
+			else if(this.getCurrentWeapon().getWeaponType().equals("Sword")){
 			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+43, (int) (this.getYCoord())+28, null);
 			}
-			else if(this.getCurrentWeapon().getWeaponType()=="Stick"){
+			else if(this.getCurrentWeapon().getWeaponType().equals("Stick")){
 			    g2d.drawImage(this.getCurrentWeapon().getStillRight().getImage(),(int) (this.getXCoord())+39, (int) (this.getYCoord())+32, null);
 			}
 
@@ -274,7 +274,7 @@ if(isAttacking()){
 		WeaponTracker = 0;
 		currentWeapon = weapon.get(WeaponTracker);
 	    }
-	    if(currentWeapon.getWeaponType()!="empty"){
+	    if(!currentWeapon.getWeaponType().equals("empty")){
 		break;
 	    }		
 	}
@@ -294,7 +294,7 @@ if(isAttacking()){
 		currentWeapon = weapon.get(WeaponTracker);
 	    }
 
-	    if(currentWeapon.getWeaponType()!="empty"){
+	    if(!currentWeapon.getWeaponType().equals("empty")){
 		break;
 	    }		
 
@@ -381,27 +381,27 @@ if(isAttacking()){
 		}
 
 		if(key == KeyEvent.VK_1){
-		    if(weapon.get(0).getWeaponType()!="empty")
+		    if(!weapon.get(0).getWeaponType().equals("empty"))
 			currentWeapon = weapon.get(0);
 		}
 		if(key == KeyEvent.VK_2){
-		    if(weapon.get(1).getWeaponType()!="empty")
+		    if(!weapon.get(1).getWeaponType().equals("empty"))
 			currentWeapon = weapon.get(1);
 		}
 		if(key == KeyEvent.VK_3){
-		    if(weapon.get(2).getWeaponType()!="empty")
+		    if(!weapon.get(2).getWeaponType().equals("empty"))
 			currentWeapon = weapon.get(2);
 		}
 		if(key == KeyEvent.VK_4){
-		    if(weapon.get(3).getWeaponType()!="empty")
+		    if(!weapon.get(3).getWeaponType().equals("empty"))
 			currentWeapon = weapon.get(3);
 		}
 		if(key == KeyEvent.VK_5){
-		    if(weapon.get(4).getWeaponType()!="empty")
+		    if(!weapon.get(4).getWeaponType().equals("empty"))
 			currentWeapon = weapon.get(4);
 		}
 		if(key == KeyEvent.VK_6){
-		    if(weapon.get(5).getWeaponType()!="empty")
+		    if(!weapon.get(5).getWeaponType().equals("empty"))
 			currentWeapon = weapon.get(5);
 		}
 
