@@ -47,6 +47,7 @@ public class Bow extends Weapon implements Serializable{
         if(this.getAttackSpeedTimer() == this.getAttackSpeed()){
 		    Arrow arrow = new Arrow(this.getXCoord(), 
 					       this.getYCoord(), this.getFacing(), g, findAngle(p), player);
+			arrow.setAttack(30);
 		    arrow.setMouseY(this.getMouseY());
 		    arrow.setMouseX(this.getMouseX());
 		    arrow.setMouseAngle(this.getMouseAngle());
