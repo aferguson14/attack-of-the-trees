@@ -56,18 +56,21 @@ public abstract class Enemies implements Serializable{
 	private double angle = 0;
 	private int totalHp;
 
-	/*
-	@param x
-	@param y
+	/**
+	*@param x double
+	*@param y double
+	*Constructor, place an enemy at a specific coordinate
 	*/
-	//Constructor, place an enemy at a specific coordinate
 	public Enemies(double x, double y){
 		XCoord = x;
 		YCoord = y;
 	}
-
-	//adjust coordinates based on velocity, adjust velocity based on acceleration
-	//check contact with world/terrain
+	/**
+	*@param terrain ArrayList <Terrain>
+	*@param enem ArrayList <Enemies>
+	*adjust coordinates based on velocity, adjust velocity based on acceleration
+	*check contact with world/terrain
+	*/
 	public void move(ArrayList <Terrain> terrain, ArrayList <Enemies> enem){
 		if(Board.getState() == Board.STATE.GAME){
 			//adjust velocities
@@ -112,9 +115,11 @@ public abstract class Enemies implements Serializable{
 			setLastCoord1Y(getYCoord());
 		}
 	}
-
-	//if current coord and last coord are equal, and not attacking, return true
-	//basically, if not moving and not attacking return true
+	/**
+	*@return boolean
+	*if current coord and last coord are equal, and not attacking, return true
+	*basically, if not moving and not attacking return true
+	*/
 	public boolean checkMove(){
 		if((getLastCoord1() <= getLastCoord2()) && (getLastCoord1() 
 				>= getLastCoord2()) && !attacking && !isInAir()){
@@ -122,7 +127,10 @@ public abstract class Enemies implements Serializable{
 		}
 		return false;
 	}
-	//if the enemy is slower than his normal speed, return true
+	/**
+	*@return boolean
+	*if the enemy is slower than his normal speed, return true
+	*/
 	public boolean checkSpeed(){
 		if((abs(getLastCoord2() - getLastCoord1()) < abs(this.getSpeed())) && !isAttacking() && !isInAir()){
 			return true;
@@ -131,7 +139,10 @@ public abstract class Enemies implements Serializable{
 			return false;
 		}
 	}
-	//if the enemies last coordinate and current coordinate are the same, return true
+	/*
+	*@return boolean
+	*if the enemies last coordinate and current coordinate are the same, return true
+	*/
 	public boolean checkInAirMove(){
 		if(checkMove() && (getLastCoord1Y() <= getLastCoord2Y() && (getLastCoord1Y() 
 				>= getLastCoord2Y()))){
@@ -141,33 +152,50 @@ public abstract class Enemies implements Serializable{
 			return false;
 		}
 	}
-	
-	//Attack method, differenet for each subclass
+	/*
+	*implemented in subclasses
+	*/
 	public void Attack(Player p, Graphics g){}
 	
-	//subtract health by player's attack dmg
+	/*
+	*@param p Player
+	*subtract health by player's attack dmg
+	*/
 	public void takeDmg(Player p){
 		hp -= p.getAttack();
 		if(hp <= 0){
 			die();
 		}
 	}
-	
-	//subtract health by an integer
+	/*
+	*@param dmg int
+	*subtract health by an integer
+	*/
 	public void takeDmg(int dmg){
 		hp -= dmg;
 		if(hp <= 0){
 			die();
 		}
 	}
-
-	//AI, die, dropItem different for each subclass
+	
+	/*
+	*implemented in subclasses
+	*/
 	public void AI(Player p, Graphics g, ArrayList<Terrain> terrain, ArrayList<Enemies> enem){}
+	/*
+	*implemented in subclasses
+	*/
 	public void dropItem(){}
+	/*
+	*implemented in subclasses
+	*/
 	public void die(){}
 
-	//No Longer Used
-	//Paints image based on facing direction
+	/*
+	*@param p Player
+	*@param g Graphics
+	*Paints image based on facing direction
+	*/
 	public void paintEnemy(Player p , Graphics g){
 		//paint enemy based on direction
 		Graphics2D g2d = (Graphics2D) g;
@@ -186,8 +214,11 @@ public abstract class Enemies implements Serializable{
 		//deletes and projectiles that need to be deleted
 		deleteProjectiles();
 	}
-
-	//move enemies projectiles, then paint them
+	/*
+	*@param p Player
+	*@param g Graphics
+	*move enemies projectiles, then paint them
+	*/
 	public void paintProjectile(Player p, Graphics g){
 		for(Projectile proj : this.getProjectiles()){
 			proj.move(p);
@@ -196,8 +227,11 @@ public abstract class Enemies implements Serializable{
 			proj.paintImage(g);
 		}
 	}
-
-	//Check if the player is within the Enemies attack range
+	/*
+	*@param p Player
+	*@return boolean
+	*Check if the player is within the Enemies attack range
+	*/
 	public boolean checkInRange(Player p){
 		//if player right side within enemy's range, return true
 		if(facing == 0){
@@ -215,8 +249,9 @@ public abstract class Enemies implements Serializable{
 		//else return false
 		return false;
 	}
-
-	//if any projectiles need to be removed, remove them
+	/*
+	*if any projectiles need to be removed, remove them
+	*/
 	public void deleteProjectiles(){
 		for(Projectile proj : projectiles){
 			if(proj.isRemove()){
@@ -225,31 +260,48 @@ public abstract class Enemies implements Serializable{
 			}
 		}
 	}
-	//prints enemy name, implemented in subclasses
+	/*
+	*implemented in subclasses
+	*/s
 	public abstract void print();
-
-	//finds the angle between enemy position and a given point
+	/*
+	*@param p Point
+	*@retrun double
+	*finds the angle between enemy position and a given point
+	*/
 	public double findAngle(Point p){
 		return Math.sinh((this.getYCoord() - p.getY()) 
 				/ p.distance(this.getXCoord(), this.getYCoord()));
 	}
-	//paints when enemy attacks, implemented in subclasses
+	/*
+	*implemented in subclasses
+	*/
 	public void attackAnimation(Graphics g){}
-
-	//adds a Projectile object to the projectiles arraylist
+	/*
+	*@param p Projectile
+	*adds a Projectile object to the projectiles arraylist
+	*/
 	public void addProjectile(Projectile p){
 		projectiles.add(p);
 	}
-	//removes a Projectile from projectiles arraylist at an index
+	/*
+	*@param index int
+	*removes a Projectile from projectiles arraylist at an index
+	*/
 	public void deleteProjectile(int index){
 		projectiles.remove(index);
 	}
-	//removes a Projectile from projectiles arraylist based on the object
+	/*
+	*@param p Projectile
+	*removes a Projectile from projectiles arraylist based on the object
+	*/
 	public void deleteProjectile(Projectile p){
 		projectiles.remove(p);
 	}
-
-	//Check if the Enemy is in contact with another enemy
+	/*
+	*@param e Enemies
+	*Check if the Enemy is in contact with another enemy
+	*/
 	public void CheckEnemyContact(Enemies e){
 		double speedDif = 0;
 		//gets the largest speed difference
@@ -290,35 +342,6 @@ public abstract class Enemies implements Serializable{
 			//adjust coords accordingly
 			e.setXCoord(this.getXCoord() + this.getHorizontalSize() + e.getSpeed()); 
 		}
-		//         //check if coords in contact with top of terrain
-		//         else if((startedJump == false) && ((((e.getYCoord() + e.getVerticalSize()) > this.getYCoord()) 
-		//                 && (e.getYCoord() < this.getYCoord())))
-		//                 && (((e.getXCoord() > this.getXCoord()) 
-		//                    && ((e.getXCoord()) < (this.getXCoord() + this.getHorizontalSize())))
-		//                 || ((((e.getXCoord() + e.getHorizontalSize()) 
-		//                 > this.getXCoord()) && ((e.getXCoord() + 
-		//                    e.getHorizontalSize()) < (this.getXCoord() + this.getHorizontalSize())))))){
-		//             //adjust coords anf velocities accordingly
-		//                
-		//                e.setYCoord(this.getYCoord() - e.getVerticalSize());
-		//                e.setYVel(0);
-		//                e.setYAcc(0);
-		//                e.setStartedJump(false);          
-		//         }
-		//         //check if enemy coords in contact with bot of terrain
-		//        else if((((e.getYCoord()) < (this.getYCoord() + this.getVerticalSize())) 
-		//                && (e.getYCoord() + e.getVerticalSize() >
-		//                (this.getYCoord() + this.getVerticalSize())))
-		//                 && (((e.getXCoord() > this.getXCoord()) 
-		//                && ((e.getXCoord()) < (this.getXCoord() + this.getHorizontalSize())))
-		//                 || ((((e.getXCoord() + e.getHorizontalSize()) 
-		//                > this.getXCoord()) && ((e.getXCoord() + e.getHorizontalSize())
-		//                < (this.getXCoord() + this.getHorizontalSize())))))){
-		//            
-		//            //adjust velocities accordingly
-		//                e.setYVel(-1 * e.getYVel());
-		//            
-		//         }
 		//if not in contact, if acc == 0, set to .5
 		//(if on ground will be reset in move)
 		else{
@@ -329,16 +352,19 @@ public abstract class Enemies implements Serializable{
 			}
 		}
 	}
-
-	//sets the top dimension of the terrain in the terrains arraylist
+	/*
+	*@param ter ArrayList <Terrain>
+	*sets the top dimension of the terrain in the terrains arraylist
+	*/
 	public void setTerrainDimensions(ArrayList <Terrain> ter){
 		this.setTerrains(ter);
 		for(int i = 0; i < terrains.size(); i++){
 			getTops().add(i, terrains.get(i).getTop());
 		}
 	}
-
-	//Updates the top dimension of the terrain in the terrains arraylist
+	/*
+	*Updates the top dimension of the terrain in the terrains arraylist
+	*/
 	public void updateTerrainDimensions(){
 		for(int i = 0; i < terrains.size(); i++){
 			terrains.get(i).UpdateSides(this, i);
