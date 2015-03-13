@@ -49,10 +49,7 @@ public class EnemyBear extends Enemies implements Serializable{
 		this.setAttackSpeedCount(49);
 	}
 
-	/*
-	*@param p Player
-	*@param g Graphics
-	*/
+
 	@Override
 	public void Attack(Player p, Graphics g){
 		if(Board.getState() == Board.STATE.GAME){
@@ -75,13 +72,7 @@ public class EnemyBear extends Enemies implements Serializable{
 		}
 	}
 
-	/*
-	*@param p Player
-	*@param g Graphics
-	*@param terrain ArrayList <Terrain>
-	*@param enem ArrayList <Enemies>
-	*AI for the enemy, moves and attack based on situation
-	*/
+
 	@Override
 	public void AI(Player p, Graphics g, ArrayList<Terrain>terrain, ArrayList<Enemies> enem){
 		//If it can't move, Jump
