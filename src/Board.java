@@ -96,7 +96,8 @@ public class Board extends JPanel implements ActionListener {
         //creates player, enemies, terrain, weapon, menu, and background ../images
 	p = new Player();
 	backgroundMusic = new MP3("../sound/backgroundMusic.mp3");
-	backgroundMusic.play();
+	//backgroundMusic.play();
+	backgroundMusic.loop();
 
 	enemies = new ArrayList<Enemies>();
 	terrain = new ArrayList<Terrain>();
@@ -206,8 +207,6 @@ public class Board extends JPanel implements ActionListener {
      */        
     public void actionPerformed(ActionEvent e) {
          //move player, move weapon
-	//backgroundMusic.play();
-	//stickSound.play();
 
 	if(getState() == STATE.PAUSE){
 	    getP().setXVel(0);
