@@ -50,6 +50,7 @@ public abstract class Weapon implements Serializable{
     public void shoot(Point p, Graphics g, Player player){}
     //move weapon in correspondence with player
     public void move(Player p){
+
   	/*        if(p.getFacing() == 1){
             setXCoord(p.getXCoord()+15); //changed
             setYCoord(p.getYCoord()+63); //25 to make weapon lower
@@ -59,11 +60,13 @@ public abstract class Weapon implements Serializable{
             setYCoord(p.getYCoord()+63);//25
         }
         */
-
+	//set the corrdinate at the player coords
 	setXCoord(p.getXCoord());
 	setYCoord(p.getYCoord());
+		
+	//necessary for projectiles to know player facing
 	setPlayerDirection(p.getFacing());
-	//above line necessary for projectiles to know player facing
+	
 
 	//check boundaries, if on ground, InAir = false
 	if((getYCoord() + p.getVerticalSize()) >= 700){
@@ -99,9 +102,11 @@ public abstract class Weapon implements Serializable{
             }
         }
     }
+    //adds projectile
     public void addProjectile(PlayerProjectile p){
         projectiles.add(p);
     }
+    //delets Projectile
     public void deleteProjectile(PlayerProjectile p){
         projectiles.remove(p);
     }
@@ -110,12 +115,12 @@ public abstract class Weapon implements Serializable{
 	//	    return -Math.atan2((p.getY()-this.getYCoord()),(p.getX()-this.getXCoord()));
 
 	if(facing == 1){
-	//System.out.print("Angle: " + -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+15-this.getXCoord())));
+	//get angle based on facing right
 	    return -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+15-this.getXCoord()));
 	    
 	}
 	else if(facing == 0){
-	//System.out.print("Angle: " + -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+25-this.getXCoord())));
+	//get angle based on facing left
 	    return -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+25-this.getXCoord()));
 	}
 
