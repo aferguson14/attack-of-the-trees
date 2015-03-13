@@ -347,28 +347,24 @@ public class Board extends JPanel implements ActionListener {
 	}
 	else{
 	        if (getState() == STATE.LOAD) {
-				System.out.println("Pressed load game");
-				// System.exit(0);
-				try {
-					FileInputStream fs = new FileInputStream("saved.ser");
-					ObjectInputStream os = new ObjectInputStream(fs);
-					p = (Player) os.readObject();
-					enemies = (ArrayList<Enemies>) os.readObject();
-					resources = (ArrayList<Resource>) os.readObject();
-					lvlhandler = (LevelHandler) os.readObject();
-					TotalProgress = os.readInt();
-					level = os.readInt();
-					pmenu = new PauseMenu(p, this);
-					//System.out.println(getTotalProgress());
-					//System.out.println(getLevel());
-					os.close();
-					setState(STATE.GAME);
-					// System.out.println("in try catch");
-					// repaint();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+			try {
+				FileInputStream fs = new FileInputStream("saved.ser");
+				ObjectInputStream os = new ObjectInputStream(fs);
+				p = (Player) os.readObject();
+				enemies = (ArrayList<Enemies>) os.readObject();
+				resources = (ArrayList<Resource>) os.readObject();
+				lvlhandler = (LevelHandler) os.readObject();
+				pmenu = new PauseMenu(p, this);
+				((ShopPanel) pmenu.getShop()).setWeaponsBought((int[]) os.readObject());
+				TotalProgress = os.readInt();
+				level = os.readInt();
+				os.close();
+				setState(STATE.GAME);
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
+			// repaint();
+		}
 	        BoardLoc = this.getLocationOnScreen();
 		
 	        //background ../images
@@ -490,19 +486,19 @@ public class Board extends JPanel implements ActionListener {
 				
 				Color whiteTransp = new Color(255,255,255,200);
 				g.setColor(whiteTransp);
-				if(getP().getCurrentWeapon().getWeaponType()=="Gun"){
+				if(getP().getCurrentWeapon().getWeaponType().equals("Gun")){
 				    g.fillRect(weaponBarX-20, 240, 100, 60);
 				}
-				else if(getP().getCurrentWeapon().getWeaponType()=="Bow"){
+				else if(getP().getCurrentWeapon().getWeaponType().equals("Bow")){
 				    g.fillRect(weaponBarX-20, 300, 100, 122);
 				}
-				else if(getP().getCurrentWeapon().getWeaponType()=="Axe"){
+				else if(getP().getCurrentWeapon().getWeaponType().equals("Axe")){
 				    g.fillRect(weaponBarX-20, 173, 100, 67);
 				}
-				else if(getP().getCurrentWeapon().getWeaponType()=="Sword"){
+				else if(getP().getCurrentWeapon().getWeaponType().equals("Sword")){
 				    g.fillRect(weaponBarX-20, 103, 100, 70);
 				}
-				else if(getP().getCurrentWeapon().getWeaponType()=="Stick"){
+				else if(getP().getCurrentWeapon().getWeaponType().equals("Stick")){
 				    g.fillRect(weaponBarX-20, 32, 100, 71);
 				}
 	
