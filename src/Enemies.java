@@ -139,7 +139,7 @@ public abstract class Enemies implements Serializable{
 			return false;
 		}
 	}
-	/*
+	/**
 	*@return boolean
 	*if the enemies last coordinate and current coordinate are the same, return true
 	*/
@@ -152,12 +152,14 @@ public abstract class Enemies implements Serializable{
 			return false;
 		}
 	}
-	/*
+	/**
+	 * @param p Playerr
+	 *@param g Graphics
 	*implemented in subclasses
 	*/
 	public void Attack(Player p, Graphics g){}
 	
-	/*
+	/**
 	*@param p Player
 	*subtract health by player's attack dmg
 	*/
@@ -167,7 +169,7 @@ public abstract class Enemies implements Serializable{
 			die();
 		}
 	}
-	/*
+	/**
 	*@param dmg int
 	*subtract health by an integer
 	*/
@@ -178,20 +180,24 @@ public abstract class Enemies implements Serializable{
 		}
 	}
 	
-	/*
+	/**
+	@param p Player
+	@param g Graphics
+	@param terrain ArrayList<Terrain>
+	@param enem ArrayList<Enemies>
 	*implemented in subclasses
 	*/
 	public void AI(Player p, Graphics g, ArrayList<Terrain> terrain, ArrayList<Enemies> enem){}
-	/*
+	/**
 	*implemented in subclasses
 	*/
 	public void dropItem(){}
-	/*
+	/**
 	*implemented in subclasses
 	*/
 	public void die(){}
 
-	/*
+	/**
 	*@param p Player
 	*@param g Graphics
 	*Paints image based on facing direction
@@ -214,7 +220,7 @@ public abstract class Enemies implements Serializable{
 		//deletes and projectiles that need to be deleted
 		deleteProjectiles();
 	}
-	/*
+	/**
 	*@param p Player
 	*@param g Graphics
 	*move enemies projectiles, then paint them
@@ -227,7 +233,7 @@ public abstract class Enemies implements Serializable{
 			proj.paintImage(g);
 		}
 	}
-	/*
+	/**
 	*@param p Player
 	*@return boolean
 	*Check if the player is within the Enemies attack range
@@ -249,7 +255,7 @@ public abstract class Enemies implements Serializable{
 		//else return false
 		return false;
 	}
-	/*
+	/**
 	*if any projectiles need to be removed, remove them
 	*/
 	public void deleteProjectiles(){
@@ -260,11 +266,11 @@ public abstract class Enemies implements Serializable{
 			}
 		}
 	}
-	/*
+	/**
 	*implemented in subclasses
-	*/s
+	*/
 	public abstract void print();
-	/*
+	/**
 	*@param p Point
 	*@retrun double
 	*finds the angle between enemy position and a given point
@@ -273,32 +279,32 @@ public abstract class Enemies implements Serializable{
 		return Math.sinh((this.getYCoord() - p.getY()) 
 				/ p.distance(this.getXCoord(), this.getYCoord()));
 	}
-	/*
+	/**
 	*implemented in subclasses
 	*/
 	public void attackAnimation(Graphics g){}
-	/*
+	/**
 	*@param p Projectile
 	*adds a Projectile object to the projectiles arraylist
 	*/
 	public void addProjectile(Projectile p){
 		projectiles.add(p);
 	}
-	/*
+	/**
 	*@param index int
 	*removes a Projectile from projectiles arraylist at an index
 	*/
 	public void deleteProjectile(int index){
 		projectiles.remove(index);
 	}
-	/*
+	/**
 	*@param p Projectile
 	*removes a Projectile from projectiles arraylist based on the object
 	*/
 	public void deleteProjectile(Projectile p){
 		projectiles.remove(p);
 	}
-	/*
+	/**
 	*@param e Enemies
 	*Check if the Enemy is in contact with another enemy
 	*/
@@ -352,7 +358,7 @@ public abstract class Enemies implements Serializable{
 			}
 		}
 	}
-	/*
+	/**
 	*@param ter ArrayList <Terrain>
 	*sets the top dimension of the terrain in the terrains arraylist
 	*/
@@ -362,7 +368,7 @@ public abstract class Enemies implements Serializable{
 			getTops().add(i, terrains.get(i).getTop());
 		}
 	}
-	/*
+	/**
 	*Updates the top dimension of the terrain in the terrains arraylist
 	*/
 	public void updateTerrainDimensions(){
