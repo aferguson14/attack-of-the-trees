@@ -69,7 +69,6 @@ public class ShopPanel extends JPanel {
 
     ActionListener actionListener = new ActionListener() {
 	    public void actionPerformed(ActionEvent actionEvent) {
-		//System.out.println(actionEvent.getSource());
 		//check to see which button was clicked 
 		jf.setVisible(false);
 		JButton b = (JButton) actionEvent.getSource();
@@ -116,10 +115,7 @@ public class ShopPanel extends JPanel {
 			jf.setVisible(true);
 			//System.out.println("Don't have enough resources");
 		    }
-		    //jmenu.setVisible(false);
-		    //repaint();
 		}
-		//shop.remove(cost);
 	    }
 	};
     
@@ -151,13 +147,24 @@ public class ShopPanel extends JPanel {
  
 	// if so, draw already purchased (which might not want to be a button
 	// and just some text)
-	else{ //if(weaponsBought[indexClicked] == 1){
-	    /*Rectangle box = new Rectangle(20, 50, 200, 275);
-	            g2d.draw(box);
-		    g2d.drawString("Already Purchased", 205, 280);*/
+	else{ 
 	    purchased.setLocation(170,275);
 	    this.add(purchased);
 	}
     }
+
+	/**
+	 * @return the array of weaponsBought
+	 */
+    	public int[] getWeaponsBought() {
+		return weaponsBought;
+	}
+
+	/**
+	 * @param weaponsBought to set the weaponsBought array
+	 */
+	public void setWeaponsBought(int[] weaponsBought) {
+		this.weaponsBought = weaponsBought;
+	}
 
 }
