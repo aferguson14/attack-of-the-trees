@@ -125,7 +125,8 @@ public abstract class Weapon implements Serializable{
     public abstract void paintWeapon(Graphics g, Player p,  
                                         ArrayList <Enemies> e);
     public abstract void print();
-    
+
+    public abstract void playSound();
     //----------------------------------------Getters/Setters--------------------------------------
     /**
      * @return the Attack

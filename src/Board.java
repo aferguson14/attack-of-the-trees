@@ -197,7 +197,7 @@ public class Board extends JPanel implements ActionListener {
 	Bow b = new Bow(p.getXCoord(),p.getYCoord());
 	p.AddWeapon(4, b);//index in arraylist*/
 	p.setCurrentWeapon(s);
-}
+    }
 
     /** 
      * @param e ActionEvent 
@@ -637,7 +637,7 @@ public class Board extends JPanel implements ActionListener {
 				}
 			}
 		}
-	}
+    }
 
 	private class AL extends KeyAdapter {
 	    /**

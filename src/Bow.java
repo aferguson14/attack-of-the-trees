@@ -73,5 +73,12 @@ public class Bow extends Weapon implements Serializable{
         paintProjectile(e, g, p);
         deleteProjectiles();
     }
+
+    @Override
+    public void playSound(){
+	MP3 bowSound = new MP3("../sound/bow.mp3");
+	bowSound.play();
+    }
+
     
 }

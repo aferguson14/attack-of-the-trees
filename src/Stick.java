@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
+
 /** 
  * Stick represents a weapon the player uses to defeat enemies.
  * 
@@ -54,7 +55,10 @@ public class Stick extends Weapon implements Serializable{
 					axeproj.setMouseAngle(this.getMouseAngle());
 					this.addProjectile(axeproj);
 					this.setAttackSpeedTimer(0);
+					this.playSound();
+		
 		}
+
 	}
 	@Override
 	public void DealDmgE(Enemies e){
@@ -74,5 +78,12 @@ public class Stick extends Weapon implements Serializable{
 		paintProjectile(e, g, p);
 		deleteProjectiles();
 	}
+    @Override
+    public void playSound(){
+	
+	MP3 stickSound = new MP3("../sound/swish.mp3");
+	stickSound.play();
+    
 
+    }
 }
