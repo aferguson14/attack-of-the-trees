@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 
 public class Arrow extends PlayerProjectile implements Serializable{
     
- public Arrow(double x, double y, int direction, Graphics g, double angle, Player player) {\
+ public Arrow(double x, double y, int direction, Graphics g, double angle, Player player) {
  	//initialize private data
         super(x, y, direction, g, angle, player);
         setXAcc(0);
