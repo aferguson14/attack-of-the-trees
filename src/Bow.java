@@ -53,7 +53,8 @@ public class Bow extends Weapon implements Serializable{
 	   	    arrow.setPlayerDirection(this.getPlayerDirection());
 		    this.addProjectile(arrow);
 		    this.setAttackSpeedTimer(0);
-                }
+		    this.playSound();
+	}
     }
     @Override
     public void DealDmgE(Enemies e){

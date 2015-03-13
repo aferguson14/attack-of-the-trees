@@ -52,6 +52,7 @@ public class Axe extends Weapon implements Serializable{
 		    axeproj.setMouseAngle(this.getMouseAngle());
 		    this.addProjectile(axeproj);
 		    this.setAttackSpeedTimer(0);
+		    this.playSound();
                 }
     }
     @Override
@@ -71,6 +72,11 @@ public class Axe extends Weapon implements Serializable{
 
         paintProjectile(e, g, p);
         deleteProjectiles();
+    }
+
+    public void playSound(){
+	MP3 axeSound = new MP3("../sound/axeSound.mp3");
+	axeSound.play();
     }
     
 }
