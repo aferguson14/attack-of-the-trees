@@ -23,8 +23,8 @@ public class Axe extends Weapon implements Serializable{
         setXCoord(x);
         setYCoord(y);
         setAttack(40);
-        setAttackSpeed(100);
-        setAttackSpeedTimer(99);
+        setAttackSpeed(60);
+        setAttackSpeedTimer(59);
         setSpeed(3);
         setXVel(0);
         setYVel(0);
@@ -47,6 +47,7 @@ public class Axe extends Weapon implements Serializable{
         if(this.getAttackSpeedTimer() == this.getAttackSpeed()){
 		    AxeProjectile axeproj = new AxeProjectile(this.getXCoord(), 
 					       this.getYCoord(), this.getFacing(), g, findAngle(p), player); //+45
+			axeproj.setAttack(50);
 		    axeproj.setMouseY(this.getMouseY());
 		    axeproj.setMouseX(this.getMouseX());
 		    axeproj.setMouseAngle(this.getMouseAngle());
