@@ -23,13 +23,14 @@ public class Fish extends Enemies implements Serializable{
         super(x, y);
         ImageIcon iLeft = new ImageIcon("../images/enemyImages/fish/fishLeft.png");
         ImageIcon iRight = new ImageIcon("../images/enemyImages/fish/fishRight.png");
-        ResourceLog log = new ResourceLog(this.getXCoord(), this.getYCoord());
+        ResourceBlueHeart blueHeart  = new ResourceBlueHeart(this.getXCoord(), this.getYCoord());
+      
         this.setStill(iLeft);
         this.setStillRight(iRight);
         this.setHorizontalSize(120);
         this.setVerticalSize(115);
         
-        this.setResource(log);
+        this.setResource(blueHeart);
         this.setHp(600);
         this.setTotalHp(getHp());
         this.setAttack(15);

@@ -46,7 +46,7 @@ public class Board extends JPanel implements ActionListener {
     public Image LogImage;
     public Image CoinImage;
     public Image HeartImage;
-
+    public Image BlueHeartImage;
     //Weapon ../images
     public Image SwordImage;
     public Image AxeImage;
@@ -143,7 +143,7 @@ public class Board extends JPanel implements ActionListener {
 	Grass2 = grass2.getImage();
 	Grass3 = grass3.getImage();
 
-	ImageIcon dirt = new ImageIcon("../images/grassImages/dirt.png");
+	ImageIcon dirt = new ImageIcon("../images/grassImages/dirtNew.png");
 	DirtBlock = dirt.getImage();
 
 	//RESOURCE IMAGES
@@ -153,7 +153,8 @@ public class Board extends JPanel implements ActionListener {
 	CoinImage = coinImage.getImage();
 	ImageIcon heartImage = new ImageIcon("../images/sourceImage/heart.png");
 	HeartImage = heartImage.getImage();
-
+	ImageIcon blueHeartImage = new ImageIcon ("../images/sourceImage/blueHeart.png");
+	BlueHeartImage = blueHeartImage.getImage();
 	//TIME
 	time = new Timer(5, this);
 	time.start();
@@ -319,7 +320,9 @@ public class Board extends JPanel implements ActionListener {
 		    else
 			getP().setHp(getP().getHp()+20);
 		}
-		    
+		else if(getResources().get(i).getResourceType().equals("blueHeart")){
+		    getP().setHp(100);
+		}
 	     /*	else if(getResources().get(i).getResourceType() == "coal")
 		    getP().setCoalCount(getP().getCoalCount() + 1);
 		else if(getResources().get(i).getResourceType() == "oil")
@@ -393,7 +396,13 @@ public class Board extends JPanel implements ActionListener {
 		    q+=324;
 		}
 		*/
-		int q = 0;
+		 int q=-20;
+		 while(q<7478){ //188x29
+		    g2d.drawImage(DirtBlock, q, 690, null);
+		    q+=190;
+		 }
+
+		q = 0;
 		while(q<7478){
 		    g2d.drawImage(Grass3, q+73, 657, null);
 		    g2d.drawImage(Grass1, q, 657, null); //657
@@ -403,11 +412,6 @@ public class Board extends JPanel implements ActionListener {
 		    q+=80;
 		}
 	
-		q=0;
-		while(q<7478){ //188x29
-		    g2d.drawImage(DirtBlock, q, 700, null);
-		    q+=128;
-		}
 	
 	
 	        g.setColor(greyTransp);
