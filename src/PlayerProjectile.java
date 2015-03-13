@@ -43,7 +43,16 @@ public class PlayerProjectile {
     private double mouseY;
     private double mouseAngle;
     private int playerDirection;
-    //Constructor
+    /**
+     * @param x double
+     * @param y double
+     * @param direction int
+     * @param g Graphics
+     * @param angle double
+     * @param p Player
+     * Constructor
+     * sets parameters based on arm and weapon rotation and position
+     */ 
     public PlayerProjectile(double x, double y, int direction, Graphics g, double angle, Player p){
 	if((direction == 0) && (this.getPlayerDirection()== 0)){
 	    double cx = x+25; //25, center x  of arm rotation
@@ -78,7 +87,11 @@ public class PlayerProjectile {
         setTerrainDimensions(p.getTerrains());
     }
 
-    //move same as Projectile
+    /**
+     * @param e ArrayList <Enemies>
+     * @param p Player
+     * moves projectile, adjusts coords/velocities
+     */ 
         public void move(ArrayList<Enemies> e, Player p){
             if(Board.getState() == Board.STATE.GAME){
                 //adjust velocities
@@ -115,7 +128,11 @@ public class PlayerProjectile {
             }
     }
 
-//return true if in contact with enemy
+/**
+ * @param enem Enemies
+ * @return boolean
+ * checks if in contact with any Enemies
+ */ 
 public boolean EnemyContact(Enemies enem){
     if((getXCoord() >= enem.getXCoord()) && 
             (getXCoord() <= (enem.getXCoord() + enem.getHorizontalSize())) 
@@ -128,15 +145,26 @@ public boolean EnemyContact(Enemies enem){
         return false;
     }
 }
-    //deal dmg to enemy based on projectile attack
+    /**
+     * @param e Enemies
+     * deals damage to Enemy based on attack
+     */ 
     public void dealDmg(Enemies e){
         e.setHp(e.getHp() - this.getAttack());
         setRemove(true);
     }
     
+    /**
+     * @param g Graphics
+     * Implemented in subclasses
+     */ 
     public void CreateImage(Graphics g){}
     
-    //paint projectile **REMOVE CALL TO THIS FUNCTION TO RID RED PROJECTILE**
+    /**
+     * @param g Graphics
+     * paints a red block for projectile
+     * testing purposes
+     */ 
     public void paintImage(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         Rectangle rect = new Rectangle((int) getXCoord(), 
@@ -144,8 +172,11 @@ public boolean EnemyContact(Enemies enem){
 			    g2d.setColor(Color.red);
 			    g2d.fill(rect);
     }
-    
-    //get xy velocities based on angle and speed, like a right traingle
+    /**
+     * @param spd double
+     * @param ang double
+     * get xy velocities based on angle and speed, like a right traingle
+     */ 
     public void getXY(Double spd, Double ang){
         double yvel, xvel;
         yvel = -1 * (spd * (Math.sin(ang)));
@@ -154,27 +185,30 @@ public boolean EnemyContact(Enemies enem){
         setYVel(yvel);
         
 	setXVel(getXVel());
-	/*       if(this.getFacing() == 0){
-	   setXVel(-1 * (getXVel()));
-        }
-	else{
-            setXVel(getXVel());
-	}
-	*/
     }
-    
+    /**
+     * @param ter ArrayList <Terrain>
+     * sets top dimensions of terrain
+     */ 
     public void setTerrainDimensions(ArrayList <Terrain> ter){
          this.setTerrains(ter);
          for(int i = 0; i < getTerrains().size(); i++){
              getTops().add(i, getTerrains().get(i).getTop());
          }
      }
+     /**
+      * updates top terrain dimensions
+      */ 
      public void updateTerrainDimensions(){
          for(int i = 0; i < getTerrains().size(); i++){
              getTerrains().get(i).UpdateSides(this, i);
          }
      }
-     
+     /**
+      *@param index int
+      * @param value double
+      * sets a top terrain dimension value to a corresponding index within tops
+      */ 
      public void setTopIndex(int index, double value){
          tops.set(index, value);
      }
