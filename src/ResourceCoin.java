@@ -16,6 +16,11 @@ import javax.swing.ImageIcon;
 
 public class ResourceCoin extends Resource implements Serializable{
 
+    /**
+     * @param x double for x coordinate
+     * @param y double for y coordinate
+     * Creates a coin resource that sets it coordinates, image, and type
+     */
     public ResourceCoin(double x, double y){
 	super(x,y);
 	//Image needs to be replaced by log
@@ -24,6 +29,10 @@ public class ResourceCoin extends Resource implements Serializable{
 	this.setResourceType("coin");
     }
 
+    /**
+     * @param g Graphics
+     * Draws the image of the resource at its x and y coordinates
+     */
     public void paintResource(Graphics g){
 	//paint resource
 	Graphics2D g2d = (Graphics2D) g;
