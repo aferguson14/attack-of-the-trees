@@ -77,7 +77,7 @@ public class Player implements Serializable{
         YAcc =  .5;
         YVel = 0;
         XVel = 0;
-        hp = 1000;//100
+        hp = 100;//100
         attack = 500;
         AttackSpeed = 50;
         Speed = 4;
