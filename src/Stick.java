@@ -49,6 +49,7 @@ public class Stick extends Weapon implements Serializable{
 		if(this.getAttackSpeedTimer() == this.getAttackSpeed()){
 			AxeProjectile axeproj = new AxeProjectile(this.getXCoord(), 
 					this.getYCoord(), this.getFacing(), g, findAngle(p), player); //+45
+					axeproj.setAttack(15);
 					axeproj.setMouseY(this.getMouseY());
 					axeproj.setMouseX(this.getMouseX());
 					axeproj.setMouseAngle(this.getMouseAngle());
