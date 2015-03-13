@@ -42,24 +42,37 @@ public abstract class Weapon implements Serializable{
     private int playerDirection;
     private String weaponType;
 
-    
+    /**
+     * Animation for attacking should be overridden by subclasses
+     */
     public void AttackAnimation(Graphics g){}
+    
+    /**
+     * Animation for attacking should be overridden by subclasses
+     */
     public void Attack(){}
+    
+    /**
+     * Deals damage to the player should be overridden by subclasses
+     */
     public void DealDmgP(Player p){}
+    
+    /**
+     * Deals damage to enemies should be overridden by subclasses
+     */
     public void DealDmgE(Enemies e){}
+    
+    /**
+     * Shoots the weapon's projectiles should be overridden by subclasses
+     */
     public void shoot(Point p, Graphics g, Player player){}
-    //move weapon in correspondence with player
+    
+    /**
+     * Changes the weapons coordinates
+     */
     public void move(Player p){
+	//move weapon in correspondence with player
 
-  	/*        if(p.getFacing() == 1){
-            setXCoord(p.getXCoord()+15); //changed
-            setYCoord(p.getYCoord()+63); //25 to make weapon lower
-        }
-        else{
-            setXCoord(p.getXCoord()+25);
-            setYCoord(p.getYCoord()+63);//25
-        }
-        */
 	//set the corrdinate at the player coords
 	setXCoord(p.getXCoord());
 	setYCoord(p.getYCoord());
@@ -67,33 +80,27 @@ public abstract class Weapon implements Serializable{
 	//necessary for projectiles to know player facing
 	setPlayerDirection(p.getFacing());
 	
-
 	//check boundaries, if on ground, InAir = false
 	if((getYCoord() + p.getVerticalSize()) >= 700){
 	    setYCoord(p.getWorldBot() - p.getVerticalSize());
 	    setYVel(0);
 	}
-	/*
-        if(p.getXCoord() <= 0){
-            setXCoord(p.getHorizontalSize());
-        }
-        else if((p.getXCoord() + 50) >= 7000){
-            setXCoord(1024 - 50 + p.getHorizontalSize());
-        }
-	*/
-
     }
-    //move then paint weapon's projectiles
+    
+    /**
+     * Move then paint the weapon's projectiles 
+     */
     public void paintProjectile(ArrayList <Enemies> e, Graphics g, Player p){
         for(PlayerProjectile proj : this.getProjectiles()){
             proj.move(e, p);
         }
         for(PlayerProjectile proj : this.getProjectiles()){
-	    //            proj.paintImage(g);
             proj.CreateImage(g);
         }
     }
-    //if projectile needs to be removed, remove
+    /**
+     * If the projectile needs to be removed, delete
+     */
     public void deleteProjectiles(){
         for(PlayerProjectile proj : projectiles){
             if(proj.isRemove()){
@@ -102,18 +109,25 @@ public abstract class Weapon implements Serializable{
             }
         }
     }
-    //adds projectile
+    
+    /**
+     * Adds the PlayerProjectile to the projectiles arraylist
+     */
     public void addProjectile(PlayerProjectile p){
         projectiles.add(p);
     }
-    //delets Projectile
+    
+    /**
+     * Removes the PlayerProjectile from the projectiles arraylist
+     */
     public void deleteProjectile(PlayerProjectile p){
         projectiles.remove(p);
     }
-    //find angle between player and point
+    
+    /**
+     * Finds the angle between player and point
+     */
     public double findAngle(Point p){
-	//	    return -Math.atan2((p.getY()-this.getYCoord()),(p.getX()-this.getXCoord()));
-
 	if(facing == 1){
 	//get angle based on facing right
 	    return -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+15-this.getXCoord()));
@@ -123,12 +137,17 @@ public abstract class Weapon implements Serializable{
 	//get angle based on facing left
 	    return -Math.atan2((p.getY()-63-this.getYCoord()),(p.getX()+25-this.getXCoord()));
 	}
-
 	return -1;
-
     }
+    
+    /**
+     * Method to paint the weaoon should be overridden by subclasses
+     */
     public abstract void paintWeapon(Graphics g, Player p,  
                                         ArrayList <Enemies> e);
+    /**
+     * Prints the weapon's name should be overridden by subclasses
+     */
     public abstract void print();
     
     //----------------------------------------Getters/Setters--------------------------------------
@@ -398,21 +417,31 @@ public abstract class Weapon implements Serializable{
         this.mouseAngle = mouseAngle;
     }
     
+    /**
+     * @return the playerDirection
+     */
     public int getPlayerDirection(){
 	return playerDirection;
     }
 
+    /**
+     * @param playerDirection the direction of the player to set
+     */
     public void setPlayerDirection(int playerDirection){
 	this.playerDirection = playerDirection;
     }
 
-
+    /**
+     * @param weaponType the weapon type to set
+     */
     public void setWeaponType(String weaponType){
 	this.weaponType = weaponType;
     }
 
+    /**
+     * @return the weaponType
+     */	
     public String getWeaponType(){
 	return weaponType;
     }
-    
 }
