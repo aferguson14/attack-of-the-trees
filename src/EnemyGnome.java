@@ -34,7 +34,7 @@ public class EnemyGnome extends Enemies implements Serializable{
 		this.setAttack(15);
 		this.setSpeed(.5);
 		this.setAttackSpeed(100);
-		this.setAttackRange(20);
+		this.setAttackRange(400);
 		this.setJumpSpeed(-20);
 		this.setAttackSpeedCount(99);
 	}
